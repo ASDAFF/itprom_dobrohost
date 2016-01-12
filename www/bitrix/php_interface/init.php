@@ -29,3 +29,14 @@ function Trace($object)
         }
     }
 }
+
+function GetResizedImage($id, $width, $height) {
+    $arSize = Array (
+        "width" => $width,
+        "height" => $height,
+    );
+    $file = CFile::GetFileArray($id);
+    $resized = CFile::ResizeImageGet($file, $arSize);
+
+    return $resized;
+}

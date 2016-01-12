@@ -262,15 +262,10 @@ isset($arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_ALT"]) && '' !=
 										$miscPh .= "\" ";
 										?>
 										<?
-											$arSize = Array (
-												"width" => 100,
-												"height" => 100,
-											);
-											$file = CFile::GetFileArray($arOnePhoto["ID"]);
-											$resized = CFile::ResizeImageGet($file, $arSize);
+											$resized_src = GetResizedImage($arOnePhoto["ID"], 100, 100)["src"];
 										?>
 										<a rel="productgallery" class="fancyimages" href="<?=$arOnePhoto['SRC']?>">
-											<img <?=$miscPh?>  src="<?=$resized['src']?>" width="90" height="90" >
+											<img <?=$miscPh?>  src="<?=$resized_src?>" width="90" height="90" >
 										</a>
 									</a>
 								</li>
@@ -290,9 +285,11 @@ isset($arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_ALT"]) && '' !=
 					else {$detPh .= strval($arResult["NAME"]."изображение 1"); }
 					$detPh .= "\" ";
 					?>
-
+					<?
+						$resized_src = GetResizedImage($arResult["DETAIL_PICTURE"]["ID"], 500, 500)["src"];
+					?>
 					<a rel="productgallery" class="fancyimages" href="<?=$arResult["DETAIL_PICTURE"]["SRC"]?>">
-						<img itemprop="image" <?=$detPh?> id="<?= $arItemIDs['PICT']?>" class="" src="<?=$arResult["DETAIL_PICTURE"]["SRC"]?>" >
+						<img itemprop="image" <?=$detPh?> id="<?= $arItemIDs['PICT']?>" class="" src="<?=$resized_src?>" >
 					</a>
 				</div>
 			</div>
