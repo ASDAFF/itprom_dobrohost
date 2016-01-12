@@ -261,8 +261,16 @@ isset($arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_ALT"]) && '' !=
 										else {$miscPh .= strval($arResult["NAME"]." изображение ".strval($i+2))."\" title=\"".strval($arResult["NAME"]." изображение ".strval($i+2)); }
 										$miscPh .= "\" ";
 										?>
+										<?
+											$arSize = Array (
+												"width" => 100,
+												"height" => 100,
+											);
+											$file = CFile::GetFileArray($arOnePhoto["ID"]);
+											$resized = CFile::ResizeImageGet($file, $arSize);
+										?>
 										<a rel="productgallery" class="fancyimages" href="<?=$arOnePhoto['SRC']?>">
-											<img <?=$miscPh?>  src="<?=$arOnePhoto['SRC']?>" width="90" height="90" >
+											<img <?=$miscPh?>  src="<?=$resized['src']?>" width="90" height="90" >
 										</a>
 									</a>
 								</li>
