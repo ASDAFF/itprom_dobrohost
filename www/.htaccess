@@ -34,9 +34,15 @@ RewriteCond %{REQUEST_URI} !\/$
 RewriteCond %{HTTP_HOST} ^([^www].*)$
 RewriteRule ^(.*)$ https://%1/$1/ [L,R=301]
   #======http -> https
-  RewriteCond %{SERVER_PORT} ^80$ [OR]
-  RewriteCond %{HTTP} =on
-  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+RewriteCond %{HTTP:HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+#RewriteCond %{HTTPS} =off
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,L]
+  #RewriteCond %{SERVER_PORT} ^80$ [OR]
+  #RewriteCond %{HTTP} =on
+  #RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
   #======no / -> /
 #  RewriteCond %{REQUEST_URI}  !\.(php|html?|jpg|gif)$
@@ -65,3 +71,4 @@ RewriteRule ^(.*)$ https://%1/$1/ [L,R=301]
 
 Header add Access-Control-Allow-Origin "*"
 Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+
