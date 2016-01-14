@@ -4,6 +4,7 @@ $APPLICATION->SetPageProperty("keywords", "термошкаф, термошка�
 $APPLICATION->SetPageProperty("title", "Термошкафы ITProm");
 $APPLICATION->SetPageProperty("description", "Купить термошкафы ITProm по лучшей цене с доставкой по Москве и в регионы. Огромный каталог термошкафов ITProm от производителя.");
 $APPLICATION->SetTitle("Термошкафы ITProm");
+
 ?><div class="wrapper">
 	 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.list",
@@ -207,7 +208,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm");
 		"CURRENCY_ID" => "RUB",
 		"DETAIL_URL" => "",
 		"DISPLAY_COMPARE" => "N",
-		"ELEMENT_COUNT" => "150",
+		"ELEMENT_COUNT" => "500000",
 		"ELEMENT_SORT_FIELD" => "sort",
 		"ELEMENT_SORT_FIELD2" => "name",
 		"ELEMENT_SORT_ORDER" => "asc",
@@ -239,7 +240,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm");
 		"PRODUCT_PROPERTIES" => array(),
 		"PRODUCT_PROPS_VARIABLE" => "prop",
 		"PRODUCT_QUANTITY_VARIABLE" => "quantity",
-		"PROPERTY_CODE" => array(0=>"NEWPRODUCT",1=>"SALELEADER",2=>"SPECIALOFFER",3=>"",),
+		"PROPERTY_CODE" => array(0=>"SPECIALOFFER",),
 		"ROTATE_TIMER" => "30",
 		"SECTION_ID_VARIABLE" => "SECTION_ID",
 		"SECTION_URL" => "",
@@ -352,4 +353,18 @@ $APPLICATION->SetTitle("Термошкафы ITProm");
 		</div>
 	</div>
 </div>
+
+<?php
+//$els = CIBlockElement::GetList(Array("IBLOCK_ID" => 4), Array(), false, false, Array("ID", "NAME"));
+//$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
+//$arFilter = Array("IBLOCK_ID"=>4, "ACTIVE"=>"Y", "PROPERTY_SPECIALOFFER_VALUE" => "да");
+//$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>50), $arSelect);
+//while($ob = $res->GetNextElement()){
+//	$arFields = $ob->GetFields();
+//	test_dump($arFields["ID"]);
+//	$arProps = $ob->GetProperties()["SPECIALOFFER"]["VALUE"];
+//	test_dump($arProps);
+//}
+?>
+
  <br><? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

@@ -14,6 +14,17 @@ $this->setFrameMode(true);
 
 //test_dump($arResult);
 
+//$els = CIBlockElement::GetList(Array("IBLOCK_ID" => 4), Array(), false, false, Array("ID", "NAME"));
+//$arSelect = Array("ID", "IBLOCK_ID", "NAME", "DATE_ACTIVE_FROM","PROPERTY_*");
+//$arFilter = Array("IBLOCK_ID"=>4, "ACTIVE"=>"Y", "PROPERTY_SPECIALOFFER_VALUE" => "да");
+//$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>50), $arSelect);
+//while($ob = $res->GetNextElement()){
+//	$arFields = $ob->GetFields();
+//	test_dump($arFields["ID"]);
+//	$arProps = $ob->GetProperties()["SPECIALOFFER"]["VALUE"];
+//	test_dump($arProps);
+//}
+
 if (!empty($arResult['ITEMS']))
 {
 	CJSCore::Init(array("popup"));

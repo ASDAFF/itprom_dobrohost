@@ -25,6 +25,11 @@ foreach($favList as $fv){
   $favIds[$fv["ID"]] = $fv["UF_FAV_ID"];
 }
 $arResult["FAVS"] = array_flip($favIds);
+
+//foreach ($arResult["ITEMS"] as $i) {
+//  test_dump($i["PROPERTIES"]["SPECIALOFFER"]);
+//}
+
 ?>
 <ul class="tab-list">
   <li><a href="javascript:void(0);" class="active" data-selector="wf-new"><span class="icon40px icon-new"></span><strong><?=GetMessage("WF_NEW_WARES")?></strong></a></li>
