@@ -23,3 +23,4 @@ www/bitrix/license_key.php
 www/bitrix/site_checker*.log
 www/bitrix/spread.php
 www/log
+www/bitrix/html_pages/
