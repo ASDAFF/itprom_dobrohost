@@ -182,7 +182,7 @@ $(function () {
     _this.closest('ul').find('li.active').removeClass('active');
     _this.parent().addClass('active');
     var _img_hold = $('.gallery-vertical-hold .visual');
-    _img_hold.find('img').addClass('active');
+    //_img_hold.find('img').addClass('active');
     var image = new Image();
     image.onload = function () {
       _img_hold.append('<img class="next1" style="display:none;" src="' + _this.attr('href') + '" alt=""/>');
@@ -193,7 +193,10 @@ $(function () {
         $(this).removeClass('next1');
       });
     }
-    image.src = $(this).attr('href');
+    //image.src = $(this).attr('href');
+    //_img_hold.src = "hello";//$(this).attr('href');
+    _img_hold.find("img").attr("src", $(this).attr("medium_href"));
+    _img_hold.find("a").attr("href", $(this).attr('href'));
     e.preventDefault();
   });
 

@@ -287,9 +287,10 @@ isset($arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_ALT"]) && '' !=
                                             ?>
                                             <?
                                             $resized_src = GetResizedImage($arOnePhoto["ID"], 100, 100)["src"];
+                                            $resized_medium_src = GetResizedImage($arOnePhoto["ID"], 500, 500)["src"];
                                             ?>
                                             <a rel="productgallery" class="fancyimages_mini"
-                                               href="<?= $arOnePhoto['SRC'] ?>">
+                                               href="<?= $arOnePhoto['SRC']?>" medium_href="<?=$resized_medium_src?>">
                                                 <img <?= $miscPh ?> src="<?= $resized_src ?>" width="90" height="90">
                                             </a>
                                         </a>
