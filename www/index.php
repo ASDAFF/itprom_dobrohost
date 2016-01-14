@@ -240,7 +240,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm");
 		"PRODUCT_PROPERTIES" => array(),
 		"PRODUCT_PROPS_VARIABLE" => "prop",
 		"PRODUCT_QUANTITY_VARIABLE" => "quantity",
-		"PROPERTY_CODE" => array(0=>"SPECIALOFFER",),
+		"PROPERTY_CODE" => array(0=>"SPECIALOFFER",1=>"SALELEADER",2=>"SPECIALOFFER",3=>"",),
 		"ROTATE_TIMER" => "30",
 		"SECTION_ID_VARIABLE" => "SECTION_ID",
 		"SECTION_URL" => "",
