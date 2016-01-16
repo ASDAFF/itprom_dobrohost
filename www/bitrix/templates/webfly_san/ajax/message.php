@@ -1,7 +1,8 @@
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");?>
 <?
-$_POST["name"] = iconv("utf-8","windows-1251",$_POST["name"]);
-$_POST["message"] = iconv("utf-8","windows-1251",$_POST["message"]);?>
+//$_POST["name"] = iconv("utf-8","windows-1251",$_POST["name"]) . "::" . $_POST["name"];
+//$_POST["message"] = iconv("utf-8","windows-1251",$_POST["message"]);
+?>
 <?$APPLICATION->IncludeComponent(
   "webfly:message.add", 
   $_POST["p_template"], 

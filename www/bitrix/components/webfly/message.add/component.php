@@ -48,7 +48,7 @@ if(isset($_POST["ajaxm"])){
       "EMAIL_TO" => $arParams["EMAIL_TO"],
       "LINK" => $link
     );
-    //
+
     if(is_array($arParams['EVENT_MESSAGE_ID']))
       foreach($arParams['EVENT_MESSAGE_ID'] as $event){
         $rsEM = CEventMessage::GetByID($event);
