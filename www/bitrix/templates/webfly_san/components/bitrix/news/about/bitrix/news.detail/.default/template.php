@@ -78,6 +78,8 @@ $APPLICATION->AddHeadScript($fancypath."source/helpers/jquery.fancybox-thumbs.js
     $cat = $prevCat = "";
     foreach($arResult["SIDEBAR"] as $sidebar):
       $cat = $sidebar["SECTION"];
+    //test_dump($sidebar["SECTION"]);
+    //test_dump($sidebar["NAME"]);
       if($cat != $prevCat):
         if($prevCat != ""):?>
             </ul>

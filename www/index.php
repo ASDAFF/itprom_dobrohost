@@ -5,7 +5,6 @@ $APPLICATION->SetPageProperty("title", "Термошкафы ITProm");
 $APPLICATION->SetPageProperty("description", "Купить термошкафы ITProm по лучшей цене с доставкой по Москве и в регионы. Огромный каталог термошкафов ITProm от производителя.");
 $APPLICATION->SetTitle("Термошкафы ITProm");
 
-test_dump(mail('hasan.akniyev@gmail.com','test','test'));
 ?><div class="wrapper">
 	 <?$APPLICATION->IncludeComponent(
 	"bitrix:news.list",

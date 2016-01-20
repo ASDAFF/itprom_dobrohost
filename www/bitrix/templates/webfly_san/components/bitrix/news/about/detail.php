@@ -62,22 +62,4 @@ $this->setFrameMode(true);
           ), $component
   );
   ?>
-	<?/*<div class="aside">
-    <?$APPLICATION->IncludeComponent("bitrix:sale.viewed.product", "about_page", Array(
-      "VIEWED_COUNT" => "5",	// ���������� ���������
-      "VIEWED_NAME" => "Y",	// ���������� ������������
-      "VIEWED_IMAGE" => "Y",	// ���������� �����������
-      "VIEWED_PRICE" => "Y",	// ���������� ����
-      "VIEWED_CANBUY" => "Y",	// �������� "������"
-      "VIEWED_CANBUSKET" => "Y",
-      "VIEWED_IMG_HEIGHT" => "194",	// ������ �����������
-      "VIEWED_IMG_WIDTH" => "235",	// ������ �����������
-      "BASKET_URL" => SITE_DIR."/personal/basket.php",	// URL, ������� �� �������� � �������� ����������
-      "ACTION_VARIABLE" => "action",	// �������� ����������, � ������� ���������� ��������
-      "PRODUCT_ID_VARIABLE" => "id_viewed",	// �������� ����������, � ������� ���������� ��� ������ ��� �������
-      "SET_TITLE" => "N",	// ������������� ��������� ��������
-      ),
-      false
-    );?>
-	</div>*/?>
 </div>

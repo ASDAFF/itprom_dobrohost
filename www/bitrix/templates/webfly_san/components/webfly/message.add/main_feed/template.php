@@ -64,6 +64,10 @@ $this->setFrameMode(true);
       $(".btn-close-type01").click();
       $(".holder").html(html);
     },2700);
+
+    //added from Dima
+    yaCounter32630115.reachGoal('header_phone');
+    console.log("clicked");
   }
   /**
    * We throw errors at you
