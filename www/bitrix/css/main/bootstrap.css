@@ -5,6 +5,13 @@
  */
 
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+.contact-line {
+  position: relative;
+  height: 1%;
+  border-top: 1px solid #d6d6d6;
+  padding-top: 2%;
+}
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
