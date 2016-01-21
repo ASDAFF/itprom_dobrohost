@@ -64,11 +64,11 @@ $APPLICATION->AddHeadScript($fancypath."source/helpers/jquery.fancybox-thumbs.js
                     "MAP_HEIGHT" => "490",
                     "CONTROLS" => array("SMALL_ZOOM_CONTROL","TYPECONTROL","SCALELINE"),
                     "OPTIONS" => array("ENABLE_DBLCLICK_ZOOM","ENABLE_DRAGGING","ENABLE_KEYBOARD"),
-                    "MAP_ID" => ""
+                    "MAP_ID" => "",
+                    "DEV_MODE"=>"Y"
                 )
             );?>
         <?}?>
-
     </div>
   </div>
 </div>
