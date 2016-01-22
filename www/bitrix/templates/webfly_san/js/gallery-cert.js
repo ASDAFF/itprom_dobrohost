@@ -13,4 +13,6 @@ $(document).ready(function() {
 
 
     $('.slideshow').jCarouselLite(options);
+
+    $("a#single_cert_image").fancybox();
 });

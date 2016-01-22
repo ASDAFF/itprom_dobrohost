@@ -153,9 +153,13 @@ $APPLICATION->SetTitle("Термошкафы ITProm");
 //                                        test_dump($arItems);
                                         foreach ($arItems as $image) {
                                             $resized_src = GetResizedImage($image["SOURCE_ID"], 220, 270)["src"];
-                                            if (!$resized_src) $resized_src = $image["src"];
+                                            if (!$resized_src) $resized_src = $image["PATH"];
                                             ?>
-                                            <li class="slide"><img src="<?= $resized_src?>"></li>
+                                            <li class="slide">
+                                                <a id="single_cert_image" href="<?=$image["PATH"]?>">
+                                                    <img src="<?= $resized_src?>">
+                                                </a>
+                                            </li>
                                             <?
                                         }
                                         ?>
