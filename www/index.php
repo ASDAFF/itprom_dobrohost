@@ -79,6 +79,40 @@ $APPLICATION->SetTitle("Термошкафы ITProm");
                 <div class="container-hold container-hold-index">
                     <!--    Left column starts here -->
                     <div class="blog-col">
+                        <div class="blocl-type01">
+                            <div class="container">
+                                <div class="heading-blog">
+                                    <p class="cert_title">Сертификаты</p>
+                                    <a class="cert_title_link" href="/about/sertifikaty/">Все сертификаты</a>
+                                </div>
+                                <div class="slideshow">
+                                    <ul class="slides">
+                                        <?
+                                        CModule::IncludeModule("fileman");
+                                        CMedialib::Init();
+                                        $arItems = CMedialibItem::GetList(array('arCollections' => array("0" => 3)));
+
+                                        //                                        test_dump("ABCDFGGWEWEF");
+                                        //                                        test_dump($arItems);
+                                        foreach ($arItems as $image) {
+                                            $resized_src = GetResizedImage($image["SOURCE_ID"], 220, 270)["src"];
+                                            if (!$resized_src) $resized_src = $image["PATH"];
+                                            ?>
+                                            <li class="slide">
+                                                <a id="single_cert_image" href="<?=$image["PATH"]?>">
+                                                    <img src="<?= $resized_src?>">
+                                                </a>
+                                            </li>
+                                            <?
+                                        }
+                                        ?>
+                                    </ul>
+
+                                </div>
+                                <a class='prev' href="#"> &laquo; </a>
+                                <a class='next' href="#"> &raquo; </a>
+                            </div>
+                        </div>
                         <? $APPLICATION->IncludeComponent(
                             "bitrix:news.list",
                             "main_blog",
@@ -136,40 +170,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm");
                                 "SORT_ORDER2" => "ASC"
                             )
                         ); ?>
-                        <div class="blocl-type01">
-                            <div class="container">
-                                <div class="cert_head"
-                                     style="height: 20px; align-content: center; text-align: center; vertical-align: middle; font-size: 16px";>
-                                    <a href="/about/sertifikaty/">Все сертификаты</a>
-                                </div>
-                                <div class="slideshow">
-                                    <ul class="slides">
-                                        <?
-                                        CModule::IncludeModule("fileman");
-                                        CMedialib::Init();
-                                        $arItems = CMedialibItem::GetList(array('arCollections' => array("0" => 3)));
 
-//                                        test_dump("ABCDFGGWEWEF");
-//                                        test_dump($arItems);
-                                        foreach ($arItems as $image) {
-                                            $resized_src = GetResizedImage($image["SOURCE_ID"], 220, 270)["src"];
-                                            if (!$resized_src) $resized_src = $image["PATH"];
-                                            ?>
-                                            <li class="slide">
-                                                <a id="single_cert_image" href="<?=$image["PATH"]?>">
-                                                    <img src="<?= $resized_src?>">
-                                                </a>
-                                            </li>
-                                            <?
-                                        }
-                                        ?>
-                                    </ul>
-
-                                </div>
-                                <a class='prev' href="#"> &laquo; </a>
-                                <a class='next' href="#"> &raquo; </a>
-                            </div>
-                        </div>
 
                         <div class="block-type02">
                             <? $APPLICATION->IncludeComponent(

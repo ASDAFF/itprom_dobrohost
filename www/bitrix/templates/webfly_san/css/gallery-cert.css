@@ -3,6 +3,20 @@ body {
     font-family: Helvetica, Arial, Verdana, sans-serif;
     line-height: 1.3em;
 }
+
+.cert_title {
+    font: 22px/26px 'ubuntulight', Arial, Helvetica, sans-serif;
+    top: 20px;
+    left: 20px;
+    position: absolute;
+}
+
+.cert_title_link {
+    position: absolute;
+    right: 20px;
+    top: 30px;
+}
+
 .container {
     width: 100%;
     margin: 0 auto;
@@ -13,7 +27,7 @@ body {
     width: 100%;
     overflow: hidden;
     padding: 0 100px;
-    margin: 0 auto 20px;
+    margin: 20px auto 0px;
     //border: 5px solid #999;
 }
 .slides {
