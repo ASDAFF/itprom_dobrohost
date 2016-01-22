@@ -136,7 +136,6 @@ $APPLICATION->SetTitle("Термошкафы ITProm");
                                 "SORT_ORDER2" => "ASC"
                             )
                         ); ?>
-
                         <div class="blocl-type01">
                             <div class="container">
                                 <div class="cert_head"
@@ -150,9 +149,13 @@ $APPLICATION->SetTitle("Термошкафы ITProm");
                                         CMedialib::Init();
                                         $arItems = CMedialibItem::GetList(array('arCollections' => array("0" => 3)));
 
+//                                        test_dump("ABCDFGGWEWEF");
+//                                        test_dump($arItems);
                                         foreach ($arItems as $image) {
+                                            $resized_src = GetResizedImage($image["SOURCE_ID"], 220, 270)["src"];
+                                            if (!$resized_src) $resized_src = $image["src"];
                                             ?>
-                                            <li class="slide"><img src="<?= $image["PATH"]?>"></li>
+                                            <li class="slide"><img src="<?= $resized_src?>"></li>
                                             <?
                                         }
                                         ?>
