@@ -380,7 +380,7 @@ ul.top_categories li:last-child .cat-img { right: 0; }
 .blog-list li .visual { margin-bottom: 30px; }
 .blog-date { margin-bottom: 15px; display: block;}
 .block-type02 .heading-blog { padding-bottom: 15px; }
-.blog-col { height: 870px; overflow: hidden; }
+.blog-col { height: 1100px; overflow: hidden; }
 
 
 .btn-basket{
@@ -535,12 +535,12 @@ ul.top_categories li:last-child .cat-img { right: 0; }
 	width: 100%;
 	bottom: -27px;
 	left: 0;
-	content: 'Р”РЅРµР№';
+	content: 'Дней';
 	font-size: 7pt;
 	font-weight: normal;
 }
-.counter-hours:after { content: 'Р§Р°СЃРѕРІ' }
-.counter-minutes:after { content: 'РњРёРЅСѓС‚' }
+.counter-hours:after { content: 'Часов' }
+.counter-minutes:after { content: 'Минут' }
 .sale .description { margin-bottom: 10px; padding: 0 10px;}
 .sale .description a { max-height: 35px; }
 .sale .price { margin-top: 10px; font-size: 22px; overflow: auto; font-weight: bold; color: #fe6869}

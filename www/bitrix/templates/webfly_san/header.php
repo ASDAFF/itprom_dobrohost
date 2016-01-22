@@ -16,6 +16,7 @@ require_once 'settings.php';
 	<?$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/themes/backgrounds.css");?>
 	<?$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/jquery.tiles.css");?>
 	<?$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/pult.css");?>
+	<?$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/gallery-cert.css");?>
 	<?php
 	if(!empty($WF_Settings["theme"]) and ($WF_Settings["theme"]!="default")){
 		$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/themes/{$WF_Settings["theme"]}-bg.css");
@@ -31,6 +32,7 @@ require_once 'settings.php';
 	<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/jquery-migrate-1.2.1.min.js");?>
 	<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/jquery-ui-1.9.2.custom.min.js");?>
 	<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/clear-form-fields.js");?>
+	<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/gallery-cert.js");?>
 	<?if($url != '/personal/order/make/'):?>
 		<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/form.js");?>
 	<?endif;?>
@@ -46,6 +48,8 @@ require_once 'settings.php';
 	<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/hammer.min.js");?>
 	<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/hammer.jquery.min.js");?>
 	<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/pult.js");?>
+	<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/jcarousellite.min.js");?>
+
 	<?if(!empty($_POST["pult_theme"])):?>
 		<script type="text/javascript">
 			$(function(){

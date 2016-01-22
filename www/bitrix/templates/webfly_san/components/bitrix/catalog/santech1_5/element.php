@@ -10,7 +10,8 @@
 /** @var string $templateFolder */
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
-$this->setFrameMode(true);?>
+$this->setFrameMode(true);
+?>
 <div class="main-frame main-frame-other">
   <div id="content">
     <div class="c1">
