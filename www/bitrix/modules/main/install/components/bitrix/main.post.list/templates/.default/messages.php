@@ -17,7 +17,7 @@ if (!function_exists("__mpl_get_avatar"))
 						$u["PERSONAL_PHOTO"],
 						array('width' => 58, 'height' => 58),
 						BX_RESIZE_IMAGE_EXACT,
-  						false,
+						false,
 						false,
 						true
 					);
@@ -31,9 +31,8 @@ if (!function_exists("__mpl_get_avatar"))
 }
 ?>
 <script type="text/javascript">
-
-FCForm.onUCUsersAreWriting();
-
+if (window.FCForm)
+	FCForm.onUCUsersAreWriting();
 <? if (IsModuleInstalled("im")): ?>
 if (window.SPC)
 {

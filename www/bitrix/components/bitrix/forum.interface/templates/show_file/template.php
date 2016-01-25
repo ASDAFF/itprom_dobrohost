@@ -32,9 +32,10 @@ if (intVal($arResult["FILE"]["ID"]) > 0)
 		(!empty($arParams["ADDITIONAL_URL"]) ? "&".$arParams["ADDITIONAL_URL"] : "");
 if ($arResult["FILE"]["USER_ID"] > 0)
 {
+	$forumUser = CForumUser::GetByUSER_ID($arResult["FILE"]["USER_ID"]);
 	$db_res = CUser::GetById($arResult["FILE"]["USER_ID"]);
 	if ($db_res && ($arUser = $db_res->Fetch()))
-		$arResult["FILE"]["OWNER"] = CUser::FormatName($arParams["NAME_TEMPLATE"], $arUser, true, false);
+		$arResult["FILE"]["OWNER"] = ($forumUser && $forumUser["SHOW_NAME"] != "Y") ?  $arUser["LOGIN"] : CUser::FormatName($arParams["NAME_TEMPLATE"], $arUser, true, false);
 }
 $arResult["RETURN_DATA"] = "";
 $arResult["RETURN_DATA_ARRAY"] = array();

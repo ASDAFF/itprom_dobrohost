@@ -1,5 +1,5 @@
-;(function(window){
-	if (window.LHEPostForm)
+;(function(){
+	if (window["LHEPostForm"])
 		return;
 var repo = { controller : {}, handler : {}};
 BX.addCustomEvent(window, "BFileDLoadFormControllerWasBound", function(obj) { repo.controller[obj.id] = true;});
@@ -913,7 +913,7 @@ fileController.prototype.clean = function()
 	fileController.superclass.clean.apply(this, arguments);
 	if (this["handler"] && this.handler["agent"] && this.handler.agent["inputName"])
 	{
-		var res, files, ii, form = BX(this.manager.formID);
+		var files, ii, form = BX(this.manager.formID);
 		files = BX.findChildren(form, {
 			tagName : "INPUT",
 			attribute : {
@@ -930,7 +930,7 @@ fileController.prototype.clean = function()
 	}
 };
 
-window.LHEPostForm = function(formID, params)
+var LHEPostForm = function(formID, params)
 {
 	this.params = params;
 	this.formID = formID;
@@ -994,7 +994,7 @@ window.LHEPostForm = function(formID, params)
 		BX.onCustomEvent(this.oEditor, "OnEditorInitedAfter", [this.oEditor, true]);
 	}
 };
-window.LHEPostForm.prototype = {
+LHEPostForm.prototype = {
 	editorIsLoaded : false,
 	arFiles : {},
 	parser : {},
@@ -1947,15 +1947,15 @@ window.LHEPostForm.prototype = {
 		}
 	}
 };
-window.LHEPostForm.getEditor = function(editor)
+LHEPostForm.getEditor = function(editor)
 {
 	return (window["BXHtmlEditor"] ? window["BXHtmlEditor"].Get((typeof editor == "object" ? editor.id : editor)) : null);
 };
-window.LHEPostForm.getHandler = function(editor)
+LHEPostForm.getHandler = function(editor)
 {
 	return repo.handler[(typeof editor == "object" ? editor.id : editor)];
 };
-window.LHEPostForm.unsetHandler = function(editor)
+LHEPostForm.unsetHandler = function(editor)
 {
 	var editorId = (typeof editor == "object" ? editor.id : editor);
 
@@ -1969,19 +1969,20 @@ window.LHEPostForm.unsetHandler = function(editor)
 
 	repo.handler[editorId] = null;
 };
-window.LHEPostForm.reinitData = function(editorID, text, data)
+LHEPostForm.reinitData = function(editorID, text, data)
 {
 	var handler = LHEPostForm.getHandler(editorID);
 	if (handler)
 		handler.exec(handler.reinit, [text, data]);
 	return false;
 };
-window.LHEPostForm.reinitDataBefore = function(editorID)
+LHEPostForm.reinitDataBefore = function(editorID)
 {
 	var handler = LHEPostForm.getHandler(editorID);
 	if (handler && handler["eventNode"])
 		BX.onCustomEvent(handler.eventNode, "onReinitializeBefore", [handler]);
 };
+window.LHEPostForm = LHEPostForm;
 window.BXPostFormTags = function(formID, buttonID)
 {
 	this.popup = null;
@@ -2096,7 +2097,7 @@ window.BXPostFormTags.prototype.addTag = function(tagStr)
 	return result;
 };
 
-window.BXPostFormTags.prototype.onTagAdd = function(event)
+window.BXPostFormTags.prototype.onTagAdd = function()
 {
 	this.addTag();
 	this.popupInput.value = "";
@@ -2162,7 +2163,7 @@ window.__mpf_wd_getinfofromnode = function(result, obj)
 	if (preview)
 	{
 		result.lowsrc = preview.src;
-		result.element_url = preview.src.replace(/\Wwidth\=(\d+)/, '').replace(/\Wheight\=(\d+)/, '');
+		result.element_url = preview.src.replace(/\Wwidth=(\d+)/, '').replace(/\Wheight\=(\d+)/, '');
 		result.width = parseInt(preview.getAttribute("data-bx-full-width"));
 		result.height = parseInt(preview.getAttribute("data-bx-full-height"));
 	}
@@ -2412,7 +2413,7 @@ window.onKeyUpHandler = function(e, editor, formID)
 {
 	var
 		keyCode = e.keyCode,
-		doc, range;
+		doc, range, mentText;
 
 	if (!window['BXfpdStopMent' + formID])
 		return true;
@@ -2436,9 +2437,8 @@ window.onKeyUpHandler = function(e, editor, formID)
 
 			if (mentNode)
 			{
-				var
-					mentText = BX.util.trim(editor.util.GetTextContent(mentNode)),
-					mentTextOrig = mentText;
+				mentText = BX.util.trim(editor.util.GetTextContent(mentNode))
+				var mentTextOrig = mentText;
 
 				mentText = mentText.replace(/^[\+@]*/, '');
 				MPFMention.bSearch = (mentText.length > 0);
@@ -2622,7 +2622,7 @@ window.onTextareaKeyUpHandler = function(e, editor, formID)
 };
 
 
-window.getMentionNodePosition = function(mention, editor)
+var getMentionNodePosition = function(mention, editor)
 {
 	var
 		mentPos = BX.pos(mention),
@@ -2642,7 +2642,8 @@ window.BxInsertMention = function (params)
 		formID = params.formID,
 		editorId = params.editorId,
 		bNeedComa = params.bNeedComa,
-		editor = LHEPostForm.getEditor(editorId);
+		editor = LHEPostForm.getEditor(editorId),
+		spaceNode;
 
 	if(type == 'users' && item && item.entityId > 0 && editor)
 	{
@@ -2656,9 +2657,9 @@ window.BxInsertMention = function (params)
 					{
 						props: {className: 'bxhtmled-metion'},
 						text: BX.util.htmlspecialcharsback(item.name)
-					}, doc),
+					}, doc);
 				// &nbsp; - for chrome
-				spaceNode = BX.create('SPAN', {html: (bNeedComa ? ',&nbsp;' : '&nbsp;')}, doc);
+			spaceNode = BX.create('SPAN', {html: (bNeedComa ? ',&nbsp;' : '&nbsp;')}, doc);
 
 			editor.SetBxTag(mention, {tag: "postuser", params: {value : item.entityId}});
 
@@ -2719,31 +2720,37 @@ window.BxInsertMention = function (params)
 
 window.buildDepartmentRelation = function(department)
 {
-	var relation = {};
-	for(var iid in department)
+	var relation = {}, p, iid;
+	for(iid in department)
 	{
-		var p = department[iid]['parent'];
-		if (!relation[p])
-			relation[p] = [];
-		relation[p][relation[p].length] = iid;
+		if (department.hasOwnProperty(iid))
+		{
+			p = department[iid]['parent'];
+			if (!relation[p])
+				relation[p] = [];
+			relation[p][relation[p].length] = iid;
+		}
 	}
 	function makeDepartmentTree(id, relation)
 	{
-		var arRelations = {};
+		var arRelations = {}, relId, arItems;
 		if (relation[id])
 		{
 			for (var x in relation[id])
 			{
-				var relId = relation[id][x];
-				var arItems = [];
-				if (relation[relId] && relation[relId].length > 0)
-					arItems = makeDepartmentTree(relId, relation);
+				if (relation[id].hasOwnProperty(x))
+				{
+					relId = relation[id][x];
+					arItems = [];
+					if (relation[relId] && relation[relId].length > 0)
+						arItems = makeDepartmentTree(relId, relation);
 
-				arRelations[relId] = {
-					id: relId,
-					type: 'category',
-					items: arItems
-				};
+					arRelations[relId] = {
+						id: relId,
+						type: 'category',
+						items: arItems
+					};
+				}
 			}
 		}
 
@@ -2843,7 +2850,10 @@ window.MPFMentionInit = function(formId, params)
 		{
 			for (var ii in params["itemsHidden"])
 			{
-				window.BXfpdSelectCallback({id:('SG'+params["itemsHidden"][ii]["ID"]), name:params["itemsHidden"][ii]["NAME"]}, 'sonetgroups', '', true);
+				if (params["itemsHidden"].hasOwnProperty(ii))
+				{
+					window.BXfpdSelectCallback({id:('SG'+params["itemsHidden"][ii]["ID"]), name:params["itemsHidden"][ii]["NAME"]}, 'sonetgroups', '', true);
+				}
 			}
 		}
 
@@ -2853,7 +2863,7 @@ window.MPFMentionInit = function(formId, params)
 			tagLink1: BX.message('BX_FPD_LINK_1'),
 			tagLink2: BX.message('BX_FPD_LINK_2')
 		});
-	};
+	}
 	window["BXfpdSelectCallbackMent" + formId] = function(item, type, search)
 	{
 		window.BxInsertMention({item: item, type: type, formID: formId, editorId: params["editorId"]});
@@ -2915,7 +2925,10 @@ window.MPFMentionInit = function(formId, params)
 		params["items"]["departmentExtranet"] = BX.clone(params["items"]["department"]);
 		for(var key in params["items"]["extranetRoot"])
 		{
-			params["items"]["departmentExtranet"][key] = params["items"]["extranetRoot"][key];
+			if (params["items"]["extranetRoot"].hasOwnProperty(key))
+			{
+				params["items"]["departmentExtranet"][key] = params["items"]["extranetRoot"][key];
+			}
 		}
 		params["items"]["departmentRelationExtranet"] = window.buildDepartmentRelation(params["items"]["departmentExtranet"]);
 	}
@@ -3046,4 +3059,4 @@ window.MPFMentionInit = function(formId, params)
 		}
 	);
 }
-})(window);
+})();

@@ -4,12 +4,12 @@ $arHTMLPagesOptions = array(
 	"EXCLUDE_MASK" => "/bitrix/*;/404.php",
 	"FILE_QUOTA" => "100",
 	"COMPOSITE" => "Y",
-	"BANNER_BGCOLOR" => "#E94524",
-	"BANNER_STYLE" => "white",
+	"BANNER_BGCOLOR" => "#FFFFFF",
+	"BANNER_STYLE" => "grey",
 	"STORAGE" => "files",
 	"ONLY_PARAMETERS" => "referrer1;r1;referrer2;r2;referrer3;r3;utm_source;utm_medium;utm_campaign;utm_content;fb_action_ids",
 	"WRITE_STATISTIC" => "Y",
-	"ALLOW_HTTPS" => "",
+	"ALLOW_HTTPS" => "Y",
 	"~INCLUDE_MASK" => array(
 		0 => "'^.*?\\.php\$'",
 		1 => "'^.*?/\$'",
@@ -44,7 +44,7 @@ $arHTMLPagesOptions = array(
 	"GROUPS" => array(
 	),
 	"DOMAINS" => array(
-		"15918.b2153.dhpage.net" => "15918.b2153.dhpage.net",
+		"itprom.ru" => "itprom.ru",
 	),
 );
 ?>

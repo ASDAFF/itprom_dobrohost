@@ -370,4 +370,30 @@ class HttpRequest extends Request
 		}
 		return $scriptName;
 	}
+
+	/**
+	 * Returns the array with predefined query parameters.
+	 * @return array
+	 */
+	public static function getSystemParameters()
+	{
+		static $params = array(
+			"login",
+			"logout",
+			"register",
+			"forgot_password",
+			"change_password",
+			"confirm_registration",
+			"confirm_code",
+			"confirm_user_id",
+			"bitrix_include_areas",
+			"clear_cache",
+			"show_page_exec_time",
+			"show_include_exec_time",
+			"show_sql_stat",
+			"show_cache_stat",
+			"show_link_stat",
+		);
+		return $params;
+	}
 }

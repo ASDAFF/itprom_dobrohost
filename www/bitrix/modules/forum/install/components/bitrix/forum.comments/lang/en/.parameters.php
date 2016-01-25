@@ -25,6 +25,7 @@ $MESS["ALLOW_TABLE_TITLE"] = "enable tables";
 $MESS["ALLOW_QUOTE_TITLE"] = "enable quotations";
 $MESS["ALLOW_CODE_TITLE"] = "enable code";
 $MESS["ALLOW_FONT_TITLE"] = "enable fonts";
+$MESS["ALLOW_ALIGN_TITLE"] = "enable alignment";
 $MESS["F_ENTITY_TYPE"] = "Entity type";
 $MESS["F_ENTITY_ID"] = "Numeric Entity ID";
 $MESS["F_ENTITY_XML_ID"] = "Symbolic Entity ID (XML ID)";

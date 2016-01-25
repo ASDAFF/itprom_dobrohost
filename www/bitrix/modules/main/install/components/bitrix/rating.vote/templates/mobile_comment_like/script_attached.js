@@ -1,220 +1,148 @@
-if (!BXRL)
-{
-	var BXRL = {};
-}
+;(function(){
+	if (window["RatingLikeComments"] || !window["app"])
+		return;
 
-if (typeof bRatingLikeCommentsInited == 'undefined')
-{
-	var bRatingLikeCommentsInited = true;
+	var BXRLC = {}, voteEvents = {};
 
-	BX.addCustomEvent("onPull-main", function(data)
+	window.RatingLikeComments = function(likeId, entityTypeId, entityId, available)
 	{
-		if (data.command == 'rating_vote')
-		{
-			RatingLikeComments.LiveUpdate(data.params);
-		}
-	});
-}
+		this.likeId = likeId;
+		this.entityTypeId = entityTypeId;
+		this.entityId = entityId;
+		this.available = (available == 'Y');
+		this.likeTimeout = false;
+		this.enabled = this.init();
+		BXRLC[likeId] = this;
+	};
+	window.RatingLikeComments.prototype = {
+		init : function() {
+			this.box = BX('bx-ilike-button-' + this.likeId);
+			if (!this.box)
+				return false;
 
-RatingLikeComments = function(likeId, entityTypeId, entityId, available)
-{	
-	this.enabled = true;
-	this.entityTypeId = entityTypeId;
-	this.entityId = entityId;
-	this.available = (available == 'Y');
-
-	this.box = BX('bx-ilike-button-' + likeId);
-	this.countText = BX('bx-ilike-count-' + likeId);
-
-	if (this.box === null)
-	{
-		this.enabled = false;
-		return false;
-	}
-
-	this.likeTimeout = false;	
-	this.lastVote = BX.hasClass(this.box, 'post-comment-likes-liked') ? 'plus' : 'cancel';
-}
-
-RatingLikeComments.Set = function(likeId, entityTypeId, entityId, available)
-{
-	BXRL[likeId] = new RatingLikeComments(likeId, entityTypeId, entityId, available);
-	if (BXRL[likeId].enabled)
-	{
-		RatingLikeComments.Init(likeId);	
-	}
-};
-
-RatingLikeComments.Init = function(likeId)
-{
-	if (BXRL[likeId].available)
-	{
-		BX.bind(BXRL[likeId].box, 'click', function(e) 
-		{
-			clearTimeout(BXRL[likeId].likeTimeout);
-
-			var counterValue = (
-				typeof BXRL[likeId].countText.innerHTML == 'undefined'
-				|| BXRL[likeId].countText.innerHTML == null
-				|| BXRL[likeId].countText.innerHTML == ''
-					? 0
-					: parseInt(BXRL[likeId].countText.innerHTML)
-			);
-
-			var oldValue = (
-				BX.hasClass(BXRL[likeId].box, 'post-comment-likes-liked') 
-					? 'plus' 
-					: 'cancel'
-			);
-
-			var newValue = (
-				oldValue == 'plus'
-					? 'cancel' 
-					: 'plus'
-			);
-
-			BXRL[likeId].countText.innerHTML = (
-				oldValue == 'plus'
-					? counterValue - 1
-					: counterValue + 1
-			);
-
-			BX.removeClass(BXRL[likeId].box, (
-				oldValue == 'plus'
-					? 'post-comment-likes-liked'
-					: 'post-comment-likes'
-			));
-
-			BX.addClass(BXRL[likeId].box, (
-				oldValue == 'plus'
-					? 'post-comment-likes'
-					: 'post-comment-likes-liked'
-			));
-
-			BXRL[likeId].likeTimeout = setTimeout(function()
-			{
-				if (BXRL[likeId].lastVote != newValue)
+			BX.addCustomEvent("onPull-main", BX.proxy(function(data) {
+				if (data.command == 'rating_vote')
 				{
-					RatingLikeComments.Vote(likeId, newValue);
+					var p = data.params;
+					if (((p.USER_ID + '') != (BX.message('USER_ID') + '')) &&
+						this.entityTypeId == p.ENTITY_TYPE_ID && this.entityId == p.ENTITY_ID)
+					{
+						this.someoneVote((p.TYPE == 'ADD'), p.TOTAL_POSITIVE_VOTES);
+					}
 				}
-			}, 1000);
 
-			BX.PreventDefault(e);
-		});
-		
-	}
-}
+			}, this));
 
-RatingLikeComments.Vote = function(likeId, voteAction)
-{
-	var BMAjaxWrapper = new MobileAjaxWrapper;
-	BMAjaxWrapper.Wrap({
-		'type': 'json',
-		'method': 'POST',
-		'url': '/mobile/ajax.php?mobile_action=like',
-		'data': {
-			'RATING_VOTE': 'Y', 
-			'RATING_VOTE_TYPE_ID': BXRL[likeId].entityTypeId, 
-			'RATING_VOTE_ENTITY_ID': BXRL[likeId].entityId, 
-			'RATING_VOTE_ACTION': voteAction,
-			'sessid': BX.message('RVCSessID')
+			this.voted = BX.hasClass(this.box, 'post-comment-likes-liked');
+			BX.bind(this.box, 'click', BX.proxy(this.vote, this));
+
+			this.countText = BX('bx-ilike-count-' + this.likeId);
+			if (window.app.enableInVersion(2))
+				BX.bind(this.countText, 'click', BX.proxy(this.list, this));
+
+			return true;
 		},
-		'callback': function(data) {
-			if (
-				typeof data != 'undefined'
-				&& typeof data.action != 'undefined'
-				&& typeof data.items_all != 'undefined'
-			)
+		vote : function(e) {
+			clearTimeout(this.likeTimeout);
+			if (BX.type.isBoolean(e) && this.voted == e)
+				return false;
+
+			var counterValue = BX.type.isNotEmptyString(this.countText.innerHTML) ? parseInt(this.countText.innerHTML) : 0,
+				newValue;
+
+			newValue = this.voted = (BX.type.isBoolean(e) ? e : !this.voted);
+
+			if (this.voted)
 			{
-				BXRL[likeId].lastVote = data.action;
-				BXRL[likeId].countText.innerHTML = data.items_all;
+				this.countText.innerHTML = counterValue + 1;
+				BX.addClass(this.box, 'post-comment-likes-liked');
+				BX.removeClass(this.box, 'post-comment-likes');
 			}
 			else
 			{
-				BX.removeClass(BXRL[likeId].box, (
-					voteAction == 'plus'
-						? 'post-comment-likes-liked'
-						: 'post-comment-likes'
-				));
-
-				BX.addClass(BXRL[likeId].box, (
-					voteAction == 'plus'
-						? 'post-comment-likes'
-						: 'post-comment-likes-liked'
-				));
-
-				var newValue = (
-					voteAction == 'plus' 
-						? (parseInt(BXRL[likeId].countText.innerHTML) - 1)
-						: (parseInt(BXRL[likeId].countText.innerHTML) + 1)
-				);
-				BXRL[likeId].countText.innerHTML = newValue;
+				this.countText.innerHTML = counterValue - 1;
+				BX.addClass(this.box, 'post-comment-likes');
+				BX.removeClass(this.box, 'post-comment-likes-liked');
+			}
+			if (BX.type.isBoolean(e))
+			{
+				return false;
+			}
+			else
+			{
+				this.likeTimeout = setTimeout(BX.proxy(function() { this.send(newValue); }, this), 1000);
+				BX.eventCancelBubble(e);
+				return BX.PreventDefault(e);
 			}
 		},
-		'callback_failure': function(data)
-		{
-			BX.removeClass(BXRL[likeId].box, (
-				voteAction == 'plus'
-					? 'post-comment-likes-liked'
-					: 'post-comment-likes'
-			));
-
-			BX.addClass(BXRL[likeId].box, (
-				voteAction == 'plus'
-					? 'post-comment-likes'
-					: 'post-comment-likes-liked'
-			));
-
-			var newValue = (
-				voteAction == 'plus'
-					? (parseInt(BXRL[likeId].countText.innerHTML) - 1)
-					: (parseInt(BXRL[likeId].countText.innerHTML) + 1)
-			);
-			BXRL[likeId].countText.innerHTML = newValue;
-		}
-	});
-
-	return false;
-}
-
-RatingLikeComments.List = function(likeId)
-{
-	if (app.enableInVersion(2))
-	{
-		app.openTable({
-			callback: function() {},
-			url: (BX.message('MobileSiteDir') ? BX.message('MobileSiteDir') : '/') + 'mobile/index.php?mobile_action=get_likes&RATING_VOTE_TYPE_ID=' + BXRL[likeId].entityTypeId + '&RATING_VOTE_ENTITY_ID=' + BXRL[likeId].entityId + '&URL=' + BX.message('RVCPathToUserProfile'),
-			markmode: false,
-			showtitle: false,
-			modal: false,
-			cache: false,
-			outsection: false,
-			cancelname: BX.message('RVCListBack')
-		});
-	}
-
-	return false;
-}
-
-RatingLikeComments.LiveUpdate = function(params)
-{
-	if (params.USER_ID == BX.message('USER_ID'))
-	{
-		return false;
-	}
-
-	for(var i in BXRL)
-	{
-		if (
-			BXRL[i].entityTypeId == params.ENTITY_TYPE_ID
-			&& BXRL[i].entityId == params.ENTITY_ID
-		)
-		{
-			oMSL.onLogCommentRatingLike({
-				ratingId: i,
-				voteAction: (params.TYPE == 'ADD' ? 'plus' : 'cancel'),
-				userId: params.USER_ID
+		send : function(voteAction) {
+			var BMAjaxWrapper = new window.MobileAjaxWrapper();
+			BMAjaxWrapper.Wrap({
+				'type': 'json',
+				'method': 'POST',
+				'url': '/mobile/ajax.php?mobile_action=like',
+				'data': {
+					'RATING_VOTE': 'Y',
+					'RATING_VOTE_TYPE_ID': this.entityTypeId,
+					'RATING_VOTE_ENTITY_ID': this.entityId,
+					'RATING_VOTE_ACTION': (voteAction === true ? 'plus' : 'cancel'),
+					'sessid': BX.bitrix_sessid()
+				},
+				'callback': BX.proxy(function(data) {
+					if (
+						typeof data != 'undefined'
+							&& typeof data.action != 'undefined'
+							&& typeof data.items_all != 'undefined'
+						)
+					{
+						this.vote((data.action == 'plus'));
+						this.countText.innerHTML = data.items_all;
+					}
+					else
+						this.vote(!voteAction);
+				}, this),
+				'callback_failure': BX.proxy(function() { this.vote(!voteAction); }, this)
 			});
+		},
+		someoneVote : function(vote, votes) {
+			this.countText.innerHTML = votes;
+			if (votes > 1 || (votes == 1 && !this.voted))
+			{
+				BX.addClass(this.box, 'post-comment-liked');
+			}
+			else
+			{
+				BX.removeClass(this.box, 'post-comment-liked');
+			}
+		},
+		list : function(e) {
+			window.app.openTable({
+				callback: function() {},
+				url: (BX.message('MobileSiteDir') ? BX.message('MobileSiteDir') : '/') + 'mobile/index.php?mobile_action=get_likes&RATING_VOTE_TYPE_ID=' + this.entityTypeId + '&RATING_VOTE_ENTITY_ID=' + this.entityId + '&URL=' + BX.message('RVCPathToUserProfile'),
+				markmode: false,
+				showtitle: false,
+				modal: false,
+				cache: false,
+				outsection: false,
+				cancelname: BX.message('RVCListBack')
+			});
+			return BX.PreventDefault(e);
 		}
+	};
+	window.RatingLikeComments.getById = function(id)
+	{
+		return BXRLC[id]
+	};
+	window.RatingLikeComments.List = function(id)
+	{
+		if (BXRLC[id])
+			BXRLC[id].list();
+
+	};
+	if (window["RatingLikeCommentsQueue"] && window["RatingLikeCommentsQueue"].length > 0)
+	{
+		var f;
+		while((f = window["RatingLikeCommentsQueue"].pop()) && f) { f(); }
+		delete window["RatingLikeCommentsQueue"];
 	}
-}
+}());

@@ -214,9 +214,10 @@ class blogTextParser extends CTextParser
 		}
 		$anchor_id = RandString(8);
 		return '<a class="blog-p-user-name'.(is_array($GLOBALS["arExtranetUserID"]) && in_array($userId, $GLOBALS["arExtranetUserID"]) ? ' feed-extranet-mention' : '').'" id="bp_'.$anchor_id.'" href="'.CComponentEngine::MakePathFromTemplate($this->pathToUser, array("user_id" => $userId)).'">'.$name.'</a>'.
-			(!defined("BX_MOBILE_LOG") && !$this->bMobile
-				? '<script type="text/javascript">BX.tooltip(\''.$userId.'\', "bp_'.$anchor_id.'", "'.CUtil::JSEscape($this->ajaxPage).'");</script>' 
-				: ''
+			(
+				!$this->bMobile
+					? '<script type="text/javascript">BX.tooltip(\''.$userId.'\', "bp_'.$anchor_id.'", "'.CUtil::JSEscape($this->ajaxPage).'");</script>'
+					: ''
 			);
 	}
 	function convert_blog_tag($name = "")

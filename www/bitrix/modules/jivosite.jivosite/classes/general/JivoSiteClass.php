@@ -13,13 +13,15 @@ class JivoSiteClass{
         $add_script = false;
         $sites = COption::GetOptionString("jivosite.jivosite", "sites");
         $sites = json_decode($sites, true);
-        foreach ($sites as $site => $value) {
-            if ($site == SITE_ID) {
-                $add_script = true;
+        if(isset($sites) and is_array($sites)) {
+            foreach ($sites as $site => $value) {
+                if ($site == SITE_ID) {
+                    $add_script = true;
+                }
             }
-        }
-        if (!$add_script) {
-            return;
+            if (!$add_script) {
+                return;
+            }
         }
 
         $widget_id = COption::GetOptionString("jivosite.jivosite", "widget_id");

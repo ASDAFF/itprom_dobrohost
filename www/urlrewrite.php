@@ -13,6 +13,12 @@ $arUrlRewrite = array(
 		"PATH" => "/brands/detail.php",
 	),
 	array(
+		"CONDITION" => "#^/acrit.exportpro/(.*)#",
+		"RULE" => "path=\$1",
+		"ID" => "",
+		"PATH" => "/acrit.exportpro/index.php",
+	),
+	array(
 		"CONDITION" => "#^={SITE_DIR.\"staff/\"}#",
 		"RULE" => "",
 		"ID" => "bitrix:news",
@@ -61,10 +67,10 @@ $arUrlRewrite = array(
 		"PATH" => "/adults/index.php",
 	),
 	array(
-		"CONDITION" => "#^/about/#",
+		"CONDITION" => "#^/sales/#",
 		"RULE" => "",
-		"ID" => "bitrix:photogallery",
-		"PATH" => "/about/gallery.php",
+		"ID" => "bitrix:news",
+		"PATH" => "/sales/index.php",
 	),
 	array(
 		"CONDITION" => "#^/about/#",
@@ -79,16 +85,16 @@ $arUrlRewrite = array(
 		"PATH" => "/store/index.php",
 	),
 	array(
+		"CONDITION" => "#^/about/#",
+		"RULE" => "",
+		"ID" => "bitrix:photogallery",
+		"PATH" => "/about/gallery.php",
+	),
+	array(
 		"CONDITION" => "#^/staff/#",
 		"RULE" => "",
 		"ID" => "bitrix:news",
 		"PATH" => "/staff/index.php",
-	),
-	array(
-		"CONDITION" => "#^/sales/#",
-		"RULE" => "",
-		"ID" => "bitrix:news",
-		"PATH" => "/sales/index.php",
 	),
 	array(
 		"CONDITION" => "#^/news/#",

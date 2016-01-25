@@ -247,6 +247,7 @@ class CUser extends CAllUser
 					&& $key != "LAST_LOGIN"
 					&& $key != "!LAST_LOGIN"
 					&& $key != "EXTERNAL_AUTH_ID"
+					&& $key != "!EXTERNAL_AUTH_ID"
 				)
 				{
 					if(strlen($val) <= 0 || $val === "NOT_REF")
@@ -313,6 +314,33 @@ class CUser extends CAllUser
 						$arSqlSearch[] = "U.EXTERNAL_AUTH_ID='".$DB->ForSQL($val, 255)."'";
 					else
 						$arSqlSearch[] = "(U.EXTERNAL_AUTH_ID IS NULL OR U.EXTERNAL_AUTH_ID='')";
+					break;
+				case "!EXTERNAL_AUTH_ID":
+  					if (
+						is_array($val)
+						&& count($val) > 0
+					)
+					{
+						$strTmp = "";
+						foreach($val as $authId)
+						{
+							if (strlen($authId) > 0)
+							{
+								$strTmp .= (strlen($strTmp) > 0 ? "," : "")."'".$DB->ForSQL($authId, 255)."'";
+							}
+						}
+						if (strlen($strTmp) > 0)
+						{
+							$arSqlSearch[] = "U.EXTERNAL_AUTH_ID NOT IN (".$strTmp.") OR U.EXTERNAL_AUTH_ID IS NULL";
+						}
+					}
+					elseif (!is_array($val))
+					{
+						if($val <> '')
+							$arSqlSearch[] = "U.EXTERNAL_AUTH_ID <> '".$DB->ForSql($val, 255)."' OR U.EXTERNAL_AUTH_ID IS NULL";
+						else
+							$arSqlSearch[] = "(U.EXTERNAL_AUTH_ID IS NOT NULL AND LENGTH(U.EXTERNAL_AUTH_ID) > 0)";
+					}
 					break;
 				case "LOGIN_EQUAL_EXACT":
 					$arSqlSearch[] = "U.LOGIN='".$DB->ForSql($val)."'";

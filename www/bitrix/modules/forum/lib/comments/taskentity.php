@@ -21,7 +21,7 @@ final class TaskEntity extends Entity
 			return false;
 		}
 
-		return parent::canRead();
+		return true;
 	}
 	/**
 	 * @return bool
@@ -34,7 +34,7 @@ final class TaskEntity extends Entity
 			return false;
 		}
 
-		return parent::canAdd();
+		return true;
 	}
 
 	/**
@@ -42,19 +42,22 @@ final class TaskEntity extends Entity
 	 */
 	public function canEditOwn()
 	{
-		// you must obey module settings
+		//!!!
+		// in case of canEdit() returns FALSE, canEditOwn() may override this
+
+		// if you are not an admin, you must obey "tasks" module settings
 		if(!static::checkEditOptionIsOn())
 		{
 			return false;
 		}
 
-		// you are not allowed to view the task, so you can not edit messages either (even own)
+		// if you are not an admin AND you are not allowed to view the task, you cant edit even your own comments
 		if(!$this->checkHasAccess())
 		{
 			return false;
 		}
 
-		return parent::canEditOwn();
+		return true;
 	}
 
 	/**
@@ -69,33 +72,24 @@ final class TaskEntity extends Entity
 			Loader::includeModule("tasks")
 			&& (
 				\CTasksTools::isAdmin($userId)
-				|| \CTasksTools::IsPortalB24Admin($userId)
+				|| \CTasksTools::isPortalB24Admin($userId)
 			)
 		)
 		{
 			return true;
 		}
 
-		// if you are not an admin, you must obey "tasks" module settings
-		if(!static::checkEditOptionIsOn())
-		{
-			return false;
-		}
-
-		// you are not allowed to view the task, so you can not edit messages either (even own)
-		if(!$this->checkHasAccess())
-		{
-			return false;
-		}
-
-		// in all other ways - depends on "forum" module settings
-		return parent::canEdit();
+		return false;
 	}
 
+	/**
+	 * @return $this
+	 */
 	public function dropCache()
 	{
 		$this->taskPostData = null;
 		$this->hasAccess = null;
+		return $this;
 	}
 
 	private function checkHasAccess()
@@ -150,6 +144,8 @@ final class TaskEntity extends Entity
 
 	private static function checkEditOptionIsOn()
 	{
-		return Option::get("tasks", "task_comment_allow_edit");
+		$value = Option::get("tasks", "task_comment_allow_edit");
+
+		return $value == 'Y' || $value == '1';
 	}
 }

@@ -319,7 +319,7 @@ class CAllUserCounter
 		return CModule::IncludeModule('pull') && CPullOptions::GetNginxStatus();
 	}
 
-	protected static function SendPullEvent($user_id, $code = "")
+	protected static function SendPullEvent($user_id, $code = "", $bMultiple = false)
 	{
 		$user_id = intval($user_id);
 		if ($user_id < 0)
@@ -338,13 +338,23 @@ class CAllUserCounter
 				SELECT pc.CHANNEL_ID, pc.CHANNEL_TYPE, uc.USER_ID, uc.SITE_ID, uc.CODE, uc.CNT
 				FROM b_user_counter uc
 				INNER JOIN b_pull_channel pc ON pc.USER_ID = uc.USER_ID
-				WHERE uc.USER_ID = ".intval($user_id).(strlen($code) > 0? " AND uc.CODE = '".$DB->ForSQL($code)."'": "")."
+				WHERE uc.USER_ID = ".intval($user_id).(
+					strlen($code) > 0
+					? (
+						$bMultiple
+						? " AND uc.CODE LIKE '".$DB->ForSQL($code)."%'"
+						: " AND uc.CODE = '".$DB->ForSQL($code)."'"
+					)
+					: ""
+				)."
 			";
 			$res = $DB->Query($strSQL, false, "FILE: ".__FILE__."<br> LINE: ".__LINE__);
 
 			$pullMessage = Array();
 			while ($row = $res->Fetch())
 			{
+				$key = (strlen($code) > 0 ? $code : $row['CODE']);
+
 				if (!($row['CHANNEL_TYPE'] == 'private' || $row['CHANNEL_TYPE'] == 'shared' && $row['USER_ID'] == 0))
 				{
 					continue;
@@ -353,18 +363,18 @@ class CAllUserCounter
 				{
 					foreach ($arSites as $siteId)
 					{
-						if (isset($pullMessage[$row['CHANNEL_ID']][$siteId][$row['CODE']]))
-							$pullMessage[$row['CHANNEL_ID']][$siteId][$row['CODE']] += intval($row['CNT']);
+						if (isset($pullMessage[$row['CHANNEL_ID']][$siteId][$key]))
+							$pullMessage[$row['CHANNEL_ID']][$siteId][$key] += intval($row['CNT']);
 						else
-							$pullMessage[$row['CHANNEL_ID']][$siteId][$row['CODE']] = intval($row['CNT']);
+							$pullMessage[$row['CHANNEL_ID']][$siteId][$key] = intval($row['CNT']);
 					}
 				}
 				else
 				{
-					if (isset($pullMessage[$row['CHANNEL_ID']][$row['SITE_ID']][$row['CODE']]))
-						$pullMessage[$row['CHANNEL_ID']][$row['SITE_ID']][$row['CODE']] += intval($row['CNT']);
+					if (isset($pullMessage[$row['CHANNEL_ID']][$row['SITE_ID']][$key]))
+						$pullMessage[$row['CHANNEL_ID']][$row['SITE_ID']][$key] += intval($row['CNT']);
 					else
-						$pullMessage[$row['CHANNEL_ID']][$row['SITE_ID']][$row['CODE']] = intval($row['CNT']);
+						$pullMessage[$row['CHANNEL_ID']][$row['SITE_ID']][$key] = intval($row['CNT']);
 				}
 			}
 

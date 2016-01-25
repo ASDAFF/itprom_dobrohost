@@ -89,7 +89,6 @@ else
 /********************************************************************
 				/Input params
 ********************************************************************/
-
 /********************************************************************
 				Default values
 ********************************************************************/
@@ -298,8 +297,6 @@ $ar_cache_id = array(
 
 $cache_id = "forum_comment_".serialize($ar_cache_id);
 
-ob_start();
-
 if ($arResult['DO_NOT_CACHE'] || $this->StartResultCache($arParams["CACHE_TIME"], $cache_id))
 {
 	ForumSetLastVisit($arParams["FORUM_ID"], $arResult["FORUM_TOPIC_ID"], array("nameTemplate" => $arParams["NAME_TEMPLATE"]));
@@ -413,8 +410,10 @@ if ($arResult['DO_NOT_CACHE'] || $this->StartResultCache($arParams["CACHE_TIME"]
 							$res["AVATAR"]["HTML"] = CFile::ShowImage($res["AVATAR"]["FILE"]['src'], 30, 30, "border=0 align='right'");
 					}
 					// For quote JS
-					$res["FOR_JS"]["AUTHOR_NAME"] = CUtil::JSEscape($res["AUTHOR_NAME"]);
-					$res["FOR_JS"]["POST_MESSAGE_TEXT"] = CUtil::JSEscape(htmlspecialcharsbx($res["POST_MESSAGE_TEXT"]));
+					$res["FOR_JS"] = array(
+						"AUTHOR_NAME" => CUtil::JSEscape($res["AUTHOR_NAME"]),
+						"POST_MESSAGE_TEXT" => CUtil::JSEscape(htmlspecialcharsbx($res["POST_MESSAGE_TEXT"]))
+					);
 
 					$res["NEW"] = ($arResult["UNREAD_MID"] > 0 && $res["ID"] >= $arResult["UNREAD_MID"] ? "Y" : "N");
 					$arMessages[$res["ID"]] = $res;
@@ -424,7 +423,7 @@ if ($arResult['DO_NOT_CACHE'] || $this->StartResultCache($arParams["CACHE_TIME"]
 			unset($arMessages);
 
 			foreach (GetModuleEvents('forum', 'OnPrepareComments', true) as $arEvent)
-				$result = ExecuteModuleEventEx($arEvent);
+				ExecuteModuleEventEx($arEvent);
 
 			$parser->arFiles = $arResult["FILES"];
 			foreach ($arResult["MESSAGES"] as $iID => $res):
@@ -446,10 +445,3 @@ if ($arResult['DO_NOT_CACHE'] || $this->StartResultCache($arParams["CACHE_TIME"]
 	}
 	$this->IncludeComponentTemplate();
 }
-
-$output = ob_get_clean();
-
-foreach (GetModuleEvents('forum', 'OnCommentsDisplayTemplate', true) as $arEvent)
-	ExecuteModuleEventEx($arEvent, array(&$output, $arParams, $arResult));
-
-echo $output;

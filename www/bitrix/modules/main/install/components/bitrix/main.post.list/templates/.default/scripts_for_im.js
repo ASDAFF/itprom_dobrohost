@@ -1,4 +1,4 @@
-;(function(window){
+;(function(){
 	window["UC"] = (!!window["UC"] ? window["UC"] : {});
 	if (!!window["UC"]["Informer"])
 		return;
@@ -22,6 +22,7 @@
 		this.notifyAutoHide = true;
 		this.notifyAutoHideTimeout = null;
 	};
+	var SPC = window.SPC;
 	/**
 	 * @return boolean
 	 */
@@ -159,7 +160,7 @@
 
 				this.stackPopup[id].close();
 
-				if (this.notifyAutoHide == false)
+				if (this.notifyAutoHide === false)
 				{
 					this.clearAutoHide();
 					this.setAutoHide(this.notifyHideTime/2);
@@ -233,7 +234,7 @@
 	{
 		clearTimeout(this.notifyGarbageTimeout);
 		this.notifyAutoHide = false;
-		force = force==true;
+		force = (force===true);
 		var i;
 		if (force)
 		{
@@ -252,7 +253,7 @@
 			clearTimeout(this.notifyAutoHideTimeout);
 			this.notifyAutoHideTimeout = setTimeout(BX.delegate(function(){
 				clearTimeout(this.stackTimeout);
-				for (i in this.stackPopupTimeout)
+				for (var i in this.stackPopupTimeout)
 				{
 					if (this.stackPopupTimeout.hasOwnProperty(i))
 					{
@@ -343,7 +344,7 @@
 		return (window.webkitNotifications && window.webkitNotifications.checkPermission() == 0);
 	};
 
-	window["UC"]["Informer"] = new SPC;
+	window["UC"]["Informer"] = new SPC();
 	window["UC"]["InformerTags"] = {};
 
 	SPC.notifyManagerShow = function()
@@ -364,6 +365,4 @@
 			});
 		});
 	};
-
-
-})(window);
+})();

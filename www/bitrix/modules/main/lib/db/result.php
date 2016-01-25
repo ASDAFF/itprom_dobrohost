@@ -33,6 +33,9 @@ abstract class Result
 	/** @var callable[] */
 	protected $fetchDataModifiers = array();
 
+	/** @var int */
+	protected $count;
+
 	/**
 	 * @param resource $result Database-specific query result.
 	 * @param Connection $dbConnection Connection object.
@@ -270,5 +273,28 @@ abstract class Result
 	public function getTrackerQuery()
 	{
 		return $this->trackerQuery;
+	}
+
+	/**
+	 * Sets record count.
+	 * @param int $n
+	 */
+	public function setCount($n)
+	{
+		$this->count = (int)$n;
+	}
+
+	/**
+	 * Returns record count. It's required to set record count explicitly before.
+	 * @return int
+	 * @throws \Bitrix\Main\ObjectPropertyException
+	 */
+	public function getCount()
+	{
+		if($this->count !== null)
+		{
+			return $this->count;
+		}
+		throw new \Bitrix\Main\ObjectPropertyException("count");
 	}
 }

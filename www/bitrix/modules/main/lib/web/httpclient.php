@@ -437,9 +437,13 @@ class HttpClient
 
 		$context = $this->createContext();
 		if ($context)
+		{
 			$res = stream_socket_client($proto.$host.":".$port, $errno, $errstr, $this->socketTimeout, STREAM_CLIENT_CONNECT, $context);
+		}
 		else
+		{
 			$res = stream_socket_client($proto.$host.":".$port, $errno, $errstr, $this->socketTimeout);
+		}
 
 		if(is_resource($res))
 		{
@@ -465,7 +469,7 @@ class HttpClient
 		return false;
 	}
 
-	private function createContext()
+	protected function createContext()
 	{
 		$contextOptions = array();
 		if ($this->sslVerify === false)
@@ -526,7 +530,7 @@ class HttpClient
 
 		if($this->proxyHost <> '')
 		{
-			$path = $url->getUrl();
+			$path = $url->getLocator();
 			if($this->proxyUser <> '')
 			{
 				$this->setHeader("Proxy-Authorization", "Basic ".base64_encode($this->proxyUser.":".$this->proxyPassword));

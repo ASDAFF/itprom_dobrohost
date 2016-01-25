@@ -1157,4 +1157,13 @@ class CBitrixComponentTemplate
 		if($this->__component && $this->__component->__parent)
 			$this->__component->__parent->addChildJS($jsPath);
 	}
+
+	/**
+	 * A bit more civilised method of getting the parent component.
+	 * @return CBitrixComponent
+	 */
+	public function getComponent()
+	{
+		return $this->__component;
+	}
 }

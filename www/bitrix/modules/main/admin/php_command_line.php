@@ -35,7 +35,7 @@ function fancy_output($content)
 {
 	if (isTextMode())
 	{
-		return sprintf('<pre>%s</pre>', htmlspecialcharsEx($content));
+		return sprintf('<pre>%s</pre>', htmlspecialcharsbx($content));
 	}
 
 	return sprintf('<p>%s</e>', $content);

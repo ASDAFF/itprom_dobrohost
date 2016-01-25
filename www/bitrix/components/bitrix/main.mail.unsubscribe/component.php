@@ -10,7 +10,7 @@ $messageDictionary = array(
 
 try
 {
-	$arTag = \Bitrix\Main\Mail\Tracking::parseSignedTag($_REQUEST['tag']);
+	$arTag = \Bitrix\Main\Mail\Tracking::parseSignedTag(is_string($_REQUEST['tag']) ? $_REQUEST['tag'] : '');
 	$arTag['IP'] = $_SERVER['REMOTE_ADDR'];
 
 	$arResult = array();

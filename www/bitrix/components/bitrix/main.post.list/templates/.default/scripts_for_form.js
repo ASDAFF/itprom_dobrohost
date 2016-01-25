@@ -1,5 +1,5 @@
-;(function(window){
-	window["UC"] = (!!window["UC"] ? window["UC"] : {});
+;(function(){
+	window["UC"] = (window["UC"] || {});
 	if (!!window["FCForm"])
 		return;
 
@@ -9,7 +9,7 @@
 		this.lhe = '';
 		this.entitiesId = {};
 		this.form = BX(arParams['formId']);
-		this.handler = LHEPostForm.getHandler(arParams['editorId']);
+		this.handler = window.LHEPostForm.getHandler(arParams['editorId']);
 		this.editorName = arParams['editorName'];
 		this.editorId = arParams['editorId'];
 
@@ -48,7 +48,6 @@
 					if (loaded !== true)
 					{
 						this.handler.exec(this.windowEvents.OnUCUserQuote, [entityId, author, res, safeEdit, true]);
-						return;
 					}
 					else if (!this.handler.oEditor.toolbar.controls.Quote)
 					{
@@ -149,10 +148,9 @@
 				} }, this),
 			OnUCUsersAreWriting : BX.delegate(function(entityId, authorId, authorName, authorAvatar, timeL) {
 				if (!!this.entitiesId[entityId]) { this.showAnswering([entityId, 0], authorId, authorName, authorAvatar, timeL); } }, this),
-			OnUCRecordHaveDrawn :  BX.delegate(function(entityId, data/*, params*/) {
+			OnUCRecordHasDrawn :  BX.delegate(function(entityId, id, data/*, params*/) {
 				if (!!this.entitiesId[entityId]) {
-					var authorId = parseInt(!!data && !!data["messageFields"] && !!data["messageFields"]["AUTHOR"] && !!data["messageFields"]["AUTHOR"]["ID"] ?
-						data["messageFields"]["AUTHOR"]["ID"] : 0);
+					var authorId = parseInt(data && data["AUTHOR"] ? data["AUTHOR"]["ID"] : 0);
 					if (authorId > 0)
 						this.hideAnswering([entityId, 0], authorId); } }, this)
 		};
@@ -246,7 +244,7 @@
 				BX.addCustomEvent(window, 'OnUCUserQuote', this.windowEvents.OnUCUserQuote);
 				BX.addCustomEvent(window, 'OnUCAfterRecordEdit', this.windowEvents.OnUCAfterRecordEdit);
 				BX.addCustomEvent(window, 'OnUCUsersAreWriting', this.windowEvents.OnUCUsersAreWriting);
-				BX.addCustomEvent(window, 'OnUCRecordHaveDrawn', this.windowEvents.OnUCRecordHaveDrawn);
+				BX.addCustomEvent(window, 'OnUCRecordHasDrawn', this.windowEvents.OnUCRecordHasDrawn);
 				this.windowEventsSet = true;
 			}
 		},
@@ -256,7 +254,7 @@
 			{
 				checkObj = id;
 				if (this.id && this.id.join('-') != id.join('-') && this.handler.editorIsLoaded && this.handler.oEditor.IsContentChanged())
-					return confirm(BX.message('MPL_SAFE_EDIT'));
+					return window.confirm(BX.message('MPL_SAFE_EDIT'));
 				return true;
 			}
 			return checkObj === false;
@@ -445,8 +443,9 @@
 		objAnswering : null,
 		showAnswering : function(id, userId, name, avatar, time)
 		{
-			if (!(userId > 0))
-				return false;
+			userId = (userId > 0 ? userId : 0);
+			if (userId <= 0)
+				return;
 			var
 				_id = 'uc-writing-' + this.form.id + '-' + id[0],
 				placeHolder = BX(_id + '-area'),
@@ -708,4 +707,4 @@
 			});
 		}
 	};
-})(window);
+})();

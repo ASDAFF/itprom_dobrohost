@@ -244,9 +244,8 @@ class CUserCounter extends CAllUserCounter
 					}
 
 					$strSQL = "
-						SELECT distinct pc.CHANNEL_ID, uc1.USER_ID, uc1.SITE_ID, uc1.CODE, uc1.CNT
+						SELECT distinct pc.CHANNEL_ID, uc.USER_ID, uc.SITE_ID, uc.CODE, uc.CNT
 						FROM b_user_counter uc
-						INNER JOIN b_user_counter uc1 ON uc1.USER_ID = uc.USER_ID AND uc1.CODE = uc.CODE
 						INNER JOIN b_pull_channel pc ON pc.USER_ID = uc.USER_ID
 						WHERE uc.SENT = '0'
 					";
@@ -400,9 +399,8 @@ class CUserCounter extends CAllUserCounter
 				}
 
 				$strSQL = "
-					SELECT distinct pc.CHANNEL_ID, uc1.USER_ID, uc1.SITE_ID, uc1.CODE, uc1.CNT
+					SELECT distinct pc.CHANNEL_ID, uc.USER_ID, uc.SITE_ID, uc.CODE, uc.CNT
 					FROM b_user_counter uc
-					INNER JOIN b_user_counter uc1 ON uc1.USER_ID = uc.USER_ID AND uc1.CODE = uc.CODE
 					INNER JOIN b_pull_channel pc ON pc.USER_ID = uc.USER_ID
 					WHERE uc.CODE LIKE '**%'
 				";

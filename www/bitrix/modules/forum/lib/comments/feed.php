@@ -28,37 +28,64 @@ class Feed extends BaseObject
 		return ($this->topic !== null);
 	}
 
+	/**
+	 * Returns true if entity allows adding
+	 * @return bool
+	 */
 	public function canAdd()
 	{
 		global $USER;
 		return $this->entity->canAdd();
 	}
 
+	/**
+	 * Returns true if entity allows reading
+	 * @return bool
+	 */
 	public function canRead()
 	{
 		return $this->entity->canRead();
 	}
 
+	/**
+	 * Returns true if entity allows editing
+	 * @return bool
+	 */
 	public function canEdit()
 	{
 		return $this->entity->canEdit();
 	}
 
-	public function canEditComment(Comment $comment)
+	/**
+	 * @param integer $commentId Message ID in b_forum_message to edit.
+	 * @return bool
+	 */
+	public function canEditComment($commentId)
 	{
-		return $this->entity->canEdit($comment);
+		return Comment::createFromId($this, $commentId)->canEdit();
 	}
 
+	/**
+	 * Returns true if entity allows deleting.
+	 * @return bool
+	 */
 	public function canDelete()
 	{
 		return $this->entity->canEdit();
 	}
 
-	public function canDeleteComment(Comment $comment)
+	/**
+	 * @param  integer $commentId Message ID in b_forum_message to delete.
+	 * @return bool
+	 */
+	public function canDeleteComment($commentId)
 	{
-		return $this->entity->canEdit($comment);
+		return Comment::createFromId($this, $commentId)->canEdit();
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function canModerate()
 	{
 		global $USER;
@@ -67,8 +94,8 @@ class Feed extends BaseObject
 
 	/**
 	 * Add a comment
-	 * @param array $params
-	 * @return array|false
+	 * @param array $params Fields for new message to add in table b_forum_message.
+	 * @return array|bool
 	 */
 	public function add(array $params)
 	{
@@ -88,8 +115,9 @@ class Feed extends BaseObject
 
 	/**
 	 * Edit a comment
-	 * @param array $params
-	 * @return array|false
+	 * @param integer $id Message id.
+	 * @param array $params Fields to edit message.
+	 * @return array|bool
 	 */
 	public function edit($id, array $params)
 	{
@@ -107,6 +135,11 @@ class Feed extends BaseObject
 		return false;
 	}
 
+	/**
+	 * Delete a comment
+	 * @param integer $id Message id.
+	 * @return array|bool
+	 */
 	public function delete($id)
 	{
 		$comment = Comment::createFromId($this, $id);
@@ -123,6 +156,12 @@ class Feed extends BaseObject
 		return false;
 	}
 
+	/**
+	 * Moderate comment with id
+	 * @param integer $id Message id.
+	 * @param boolean $show State for moderating: true - show, false - hide.
+	 * @return array|bool
+	 */
 	public function moderate($id, $show)
 	{
 		$comment = Comment::createFromId($this, $id);
@@ -139,14 +178,31 @@ class Feed extends BaseObject
 		return false;
 	}
 
+	/**
+	 * Mainly this function for forum entity. In this case params have to from the list: A < E < I < M < Q < U < Y
+	 * A - NO ACCESS		E - READ			I - ANSWER
+	 * M - NEW TOPIC		Q - MODERATE	U - EDIT			Y - FULL_ACCESS
+	 * @param string $permission A,E,I,M,Q,U,Y.
+	 * @return $this
+	 */
 	public function setPermission($permission)
 	{
 		return $this->entity->setPermission($permission);
 	}
+
+	/**
+	 * @param boolean $allow True or false.
+	 * @return $this
+	 */
 	public function setEditOwn($allow)
 	{
 		return $this->entity->setEditOwn($allow);
 	}
+
+	/**
+	 * Returns permission From list: A < E < I < M < Q < U < Y.
+	 * @return string
+	 */
 	public function getPermission()
 	{
 		return $this->entity->getPermission();

@@ -36,6 +36,13 @@ final class ForumCommentsComponent extends CBitrixComponent
 
 	/** @var array */
 	private static $users = array();
+	/** @var integer */
+	private static $index = 0;
+
+	const STATUS_SCOPE_MOBILE = 'mobile';
+	const STATUS_SCOPE_WEB = 'web';
+	private $scope;
+	public $prepareMobileData;
 
 	public function __construct($component = null)
 	{
@@ -43,12 +50,31 @@ final class ForumCommentsComponent extends CBitrixComponent
 		\Bitrix\Main\Loader::includeModule("forum");
 		$this->componentId = $this->isAjaxRequest()? randString(7) : $this->randString();
 		$this->errorCollection = new ErrorCollection();
+
+		$this->prepareMobileData = IsModuleInstalled("mobile");
+		$this->scope = self::STATUS_SCOPE_WEB;
+
+		if (is_callable(array('\Bitrix\MobileApp\Mobile', 'getApiVersion')) && \Bitrix\MobileApp\Mobile::getApiVersion() >= 1 &&
+			defined("BX_MOBILE") && BX_MOBILE === true)
+			$this->scope = self::STATUS_SCOPE_MOBILE;
+
+		self::$index++;
+
+		if ($this->isWeb())
+			$this->setTemplateName(".default");
+		else
+			$this->setTemplateName("mobile_app");
+	}
+
+	public function isWeb()
+	{
+		return ($this->scope == self::STATUS_SCOPE_WEB);
 	}
 
 	protected function sendResponse($response)
 	{
-		global $APPLICATION;
-		$APPLICATION->restartBuffer();
+		$this->getApplication()->restartBuffer();
+		while (ob_end_clean());
 
 		echo $response;
 
@@ -58,8 +84,8 @@ final class ForumCommentsComponent extends CBitrixComponent
 
 	protected function sendJsonResponse($response)
 	{
-		global $APPLICATION;
-		$APPLICATION->restartBuffer();
+		$this->getApplication()->restartBuffer();
+		while (ob_end_clean());
 
 		header('Content-Type:application/json; charset=UTF-8');
 		echo Json::encode($response);
@@ -241,6 +267,9 @@ final class ForumCommentsComponent extends CBitrixComponent
 		// TODO allow to skip XML_ID
 		elseif (empty($this->arParams["ENTITY_XML_ID"]) || (intval($this->arParams['ENTITY_ID']) <= 0 && $this->arParams['ENTITY_ID'] !== 0))
 			$this->errorCollection->add(array(new Error(Loc::getMessage('F_ERR_EID_EMPTY'), self::ERROR_REQUIRED_PARAMETER)));
+
+		$this->arParams["NAME_TEMPLATE"] = empty($this->arParams["NAME_TEMPLATE"]) ? \CSite::GetNameFormat() : $this->arParams["NAME_TEMPLATE"];
+		$this->arParams["NAME_TEMPLATE"] = str_replace(array("#NOBR#","#/NOBR#"), "", $this->arParams["NAME_TEMPLATE"]);
 	}
 
 	protected function prepareParams()
@@ -265,7 +294,7 @@ final class ForumCommentsComponent extends CBitrixComponent
 		}
 		if (in_array($this->arParams["ALLOW_UPLOAD"], array("A", "Y", "F", "N", "I")))
 		{
-			$this->feed->expandForum(array(
+			$this->feed->setForumFields(array(
 				"ALLOW_UPLOAD" => ($this->arParams["ALLOW_UPLOAD"] == "I" ? "Y" : $this->arParams["ALLOW_UPLOAD"]),
 				"ALLOW_UPLOAD_EXT" => $this->arParams["ALLOW_UPLOAD_EXT"]
 			));
@@ -278,7 +307,8 @@ final class ForumCommentsComponent extends CBitrixComponent
 			$this->arResult["OK_MESSAGE"] = Loc::getMessage("COMM_COMMENT_OK_AND_NOT_APPROVED");
 		unset($_GET["result"]);
 		unset($GLOBALS["HTTP_GET_VARS"]["result"]);
-
+		$this->arParams["AJAX_MODE"] = $this->isAjaxRequest() ? "Y" : "N";
+		$this->arParams["index"] = self::$index;
 		return $this;
 	}
 
@@ -312,10 +342,7 @@ final class ForumCommentsComponent extends CBitrixComponent
 	private function bindObjects()
 	{
 		$path = dirname(__FILE__);
-		if ($this->arParams['UPLOAD_SIMPLE'] === 'Y')
-			include_once($path."/files.php");
-		else
-			include_once($path."/files_input.php");
+		include_once($path."/files_input.php");
 		$this->arResult["objFiles"] = new CCommentFiles($this);
 
 		include_once($path."/ufs.php");

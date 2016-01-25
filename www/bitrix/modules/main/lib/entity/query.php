@@ -1731,27 +1731,36 @@ class Query
 			}
 		}
 
-/*
-Vadim: this is for paging but currently is not used
-		if ($this->count_total || !is_null($this->offset))
+		$cnt = null;
+		if ($this->count_total)
 		{
-			$cnt_body_elements = $build_parts;
+			$buildParts = $this->query_build_parts;
 
-			// remove order
-			unset($cnt_body_elements['ORDER BY']);
+			//remove order
+			unset($buildParts['ORDER BY']);
 
-			$cnt_query = join("\n", $cnt_body_elements);
+			//remove select
+			$buildParts['SELECT'] = "1";
 
-			// remove long aliases
-			list($cnt_query, ) = $this->replaceSelectAliases($cnt_query);
+			foreach ($buildParts as $k => &$v)
+			{
+				$v = $k . ' ' . $v;
+			}
+
+			$cntQuery = join("\n", $buildParts);
 
 			// select count
-			$cnt_query = 'SELECT COUNT(1) AS TMP_ROWS_CNT FROM ('.$cnt_query.') xxx';
-			$cnt = $connection->queryScalar($cnt_query);
+			$cntQuery = 'SELECT COUNT(1) AS TMP_ROWS_CNT FROM ('.$cntQuery.') xxx';
+			$cnt = $connection->queryScalar($cntQuery);
 		}
-*/
+
 		$result = $connection->query($query);
 		$result->setReplacedAliases($this->replaced_aliases);
+
+		if($this->count_total)
+		{
+			$result->setCount($cnt);
+		}
 
 		if ($this->isFetchModificationRequired())
 		{

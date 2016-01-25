@@ -13,6 +13,9 @@ IncludeModuleLangFile(__FILE__);
 		font-style: italic;
 		color: #888;
 	}
+    .adm-designed-checkbox-label {
+        margin: 0 0 5px 0;
+    }
 </style>
 
 <img src="http://jivo-userdata.s3.amazonaws.com/mail-images/logo-new.png" alt="jivo-logo">

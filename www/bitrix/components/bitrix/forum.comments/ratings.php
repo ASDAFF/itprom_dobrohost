@@ -32,7 +32,11 @@ class CCommentRatings
 		$arRatings = CRatings::GetRatingVoteResult('FORUM_POST', $arMessageIDs);
 		if ($arRatings)
 			foreach($arRatings as $postID => $arRating)
+			{
 				$this->arRatings[$postID] = $arRating;
+				if (array_key_exists($postID, $arMessages))
+					$arMessages[$postID]["RATING"] = $arRating;
+			}
 	}
 
 	function RatingDisplay($top = true, $commentID, $authorID)

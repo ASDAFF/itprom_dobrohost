@@ -34,6 +34,7 @@ abstract class BaseObject
 		$this->setEntity($entity);
 		$this->setTopic();
 	}
+
 	protected function setEntity(array $id)
 	{
 		if (is_array($id) &&
@@ -45,6 +46,8 @@ abstract class BaseObject
 			{
 				case 'tk':
 					$result = array(TaskEntity::className(), 'tasks');
+					if (!array_key_exists('xml_id', $id))
+						$id['xml_id'] = 'TASK_'.$id['id'];
 					break;
 				default:
 					$result = array(Entity::className(), 'forum');
@@ -62,6 +65,10 @@ abstract class BaseObject
 		return $this;
 	}
 
+	/**
+	 * Returns entity which manage all rights. For example forum topic or task
+	 * @return Entity
+	 */
 	public function getEntity()
 	{
 		return $this->entity;
@@ -71,11 +78,11 @@ abstract class BaseObject
 	{
 		if (!array_key_exists($this->entity->getXmlId(), self::$topics))
 		{
-			$dbRes = \CForumTopic::GetList(null, array(
+			$dbRes = \CForumTopic::getList(null, array(
 				"FORUM_ID" => $this->forum["ID"],
 				"XML_ID" => $this->entity->getXmlId()
 			));
-			self::$topics[$this->entity->getXmlId()] = (($res = $dbRes->Fetch()) && $res ? $res : null);
+			self::$topics[$this->entity->getXmlId()] = (($res = $dbRes->fetch()) && $res ? $res : null);
 		}
 		$this->topic = self::$topics[$this->entity->getXmlId()];
 		return $this;
@@ -126,7 +133,7 @@ abstract class BaseObject
 				"PARAM1" => $this->entity->getType(),
 				"PARAM2" => $this->entity->getId()
 			);
-			if ((\CForumMessage::Add($fields, false, array("SKIP_INDEXING" => "Y", "SKIP_STATISTIC" => "N"))) > 0)
+			if ((\CForumMessage::add($fields, false, array("SKIP_INDEXING" => "Y", "SKIP_STATISTIC" => "N"))) > 0)
 			{
 				$event = new Event("forum", "OnAfterCommentTopicAdd", array($this->entity->getType(), $this->entity->getId(), $tid));
 				$event->send();
@@ -134,22 +141,32 @@ abstract class BaseObject
 				self::$topics[$this->entity->getXmlId()] = $topic + array("ID" => $tid);
 				return self::$topics[$this->entity->getXmlId()];
 			}
-			\CForumTopic::Delete($tid);
+			\CForumTopic::delete($tid);
 		}
 		$this->errorCollection->add(array(new Error(Loc::getMessage("FORUM_CM_TOPIC_IS_NOT_CREATED"), self::ERROR_PARAMS_TOPIC_ID)));
 		return null;
 	}
 
+	/**
+	 * Returns forum topic
+	 * @return array
+	 */
 	public function getTopic()
 	{
 		return $this->topic;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function hasErrors()
 	{
 		return $this->errorCollection->hasErrors();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getErrors()
 	{
 		return $this->errorCollection->toArray();
@@ -172,7 +189,7 @@ abstract class BaseObject
 		if (!$this->checkForumId($id))
 			throw new ArgumentTypeException(Loc::getMessage("FORUM_CM_FORUM_IS_WRONG"), self::ERROR_PARAMS_FORUM_ID);
 
-		$this->forum = \CForumNew::GetByIDEx($id, SITE_ID);
+		$this->forum = \CForumNew::getByIDEx($id, SITE_ID);
 
 		if (!$this->forum)
 			throw new ArgumentException(Loc::getMessage("FORUM_CM_FORUM_IS_LOST"), self::ERROR_PARAMS_FORUM_ID);
@@ -180,26 +197,43 @@ abstract class BaseObject
 		return $this;
 	}
 
+	/**
+	 * Returns forum
+	 * @return array
+	 */
 	public function getForum()
 	{
 		return $this->forum;
 	}
 
-	public function expandForum(array $params)
+	/**
+	 * Redefines forum params
+	 *
+	 * @param array $params Array(key=>value, key2=>value2) of fields to redefine forum fields.
+	 * @return $this
+	 */
+	public function setForumFields(array $params)
 	{
 		foreach ($params as $key => $val)
 		{
 			if (array_key_exists($key, $this->forum))
 				$this->forum[$key] = $val;
 		}
+		return $this;
 	}
 
+	/**
+	 * @return \CUser
+	 */
 	public function getUser()
 	{
 		global $USER;
 		return $USER;
 	}
 
+	/**
+	 * @return \CMain
+	 */
 	public function getApplication()
 	{
 		global $APPLICATION;
@@ -210,7 +244,12 @@ abstract class BaseObject
 	{
 		if ($userId > 0 && !array_key_exists($userId, self::$users))
 		{
-			self::$users[$userId] = \CForumUser::GetListEx(array(), array("USER_ID" => $userId))->fetch();
+			self::$users[$userId] = \CForumUser::getListEx(array(), array("USER_ID" => $userId))->fetch();
+			if(!self::$users[$userId])
+			{
+				self::$users[$userId] = \CUser::getById($userId)->fetch();
+				self::$users[$userId]["SHOW_NAME"] = \COption::getOptionString("forum", "USER_SHOW_NAME", "Y");
+			}
 		}
 		return self::$users[$userId];
 	}
@@ -218,13 +257,13 @@ abstract class BaseObject
 	protected function getUserName($userId)
 	{
 		$user = self::getUserFromForum($userId);
-		$sName = "";
+		$name = "";
 		if (is_array($user))
 		{
-			$sName = ($user["SHOW_NAME"] == "Y" ? trim($user["NAME"]." ".$user["LAST_NAME"]) : "");
-			$sName = (empty($sName) ? $user["LOGIN"] : $sName);
+			$name = ($user["SHOW_NAME"] == "Y" ? trim($user["NAME"]." ".$user["LAST_NAME"]) : "");
+			$name = (empty($name) ? $user["LOGIN"] : $name);
 		}
-		return $sName;
+		return $name;
 	}
 }
 

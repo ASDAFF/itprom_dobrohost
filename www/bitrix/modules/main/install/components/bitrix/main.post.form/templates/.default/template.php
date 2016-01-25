@@ -42,8 +42,8 @@ foreach($arParams["BUTTONS"] as $val)
 ?>
 <div class="feed-add-post-micro" id="micro<?=$arParams["divId"]?>" <?
 	?>onclick="BX.onCustomEvent(this.nextSibling, 'OnControlClick'); if(this.nextSibling.style.display=='none'){BX.onCustomEvent(this.nextSibling, 'OnShowLHE', ['show']);}" <?
-	?><?if(!$arParams["LHE"]["lazyLoad"]){?> style="display:none;"<?}?>><span class="feed-add-post-micro-title"><?=GetMessage("BLOG_LINK_SHOW_NEW")?></span><span class="feed-add-post-micro-dnd"><?=GetMessage("MPF_DRAG_ATTACHMENTS2")?></span></div><?
-?><div class="feed-add-post" id="div<?=$arParams["divId"]?>" <?if($arParams["LHE"]["lazyLoad"]){?> style="display:none;"<?}?>><?
+	?><?if(!$arParams["LHE"]["lazyLoad"]): ?> style="display:none;"<? endif; ?>><span class="feed-add-post-micro-title"><?=GetMessage("BLOG_LINK_SHOW_NEW")?></span><span class="feed-add-post-micro-dnd"><?=GetMessage("MPF_DRAG_ATTACHMENTS2")?></span></div><?
+?><div class="feed-add-post" id="div<?=$arParams["divId"]?>" <?if($arParams["LHE"]["lazyLoad"]):?> style="display:none;"<? endif; ?>><?
 ?><div class="feed-add-post-dnd">
 	<div class="feed-add-post-dnd-inner">
 		<span class="feed-add-post-dnd-icon"></span>
@@ -75,7 +75,7 @@ foreach($arParams["BUTTONS"] as $val)
 	{
 		if (!LHEPostForm.getHandler('<?=$arParams["LHE"]["id"]?>'))
 		{
-			<?if ($arParams["JS_OBJECT_NAME"] !== "") { ?>window['<?=$arParams["JS_OBJECT_NAME"]?>'] = <? } ?>new LHEPostForm(
+			<?if ($arParams["JS_OBJECT_NAME"] !== ""): ?>window['<?=$arParams["JS_OBJECT_NAME"]?>'] = <? endif; ?>new LHEPostForm(
 				'<?=$arParams["FORM_ID"]?>',
 				<?=CUtil::PhpToJSObject(
 					array(
@@ -93,7 +93,7 @@ foreach($arParams["BUTTONS"] as $val)
 		}
 		else
 		{
-			BX.debug('LHEPostForm <?=$arParams["LHE"]["id"]?> already exists.');
+			BX.debug('LHEPostForm <?=$arParams["LHE"]["id"]?> has already existed.');
 		}
 	});
 </script>
@@ -226,9 +226,11 @@ if (defined("BITRIX24_INDEX_COMPOSITE"))
 
 if (in_array('socnetlogdest', $array))
 {
+	CModule::IncludeModule('intranet'); // for gov/public messages
 	?>
 	<script type="text/javascript">
-		MPFMentionInit('<?=$arParams["FORM_ID"]?>', {
+		BX.ready(function(){
+		window.MPFMentionInit('<?=$arParams["FORM_ID"]?>', {
 			editorId : '<?= $arParams["LHE"]["id"]?>',
 			id : '<?=$this->randString(6)?>',
 			extranetUser : <?=($arParams["DESTINATION"]["EXTRANET_USER"] == 'Y'? 'true': 'false')?>,
@@ -266,6 +268,7 @@ if (in_array('socnetlogdest', $array))
 			destSort : <?=CUtil::PhpToJSObject(isset($arParams["DESTINATION"]['DEST_SORT']) ? $arParams["DESTINATION"]['DEST_SORT'] : $arResult["DEST_SORT"])?>,
 			mentionDestSort : <?=CUtil::PhpToJSObject(isset($arResult["MENTION_DEST_SORT"]) ? $arResult["MENTION_DEST_SORT"] : false)?>
 		});
+	});
 	</script>
 	<?
 }

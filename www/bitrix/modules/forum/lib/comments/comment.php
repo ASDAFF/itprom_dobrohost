@@ -361,8 +361,8 @@ class Comment extends BaseObject
 		else
 		{
 			$result = ($this->entity->canEdit() || (
-					$this->message["AUTHOR_ID"] > 0 &&
-					$this->message["AUTHOR_ID"] == $this->getUser()->getId() &&
+					((int) $this->message["AUTHOR_ID"] > 0) &&
+					((int) $this->message["AUTHOR_ID"] == (int) $this->getUser()->getId()) &&
 					$this->entity->canEditOwn()
 				));
 		}
@@ -404,6 +404,7 @@ class Comment extends BaseObject
 	{
 		$forum = $feed->getForum();
 		$comment = new Comment($forum["ID"], $feed->getEntity()->getFullId());
+		$comment->getEntity()->setPermission($feed->getEntity()->getPermission());
 		$comment->setComment($id);
 		return $comment;
 	}
@@ -416,6 +417,8 @@ class Comment extends BaseObject
 	public static function create(Feed $feed)
 	{
 		$forum = $feed->getForum();
-		return new Comment($forum["ID"], $feed->getEntity()->getFullId());
+		$comment = new Comment($forum["ID"], $feed->getEntity()->getFullId());
+		$comment->getEntity()->setPermission($feed->getEntity()->getPermission());
+		return $comment;
 	}
 }

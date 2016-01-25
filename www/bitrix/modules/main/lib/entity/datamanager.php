@@ -231,13 +231,19 @@ abstract class DataManager
 	}
 
 	/**
-	 * Performs COUNT query on entity and returns the result
+	 * Performs COUNT query on entity and returns the result.
 	 *
+	 * @param array $filter
 	 * @return int
 	 */
-	public static function getCount()
+	public static function getCount(array $filter = array())
 	{
-		$result = static::query()->addSelect(new ExpressionField('CNT', 'COUNT(1)'))->exec()->fetch();
+		$query = static::query();
+
+		$query->addSelect(new ExpressionField('CNT', 'COUNT(1)'));
+		$query->setFilter($filter);
+
+		$result = $query->exec()->fetch();
 
 		return $result['CNT'];
 	}

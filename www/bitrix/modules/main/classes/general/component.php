@@ -1262,7 +1262,7 @@ class CBitrixComponent
 
 		// available variables in the epilog file:
 		// $templateName, $templateFile, $templateFolder, $templateData
-		/** @param $epilogFile */
+		/** @var $epilogFile */
 		extract($arEpilogInfo);
 		if ($epilogFile <> '' && file_exists($_SERVER["DOCUMENT_ROOT"].$epilogFile))
 		{

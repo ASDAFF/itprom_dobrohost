@@ -16,9 +16,11 @@ class Uri
 	protected $pass;
 	protected $path;
 	protected $query;
-	protected $pathQuery;
 	protected $fragment;
 
+	/**
+	 * @param string $url
+	 */
 	public function __construct($url)
 	{
 		if(strpos($url, "/") === 0)
@@ -45,16 +47,23 @@ class Uri
 			$this->pass = $parsedUrl["pass"];
 			$this->path = ((isset($parsedUrl["path"])? $parsedUrl["path"] : "/"));
 			$this->query = $parsedUrl["query"];
-			$this->pathQuery = $this->path;
-			if($this->query <> "")
-			{
-				$this->pathQuery .= '?'.$this->query;
-			}
 			$this->fragment = $parsedUrl["fragment"];
 		}
 	}
 
+	/**
+	 * @deprecated Use getLocator() or getUri().
+	 */
 	public function getUrl()
+	{
+		return $this->getLocator();
+	}
+
+	/**
+	 * Return the URI without a fragment.
+	 * @return string
+	 */
+	public function getLocator()
 	{
 		$url = "";
 		if($this->host <> '')
@@ -67,53 +76,163 @@ class Uri
 			}
 		}
 
-		$url .= $this->pathQuery;
+		$url .= $this->getPathQuery();
 
 		return $url;
 	}
 
+	/**
+	 * Return the URI with a fragment, if any.
+	 * @return string
+	 */
+	public function getUri()
+	{
+		$url = $this->getLocator();
+
+		if($this->fragment <> '')
+		{
+			$url .= "#".$this->fragment;
+		}
+
+		return $url;
+	}
+
+	/**
+	 * Returns the fragment.
+	 * @return string
+	 */
 	public function getFragment()
 	{
 		return $this->fragment;
 	}
 
+	/**
+	 * Returns the host.
+	 * @return string
+	 */
 	public function getHost()
 	{
 		return $this->host;
 	}
 
+	/**
+	 * Returns the password.
+	 * @return string
+	 */
 	public function getPass()
 	{
 		return $this->pass;
 	}
 
+	/**
+	 * Returns the path.
+	 * @return string
+	 */
 	public function getPath()
 	{
 		return $this->path;
 	}
 
-	public function getPathQuery()
+	/**
+	 * Sets the path.
+	 * @param string $path
+	 * @return $this
+	 */
+	public function setPath($path)
 	{
-		return $this->pathQuery;
+		$this->path = $path;
+		return $this;
 	}
 
+	/**
+	 * Returns the path with the query.
+	 * @return string
+	 */
+	public function getPathQuery()
+	{
+		$pathQuery = $this->path;
+		if($this->query <> "")
+		{
+			$pathQuery .= '?'.$this->query;
+		}
+		return $pathQuery;
+	}
+
+	/**
+	 * Returns the port number.
+	 * @return string
+	 */
 	public function getPort()
 	{
 		return $this->port;
 	}
 
+	/**
+	 * Returns the query.
+	 * @return string
+	 */
 	public function getQuery()
 	{
 		return $this->query;
 	}
 
+	/**
+	 * Returns the scheme.
+	 * @return string
+	 */
 	public function getScheme()
 	{
 		return $this->scheme;
 	}
 
+	/**
+	 * Returns the user.
+	 * @return string
+	 */
 	public function getUser()
 	{
 		return $this->user;
+	}
+
+	/**
+	 * Deletes parameters from the query.
+	 * @param array $params Parameters to delete.
+	 * @return $this
+	 */
+	public function deleteParams(array $params)
+	{
+		if($this->query <> '')
+		{
+			$currentParams = array();
+			parse_str($this->query, $currentParams);
+
+			foreach($params as $param)
+			{
+				unset($currentParams[$param]);
+			}
+
+			$this->query = http_build_query($currentParams, "", "&");
+		}
+		return $this;
+	}
+
+	/**
+	 * Adds parameters to query or replaces existing ones.
+	 * @param array $params Parameters to add.
+	 * @return $this
+	 */
+	public function addParams(array $params)
+	{
+		$currentParams = array();
+		if($this->query <> '')
+		{
+			parse_str($this->query, $currentParams);
+		}
+
+		$currentParams = array_merge($currentParams, $params);
+
+		$this->query = http_build_query($currentParams, "", "&");
+
+		return $this;
 	}
 }

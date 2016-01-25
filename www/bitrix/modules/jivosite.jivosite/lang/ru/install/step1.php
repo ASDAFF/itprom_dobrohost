@@ -1,13 +1,14 @@
 <?
 $sites_aviable = CSite::GetList($by="sort", $order="desc", Array());
 $sites = "";
+
 while ($site = $sites_aviable->fetch())
 {
     $sites .= '<input '.($site['DEF'] == "Y" ? "checked='checked'" : "").' class="adm-designed-checkbox-label" type="checkbox" name="sites['.$site['ID'].']" />
-                   <label>'.$site['NAME'].' ('.$site['SERVER_NAME'].')</label><br/>';
+                   <label>'.$site['NAME'].' </label><br/>';
 }
 $MESS['SIGN_UP_FORM'] = "
-        <p style='width: 500px'>Сейчас мы зарегистрируем новый, либо подключим существующий аккаунт JivoSite к вашему сайту ".COption::GetOptionString('main', 'server_name').". Если вам нужна помощь - пожалуйста, напишите нам на <a href='mailto:info@jivosite.ru'>info@jivosite.ru</a> или <a href='http://jivosite.copiny.com/' target='_blank'>задайте вопрос на форуме</a></p>
+        <p style='width: 500px'>Сейчас мы зарегистрируем новый, либо подключим существующий аккаунт JivoSite к вашему сайту ".COption::GetOptionString('main', 'server_name').". Если вам нужна помощь - пожалуйста, напишите нам на <a href='mailto:info@jivosite.ru'>info@jivosite.ru</a> или <a href='http://jivosite.ru/support' target='_blank'>задайте вопрос на форуме</a></p>
 
         <form method='post'>
         <p><b>Ваш e-mail (он же логин)</b>

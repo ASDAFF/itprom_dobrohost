@@ -28,8 +28,6 @@ if ($db_res && ($res = $db_res->GetNext()))
 	}while ($res = $db_res->GetNext());
 }
 
-$uniqueID = (!is_set($arCurrentValues, "UNIQUE_ID") || $arCurrentValues["UNIQUE_ID"] === "" ? "F_COMMENTS_".strtoupper(GetRandomCode(4)) : $arCurrentValues["UNIQUE_ID"]);
-
 $arComponentParameters = Array(
 	"GROUPS" => array(
 		"EDITOR_SETTINGS" => array(
@@ -150,7 +148,7 @@ $arComponentParameters = Array(
 
 $arEditorSettings = array("ALLOW_HTML", "ALLOW_ANCHOR", "ALLOW_BIU", 
 	"ALLOW_IMG", "ALLOW_VIDEO", "ALLOW_LIST", "ALLOW_QUOTE", "ALLOW_CODE", 
-	"ALLOW_TABLE", "ALLOW_FONT", "ALLOW_SMILES", "ALLOW_NL2BR");
+	"ALLOW_TABLE", "ALLOW_FONT", "ALLOW_SMILES", "ALLOW_NL2BR", "ALLOW_ALIGN");
 foreach ($arEditorSettings as $settingName)
 {
 	$hidden = "N";
@@ -178,5 +176,6 @@ GetMessage("ALLOW_TABLE_TITLE");
 GetMessage("ALLOW_FONT_TITLE");
 GetMessage("ALLOW_SMILES_TITLE");
 GetMessage("ALLOW_NL2BR_TITLE");
+GetMessage("ALLOW_ALIGN_TITLE");
 */
 ?>
