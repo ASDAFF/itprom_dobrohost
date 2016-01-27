@@ -3,10 +3,11 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetPageProperty("keywords", "термошкаф, термошкаф электрический, термошкафы для оборудования, термошкаф купить, термошкафы для оборудования связи, термошкаф балконный, термошкаф настенный, термошкаф лабораторный, термошкаф купить в москве, всепогодный термошкаф, вакуумный термошкаф");
 $APPLICATION->SetPageProperty("title", "Термошкафы ITProm");
 $APPLICATION->SetPageProperty("description", "Купить термошкафы ITProm по лучшей цене с доставкой по Москве и в регионы. Огромный каталог термошкафов ITProm от производителя.");
-$APPLICATION->SetTitle("Термошкафы ITProm");
-
-
-?>
+$APPLICATION->SetTitle("Термошкафы ITProm"); ?>
+<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/gallery_brands.js");?>
+<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/gallery-cert.js");?>
+<?$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/gallery-cert.css");?>
+<?$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/gallery_brands.css");?>
     <div class="wrapper">
         <? $APPLICATION->IncludeComponent(
             "bitrix:news.list",
