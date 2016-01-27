@@ -4,7 +4,6 @@
         <div class="bottomprods">
             <div class="clearboth"></div>
             <div id="linkedproducts">
-                <? test_dump($GLOBALS["catdets"]); ?>
                 <? $APPLICATION->IncludeComponent(
                     "bitrix:sale.recommended.products",
                     ".default",
