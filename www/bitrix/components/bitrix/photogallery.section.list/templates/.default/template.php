@@ -33,42 +33,6 @@ ul.photo-album-list div.photo-item-info-block-outside {
 </style>
 <?
 endif;
-if (!function_exists("__photo_cut_long_words"))
-{
-	function __photo_cut_long_words($str)
-	{
-		$MaxStringLen = 5;
-		if (strLen($str) > $MaxStringLen)
-			$str = preg_replace("/([^ \n\r\t\x01]{".$MaxStringLen."})/is".BX_UTF_PCRE_MODIFIER, "\\1<WBR/>&shy;", $str);
-		return $str;
-	}
-}
-if (!function_exists("__photo_part_long_words"))
-{
-	function __photo_part_long_words($str)
-	{
-		$word_separator = "\s.,;:!?\#\-\*\|\[\]\(\)\{\}";
-		if (strLen(trim($str)) > 5)
-		{
-			$str = str_replace(
-				array(chr(1), chr(2), chr(3), chr(4), chr(5), chr(6), chr(7), chr(8),
-					"&amp;", "&lt;", "&gt;", "&quot;", "&nbsp;", "&copy;", "&reg;", "&trade;",
-					chr(34), chr(39)),
-				array("", "", "", "", "", "", "", "",
-					chr(1), "<", ">", chr(2), chr(3), chr(4), chr(5), chr(6),
-					chr(7), chr(8)),
-				$str);
-			$str = preg_replace("/(?<=[".$word_separator."]|^)(([^".$word_separator."]+))(?=[".$word_separator."]|$)/ise".BX_UTF_PCRE_MODIFIER,
-				"__photo_cut_long_words('\\2')", $str);
-
-			$str = str_replace(
-				array(chr(1), "<", ">", chr(2), chr(3), chr(4), chr(5), chr(6), chr(7), chr(8), "&lt;WBR/&gt;", "&lt;WBR&gt;", "&amp;shy;"),
-				array("&amp;", "&lt;", "&gt;", "&quot;", "&nbsp;", "&copy;", "&reg;", "&trade;", chr(34), chr(39), "<WBR/>", "<WBR/>", "&shy;"),
-				$str);
-		}
-		return $str;
-	}
-}
 ?>
 
 <?if (empty($arResult["SECTIONS"])):?>
@@ -81,11 +45,6 @@ endif;?>
 
 <ul class="photo-items-list photo-album-list<?if($arParams['PHOTO_LIST_MODE'] == "Y"){echo " photo-album-list-first-photos";}?>">
 	<?foreach($arResult["SECTIONS"] as $res):?>
-	<?
-		$res["ORIG_NAME"] = $res["NAME"];
-		$res["NAME"] = __photo_part_long_words($res["NAME"]);
-	?>
-
 	<li class="photo-album-item photo-album-<?=($res["ACTIVE"] != "Y" ? "nonactive" : "active")?> <?=(
 		!empty($res["PASSWORD"]) ? "photo-album-password" : "")?>" id="photo_album_info_<?=$res["ID"]?>" <?
 		if ($res["ACTIVE"] != "Y" || !empty($res["PASSWORD"]))
@@ -111,7 +70,7 @@ endif;?>
 		}?>
 		<div>
 			<div class="album-top-section">
-				<a class="album-name" href="<?=$res["LINK"]?>" title="<?= $res["ORIG_NAME"].$sTitle?>"><?= $res["ORIG_NAME"]?></a>
+				<a class="album-name" href="<?=$res["LINK"]?>" title="<?= $res["NAME"].$sTitle?>"><?= $res["NAME"]?></a>
 				<?if (!empty($res["PASSWORD"])):?>
 					<span class="album-passworded">(<?= GetMessage("P_ALBUM_IS_PASSWORDED_SHORT")?>)</span>
 				<?endif;?>
@@ -131,63 +90,67 @@ endif;?>
 
 			<div class="album-photos-section">
 				<? if($res["ELEMENTS_CNT"] > 0):?>
-<?$APPLICATION->IncludeComponent("bitrix:photogallery.detail.list.ex", "intsys", Array(
-	"BEHAVIOUR" => (isset($arParams["BEHAVIOUR"])&&$arParams["BEHAVIOUR"]!="")?$arParams["BEHAVIOUR"]:"SIMPLE",	// Режим работы галереи
+<?$APPLICATION->IncludeComponent(
+	"bitrix:photogallery.detail.list.ex",
+	"",
+	Array(
+		"BEHAVIOUR" => (isset($arParams["BEHAVIOUR"]) && $arParams["BEHAVIOUR"] != "") ? $arParams["BEHAVIOUR"] : "SIMPLE",
 		"USER_ALIAS" => $arParams["USER_ALIAS"],
-		"IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],	// Тип инфоблока
-		"IBLOCK_ID" => $arParams["IBLOCK_ID"],	// Инфоблок
-		"SECTION_ID" => $res["ID"],	// ID раздела
-		"DRAG_SORT" => "N",	// Сортировать фотографии в альбоме перетаскиванием
+
+		"IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
+		"IBLOCK_ID" => $arParams["IBLOCK_ID"],
+		"SECTION_ID" => $res["ID"],
+		"DRAG_SORT" => "N",
 		"MORE_PHOTO_NAV" => "N",
-		"THUMBNAIL_SIZE" => "70",	// Размер фотографии-анонса (px)
+		"THUMBNAIL_SIZE" => "70",
 		"SHOW_CONTROLS" => "Y",
-		"SHOW_RATING" => "Y",	// Показывать голосования
-		"SHOW_SHOWS" => "N",	// Показывать количество показов
-		"SHOW_COMMENTS" => "Y",	// Показывать количество комментариев
-		"MAX_VOTE" => $arParams["MAX_VOTE"],	// Максимальный балл
-		"VOTE_NAMES" => "",	// Подписи к баллам
-		"DISPLAY_AS_RATING" => $arParams["DISPLAY_AS_RATING"],	// В качестве рейтинга показывать
-		"SET_TITLE" => "N",	// Устанавливать заголовок страницы
-		"CACHE_TYPE" => "A",	// Тип кеширования
-		"CACHE_TIME" => $arParams["CACHE_TIME"],	// Время кеширования (сек.)
+		"SHOW_RATING" => "Y",
+		"SHOW_SHOWS" => "N",
+		"SHOW_COMMENTS" => "Y",
+		"MAX_VOTE" => $arParams["MAX_VOTE"],
+		"VOTE_NAMES" => array(),
+		"DISPLAY_AS_RATING" => $arParams["DISPLAY_AS_RATING"],
+		"SET_TITLE" => "N",
+		"CACHE_TYPE" => "A",
+		"CACHE_TIME" => $arParams["CACHE_TIME"],
 		"CACHE_NOTES" => "",
-		"ELEMENT_LAST_TYPE" => "none",	// Дополнительные параметры выбора фото
-		"ELEMENT_FILTER" => array(
-			"INCLUDE_SUBSECTIONS" => "Y",
-		),
+		"ELEMENT_LAST_TYPE" => "none",
+		"ELEMENT_FILTER" => array("INCLUDE_SUBSECTIONS" => "Y"),
 		"RELOAD_ITEMS_ONLOAD" => "Y",
-		"ELEMENT_SORT_FIELD" => $arParams["ELEMENT_SORT_FIELD"],	// Первое поле сортировки фото
-		"ELEMENT_SORT_ORDER" => $arParams["ELEMENT_SORT_ORDER"],	// Порядок сортировки фото
-		"ELEMENT_SORT_FIELD1" => $arParams["ELEMENT_SORT_FIELD1"],	// Второе поле сортировки фото
-		"ELEMENT_SORT_ORDER1" => $arParams["ELEMENT_SORT_ORDER1"],	// Порядок сортировки фото
-		"PROPERTY_CODE" => "",	// Свойства
-		"INDEX_URL" => $arParams["INDEX_URL"],
-		"DETAIL_URL" => $arParams["DETAIL_URL"],	// Страница детального просмотра
-		"GALLERY_URL" => $arParams["GALLERY_URL"],
-		"SECTION_URL" => $arParams["SECTION_URL"],
-		"DETAIL_EDIT_URL" => $arParams["DETAIL_EDIT_URL"],
+		"ELEMENT_SORT_FIELD" => $arParams["ELEMENT_SORT_FIELD"],
+		"ELEMENT_SORT_ORDER" => $arParams["ELEMENT_SORT_ORDER"],
+		"ELEMENT_SORT_FIELD1" => $arParams["ELEMENT_SORT_FIELD1"],
+		"ELEMENT_SORT_ORDER1" => $arParams["ELEMENT_SORT_ORDER1"],
+		"PROPERTY_CODE" => array(),
+		"INDEX_URL" => $arParams["~INDEX_URL"],
+		"DETAIL_URL" => $arParams["~DETAIL_URL"],
+		"GALLERY_URL" => $arParams["~GALLERY_URL"],
+		"SECTION_URL" => $arParams["~SECTION_URL"],
+		"DETAIL_EDIT_URL" => $arParams["~DETAIL_EDIT_URL"],
 		"PERMISSION" => $arParams["PERMISSION"],
-		"GROUP_PERMISSIONS" => "",	// Группы пользователей, имеющие доступ к детальной информации
-		"PAGE_ELEMENTS" => $arParams["SHOWN_ITEMS_COUNT"],	// Количество фото на странице
-		"DATE_TIME_FORMAT" => $arParams["DATE_TIME_FORMAT_DETAIL"],	// Формат вывода даты
-		"SET_STATUS_404" => "N",	// Устанавливать статус 404, если не найдены элемент или раздел
-		"ADDITIONAL_SIGHTS" => "",	// Дополнительные эскизы
-		"PICTURES_SIGHT" => "real",	// Активный эскиз (один из множества дополнительных и основных эскизов)
+		"GROUP_PERMISSIONS" => array(),
+		"PAGE_ELEMENTS" => $arParams["SHOWN_ITEMS_COUNT"],
+		"DATE_TIME_FORMAT" => $arParams["DATE_TIME_FORMAT_DETAIL"],
+		"SET_STATUS_404" => "N",
+		"ADDITIONAL_SIGHTS" => array(),
+		"PICTURES_SIGHT" => "real",
 		"USE_COMMENTS" => $arParams["USE_COMMENTS"],
 		"COMMENTS_TYPE" => $arParams["COMMENTS_TYPE"],
 		"FORUM_ID" => $arParams["FORUM_ID"],
 		"USE_CAPTCHA" => $arParams["USE_CAPTCHA"],
-		"POST_FIRST_MESSAGE" => $arParams["POST_FIRST_MESSAGE"]=="N"?"N":"Y",
+		"POST_FIRST_MESSAGE" => $arParams["POST_FIRST_MESSAGE"] == "N" ? "N" : "Y",
 		"SHOW_LINK_TO_FORUM" => "N",
-		"BLOG_URL" => $arParams["BLOG_URL"],
-		"PATH_TO_BLOG" => $arParams["PATH_TO_BLOG"],
-		"PATH_TO_USER" => $arParams["PATH_TO_USER"],	// Путь к профилю пользователя
-		"NAME_TEMPLATE" => $arParams["NAME_TEMPLATE"],	// Отображение имени
-		"SHOW_LOGIN" => $arParams["SHOW_LOGIN"],	// Показывать логин, если не задано имя
+		"BLOG_URL" => $arParams["~BLOG_URL"],
+		"PATH_TO_BLOG" => $arParams["~PATH_TO_BLOG"],
+		// Display user
+		"PATH_TO_USER" => $arParams["~PATH_TO_USER"],
+		"NAME_TEMPLATE" => $arParams["NAME_TEMPLATE"],
+		"SHOW_LOGIN" => $arParams["SHOW_LOGIN"],
 		"~UNIQUE_COMPONENT_ID" => "bxfg_ucid_from_req_".$arParams["IBLOCK_ID"]."_".$res["ID"],
 		"ACTION_URL" => $res["~LINK"]
 	),
-	false
+	$component,
+	array("HIDE_ICONS" => "Y")
 );?>
 				<?else:?>
 					<span class="album-no-photos"><?= GetMessage('P_NO_PHOTOS')?></span>

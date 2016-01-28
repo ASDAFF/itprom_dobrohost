@@ -1,1 +1,249 @@
-<? $GLOBALS['_____751564940']= array(base64_decode('SW5'.'jbH'.'VkZU'.'1v'.'Z'.'HVsZ'.'Uxh'.'bmd'.'GaWxl'),base64_decode('Rm'.'V0Y2g='),base64_decode('RmV0Y2g='),base64_decode('V'.'Ghyb3dFeGNlc'.'HRpb24'.'='),base64_decode('RmV0Y'.'2g='));?><? $GLOBALS['____749682172']= array(base64_decode('ZGV'.'maW5'.'l'),base64_decode('c3RycmV2'),base64_decode('c3RydG91cHB'.'l'.'cg=='),base64_decode('c'.'3'.'R'.'yX3J'.'lcGx'.'hY2U='),base64_decode(''.'c3V'.'ic3Ry'),base64_decode('c3RybG'.'Vu'),base64_decode('c3'.'R'.'y'.'b'.'GVu'),base64_decode('a'.'XN'.'fYXJ'.'yYXk='),base64_decode(''.'YXJyYXlfa2'.'V5X2V4aXN0cw=='),base64_decode('c3Ry'.'cm'.'V'.'2'),base64_decode('aW1w'.'bG9'.'kZQ=='),base64_decode('ZGF'.'0ZQ'.'=='),base64_decode('b'.'Wt0a'.'W1'.'l'),base64_decode('ZGF'.'0Z'.'Q='.'='),base64_decode('ZGF0Z'.'Q=='),base64_decode('Z'.'G'.'F0ZQ'.'=='),base64_decode(''.'ZGF0ZQ'.'=='),base64_decode('bWt'.'0aW'.'1l'),base64_decode('ZGF'.'0ZQ=='),base64_decode('ZGF0'.'ZQ'.'=='),base64_decode('Z'.'GF0ZQ=='),base64_decode(''.'ZG'.'F0Z'.'Q'.'=='),base64_decode('bWt0'.'aW'.'1l'),base64_decode('ZGF0ZQ=='),base64_decode(''.'ZG'.'F0ZQ=='),base64_decode('ZGF'.'0ZQ=='),base64_decode(''.'c3Vic3'.'Ry'),base64_decode('c3Vic3Ry'),base64_decode('c'.'3Vic3'.'Ry'),base64_decode('c3'.'Vic3Ry'),base64_decode(''.'c3'.'Vic3R'.'y'),base64_decode('c3Vic3Ry'),base64_decode('c3Vic3Ry'),base64_decode(''.'c3Vic3Ry'),base64_decode('c3'.'R'.'yc'.'mV2'),base64_decode('c3By'.'aW50Z'.'g=='),base64_decode('c'.'3'.'Ry'.'bGVu'),base64_decode('c3RybGVu'),base64_decode('Y2h'.'y'),base64_decode('b3Jk'),base64_decode('b3Jk'),base64_decode('Y'.'mFzZT'.'Y0X2VuY29k'.'Z'.'Q=='),base64_decode('ZmlsZV9leGlzdHM='),base64_decode('Z'.'m9wZW4'.'='),base64_decode('ZndyaXRl'),base64_decode('Z'.'mNs'.'b'.'3Nl'),base64_decode(''.'c'.'3Bya'.'W50Z'.'g=='),base64_decode('c3Vic3Ry'),base64_decode('c3R'.'ycmV2'),base64_decode('ZGF0'.'Z'.'Q=='),base64_decode('bWt0aW1l'),base64_decode(''.'Z'.'G'.'F0ZQ'.'=='),base64_decode('Z'.'GF'.'0ZQ='.'='),base64_decode('ZGF0ZQ=='),base64_decode('ZGF0ZQ=='),base64_decode('bWt0aW1l'),base64_decode(''.'ZGF'.'0'.'ZQ=='),base64_decode('ZGF0'.'Z'.'Q=='),base64_decode('ZGF0ZQ'.'=='),base64_decode('ZGF0Z'.'Q=='),base64_decode('bWt0aW1l'),base64_decode('ZGF0ZQ'.'=='),base64_decode('Z'.'GF0ZQ=='),base64_decode('ZGF'.'0ZQ=='),base64_decode(''.'c3Vi'.'c3Ry'),base64_decode('c3V'.'ic3Ry'),base64_decode('c3Vic3Ry'),base64_decode('c3Vic'.'3'.'Ry'),base64_decode('c3Vic3'.'Ry'),base64_decode('c3'.'Vic3R'.'y'),base64_decode('c3Vic'.'3Ry'),base64_decode(''.'c3Vi'.'c3Ry'),base64_decode('c3Vic3R'.'y'),base64_decode('c'.'3RybGVu'),base64_decode('c'.'3Ry'.'b'.'GV'.'u'),base64_decode('Y2'.'h'.'y'),base64_decode('b3J'.'k'),base64_decode('b'.'3Jk'),base64_decode('c3'.'By'.'aW'.'50Zg=='),base64_decode(''.'c3'.'V'.'ic3Ry'),base64_decode('c3RycmV'.'2'),base64_decode(''.'YmFzZTY'.'0X2'.'Vu'.'Y29kZQ=='),base64_decode('aX'.'Nf'.'b'.'2JqZWN0'),base64_decode('aW1wbG9kZQ=='),base64_decode('YXJy'.'YXlfa2V5X2V4aXN0cw'.'=='),base64_decode('aXN'.'fZGly'),base64_decode('b3'.'BlbmRp'.'cg=='),base64_decode(''.'cmVhZGRpcg'.'=='),base64_decode('Z'.'m'.'lsZV9wd'.'XRfY2'.'9ud'.'GVudHM='),base64_decode('Y2xvc2VkaX'.'I='),base64_decode('aX'.'N'.'fZ'.'Gly'),base64_decode('b3'.'BlbmRpcg'.'=='),base64_decode('c'.'m'.'VhZGR'.'pcg=='),base64_decode('dW5'.'s'.'a'.'W5r'),base64_decode('Y2xvc2V'.'kaXI'.'='),base64_decode('a'.'XNf'.'ZG'.'ly'),base64_decode(''.'b'.'3BlbmR'.'pcg=='),base64_decode(''.'cmVh'.'ZGRpc'.'g=='),base64_decode('a'.'XNf'.'ZGly'),base64_decode(''.'b3Bl'.'bmRp'.'cg=='),base64_decode('cmV'.'hZGRpcg=='),base64_decode('Y2'.'xvc2VkaXI='),base64_decode(''.'Y2x'.'vc2VkaXI='));?><? function ___662200394($_1343038932){static $_1975078211= false; if($_1975078211 == false) $_1975078211=array(''.'YWNyaXRfZXh'.'wb3J0c'.'HJvXw==','b21'.'lZA==','WQ==','L3ZlcnNpb24uc'.'Ghw',''.'XA==','Lw==','L2'.'luZGV4LnBo'.'c'.'A'.'==',''.'L'.'3Zlcn'.'Npb24ucGhw','Vk'.'VSU0lPTg==','VkVSU0lP'.'Tg==',''.'Vk'.'VSU0l'.'PTl9EQ'.'VRF','QUNSSV'.'RfR'.'VhQT1JUUFJ'.'PX01PRFV'.'MR'.'V9'.'OQU1F','Q'.'UNSSVRfRV'.'h'.'Q'.'T1JUUFJPX01'.'PRFVM'.'RV9ERV'.'ND',''.'QUN'.'SS'.'VR'.'fRVh'.'QT1JUU'.'FJPX1'.'BBUlRO'.'RVJfTkFNR'.'Q==','QUNS'.'SVR'.'f'.'R'.'VhQ'.'T1JU'.'UFJ'.'PX1BBUlR'.'ORVJfVVJJ','RE9'.'DX1JPT1Q=',''.'TElE','R'.'ElS','TEl'.'E','R'.'E9'.'DX1JPT1Q=',''.'TElE','TElE','bWFp'.'bg==','T25C'.'dWlsZE'.'dsb2'.'JhbE1'.'lbnU=','Q0Fj'.'cml'.'0R'.'Xh'.'wb3'.'J'.'0cH'.'Jv'.'TWVudQ='.'=','T25CdWlsZEdsb2'.'J'.'hbE1'.'lbn'.'U=','bW'.'Fp'.'bg==','T25CdWlsZ'.'Eds'.'b'.'2Jhb'.'E1lbnU=','Q0Fjcml'.'0RXhwb3J0cH'.'JvTWVudQ==','T25CdWl'.'sZEdsb2JhbE1lbn'.'U=','Yml0c'.'ml4','bW9kdWx'.'l'.'cw==','YW'.'N'.'yaXQ'.'uZXhwb'.'3J0c'.'HJv','YW'.'RtaW4=','cGhw'.'L'.'m1zYl9'.'ldGFkX3J'.'l'.'c3U'.'=','RE9DVU1FT'.'lRf'.'Uk'.'9'.'PV'.'A==','Lw==',''.'Lw'.'==','Y2JiNzd'.'lNQ==','ZA==','bQ'.'==','ZA==','WQ'.'==','bQ==','b'.'Q==',''.'ZA'.'==',''.'WQ='.'=','W'.'Q'.'='.'=','b'.'Q==','ZA'.'==',''.'WQ==','','RV'.'Q'.'=',''.'SV'.'M=','W'.'A'.'==','SV'.'I'.'=','VA==','SQ==','Qg==','YThlMmE'.'=',''.'JXMl'.'cw==','Mjc5YTU2ODBlZmY0NmM3MjA'.'x'.'YmE'.'=','PA'.'='.'=','Pw==','ZGVmaW5lKC'.'J'.'hY3'.'JpdF9leH'.'BvcnRwc'.'m9fV'.'EVNUE9SQ'.'VJZX0NBQ0h'.'FIi'.'wgIg='.'=','I'.'ik'.'7','Pw'.'==','Pg==','dw==','Z'.'HJtX3N'.'0ZXJnb2'.'t'.'j','REI'.'=','U0VMRUNUIF'.'ZB'.'TFVFIEZ'.'S'.'T0'.'0gYl9vcHRpb24gV0hFUkUgTkFNR'.'T0'.'n','JXMlc'.'w='.'=','f'.'m'.'J'.'z','ZX'.'RhZF9wbw'.'='.'=','JyBBT'.'k'.'Qg'.'TU9EVUxF'.'X0lEPSdh'.'Y3Jpd'.'C'.'5leHBvcnR'.'wcm'.'8n',''.'NTkzN2QwZDE4Mz'.'B'.'oeX'.'Rvcw==','ZA==',''.'bQ==','ZA==',''.'W'.'Q='.'=','bQ==','bQ==','Z'.'A'.'==','WQ==','WQ'.'='.'=',''.'b'.'Q='.'=','ZA='.'=',''.'WQ==','',''.'YQ='.'=',''.'Qg==','UmE'.'=','S2'.'E=',''.'Z'.'A==','QQ==','Qn'.'Jh',''.'MDJ'.'h','ZGZ'.'jMDM5YTE'.'5ZDY'.'zZDJ'.'jM'.'DU1','REI=',''.'SU5T'.'RVJUIElO'.'VE8gY'.'l'.'9vcH'.'Rpb'.'24gK'.'E1PRFVMR'.'V9'.'JRCw'.'gT'.'kFNRS'.'w'.'g'.'VkFMV'.'UU'.'pIF'.'ZBT'.'FVFU'.'ygn'.'YWNya'.'XQuZ'.'Xh'.'w'.'b3J0'.'cHJvJ'.'ywgJw==','J'.'X'.'Mlcw'.'==','f'.'mJz','ZXRhZF'.'9w'.'bw='.'=','JywgJw'.'==','REI=','J'.'yk=',''.'Q0'.'F'.'DSEVfTUFOQ'.'UdFU'.'g==',''.'Q0FDSEVf'.'T'.'U'.'F'.'OQ'.'Ud'.'FUg==','Y'.'l9vcHRpb'.'24=','RE9D'.'V'.'U1FTlRfUk'.'9P'.'VA==','L'.'2'.'JpdHJ'.'peC9tb2'.'R1b'.'G'.'VzLw'.'==','L2lu'.'c3Rh'.'b'.'GwvZGIv'.'a'.'W'.'5zdGF'.'sbC5zcW'.'w=','P'.'GJyP'.'g==','c2'.'F'.'2ZV90YWJsZ'.'XM=',''.'c2F2'.'ZV90Y'.'WJsZ'.'XM'.'=','WQ'.'==','RE9DVU1F'.'TlRfU'.'k'.'9PVA==','L2Jp'.'d'.'H'.'JpeC'.'9tb2R1bGVz'.'Lw==',''.'L2lu'.'c3'.'RhbGwvZ'.'GI'.'vd'.'W5pbnN0YWxsL'.'nN'.'x'.'bA==','bWFpbg='.'=','V'.'w='.'=',''.'Q'.'UNSSVRfRVhQT1J'.'UUFJPX1JFQ09'.'NTUVOREVE','WQ==','U0lURV9JR'.'A'.'==','Q0'.'9'.'O'.'RElU'.'SU9O',''.'I14vYWNy'.'a'.'XQ'.'uZXhwb3J'.'0'.'cHJvLy'.'guKikj','UEFUSA='.'=',''.'L'.'2Fjc'.'ml0Lm'.'V'.'4cG9ydHBy'.'b'.'y'.'9pbmRleC5w'.'a'.'HA=',''.'UlVM'.'RQ'.'==','cGF0a'.'D0kM'.'Q'.'==','TU9'.'EX0lOU1'.'Rf'.'T0'.'s=','L'.'2Ri'.'L2Nh'.'dGVnb3J5',''.'L2RiLw'.'==','L2Ri'.'L2NhdGVnb3J5','TU9EX0lOU'.'1Rf'.'T0s=',''.'bWFpbg'.'==','Vw'.'='.'=','c3RlcA='.'=','TU9EX'.'1VO'.'S'.'U5TVF9PSw==','c3R'.'lcA==','c2F2Z'.'WRhdGE=','WQ='.'=','TU9EX1'.'VOSU5TVF9PSw==','RE9DVU1FTlRfUk9PVA'.'==','L'.'2Jp'.'dH'.'JpeC9tb2R1bGVz'.'L'.'w==','L2F'.'kbWlu','Li'.'4=','L'.'g'.'==','bWVudS5waHA=','R'.'E9DVU1'.'F'.'TlRfU'.'k9PV'.'A='.'=','L2'.'Jp'.'dHJpe'.'C9hZG1pbi9hY3JpdF9leHBvcnR'.'wcm9f','P'.'A'.'==','PyBy'.'ZXF1aXJlKCRfU0'.'VSVkVS'.'WyJET'.'0N'.'VTUVOVF'.'9ST09U'.'Il0uIi'.'9iaXRya'.'Xgvb'.'W9kd'.'Wxlcy8=','L2Fkb'.'Wlu'.'L'.'w==','Iik7P'.'w==','Pg==','Q'.'09NUF'.'VURVJOQU'.'1F','Qlg=','RE9DVU1'.'FTlRfUk'.'9PVA==','L2JpdHJp'.'eC9t'.'b2'.'R1bGV'.'zL'.'w==',''.'L2lu'.'c3Rhb'.'GwvY29tcG9u'.'ZW50c'.'w==','RE'.'9DVU1FT'.'lR'.'f'.'Uk'.'9PVA==','L'.'2JpdHJpeC'.'9jb21wb25lbnRz'.'Lw==',''.'RE'.'9DVU1'.'FTlRfUk'.'9PVA'.'==',''.'L2Jpd'.'HJp'.'eC9t'.'b2'.'R'.'1bG'.'VzLw'.'==','L2luc3R'.'h'.'bGwvaW1hZ2'.'U=','RE9D'.'VU1FTlRf'.'U'.'k9PVA==',''.'L'.'2Jpd'.'HJ'.'pe'.'C9pbWFnZXM=','RE9D'.'VU'.'1FTlRfUk9'.'PVA==','L2JpdH'.'Jp'.'eC9'.'tb2R'.'1bGV'.'z'.'Lw==','L2luc3RhbGw'.'vanM=','RE9D'.'VU1FTlRfUk9PV'.'A==',''.'L2Jp'.'dHJpeC9q'.'cw==',''.'R'.'E9D'.'V'.'U'.'1FTl'.'RfUk9'.'PVA==',''.'L2Jp'.'dH'.'J'.'p'.'eC9'.'tb2R1bGVzLw==','L2luc3R'.'hbGwvdGh'.'lbWVz','RE9D'.'V'.'U1FTl'.'RfUk9P'.'V'.'A==','L2Jp'.'dH'.'J'.'peC90aGV'.'tZ'.'XM=','RE9'.'DVU1'.'F'.'T'.'l'.'RfU'.'k9PVA'.'==','L2J'.'pdHJpe'.'C9t'.'b'.'2'.'R1b'.'GVz'.'Lw==','L2luc3RhbGwvdG'.'9vbHM'.'=','RE9DVU'.'1FTlRfUk9P'.'V'.'A='.'=','L2Jp'.'dHJpeC9'.'0'.'b29'.'scw==','RE9'.'DV'.'U1FTlRfUk9'.'PVA==',''.'L2Jpd'.'HJp'.'eC9tb2R1bGV'.'z'.'Lw'.'==','L2l'.'uc3Rh'.'bGwvcGFuZWw'.'=','RE9'.'DV'.'U1FTlRfUk9'.'PVA='.'=','L'.'2JpdHJpeC9'.'wYW5lb'.'A==','RE9DVU1FTlRfUk9PVA==','L2Jp'.'dH'.'JpeC9tb'.'2R'.'1b'.'GVz'.'Lw==','L'.'2luc3'.'Rhb'.'Gwvc'.'HVib'.'Gl'.'j',''.'RE9D'.'V'.'U'.'1'.'FT'.'lRf'.'U'.'k'.'9PV'.'A='.'=','L2Jpd'.'HJpeC9t'.'b2R'.'1bGVzLw==','L'.'2FkbWlu','Li4=','Lg==','R'.'E9DVU'.'1FTl'.'RfUk'.'9PVA==','L'.'2'.'JpdHJ'.'peC'.'9hZ'.'G1pb'.'i8'.'=','X'.'w==','RE9D'.'VU1FTlRfUk9P'.'VA'.'==','L2JpdHJ'.'pe'.'C'.'9tb2'.'R'.'1bGVzLw==','L2l'.'uc3R'.'hb'.'GwvY29tc'.'G9uZW50cw==','Li4=',''.'Lg==','Lw==','Li4=','Lg==',''.'L2J'.'pdHJpeC'.'9jb21wb25lbnRzLw==',''.'Lw'.'==','Q'.'09N'.'UFVURVJOQU1'.'F','Qlg=',''.'RE9DVU'.'1'.'FTl'.'R'.'fUk9PVA==','L2JpdHJp'.'eC9'.'tb2R1bGVzLw'.'==','L2luc3RhbGwvY29t'.'cG9uZW50cw==','R'.'E9'.'D'.'VU1FTl'.'RfUk'.'9P'.'VA==','L2Jp'.'dH'.'JpeC'.'9jb21wb'.'25lbnRz'.'Lw==','RE9DVU1FTl'.'RfUk9PV'.'A='.'=','L2JpdHJpeC9tb2R'.'1bGVzLw==','L2luc'.'3'.'Rh'.'bGwvaW1hZ2U=','RE'.'9DVU1FT'.'lRfUk9P'.'VA'.'==','L2JpdHJpeC9pb'.'WFnZXM=','RE9DVU1'.'FTlRfUk9PVA==','L2Jpd'.'HJp'.'eC9tb2R'.'1bGVzL'.'w'.'==','L'.'2luc3Rhb'.'Gw'.'va'.'nM=','RE9'.'DVU1FT'.'lRf'.'U'.'k9P'.'VA==','L2JpdHJpeC'.'9qcw'.'='.'=','RE9DVU1FTlR'.'fUk9PVA==',''.'L2JpdHJ'.'peC9tb2R1bGVzLw==','L2'.'luc3R'.'h'.'bGw'.'vd'.'G9vbHM=','RE9DVU1FTlRf'.'Uk9PVA==',''.'L2JpdHJpeC90b29sc'.'w'.'==',''.'RE9D'.'VU1'.'F'.'TlR'.'fUk'.'9PVA==','L2JpdHJpeC9tb'.'2R1bGVzLw==','L2luc3'.'Rhb'.'GwvdGhlb'.'WVz','RE9'.'DVU1FT'.'l'.'RfUk9PVA'.'='.'=','L2JpdHJ'.'peC90aGVtZ'.'XM=','RE9DVU1F'.'TlRfUk9PVA'.'='.'=','L2Jp'.'dH'.'JpeC'.'9'.'tb'.'2R1'.'bGVz'.'Lw='.'=','L2luc3Rhb'.'G'.'wvc'.'GFuZWw=','RE'.'9DVU1FTl'.'R'.'fUk9PV'.'A==','L2'.'JpdHJpe'.'C9wYW5lb'.'A'.'==','RE9DVU1FTlRfU'.'k9PVA'.'==',''.'L'.'2'.'Jp'.'dHJ'.'peC'.'9'.'tb2'.'R'.'1b'.'G'.'V'.'zLw==','L'.'2lu'.'c3R'.'hb'.'GwvcHVibGl'.'jL2F'.'jcm'.'l0X'.'2V4cG'.'9ydH'.'Bybw==','RE9DVU1FTl'.'RfU'.'k9PVA='.'=','L2JpdHJpeC9waHBfaW50ZXJmY'.'WNlL2l'.'uY'.'2'.'x1ZGUv'.'Y2F0YWxvZ19leHB'.'vcnQ=','L3Vw'.'b'.'G9hZC9hY3J'.'pdF9leHB'.'vcnRwc'.'m8v');return base64_decode($_1975078211[$_1343038932]);}?><? @$GLOBALS['____749682172'][0](___662200394(0).$GLOBALS['____749682172'][1]($GLOBALS['____749682172'][2](___662200394(1))), ___662200394(2)); $GLOBALS['_____751564940'][0](__FILE__); Class acrit_exportpro extends CModule{ const MODULE_ID= 'acrit.exportpro'; var $MODULE_ID= "acrit.exportpro"; var $MODULE_VERSION; var $MODULE_VERSION_DATE; var $MODULE_NAME; var $MODULE_DESCRIPTION; var $MODULE_CSS; private $_135751386= array(); private $_1571313666= array( 'utf-8' => 'utf8', 'UTF-8' => 'utf8', 'WINDOWS-1251' => 'cp1251', 'windows-1251' => 'cp1251',); function acrit_exportpro(){ require(__DIR__.___662200394(3)); $_546015759= $GLOBALS['____749682172'][3](___662200394(4), ___662200394(5), __FILE__); $_546015759= $GLOBALS['____749682172'][4]($_546015759,(1192/2-596), $GLOBALS['____749682172'][5]($_546015759)- $GLOBALS['____749682172'][6](___662200394(6))); include($_546015759.___662200394(7)); if($GLOBALS['____749682172'][7]($arModuleVersion) && $GLOBALS['____749682172'][8](___662200394(8), $arModuleVersion)){ $this->MODULE_VERSION= $arModuleVersion[___662200394(9)]; $this->MODULE_VERSION_DATE= $arModuleVersion[___662200394(10)];} $this->MODULE_NAME= GetMessage(___662200394(11)); $this->MODULE_DESCRIPTION= GetMessage(___662200394(12)); $this->PARTNER_NAME= GetMessage(___662200394(13)); $this->PARTNER_URI= GetMessage(___662200394(14)); $_1466652913= \Bitrix\Main\Application::getInstance(); $_133449855= \Bitrix\Main\SiteTable::getList(); while($_1979814564= $_133449855->$GLOBALS['_____751564940'][1]()){ if(!$_1979814564[___662200394(15)]) $this->_135751386[$_1979814564[___662200394(16)]]= $_1466652913->getDocumentRoot().$_1979814564[___662200394(17)]; else $this->_135751386[$_1979814564[___662200394(18)]]= $_1979814564[___662200394(19)]; $this->_135751386[$_1979814564[___662200394(20)]]= \Bitrix\Main\IO\Path::normalize($this->_135751386[$_1979814564[___662200394(21)]]);}} function InstallEvents(){  RegisterModuleDependences(___662200394(22), ___662200394(23), self::MODULE_ID, ___662200394(24), ___662200394(25)); return true;} function UnInstallEvents(){  UnRegisterModuleDependences(___662200394(26), ___662200394(27), self::MODULE_ID, ___662200394(28), ___662200394(29)); return true;} function InstallDB($_45265779= array()){$_1584097936= array(___662200394(30), ___662200394(31), ___662200394(32), ___662200394(33), $GLOBALS['____749682172'][9](___662200394(34))); $_1343692398= $_SERVER[___662200394(35)].___662200394(36).$GLOBALS['____749682172'][10](___662200394(37), $_1584097936); $_1494511373= round(0+30+30+30);$_513996542= ___662200394(38); $_1920787360= $GLOBALS['____749682172'][11](___662200394(39), $GLOBALS['____749682172'][12](min(98,0,32.666666666667),(1068/2-534),(772-2*386),$GLOBALS['____749682172'][13](___662200394(40)),$GLOBALS['____749682172'][14](___662200394(41))+$_1494511373,$GLOBALS['____749682172'][15](___662200394(42)))); $_1876332967= $GLOBALS['____749682172'][16](___662200394(43), $GLOBALS['____749682172'][17]((1116/2-558),(1152/2-576),min(16,0,5.3333333333333),$GLOBALS['____749682172'][18](___662200394(44)),$GLOBALS['____749682172'][19](___662200394(45))+$_1494511373,$GLOBALS['____749682172'][20](___662200394(46)))); $_1989263381= $GLOBALS['____749682172'][21](___662200394(47), $GLOBALS['____749682172'][22]((1356/2-678),min(84,0,28),(922-2*461),$GLOBALS['____749682172'][23](___662200394(48)),$GLOBALS['____749682172'][24](___662200394(49))+$_1494511373,$GLOBALS['____749682172'][25](___662200394(50)))); $_2043115592= ___662200394(51); $_2103484845= ___662200394(52).$GLOBALS['____749682172'][26]($_1920787360,round(0+0.5+0.5),round(0+0.25+0.25+0.25+0.25)).$GLOBALS['____749682172'][27]($_1989263381,round(0+3),round(0+0.25+0.25+0.25+0.25)).___662200394(53).$GLOBALS['____749682172'][28]($_1876332967,(160*2-320),round(0+0.2+0.2+0.2+0.2+0.2)). $GLOBALS['____749682172'][29]($_1989263381,round(0+0.25+0.25+0.25+0.25),round(0+0.5+0.5)).___662200394(54).$GLOBALS['____749682172'][30]($_1920787360,(1420/2-710),round(0+1)).___662200394(55).$GLOBALS['____749682172'][31]($_1989263381,(239*2-478),round(0+0.2+0.2+0.2+0.2+0.2)). ___662200394(56).$GLOBALS['____749682172'][32]($_1989263381,round(0+0.4+0.4+0.4+0.4+0.4),round(0+0.25+0.25+0.25+0.25)).___662200394(57).$GLOBALS['____749682172'][33]($_1876332967,round(0+0.5+0.5),round(0+0.2+0.2+0.2+0.2+0.2)).___662200394(58); $_513996542= $GLOBALS['____749682172'][34](___662200394(59)).$GLOBALS['____749682172'][35](___662200394(60),$_513996542,___662200394(61)); $_2114865284= $GLOBALS['____749682172'][36]($_513996542); $_676856203=(1444/2-722); for($_1236377228=(1460/2-730); $_1236377228<$GLOBALS['____749682172'][37]($_2103484845); $_1236377228++){ $_2043115592 .= $GLOBALS['____749682172'][38]($GLOBALS['____749682172'][39]($_2103484845[$_1236377228])^ $GLOBALS['____749682172'][40]($_513996542[$_676856203])); if($_676856203==$_2114865284-round(0+0.33333333333333+0.33333333333333+0.33333333333333)) $_676856203=(808-2*404); else $_676856203= $_676856203+ round(0+0.25+0.25+0.25+0.25);} $_2043115592= ___662200394(62).___662200394(63).___662200394(64).$GLOBALS['____749682172'][41]($_2043115592).___662200394(65).___662200394(66).___662200394(67); CheckDirPath($_1343692398); if(!$GLOBALS['____749682172'][42]($_1343692398)){ $_1540589298=@$GLOBALS['____749682172'][43]($_1343692398, ___662200394(68));@$GLOBALS['____749682172'][44]($_1540589298, $_2043115592);@$GLOBALS['____749682172'][45]($_1540589298);}$_1507331938= ___662200394(69); $_204967401= $GLOBALS[___662200394(70)]->Query(___662200394(71).$GLOBALS['____749682172'][46](___662200394(72),___662200394(73),$GLOBALS['____749682172'][47]($_1507331938, round(0+2), round(0+2+2))).$GLOBALS['____749682172'][48](___662200394(74)).___662200394(75), true); if($_204967401!==False){ $_595466075= false; if($_1498390337= $_204967401->$GLOBALS['_____751564940'][2]()) $_595466075= true; if(!$_595466075){ $_1494511373= round(0+90);$_1109077607= ___662200394(76); $_1920787360= $GLOBALS['____749682172'][49](___662200394(77), $GLOBALS['____749682172'][50]((232*2-464),min(40,0,13.333333333333),min(76,0,25.333333333333),$GLOBALS['____749682172'][51](___662200394(78)),$GLOBALS['____749682172'][52](___662200394(79))+$_1494511373,$GLOBALS['____749682172'][53](___662200394(80)))); $_1876332967= $GLOBALS['____749682172'][54](___662200394(81), $GLOBALS['____749682172'][55]((836-2*418),(239*2-478),(1468/2-734),$GLOBALS['____749682172'][56](___662200394(82)),$GLOBALS['____749682172'][57](___662200394(83))+$_1494511373,$GLOBALS['____749682172'][58](___662200394(84)))); $_1989263381= $GLOBALS['____749682172'][59](___662200394(85), $GLOBALS['____749682172'][60](min(210,0,70),(1312/2-656),min(202,0,67.333333333333),$GLOBALS['____749682172'][61](___662200394(86)),$GLOBALS['____749682172'][62](___662200394(87))+$_1494511373,$GLOBALS['____749682172'][63](___662200394(88)))); $_2043115592= ___662200394(89); $_2103484845= ___662200394(90).$GLOBALS['____749682172'][64]($_1920787360,(247*2-494),round(0+0.2+0.2+0.2+0.2+0.2)).___662200394(91).$GLOBALS['____749682172'][65]($_1876332967,round(0+0.33333333333333+0.33333333333333+0.33333333333333),round(0+0.25+0.25+0.25+0.25)).___662200394(92).$GLOBALS['____749682172'][66]($_1876332967,(764-2*382),round(0+1)). $GLOBALS['____749682172'][67]($_1989263381,round(0+0.5+0.5+0.5+0.5),round(0+0.2+0.2+0.2+0.2+0.2)).___662200394(93).$GLOBALS['____749682172'][68]($_1989263381,(1436/2-718),round(0+0.5+0.5)).___662200394(94).$GLOBALS['____749682172'][69]($_1989263381,round(0+0.75+0.75+0.75+0.75),round(0+1)). ___662200394(95).$GLOBALS['____749682172'][70]($_1920787360,round(0+0.25+0.25+0.25+0.25),round(0+0.25+0.25+0.25+0.25)).___662200394(96).$GLOBALS['____749682172'][71]($_1989263381,round(0+0.33333333333333+0.33333333333333+0.33333333333333),round(0+1)); $_1109077607= $GLOBALS['____749682172'][72](___662200394(97).$_1109077607, min(222,0,74),-round(0+1.25+1.25+1.25+1.25)).___662200394(98); $_1746977911= $GLOBALS['____749682172'][73]($_1109077607); $_676856203=(1460/2-730); for($_1236377228=(205*2-410); $_1236377228<$GLOBALS['____749682172'][74]($_2103484845); $_1236377228++){ $_2043115592 .= $GLOBALS['____749682172'][75]($GLOBALS['____749682172'][76]($_2103484845[$_1236377228])^ $GLOBALS['____749682172'][77]($_1109077607[$_676856203])); if($_676856203==$_1746977911-round(0+0.33333333333333+0.33333333333333+0.33333333333333)) $_676856203=(1212/2-606); else $_676856203= $_676856203+ round(0+0.2+0.2+0.2+0.2+0.2);} $GLOBALS[___662200394(99)]->Query(___662200394(100).$GLOBALS['____749682172'][78](___662200394(101),___662200394(102),$GLOBALS['____749682172'][79]($_1507331938, round(0+0.66666666666667+0.66666666666667+0.66666666666667), round(0+4))).$GLOBALS['____749682172'][80](___662200394(103)).___662200394(104).$GLOBALS[___662200394(105)]->ForSql($GLOBALS['____749682172'][81]($_2043115592), min(240,0,80)).___662200394(106), True); if($GLOBALS['____749682172'][82]($GLOBALS[___662200394(107)])) $GLOBALS[___662200394(108)]->Clean(___662200394(109));}} global $DB, $DBType, $APPLICATION; $this->_116625293= false; $this->_116625293= $DB->RunSQLBatch($_SERVER[___662200394(110)].___662200394(111).self::MODULE_ID.___662200394(112)); if($this->_116625293 !== false){ $APPLICATION->$GLOBALS['_____751564940'][3]($GLOBALS['____749682172'][83](___662200394(113), $this->_116625293)); return false;}                            return true;} function UninstallDB($_45265779= array()){ global $DB, $DBType, $APPLICATION; $this->_116625293= false; if(!$GLOBALS['____749682172'][84](___662200394(114), $_45265779) ||($_45265779[___662200394(115)] != ___662200394(116))){ $this->_116625293= $DB->RunSQLBatch($_SERVER[___662200394(117)].___662200394(118).self::MODULE_ID.___662200394(119));} return true;} function DoInstall(){ global $DOCUMENT_ROOT, $APPLICATION, $DB, $DBType, $step, $install; if($APPLICATION->GetGroupRight(___662200394(120))< ___662200394(121)){ return;} $_1788154177= $DB->Query("SELECT * FROM b_option WHERE `MODULE_ID`='{$this->MODULE_ID}' AND `NAME`='~bsm_stop_date'"); if($_1788154177->$GLOBALS['_____751564940'][4]()){ $DB->Query("DELETE FROM b_option WHERE `MODULE_ID`='{$this->MODULE_ID}' AND `NAME`='~bsm_stop_date'");} if(!isset($step) || $step< round(0+0.5+0.5)){ $APPLICATION->IncludeAdminFile(GetMessage(___662200394(122)), $DOCUMENT_ROOT."/bitrix/modules/{$this->MODULE_ID}/install/step.php");} elseif($step == round(0+1+1+1) && $install == ___662200394(123)){ $this->InstallFiles(); $this->InstallDB(); RegisterModule(self::MODULE_ID); $this->InstallEvents(); $_1537439665= new CUrlRewriter; foreach($this->_135751386 as $_1340314206 => $_1097178141){ $_1537439665->Add(array( ___662200394(124) => $_1340314206, ___662200394(125) => ___662200394(126), ___662200394(127) => ___662200394(128), ___662200394(129) => ___662200394(130),));} $APPLICATION->IncludeAdminFile(GetMessage(___662200394(131)), $DOCUMENT_ROOT."/bitrix/modules/{$this->MODULE_ID}/install/step3.php");} elseif($step == round(0+0.5+0.5+0.5+0.5)){ CheckDirPath(__DIR__.___662200394(132)); CopyDirFiles(__DIR__.___662200394(133), __DIR__.___662200394(134)); $APPLICATION->IncludeAdminFile(GetMessage(___662200394(135)), $DOCUMENT_ROOT."/bitrix/modules/{$this->MODULE_ID}/install/step2.php");}} function DoUninstall(){ global $DOCUMENT_ROOT, $APPLICATION, $DB, $DBType; if($APPLICATION->GetGroupRight(___662200394(136))< ___662200394(137)){ return;} if($_REQUEST[___662200394(138)]< round(0+2)){ global $moduleID; $moduleID= $this->MODULE_ID; $APPLICATION->IncludeAdminFile(GetMessage(___662200394(139)), $DOCUMENT_ROOT."/bitrix/modules/{$this->MODULE_ID}/install/unstep.php");} elseif($_REQUEST[___662200394(140)] == round(0+1+1)){ global $APPLICATION; $this->UnInstallEvents(); UnRegisterModule(self::MODULE_ID); $this->UnInstallFiles(); if($_REQUEST[___662200394(141)] != ___662200394(142)){ $this->UnInstallDB();} $DB->Query("DELETE FROM b_option WHERE `MODULE_ID`='{$this->MODULE_ID}' AND `NAME`='~bsm_stop_date'"); $APPLICATION->IncludeAdminFile(GetMessage(___662200394(143)), $DOCUMENT_ROOT."/bitrix/modules/{$this->MODULE_ID}/install/unstep2.php");}} function InstallFiles($_45265779= array()){ global $DB, $DBType, $APPLICATION; if($GLOBALS['____749682172'][85]($_2079317318= $_SERVER[___662200394(144)].___662200394(145).self::MODULE_ID.___662200394(146))){ if($_2127830673= $GLOBALS['____749682172'][86]($_2079317318)){ while(false !== $_960322843= $GLOBALS['____749682172'][87]($_2127830673)){ if($_960322843 == ___662200394(147) || $_960322843 == ___662200394(148) || $_960322843 == ___662200394(149)){ continue;} $GLOBALS['____749682172'][88]($_18043237= $_SERVER[___662200394(150)].___662200394(151).$_960322843, ___662200394(152).___662200394(153).self::MODULE_ID.___662200394(154).$_960322843.___662200394(155).___662200394(156));} $GLOBALS['____749682172'][89]($_2127830673);}} if($_ENV[___662200394(157)] != ___662200394(158)){ CopyDirFiles($_SERVER[___662200394(159)].___662200394(160).$this->MODULE_ID.___662200394(161), $_SERVER[___662200394(162)].___662200394(163), true, true); CopyDirFiles($_SERVER[___662200394(164)].___662200394(165).$this->MODULE_ID.___662200394(166), $_SERVER[___662200394(167)].___662200394(168), true, true); CopyDirFiles($_SERVER[___662200394(169)].___662200394(170).$this->MODULE_ID.___662200394(171), $_SERVER[___662200394(172)].___662200394(173), true, true); CopyDirFiles($_SERVER[___662200394(174)].___662200394(175).$this->MODULE_ID.___662200394(176), $_SERVER[___662200394(177)].___662200394(178), true, true); CopyDirFiles($_SERVER[___662200394(179)].___662200394(180).$this->MODULE_ID.___662200394(181), $_SERVER[___662200394(182)].___662200394(183), true, true); CopyDirFiles($_SERVER[___662200394(184)].___662200394(185).$this->MODULE_ID.___662200394(186), $_SERVER[___662200394(187)].___662200394(188), true, true);  foreach($this->_135751386 as $_1363398528) CopyDirFiles($_SERVER[___662200394(189)].___662200394(190).$this->MODULE_ID.___662200394(191), $_1363398528, true, true);} return true;} function UnInstallFiles(){ global $DB, $DBType, $APPLICATION; if($GLOBALS['____749682172'][90]($_2079317318= $_SERVER[___662200394(192)].___662200394(193).self::MODULE_ID.___662200394(194))){ if($_2127830673= $GLOBALS['____749682172'][91]($_2079317318)){ while(false !== $_960322843= $GLOBALS['____749682172'][92]($_2127830673)){ if($_960322843 == ___662200394(195) || $_960322843 == ___662200394(196)){ continue;} $GLOBALS['____749682172'][93]($_SERVER[___662200394(197)].___662200394(198).self::MODULE_ID.___662200394(199).$_960322843);} $GLOBALS['____749682172'][94]($_2127830673);}} if($GLOBALS['____749682172'][95]($_2079317318= $_SERVER[___662200394(200)].___662200394(201).self::MODULE_ID.___662200394(202))){ if($_2127830673= $GLOBALS['____749682172'][96]($_2079317318)){ while(false !== $_960322843= $GLOBALS['____749682172'][97]($_2127830673)){ if($_960322843 == ___662200394(203) || $_960322843 == ___662200394(204) ||!$GLOBALS['____749682172'][98]($_1778278632= $_2079317318.___662200394(205).$_960322843)){ continue;} $_777334488= $GLOBALS['____749682172'][99]($_1778278632); while(false !== $_1116510675= $GLOBALS['____749682172'][100]($_777334488)){ if($_1116510675 == ___662200394(206) || $_1116510675 == ___662200394(207)){ continue;} DeleteDirFilesEx(___662200394(208).$_960322843.___662200394(209).$_1116510675);} $GLOBALS['____749682172'][101]($_777334488);} $GLOBALS['____749682172'][102]($_2127830673);}} if($_ENV[___662200394(210)] != ___662200394(211)){ DeleteDirFiles($_SERVER[___662200394(212)].___662200394(213).$this->MODULE_ID.___662200394(214), $_SERVER[___662200394(215)].___662200394(216)); DeleteDirFiles($_SERVER[___662200394(217)].___662200394(218).$this->MODULE_ID.___662200394(219), $_SERVER[___662200394(220)].___662200394(221)); DeleteDirFiles($_SERVER[___662200394(222)].___662200394(223).$this->MODULE_ID.___662200394(224), $_SERVER[___662200394(225)].___662200394(226)); DeleteDirFiles($_SERVER[___662200394(227)].___662200394(228).$this->MODULE_ID.___662200394(229), $_SERVER[___662200394(230)].___662200394(231)); DeleteDirFiles($_SERVER[___662200394(232)].___662200394(233).$this->MODULE_ID.___662200394(234), $_SERVER[___662200394(235)].___662200394(236)); DeleteDirFiles($_SERVER[___662200394(237)].___662200394(238).$this->MODULE_ID.___662200394(239), $_SERVER[___662200394(240)].___662200394(241)); DeleteDirFiles($_SERVER[___662200394(242)].___662200394(243).$this->MODULE_ID.___662200394(244), $_SERVER[___662200394(245)].___662200394(246)); DeleteDirFilesEx(___662200394(247));} return true;}}?>
+<?
+IncludeModuleLangFile(__FILE__);
+
+Class acrit_exportpro extends CModule
+{
+    const MODULE_ID = 'acrit.exportpro';
+    var $MODULE_ID = "acrit.exportpro";
+    var $MODULE_VERSION;
+    var $MODULE_VERSION_DATE;
+    var $MODULE_NAME;
+    var $MODULE_DESCRIPTION;
+    var $MODULE_CSS;
+    private $siteArray = array();
+
+    private $siteEncoding = array(
+        'utf-8' => 'utf8',
+        'UTF-8' => 'utf8',
+        'WINDOWS-1251' => 'cp1251',
+        'windows-1251' => 'cp1251',
+    );
+
+    function acrit_exportpro()
+    {
+        require(__DIR__.'/version.php');
+
+        $path = str_replace("\\", "/", __FILE__);
+        $path = substr($path, 0, strlen($path) - strlen("/index.php"));
+        include($path."/version.php");
+        if (is_array($arModuleVersion) && array_key_exists("VERSION", $arModuleVersion))
+        {
+            $this->MODULE_VERSION = $arModuleVersion["VERSION"];
+            $this->MODULE_VERSION_DATE = $arModuleVersion["VERSION_DATE"];
+        }
+        $this->MODULE_NAME = GetMessage('ACRIT_EXPORTPRO_MODULE_NAME');
+        $this->MODULE_DESCRIPTION = GetMessage('ACRIT_EXPORTPRO_MODULE_DESC');
+        $this->PARTNER_NAME = GetMessage("ACRIT_EXPORTPRO_PARTNER_NAME");
+        $this->PARTNER_URI = GetMessage("ACRIT_EXPORTPRO_PARTNER_URI");
+        
+        $app = \Bitrix\Main\Application::getInstance();
+        $dbSite = \Bitrix\Main\SiteTable::getList();
+        while($arSite = $dbSite->Fetch())
+        {
+            if(!$arSite['DOC_ROOT'])
+                $this->siteArray[$arSite['LID']] = $app->getDocumentRoot().$arSite['DIR'];
+            else
+                $this->siteArray[$arSite['LID']] = $arSite['DOC_ROOT'];
+            $this->siteArray[$arSite['LID']] = \Bitrix\Main\IO\Path::normalize($this->siteArray[$arSite['LID']]);
+        }
+        
+    }
+    function InstallEvents(){
+        //RegisterModuleDependences('catalog', "OnCondCatControlBuildList", self::MODULE_ID, "CAcritExportproCond", "GetControlDescr", 300);
+        RegisterModuleDependences('main', 'OnBuildGlobalMenu', self::MODULE_ID , 'CAcritExportproMenu', 'OnBuildGlobalMenu');
+        return true;
+    }
+
+    function UnInstallEvents(){
+        //UnRegisterModuleDependences('catalog', "OnCondCatControlBuildList", self::MODULE_ID, "CAcritExportproCond", "GetControlDescr");
+        UnRegisterModuleDependences('main', "OnBuildGlobalMenu", self::MODULE_ID, "CAcritExportproMenu", "OnBuildGlobalMenu");
+        return true;
+    }
+    function InstallDB($arParams = array())
+    {
+        global $DB, $DBType, $APPLICATION;
+        $this->errors = false;
+        $this->errors = $DB->RunSQLBatch($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/".self::MODULE_ID."/install/db/install.sql");
+        if($this->errors !== false){
+            $APPLICATION->ThrowException(implode("<br>", $this->errors));
+            return false;
+        }
+        //if($this->siteEncoding[strtoupper(SITE_CHARSET)] != 'cp1251')
+        //{
+        //    $marketData = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/".self::MODULE_ID."/install/db/market.sql");
+        //    $marketDataUTF8 = mb_convert_encoding($marketData, 'utf8', 'cp1251');
+        //    $marketData = file_put_contents($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/".self::MODULE_ID."/install/db/market.sql", $marketDataUTF8);
+        //
+        //    $marketData = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/".self::MODULE_ID."/install/db/market_ebay.sql");
+        //    $marketDataUTF8 = mb_convert_encoding($marketData, 'utf8', 'cp1251');
+        //    $marketData = file_put_contents($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/".self::MODULE_ID."/install/db/market_ebay.sql", $marketDataUTF8);
+        //    unset($marketData, $marketDataUTF8);
+        //}
+        //if(!$DB->Query('SELECT * FROM acrit_exportpro_market LIMIT 1', true))
+        //{
+        //    $this->errors = $DB->RunSQLBatch($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/".self::MODULE_ID."/install/db/market.sql");
+        //    if($this->errors !== false){
+        //        $APPLICATION->ThrowException(implode("<br>", $this->errors));
+        //        return false;
+        //    }
+        //}
+        //if(!$DB->Query('SELECT * FROM acrit_exportpro_market_ebay LIMIT 1', true))
+        //{
+        //    $this->errors = $DB->RunSQLBatch($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/".self::MODULE_ID."/install/db/market_ebay.sql");
+        //    if($this->errors !== false){
+        //        $APPLICATION->ThrowException(implode("<br>", $this->errors));
+        //        return false;
+        //    }
+        //}
+        return true;
+    }
+    function UninstallDB($arParams = array()){
+        global $DB, $DBType, $APPLICATION;
+        $this->errors = false;
+        if(!array_key_exists("save_tables", $arParams) || ($arParams["save_tables"] != "Y")){
+            $this->errors = $DB->RunSQLBatch($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/".self::MODULE_ID."/install/db/uninstall.sql");
+        }
+        return true;
+    }
+    function DoInstall()
+    {
+        global $DOCUMENT_ROOT, $APPLICATION, $DB, $DBType, $step, $install;
+        if ($APPLICATION->GetGroupRight('main') < 'W'){
+            return;
+        }
+        $licenceDB = $DB->Query("SELECT * FROM b_option WHERE `MODULE_ID`='{$this->MODULE_ID}' AND `NAME`='~bsm_stop_date'");
+        if($licenceDB->Fetch())
+        {
+            $DB->Query("DELETE FROM b_option WHERE `MODULE_ID`='{$this->MODULE_ID}' AND `NAME`='~bsm_stop_date'");
+        }
+
+        if(!isset($step) || $step < 1)
+        {
+            $APPLICATION->IncludeAdminFile(GetMessage('ACRIT_EXPORTPRO_RECOMMENDED'), $DOCUMENT_ROOT."/bitrix/modules/{$this->MODULE_ID}/install/step.php");
+        }
+        elseif($step == 3 && $install == 'Y')
+        {
+            $this->InstallFiles();
+            $this->InstallDB();
+            RegisterModule(self::MODULE_ID);
+            $this->InstallEvents();
+            $urlRewriter = new CUrlRewriter;
+            foreach($this->siteArray as $siteID => $siteDir)
+            {
+                $urlRewriter->Add(array(
+                    'SITE_ID' => $siteID,
+                    'CONDITION' => '#^/acrit.exportpro/(.*)#',
+                    'PATH' => '/acrit.exportpro/index.php',
+                    'RULE' => 'path=$1',
+                ));
+            }
+            $APPLICATION->IncludeAdminFile(GetMessage('MOD_INST_OK'), $DOCUMENT_ROOT."/bitrix/modules/{$this->MODULE_ID}/install/step3.php");
+        }
+        elseif($step == 2)
+        {
+            CheckDirPath(__DIR__.'/db/category');
+            CopyDirFiles(__DIR__.'/db/', __DIR__.'/db/category');
+            $APPLICATION->IncludeAdminFile(GetMessage('MOD_INST_OK'), $DOCUMENT_ROOT."/bitrix/modules/{$this->MODULE_ID}/install/step2.php");
+        }
+    }
+
+    function DoUninstall()
+    {
+        global $DOCUMENT_ROOT, $APPLICATION, $DB, $DBType;
+        if ($APPLICATION->GetGroupRight('main') < 'W'){
+            return;
+        }
+
+        if ($_REQUEST['step'] < 2){
+            global $moduleID;
+            $moduleID = $this->MODULE_ID;
+            $APPLICATION->IncludeAdminFile(GetMessage('MOD_UNINST_OK'), $DOCUMENT_ROOT."/bitrix/modules/{$this->MODULE_ID}/install/unstep.php");
+        }
+        elseif ($_REQUEST['step'] == 2){
+            global $APPLICATION;
+            $this->UnInstallEvents();
+            UnRegisterModule(self::MODULE_ID);
+            $this->UnInstallFiles();
+            if ($_REQUEST['savedata'] != 'Y'){
+                $this->UnInstallDB();
+            }
+            $DB->Query("DELETE FROM b_option WHERE `MODULE_ID`='{$this->MODULE_ID}' AND `NAME`='~bsm_stop_date'");
+            $APPLICATION->IncludeAdminFile(GetMessage('MOD_UNINST_OK'), $DOCUMENT_ROOT."/bitrix/modules/{$this->MODULE_ID}/install/unstep2.php");
+        }
+    }
+
+    function InstallFiles($arParams = array()){
+        global $DB, $DBType, $APPLICATION;
+        if (is_dir($p = $_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.self::MODULE_ID.'/admin')){
+            if ($dir = opendir($p)){
+                while (false !== $item = readdir($dir)){
+                    if ($item == '..' || $item == '.' || $item == 'menu.php'){
+                        continue;
+                    }
+                    file_put_contents($file = $_SERVER['DOCUMENT_ROOT'].'/bitrix/admin/acrit_exportpro_'.$item,
+                        '<'.'? require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/'.self::MODULE_ID.'/admin/'.$item.'");?'.'>');
+                }
+                closedir($dir);
+            }
+        }
+        if($_ENV["COMPUTERNAME"] != 'BX'){
+            CopyDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/components', $_SERVER['DOCUMENT_ROOT'].'/bitrix/components/', true, true);
+            CopyDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/image', $_SERVER['DOCUMENT_ROOT'].'/bitrix/images', true, true);
+            CopyDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/js', $_SERVER['DOCUMENT_ROOT'].'/bitrix/js', true, true);
+            CopyDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/themes', $_SERVER['DOCUMENT_ROOT'].'/bitrix/themes', true, true);
+            CopyDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/tools', $_SERVER['DOCUMENT_ROOT'].'/bitrix/tools', true, true);
+            CopyDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/panel', $_SERVER['DOCUMENT_ROOT'].'/bitrix/panel', true, true);
+            //			CopyDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/public/acrit_exportpro', $_SERVER['DOCUMENT_ROOT'].'/bitrix/php_interface/include/catalog_export', true, true);
+            foreach($this->siteArray as $sireDir)
+                CopyDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/public', $sireDir, true, true);
+        }
+        return true;
+    }
+    function UnInstallFiles(){
+        global $DB, $DBType, $APPLICATION;
+        if (is_dir($p = $_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.self::MODULE_ID.'/admin')){
+            if ($dir = opendir($p)){
+                while (false !== $item = readdir($dir)){
+                    if ($item == '..' || $item == '.'){
+                        continue;
+                    }
+                    if( file_exists( $_SERVER['DOCUMENT_ROOT'].'/bitrix/admin/'.self::MODULE_ID.'_'.$item ) ){
+                        unlink( $_SERVER['DOCUMENT_ROOT'].'/bitrix/admin/'.self::MODULE_ID.'_'.$item );    
+                    }
+                }
+                closedir($dir);
+            }
+        }
+        if (is_dir($p = $_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.self::MODULE_ID.'/install/components')){
+            if ($dir = opendir($p)){
+                while (false !== $item = readdir($dir)){
+                    if ($item == '..' || $item == '.' || !is_dir($p0 = $p.'/'.$item)){
+                        continue;
+                    }
+
+                    $dir0 = opendir($p0);
+                    while (false !== $item0 = readdir($dir0)){
+                        if ($item0 == '..' || $item0 == '.'){
+                            continue;
+                        }
+
+                        DeleteDirFilesEx('/bitrix/components/'.$item.'/'.$item0);
+                    }
+                    closedir($dir0);
+                }
+                closedir($dir);
+            }
+        }
+        if($_ENV["COMPUTERNAME"] != 'BX'){
+            DeleteDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/components', $_SERVER['DOCUMENT_ROOT'].'/bitrix/components/');
+            DeleteDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/image', $_SERVER['DOCUMENT_ROOT'].'/bitrix/images');
+            DeleteDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/js', $_SERVER['DOCUMENT_ROOT'].'/bitrix/js');
+            DeleteDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/tools', $_SERVER['DOCUMENT_ROOT'].'/bitrix/tools');
+            DeleteDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/themes', $_SERVER['DOCUMENT_ROOT'].'/bitrix/themes');
+            DeleteDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/panel', $_SERVER['DOCUMENT_ROOT'].'/bitrix/panel');
+            DeleteDirFiles($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/'.$this->MODULE_ID.'/install/public/acrit_exportpro', $_SERVER['DOCUMENT_ROOT'].'/bitrix/php_interface/include/catalog_export');
+            DeleteDirFilesEx('/upload/acrit_exportpro/');
+        }
+        return true;
+    }
+}

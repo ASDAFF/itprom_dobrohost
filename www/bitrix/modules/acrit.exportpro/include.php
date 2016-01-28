@@ -1,1 +1,2215 @@
-<? $GLOBALS['_____1008814752']= array(base64_decode(''.'R2V0T'.'3B'.'0aW9uU3RyaW5n'),base64_decode(''.'SW'.'5j'.'bHVkZU'.'1v'.'Z'.'HVs'.'ZUxh'.'bmdG'.'aWx'.'l'),base64_decode(''.'QWRkQXV0b2xv'.'YWRDbGFzc2V'.'z'),base64_decode('S'.'W5jbHVkZU'.'1vZHVsZQ='.'='),base64_decode('SW'.'5jb'.'HVkZU1'.'v'.'Z'.'HV'.'sZQ='.'='),base64_decode('SW5j'.'b'.'HV'.'kZU1vZ'.'HVsZQ=='),base64_decode('R2'.'V0TGlzd'.'A'.'=='),base64_decode('R2V0TmV'.'4dA=='),base64_decode('Rm'.'V0Y2'.'g='),base64_decode('R2V'.'0TGl'.'zd'.'A=='),base64_decode('R'.'mV'.'0Y2g='),base64_decode(''.'TG9j'.'YWxSZ'.'W'.'Rpcm'.'Vjd'.'A'.'=='),base64_decode('TG'.'9'.'jYWxS'.'Z'.'W'.'RpcmV'.'j'.'d'.'A=='),base64_decode('R'.'2V'.'0T'.'GlzdA=='),base64_decode('R2V0'.'TGlz'.'dA=='),base64_decode('R2V0Q'.'nlJRA=='),base64_decode('R'.'2V0T'.'mV4dA=='),base64_decode('R2'.'V'.'0TG'.'l'.'zdA'.'='.'='),base64_decode('R2V0'.'Tm'.'V4d'.'A=='),base64_decode('R2'.'V'.'0'.'Qn'.'lJR'.'A=='),base64_decode('R2V0'.'TGlzdA=='),base64_decode('R'.'2V0TGl'.'zdA=='),base64_decode('RmV0Y'.'2g'.'='),base64_decode(''.'SW'.'5'.'jbHVkZU1vZHVsZQ='.'='),base64_decode('R'.'2V0TGl'.'zdA=='),base64_decode('R'.'2'.'V0TmV4'.'dA=='),base64_decode('R2V'.'0T'.'GlzdA=='),base64_decode('R'.'2'.'V0'.'T'.'m'.'V4d'.'A='.'='),base64_decode(''.'U2V0T'.'3B0aW9uSW'.'5'.'0'),base64_decode('R2'.'V0T3B0aW9uSW50'));?><? $GLOBALS['____1405125256']= array(base64_decode('ZGVmaW5l'),base64_decode('c3RycmV2'),base64_decode('c3R'.'ydG91cHBlcg=='),base64_decode('c3ByaW5'.'0Zg='.'='),base64_decode('c'.'3By'.'aW50Zg='.'='),base64_decode('c3V'.'ic3'.'R'.'y'),base64_decode('c3R'.'ycmV2'),base64_decode(''.'Ym'.'F'.'zZTY0'.'X2RlY29kZQ=='),base64_decode(''.'c3Vi'.'c3Ry'),base64_decode('c3Ry'.'bG'.'Vu'),base64_decode('c'.'3RybGVu'),base64_decode(''.'Y2'.'h'.'y'),base64_decode('b3'.'Jk'),base64_decode(''.'b3Jk'),base64_decode('bWt'.'0aW1l'),base64_decode('aW50dmFs'),base64_decode('aW50'.'dm'.'Fs'),base64_decode('aW50dm'.'F'.'s'),base64_decode('a3NvcnQ='),base64_decode('c3Vic3Ry'),base64_decode('aW1w'.'bG9kZQ=='),base64_decode('ZGVmaW5lZA=='),base64_decode('YmFzZTY0X2RlY2'.'9kZQ'.'='.'='),base64_decode('Y29uc3R'.'hb'.'n'.'Q='),base64_decode('c3Ry'.'c'.'m'.'V2'),base64_decode('c3ByaW50Zg=='),base64_decode('c'.'3Ryb'.'GV'.'u'),base64_decode('c3RybG'.'Vu'),base64_decode('Y2'.'hy'),base64_decode(''.'b3Jk'),base64_decode('b3'.'Jk'),base64_decode(''.'bWt0aW'.'1l'),base64_decode('aW50dm'.'F'.'s'),base64_decode('a'.'W5'.'0dm'.'F'.'s'),base64_decode(''.'a'.'W50dmFs'),base64_decode('c3Vic3'.'Ry'),base64_decode('c3Vic3Ry'),base64_decode(''.'dGltZQ=='),base64_decode('b'.'Wt'.'0aW'.'1l'),base64_decode(''.'bWt0aW1l'),base64_decode('Z'.'GF0ZQ=='),base64_decode(''.'Z'.'GF0'.'ZQ=='),base64_decode('ZGVmaW5'.'l'),base64_decode('ZGV'.'maW5l'),base64_decode('a'.'W5'.'0d'.'mFs'),base64_decode('ZGF0ZQ'.'='.'='),base64_decode('ZGF0ZQ=='),base64_decode(''.'c3RyX'.'3JlcGxhY'.'2U='),base64_decode('d'.'GltZQ=='),base64_decode(''.'aXNfYXJyYXk'.'='),base64_decode(''.'aXNfYXJyY'.'Xk='),base64_decode('YX'.'Jy'.'YXlf'.'b'.'W'.'VyZ2U='),base64_decode('YXJyYXl'.'fdW5pc'.'X'.'V'.'l'),base64_decode('aXNfYXJyY'.'Xk='),base64_decode('aXNf'.'YXJy'.'YX'.'k'.'='),base64_decode('YXJyYXlfbWVyZ2U'.'='),base64_decode('YXJy'.'YXlf'.'d'.'W5pcXVl'),base64_decode('YXJyYX'.'lfZmlsdGVy'),base64_decode('cmVzZ'.'XQ='),base64_decode(''.'ZWFjaA=='),base64_decode(''.'aX'.'NfYXJyYXk='),base64_decode('Y29'.'1'.'bnQ='),base64_decode('YX'.'JyYXlf'.'c2hpZnQ'.'='),base64_decode('aXNfYXJyYXk='),base64_decode('Y291'.'bnQ='),base64_decode('Y29'.'1'.'bn'.'Q='),base64_decode('Y291b'.'nQ'.'='),base64_decode('c'.'3RybGVu'),base64_decode('c'.'3RybGVu'),base64_decode('aW5'.'0dm'.'Fs'),base64_decode('c'.'3RyaXBvcw'.'=='),base64_decode(''.'a'.'XNfYXJyYX'.'k='),base64_decode(''.'a'.'W5'.'0dmFs'),base64_decode('c3RybGV'.'u'),base64_decode('d'.'HJpbQ=='),base64_decode(''.'c3Ry'.'bGVu'),base64_decode(''.'aW'.'50dmFs'),base64_decode('aW50dm'.'Fs'),base64_decode('a'.'W50dmFs'),base64_decode('aW50dmFs'),base64_decode('c'.'HJlZ1'.'9tY'.'XRj'.'aF'.'9hbGw='),base64_decode(''.'ZX'.'h'.'wbG'.'9kZ'.'Q=='),base64_decode('Y291bn'.'Q'.'='),base64_decode('ZnVuY3Rpb25'.'fZXhpc'.'3R'.'z'),base64_decode('c3Ry'.'c3R'.'y'),base64_decode(''.'ZXhw'.'bG'.'9kZQ=='),base64_decode('YXJyYXlfbWVyZ'.'2'.'U='),base64_decode('YXJ'.'y'.'YX'.'lfbWVy'.'Z2U='),base64_decode('c'.'HJlZ19tY'.'XRjaF9hbG'.'w='),base64_decode('aX'.'NfYXJy'.'YXk='),base64_decode('YX'.'JyYXlfb'.'W'.'VyZ2U='),base64_decode('a'.'XNfYXJ'.'yYXk='),base64_decode('YX'.'JyYXlfbWVy'.'Z2U='),base64_decode(''.'cHJlZ'.'1'.'9'.'t'.'YXR'.'j'.'aF'.'9hbGw'.'='),base64_decode('a'.'XNfYXJyY'.'Xk='),base64_decode('YXJyYXl'.'f'.'b'.'WV'.'yZ2U='),base64_decode('aXNfYX'.'JyYXk'.'='),base64_decode('YX'.'J'.'yYXlfbWVyZ2U='),base64_decode('Y'.'XJ'.'yYX'.'lf'.'dW5'.'pc'.'XVl'),base64_decode('YX'.'JyYXl'.'fZmlsd'.'GVy'),base64_decode(''.'c3Ry'.'X3JlcGxhY2U='),base64_decode('ZXhw'.'b'.'G9'.'kZQ=='),base64_decode('Y291b'.'nQ='),base64_decode(''.'Z'.'XhwbG9kZQ=='),base64_decode('ZXhwb'.'G9kZQ'.'=='),base64_decode('aW5f'.'YXJyYXk='),base64_decode(''.'a'.'W1wb'.'G9k'.'ZQ=='),base64_decode('aW'.'5fY'.'XJyYXk='),base64_decode('aW5fY'.'XJyYXk='),base64_decode('ZmxvYXR2YWw='),base64_decode(''.'c'.'3Ry'.'b'.'GV'.'u'),base64_decode('c3Ry'.'X3'.'Jl'.'cGxhY2U='),base64_decode(''.'c3RyX'.'3Jl'.'cGx'.'h'.'Y2U='),base64_decode(''.'c3RyX3'.'Jlc'.'GxhY2U'.'='),base64_decode('aX'.'N'.'fY'.'X'.'JyYXk='),base64_decode('a'.'W5f'.'YXJyYXk='),base64_decode('Z'.'nV'.'u'.'Y3Rpb25f'.'ZXhpc3R'.'z'),base64_decode('ZXhwb'.'G9kZQ=='),base64_decode('Y291b'.'nQ='),base64_decode('cH'.'JlZ1'.'9tYXRjaA=='),base64_decode('c3RycG9z'),base64_decode('cm9'.'1bmQ='),base64_decode(''.'cm91bmQ='),base64_decode('aW5fY'.'XJyYX'.'k='),base64_decode('a'.'W5fY'.'XJy'.'Y'.'X'.'k='),base64_decode('ZmxvYXR2YWw='),base64_decode('aXN'.'fY'.'XJyYX'.'k='),base64_decode(''.'c3RyX'.'3Jl'.'c'.'G'.'xhY2U='),base64_decode(''.'YXJ'.'y'.'Y'.'Xlfd'.'2Fsaw=='),base64_decode('a'.'XNfYXJy'.'Y'.'Xk='),base64_decode(''.'aHRtbF9lbnRpdHlfZGVjb'.'2Rl'),base64_decode('aH'.'RtbF9'.'lb'.'nRpdHl'.'fZGVjb2R'.'l'),base64_decode('aHRtbF9'.'lbnRp'.'d'.'Hlf'.'Z'.'GV'.'jb2Rl'),base64_decode('aXNfYXJy'.'YXk'.'='),base64_decode('aW5f'.'YXJyYXk='),base64_decode('ZnVu'.'Y3Rpb'.'2'.'5fZXhpc'.'3'.'R'.'z'),base64_decode('ZXhwbG9k'.'ZQ='.'='),base64_decode('Y29'.'1bnQ'.'='),base64_decode('cHJlZ19'.'tYXRj'.'aA'.'=='),base64_decode('cHJl'.'Z'.'1'.'9'.'t'.'YXRjaA=='),base64_decode(''.'c3'.'Ryc'.'G'.'9z'),base64_decode(''.'cm91b'.'m'.'Q='),base64_decode('cm91'.'bmQ='),base64_decode('a'.'W'.'5fYXJyY'.'Xk='),base64_decode(''.'aW5fYXJyYX'.'k='),base64_decode('Z'.'mx'.'vYX'.'R2YWw'.'='),base64_decode('aXNf'.'YXJyYXk='),base64_decode('c'.'3RyX3Jl'.'cGxhY2U'.'='),base64_decode('YX'.'JyYXl'.'fd2Fsaw='.'='),base64_decode('aXNfYXJyYXk'.'='),base64_decode('aHRtb'.'F9lbnRpd'.'H'.'lfZG'.'V'.'jb2R'.'l'),base64_decode('aHRtbF9lbnRpdHlfZG'.'Vjb2'.'Rl'),base64_decode('aHRtbF9'.'lb'.'nRp'.'dHl'.'fZGVjb2R'.'l'),base64_decode('c3'.'RyX3Jl'.'cG'.'xh'.'Y2'.'U='),base64_decode('c3RyX3Jl'.'cGxhY2U='),base64_decode('c'.'3'.'Ry'.'X3J'.'lcGxhY2'.'U='),base64_decode('aXNfYXJyYX'.'k='),base64_decode('ZXhwbG9kZ'.'Q'.'=='),base64_decode('c3Ry'.'dG9'.'sb3dlcg=='),base64_decode('dH'.'JpbQ=='),base64_decode(''.'ZXhw'.'bG9kZQ'.'='.'='),base64_decode('c'.'3R'.'y'.'b'.'GVu'),base64_decode('bW'.'JfY29'.'udmVydF9jYXNl'),base64_decode('aW1wbG9'.'kZQ=='),base64_decode(''.'a'.'W1wbG9'.'k'.'ZQ=='),base64_decode('ZXhwbG9kZ'.'Q=='),base64_decode('c'.'3Ry'.'dG'.'9sb3dlcg='.'='),base64_decode('dHJp'.'bQ=='),base64_decode('ZXhw'.'b'.'G9'.'kZQ=='),base64_decode('c3Ry'.'bGVu'),base64_decode('bWJf'.'Y'.'2'.'9udmVydF9jYXN'.'l'),base64_decode(''.'aW1wbG'.'9'.'kZ'.'Q=='),base64_decode('aW1wbG9kZQ=='),base64_decode(''.'c3RyX3JlcGx'.'hY2U='),base64_decode('aHR'.'tbF9lb'.'nRpdHlf'.'Z'.'GV'.'jb2Rl'),base64_decode('c'.'3RyX3J'.'lcGxhY2U='),base64_decode('aHR'.'tbHN'.'wZWN'.'pYW'.'xjaGFyc19kZWNvZG'.'U='),base64_decode(''.'c3RyX3JlcG'.'xhY2U='),base64_decode(''.'c'.'3Ry'.'X'.'3Jlc'.'GxhY2U'.'='),base64_decode(''.'a'.'X'.'Nf'.'Y'.'XJyYXk='),base64_decode('Y291bn'.'Q'.'='),base64_decode('cHJlZ'.'19'.'yZXB'.'s'.'YWNl'),base64_decode('c3R'.'yX'.'3Jl'.'cGxhY2'.'U='),base64_decode('c'.'3Ry'.'X'.'3JlcG'.'xhY2'.'U='),base64_decode('a'.'W1'.'wbG9k'.'Z'.'Q=='),base64_decode('cHJ'.'lZ19y'.'ZXBsYWNl'),base64_decode('aHRtbF9lbnRpdHlfZGVjb'.'2Rl'),base64_decode(''.'c3RyX3Jl'.'cG'.'xhY2U='),base64_decode('YX'.'JyYXlfa'.'2V'.'5cw'.'='.'='),base64_decode(''.'YXJyY'.'Xlfdm'.'F'.'sdWVz'),base64_decode(''.'c3'.'RyX'.'3'.'JlcGx'.'h'.'Y2U='),base64_decode('Y'.'XJyYXl'.'fa2V5cw=='),base64_decode('YXJyYXlfdmFsdWV'.'z'),base64_decode('cHJlZ19'.'yZ'.'XB'.'sYWNl'),base64_decode(''.'c'.'HJlZ19yZ'.'XBsYW'.'Nl'),base64_decode('aXNfYXJyYXk='),base64_decode(''.'aW50dmFs'),base64_decode('ZGF0ZQ'.'=='),base64_decode('b'.'Wt'.'0aW1'.'l'),base64_decode('ZGF0ZQ=='),base64_decode(''.'ZGF0'.'ZQ=='),base64_decode('aW50d'.'mFs'),base64_decode('aW5f'.'YXJyYX'.'k='),base64_decode('aW'.'50'.'dmFs'),base64_decode('YXJyY'.'XlfZGlmZg=='),base64_decode('aW5fYXJy'.'Y'.'Xk='),base64_decode('aW5fYX'.'Jy'.'YX'.'k='),base64_decode('aW5'.'fYXJy'.'YXk='),base64_decode('ZG'.'F0Z'.'Q'.'=='),base64_decode('c'.'3RyX3Jl'.'cGxhY2U='),base64_decode('c'.'3'.'Ry'.'dG90aW1'.'l'),base64_decode('a'.'W5fYXJyYXk='),base64_decode('Y'.'291bnQ='),base64_decode('Z'.'GF'.'0Z'.'Q'.'='.'='),base64_decode('c'.'3R'.'yX3JlcGxhY'.'2U='),base64_decode('c3RydG'.'90aW1'.'l'),base64_decode(''.'aX'.'NfYXJyYXk='),base64_decode('a'.'X'.'NfYXJyYXk='),base64_decode('Y291bnQ='),base64_decode('aW5fYXJyYX'.'k='),base64_decode('c'.'m91bmQ='),base64_decode('aW'.'5fYXJ'.'yYXk='),base64_decode(''.'aW5'.'fYX'.'J'.'yYX'.'k='),base64_decode('cm91b'.'mQ='),base64_decode('cm91bm'.'Q='),base64_decode('c'.'m91bm'.'Q='),base64_decode('cm91bmQ='),base64_decode('aXNfYX'.'JyYXk='),base64_decode(''.'aXNf'.'YX'.'JyYXk='),base64_decode('YXJy'.'YXlf'.'bWVyZ'.'2U='),base64_decode('aXNfYX'.'JyYXk'.'='),base64_decode('a'.'XNf'.'Y'.'XJ'.'yY'.'Xk'.'='),base64_decode('YXJ'.'yY'.'X'.'lfbWVyZ'.'2'.'U='),base64_decode('c3RybGVu'),base64_decode('d'.'HJpbQ=='),base64_decode(''.'aX'.'NfYXJy'.'Y'.'Xk'.'='),base64_decode('c'.'3RybGVu'),base64_decode(''.'aXNf'.'YXJ'.'y'.'YXk'.'='),base64_decode('cHJl'.'Z19'.'tY'.'XRjaA=='),base64_decode('c'.'H'.'JlZ'.'19t'.'YXRjaA=='),base64_decode('YX'.'JyYXlf'.'a2V5X'.'2V'.'4'.'a'.'XN0cw=='),base64_decode('aXNf'.'YXJyYXk='),base64_decode('cHJlZ19tYXRja'.'A'.'=='),base64_decode('aXNfYXJyYX'.'k='),base64_decode('cHJlZ1'.'9tYXRjaA=='),base64_decode('cHJlZ'.'1'.'9t'.'YXRjaA=='),base64_decode(''.'aXNfYXJyYXk'.'='),base64_decode(''.'c'.'HJlZ19'.'tYXRj'.'aA=='),base64_decode('c'.'HJ'.'lZ19t'.'Y'.'XRjaA=='),base64_decode(''.'cHJlZ19'.'tY'.'XRjaA='.'='),base64_decode('ZG'.'F0ZQ=='),base64_decode('dGlt'.'ZQ'.'='.'='),base64_decode(''.'Y29'.'1bnQ='),base64_decode(''.'Y'.'291bnQ='),base64_decode('YXJyYXlfdW'.'5pcX'.'Vl'),base64_decode('Y291bnQ'.'='),base64_decode('Y291bnQ='),base64_decode('Zmls'.'ZV9'.'wdXRf'.'Y29udGVudHM'.'='),base64_decode('aW50dmFs'),base64_decode('aX'.'NfZmlsZQ=='),base64_decode(''.'ZmlsZV9wdXRfY29'.'ud'.'GV'.'u'.'dHM='),base64_decode('a'.'W50'.'dmFs'),base64_decode(''.'aW50dmFs'),base64_decode('aW50dmFs'),base64_decode('aW5'.'0dmFs'),base64_decode('aW5'.'0dmFs'),base64_decode('aW5'.'0dmFs'),base64_decode('aW50'.'dmFs'),base64_decode('c'.'2NhbmR'.'p'.'c'.'g='.'='),base64_decode('c3RycG9z'),base64_decode('Zml'.'sZV9nZXRfY'.'29udG'.'V'.'u'.'dHM='),base64_decode('dW5'.'z'.'Z'.'XJp'.'YWxp'.'emU='),base64_decode('aXNfYXJ'.'yYXk='),base64_decode('Y'.'XJy'.'Y'.'XlfZm'.'lsdGVy'),base64_decode('Z'.'ml'.'s'.'ZV9'.'leGl'.'z'.'dHM='),base64_decode('ZmlsZV9nZX'.'Rf'.'Y29udGVudHM='),base64_decode(''.'dW'.'5z'.'ZX'.'JpYW'.'xpe'.'mU='),base64_decode('a'.'XNfY'.'XJy'.'YXk'.'='),base64_decode('aX'.'N'.'f'.'YXJy'.'YX'.'k='),base64_decode(''.'ZmlsZV9wd'.'XRf'.'Y29udGVu'.'dH'.'M='),base64_decode(''.'c2V'.'y'.'aWFs'.'a'.'Xp'.'l'),base64_decode('ZmlsZV'.'9l'.'eGl'.'zdHM='),base64_decode('dW5'.'s'.'a'.'W5r'),base64_decode(''.'c2'.'Nh'.'bm'.'R'.'pcg=='),base64_decode('c3RycG9'.'z'),base64_decode('dW5sa'.'W5r'),base64_decode('ZGVmaW5lZA=='),base64_decode('c3R'.'y'.'bGV'.'u'));?><? function ___1104705638($_544962628){static $_498150975= false; if($_498150975 == false) $_498150975=array('Z'.'X'.'hwaXJlX21lc'.'3Nf'.'Y3VzdG9'.'tMg==','YWNyaXRfZXhw'.'b3J0cHJvXw'.'==',''.'b21lZA==','WQ==','ZHJ'.'tX'.'3'.'N0ZXJn'.'b'.'2tj','JT'.'Ax'.'MHMK','aX'.'Rf'.'ZXhw','YWNyaXQ'.'u'.'ZXhwb3J0cH'.'Jv','JXM'.'l'.'cw==','fmJ'.'z','ZX'.'RhZF9wbw==','YWR'.'ta'.'W4=','bW9'.'kdWx'.'lcw==','dXNlcl9kYXR'.'l'.'X2JzbS'.'5waHA'.'=','YWN'.'yaXQ'.'uZXhw'.'b3'.'J0'.'cH'.'Jv',''.'Yml0'.'cml'.'4','UkhpdF9leHA=','NTkzN'.'2Qw'.'ZDE4MzBoeXRvcw==','','MDJh','ZGZ'.'j'.'MDM'.'5YTE'.'5Z'.'DYzZDJj'.'MDU'.'1','Y'.'2'.'JiNzdlNQ'.'==','aHR0cD'.'ovL'.'2J'.'pd'.'HJpeH'.'NvZnQuY29tL2J'.'p'.'dHJpeC9ic'.'y5waHA=','Y'.'WNy',''.'b3'.'J0'.'c'.'HJvX09MRFN'.'JV'.'EVFWFBJ'.'Uk'.'VEQV'.'R'.'F'.'Uw='.'=','RE9D'.'VU1FT'.'lR'.'fU'.'k9PVA==','Lw==','Lw==','YWNyaXRfZXhwb3J0c'.'HJvX1R'.'FT'.'VBPU'.'kFSWV9D'.'QUNIRQ==','YWNyaX'.'R'.'fZXhwb3J0cHJvX1'.'RFT'.'VBPU'.'kFSWV9DQUNIR'.'Q==','',''.'YTh'.'lMmE=',''.'JXMlc'.'w='.'=','Mjc5Y'.'TU2ODBl'.'ZmY0N'.'mM3MjAxYmE=',''.'YWN'.'y','b3J0'.'cHJvX1NJVEVF'.'W'.'FBJU'.'k'.'VE'.'QVRFTUFQR'.'V'.'I=',''.'bQ==',''.'ZA='.'=',''.'WQ'.'==','U2l0'.'ZUV4cGlyZURhd'.'G'.'Vf'.'YWNy'.'aXRfZXh'.'w'.'b3J'.'0cH'.'Jv','Q0'.'V4cG'.'9ydH'.'B'.'y'.'b1Byb'.'2Z'.'pbGVEQg'.'==','Y2xhc'.'3Nlc'.'y'.'9te'.'XNxb'.'C'.'9jZX'.'hwb'.'3J'.'0cH'.'JvcHJvZmls'.'ZWRiLnBocA==','Q0V'.'4cG'.'9ydHByb01hcmtldER'.'C',''.'Y2x'.'hc3Nl'.'cy9teXNx'.'b'.'C9jZX'.'hw'.'b3J0c'.'HJ'.'vcHJv'.'X'.'2'.'1'.'hc'.'mtl'.'dGRiLnBo'.'cA='.'=','Q0'.'V4cG'.'9y'.'dHByb1Byb2Z'.'pbGU=','Y2xhc3'.'Nlcy9'.'nZW'.'5lcmFsL2N'.'leHBvcnRwcm9'.'wcm9ma'.'WxlLnBocA==',''.'Q0'.'V4cG9ydHByb1Z'.'hcmlh'.'bnQ=','Y2xhc'.'3Nlcy9nZ'.'W'.'5'.'lcmF'.'sL2Nle'.'HB'.'vcn'.'Rwcm9w'.'cm9maWxlL'.'nBocA==','Q'.'0'.'F'.'jcml0RXhwb'.'3J0cHJ'.'vQ29'.'uZA==','Y2xh'.'c3'.'Nlcy9nZW'.'5l'.'cmF'.'sL'.'2N'.'l'.'eH'.'B'.'vcnRwcm9maWx0ZXIucGhw','Q0Fjcml0'.'RXhwb3'.'J0cHJvQ'.'2'.'F'.'0'.'Y'.'WxvZ'.'0Nv'.'bm'.'Q=','Y2xhc3'.'N'.'lcy9n'.'Z'.'W5lcmFs'.'L'.'2NleHBvcnRw'.'cm9'.'maWx0ZXIucGhw','Q0Fjcml0R'.'X'.'hw'.'b'.'3J0cHJvUHJvcHM=','Y2xhc3Nlcy9n'.'ZW5'.'lcmFsL2N'.'leH'.'Bvcn'.'Rwc'.'m9'.'maWx0ZX'.'IucGhw','Q0'.'Fjcml0'.'RXhwb3J0cHJvRXh'.'wb3J0','Y'.'2xhc3Nlc'.'y9nZW'.'5lc'.'mFsL2Nle'.'H'.'BvcnR'.'wc'.'m9leH'.'Bvc'.'nQucGh'.'w','Q0'.'V'.'4'.'cG9ydHByb'.'0Nyb'.'24'.'=','Y'.'2'.'xhc3'.'Nlc'.'y'.'9nZW5'.'lcm'.'F'.'sL2Nl'.'e'.'HBvcnRwcm9hZ'.'2VudC5waHA'.'=','Q0V4cG9y'.'dHB'.'yb0F'.'nZW'.'5'.'0','Y2'.'xhc'.'3Nlcy9nZW'.'5lcmFsL2NleHBvc'.'nRwcm9h'.'Z2VudC'.'5'.'waHA=','Q0V4cG9yd'.'HByb01hc'.'mtldEViYXlEQg='.'=','Y2xh'.'c'.'3Nl'.'c'.'y9'.'teXNxbC9jZXhw'.'b3J'.'0cHJvcHJvX'.'21hc'.'mt'.'ldGVi'.'YXl'.'kY'.'i5w'.'aHA=','VGhyZWFkcw==',''.'Y'.'2xhc'.'3'.'Nlc'.'y'.'9nZW5lcmFsL3Ro'.'cmVhZHMucG'.'hw','V'.'G'.'hyZWFkc'.'1Nlc3Npb24=','Y2xh'.'c3N'.'lcy9nZ'.'W5lcm'.'FsL'.'3RocmV'.'hZH'.'M'.'ucGhw','T1pPTg==','Y2xhc3Nlcy'.'9'.'n'.'Z'.'W5lcmFsL'.'29'.'6b24ucGhw','Y'.'W'.'N'.'ya'.'XQuZXhwb3J'.'0cHJv','Z2xvYmF'.'sX21lbnVfYWNyaXQ'.'=','bWVud'.'V9pZ'.'A==',''.'Y'.'WNya'.'XQ=','c29ydA'.'==','d'.'GV4'.'dA==','QUNSSVRfTU'.'V'.'OVV9OQU1F','dGl0b'.'GU=','Q'.'UN'.'SSVRf'.'TUVO'.'VV9USV'.'RMRQ'.'==','aWNvbg==','Y2x'.'vdW'.'RzX21lbnVfaWN'.'vb'.'g='.'=','c'.'GFnZ'.'V9'.'pY29'.'u','Y2'.'xvdWRzX3BhZ2VfaW'.'Nvbg='.'=','aXRlbX'.'Nf'.'a'.'WQ=','Z2'.'xv'.'YmFsX'.'21lbnV'.'fYWNyaXQ'.'=','a'.'X'.'RlbXM'.'=','Z2xvY'.'m'.'FsX21l'.'b'.'n'.'Vf'.'YW'.'Nya'.'XQ=','aWJsb2Nr','c2FsZQ==','Y2F0YWx'.'v'.'Z'.'w==','U0VUVVA=','R'.'Vh'.'QT1J'.'UX1NUR'.'VA=',''.'U0VU'.'VV'.'A=',''.'RV'.'hQ'.'T1J'.'UX'.'1NUR'.'VA=','VElNRVNUQU'.'1QX1'.'g'.'=','REF'.'U'.'RV'.'9DUkVBVEU=','R'.'EFU'.'RV9BQ1RJ'.'VkVfRlJP'.'TQ='.'=','REFURV9BQ'.'1RJVkVf'.'VE8=','S'.'UQ=','ZmlsZV'.'9nZXRfY'.'2'.'9udG'.'Vud'.'H'.'M=','Ym'.'F'.'zZTY0X'.'2RlY29kZQ==','WS'.'1t'.'LW'.'RUa'.'DppO'.'nOxaDpp','Y3A'.'xM'.'jUx','Y'.'3A'.'x'.'MjUx',''.'dXRmOA==','REF'.'URUZPU'.'k1BVA==','Z'.'C5tL'.'lkgSDppOnM'.'=','X'.'w'.'==','IA='.'=','REFU'.'RU'.'ZP'.'Uk1'.'B'.'VA='.'=',''.'I0'.'VOQ'.'09E'.'SU5H'.'Iw='.'=','RU5D'.'T'.'0RJTkc=','I0R'.'BVEUj','RE'.'FURUZPU'.'k1BV'.'A'.'==','I1NIT'.'1'.'B'.'fTkF'.'NRSM=','U0hPU'.'E5BTU'.'U=','I0NPTVBBTllfTkFNRSM=','Q09NUE'.'FO'.'W'.'Q'.'='.'=','I1NJVE'.'VfVVJMIw==','a'.'HR0cH'.'M6Ly8=','aHR0cDo'.'vLw'.'==','R'.'E9NQUl'.'OX05BT'.'U'.'U=','I'.'0R'.'F'.'U0NSSVBU'.'SU9OIw==','R'.'EV'.'TQ'.'1JJUFR'.'JT04=','I0R'.'B'.'VEUj',''.'R'.'VhQT1'.'JU'.'UFJP',''.'SUQ=','Q'.'0FURU'.'dPUlk=',''.'RV'.'hQT1JUUFJP','SUQ=','Q'.'0FU'.'RUdPUlk=','RVhQT'.'1JUUFJP','SUQ'.'=',''.'Q0FURUdPUlk=',''.'RVhQT1JUUFJP','SUQ=','Q0'.'FU'.'R'.'UdPUlk=',''.'RV'.'hQT1J'.'UUFJ'.'P','SUQ=',''.'Q0FURUd'.'PUlk=','RVhQT1JUU'.'FJP','SUQ=','Q0FURUd'.'P'.'Ul'.'k'.'=',''.'R'.'VhQT1JUUFJP','S'.'UQ=','Q0'.'FURUdPUlk=','R'.'V'.'hQT1JUUFJP','SU'.'Q=',''.'Q1VSUkVOQ1k=','RVhQT'.'1JUUFJP',''.'SUQ=',''.'Q1VSUk'.'VOQ1k=','RVh'.'Q'.'T1J'.'UUFJP','S'.'UQ'.'=','Q1V'.'SUkVOQ1k=','R'.'VhQT1J'.'UUF'.'J'.'P','SUQ=',''.'Q'.'1VSUkVOQ'.'1k'.'=',''.'RVh'.'QT1JUUFJP','S'.'UQ=','Q'.'1V'.'SUkVOQ1k=','R'.'VhQT1JUU'.'FJP','SUQ=','Q1VSUk'.'VOQ'.'1k=',''.'R'.'VhQT1'.'J'.'UU'.'FJP','SUQ=','Q1VSUk'.'VOQ1k=','R'.'V'.'hQT1JUUFJP',''.'SU'.'Q'.'=',''.'R'.'EVNT19'.'DT1VOV'.'A==',''.'RV'.'hQT1JU'.'UFJP','SUQ=','RE'.'VNT19D'.'T1VO'.'VA==','R'.'VhQ'.'T'.'1JUUFJP','SUQ=','REVNT1'.'9D'.'T1'.'VO'.'V'.'A='.'=','RV'.'hQ'.'T'.'1JU'.'UFJ'.'P','SU'.'Q'.'=','REV'.'NT1'.'9DT1VO'.'VA'.'==',''.'S'.'UQ=','','SUJM'.'T0NLX0'.'lE','Q'.'VND',''.'SU'.'Q=','QVND','S'.'UJMT0'.'NLX0lE','U0VDVE'.'lP'.'T'.'l'.'9'.'JRA==','Q0'.'F'.'U'.'RUdPUlk=','Q0'.'hFQ0tf'.'SU5DTF'.'VER'.'Q'.'==','W'.'Q==','SU5DTFVER'.'V9TVUJ'.'TRUNUS'.'U9OUw='.'=',''.'WQ==','blBhZ2VTaXpl','aU'.'51bVB'.'hZ2U'.'=','SUQ=','S'.'UJMT0NLX0'.'lE','SUJMT0N'.'L'.'X1NFQ'.'1R'.'JT05f'.'SU'.'Q'.'=',''.'TkFNRQ='.'=','Q09E'.'RQ==','QUNUSVZF','Q'.'0FUQUxP'.'R19HUk9'.'VUF'.'8=','SUQ=','UFJFVkl'.'F'.'V19URVhU','REVUQ'.'UlMX1RFWFQ'.'=','SU'.'Q=',''.'RVhQT1JUUF'.'JP','TE9H','SUQ=','U'.'1'.'R'.'FUFM=','SU'.'Q=','VF'.'lQRQ==','YWR2YW50c2hvcA==','UF'.'JP'.'UEVSVElFUw'.'='.'=','SUJM'.'T'.'0'.'NLX'.'1NFQ1'.'R'.'J'.'T05fSUQ=','U0VDV'.'ElPT'.'lM'.'=','','U'.'0VDVElPTlM=','U0V'.'DVElPTlM=','ID4+IA='.'=','TkFN'.'RQ='.'=','TkFNRQ==','U0VD'.'VElP'.'TlM=','U0VDVElPT'.'lM=',''.'W'.'w==',''.'U0VDVEl'.'PTl'.'M=','XQ==','Q0F'.'UQUxPR19'.'NRU'.'FTVV'.'JF',''.'SUQ=','Q0FUQUx'.'PR1'.'9NRUF'.'TVVJF','TUVBU1'.'V'.'SRQ==','U1lN'.'Qk'.'9MX1JVUw='.'=','VVNF'.'X1NLV'.'Q==','WQ'.'==','S'.'U'.'JMT'.'0NL'.'X0lE','SU'.'JMT0NLX'.'0l'.'E',''.'SUJMT0'.'NLX0lE','T0ZGR'.'VJTX0'.'lCTE9'.'DS19JRA==','UF'.'JPUE'.'VS'.'VFlf','SUJMT0NLX0lE',''.'T0ZG'.'RVJTX'.'1BST'.'1BF'.'U'.'lRZX0l'.'E','SUQ=','SUQ=','SUJMT0'.'N'.'LX0lE','Tk'.'FN'.'R'.'Q==','Q0FUQUxPR'.'19HU'.'k'.'9VUF8=','SU'.'Q=','T0ZGRVJT','','SU'.'Q=','Q0F'.'UQUxP'.'R'.'19NR'.'UFT'.'VVJF',''.'TUVBU1VS'.'RQ'.'==','U1lNQk'.'9M'.'X'.'1JVUw==','',''.'Q01'.'MM'.'g='.'=','VkFMVUU=','','VkFMVUU=','VkFMVUU'.'=','O'.'g==','Q0FUQUxPR19QUklDRV8'.'=','SUQ=','Og'.'==','Q0FUQ'.'U'.'xPR'.'19Q'.'VV'.'JDSEF'.'TSU5'.'HX1BSSU'.'NF','Q0FUQUxPR1'.'9'.'Q'.'VVJDSEFTSU5HX1BSSU'.'N'.'F','Og==','Q0F'.'UQU'.'x'.'PR19RVUF'.'OVE'.'l'.'UWQ==','T0Z'.'GRVJ'.'T','T'.'0Z'.'GRVJT','O'.'w==','U'.'g==','O'.'w==','c2'.'t1','b'.'mFtZQ==','c'.'GFyYW1zeW5vbnlt','Y2F0ZWdvcnk=','ZW5hY'.'mxl'.'ZA==','Y3Vyc'.'mV'.'uY'.'3k'.'=','cH'.'J'.'p'.'Y2'.'U=','cHV'.'yY'.'2hhc2Vw'.'cm'.'lj'.'Z'.'Q==',''.'YW1v'.'d'.'W'.'50','c2t1On'.'NpemU6Y29'.'sb3I6cHJpY2U6cH'.'VyY2hhc2'.'VwcmljZTphbW91bn'.'Q=','dW5'.'pdA==',''.'Z'.'Glz'.'Y291bnQ'.'=','c2hpcHBpbm'.'dw'.'cml'.'jZQ==','d'.'2VpZ2h0','c2l'.'6ZQ'.'==','YnJ'.'pZW'.'ZkZ'.'XNjc'.'m'.'lw'.'dGlv'.'bg==','Z'.'GVzY3JpcHRpb'.'24=','dGl0bGU'.'=','bWV'.'0YWtl'.'eX'.'dvcmRz','b'.'WV0Y'.'W'.'R'.'lc2NyaXB'.'0a'.'W'.'9'.'u','c'.'Ghvd'.'G9z',''.'bW'.'Fya2Vycw'.'==',''.'c'.'HJvcGVyd'.'Gllcw==','cHJvZHVjZX'.'I=','cHJlb'.'3JkZXI'.'=','c'.'2Fs'.'ZX'.'Nub'.'3Rl',''.'cmVsYX'.'RlZCB'.'za'.'3U=','YWx0ZXJuYXRpd'.'m'.'Ugc'.'2t1','Y3VzdG9'.'tb3B'.'0aW9u','Z3'.'Rp'.'bg==','Z'.'29vZ2xl'.'cHJvZHVjd'.'GNhdGVnb3J'.'5','Y'.'W'.'R1bHQ=','b'.'WFudW'.'ZhY'.'3R'.'1cmV'.'yIHdhc'.'n'.'JhbnR5','dGFn'.'cw='.'=',''.'Z'.'2lmdHM=','c'.'HJvZHVjdHNldHM'.'=','Y'.'3Ax'.'MjUx','Y3Ax'.'Mj'.'Ux','dXRmOA==',''.'U'.'F'.'J'.'P'.'UEVSV'.'ElFUw==','Q'.'VJUTlV'.'N'.'QkVS','UFJPUE'.'V'.'S'.'VElFUw='.'=','Q'.'VJUTlVN'.'QkVS','SUQ=','T'.'kFNRQ='.'=','T'.'k'.'FNRQ==','RU5'.'D'.'T0'.'RJ'.'Tkc=','Q09ERQ'.'==',''.'U0'.'VDV'.'ElPTlM=','U0V'.'DVE'.'lPTl'.'M=','RU'.'5DT0RJTk'.'c'.'=','Q'.'U'.'NUSV'.'ZF','WQ==','Kw==','LQ==','RU5DT0RJTkc'.'=','Q0FUQ'.'UxP'.'R1'.'9QU'.'k'.'lDRV8=','Q0FUQUxPR19QUklDRV8=','','Q0F'.'UQUxP'.'R19QV'.'VJDSEFTS'.'U5HX1'.'BSSUNF','Q0FUQU'.'xPR19RVUFOVEl'.'UWQ'.'==','T0'.'ZGRVJ'.'T',''.'T'.'0ZGRVJ'.'T',''.'RU5'.'DT0RJ'.'Tk'.'c=','T'.'UVBU'.'1VS'.'RQ==','TUVBU1VS'.'RQ==','RU5DT0RJTkc=','Q'.'0FU'.'Q'.'UxPR19XRUlHSFQ=','Q0FUQUxPR19XSURUSA==','IHg'.'g',''.'Q0FUQUxPR19IRUlHSFQ=',''.'IH'.'gg','Q0FUQ'.'U'.'x'.'PR1'.'9MRU'.'5HVEg=','U'.'FJF'.'Vkl'.'FV19'.'U'.'RVhU','UFJ'.'FVkl'.'F'.'V19UR'.'VhU','R'.'U5DT'.'0'.'RJTkc=','R'.'E'.'VUQ'.'U'.'lM'.'X'.'1'.'RFWF'.'Q=','R'.'EVUQUlMX1RFWFQ=','R'.'U5DT0R'.'J'.'Tkc=',''.'L2Fjcml0LmV4cG'.'9y'.'d'.'HByby8'.'/cGF'.'0aD'.'0=','Ug==','Ow='.'=','L2Fjcml'.'0Lm'.'V4'.'cG9'.'yd'.'HBy'.'by8/cGF0'.'aD0'.'=','VVNFX1'.'ZB'.'U'.'klB'.'TlQ=','WQ'.'==',''.'VFl'.'QRQ==','YWN0'.'aXZpem0'.'=','QUN'.'SSVRfRVhQT1'.'JUUFJPX0FfQUFf'.'QQ'.'==','Ly4'.'qKDw'.'uKz'.'4'.'pLiooI'.'1t'.'c'.'d'.'1xk'.'Xy'.'1dKzoqW1x3XG'.'RfLV0r'.'IykuKi'.'g8XC8uKz4pLw='.'=',''.'T0ZGR'.'VJfVEVN'.'UExBVEU=','','I'.'0'.'1BUktF'.'VF9'.'DQ'.'V'.'RFR09'.'SWSM=','','S'.'UQ=','W'.'E1MR'.'EFUQ'.'Q'.'==','V'.'k'.'F'.'MVUU=','Q'.'09'.'OVFZBTFV'.'FX0Z'.'BTFNF','Q09'.'OVFZBT'.'F'.'V'.'FX'.'1RSVUU=','LQ'.'='.'=','VkFMVU'.'U=','S'.'UQ=','Q09ORElUSU9'.'O','Q0'.'hJTER'.'SR'.'U4=','Q'.'0xB'.'U1Nf'.'SUQ=','Q29uZElCUHJvcA==','Og'.'==','Q0xB'.'U'.'1NfSUQ=','Q0'.'hJTERSRU4'.'=','Q0hJT'.'E'.'RSRU4=','S'.'UQ=','SUQ=','Q09OREl'.'USU'.'9O','Q0h'.'J'.'TERSRU4'.'=','RV'.'ZBT'.'F9GSUxURVI=',''.'L'.'y4q'.'P1BST'.'1BFUlRZXyhcZCspf'.'ChD'.'QVR'.'BTE9HX1'.'BS'.'SU'.'NFX1tcZF'.'0rX1dEfENBVEFMT0dfUFJJQ0VfW1xkXS'.'tfRCku'.'Kj'.'8v','RVZBTF9GS'.'UxURV'.'I=','S'.'U'.'Q=','S'.'UQ=','L'.'y4qP1BST1BFUlRZXyhcZ'.'CspfCh'.'D'.'QVRBTE'.'9HX1BSSUN'.'F'.'X1'.'tcZF0rX1dEfENBVEFM'.'T0dfU'.'FJJ'.'Q'.'0VfW1x'.'k'.'XStfRCkuKj'.'8'.'v',''.'RVZBTF9GS'.'UxURV'.'I=','SUQ=','SUQ=','SUQ=','SUQ=','S'.'UQ=','SUQ=','LQ==','Xw==','Vk'.'FSSUFOVA==','UFJJQ0U=','U'.'0VY'.'X1ZBTFVF','U0VY','Q09MT'.'1'.'JfVkFM'.'V'.'UU'.'=','Q'.'09MT1I=','U0'.'laRV9WQUxVRQ==','U0la'.'RQ==','V0VJR0hUX1ZBTFVF','V0VJR0h'.'U','U0'.'VY'.'T0ZGRVJfVkFMVUU=','U0VYT0'.'ZGRVI'.'=','Q'.'09MT1'.'J'.'PRkZFU'.'l9WQU'.'x'.'VRQ==','Q0'.'9MT1JP'.'Rk'.'ZFU'.'g==',''.'U0l'.'aR'.'U9GRkVSX1ZBTFV'.'F','U0laRU9'.'G'.'Rk'.'V'.'S','V'.'0V'.'J'.'R0hUT0ZG'.'R'.'VJ'.'f'.'Vk'.'FMVUU'.'=','V0VJR'.'0hU'.'T0ZGR'.'VI=',''.'VkFSSUFO'.'V'.'A==','LQ'.'==','SUQ=',''.'UF'.'JPUE'.'VS'.'VF'.'lf','X0RJU1BMQVlfVk'.'FMV'.'UU=','a'.'WJsb2NrX2lk',''.'YXNj','aWQ'.'=','YXNj','S'.'UJMT0NLX0lE','U0'.'VDVElPTl9JRA='.'=','Q0FURUdPUlk=','Q0hF'.'Q0tfSU5DTFVERQ==',''.'WQ='.'=',''.'SU5DTF'.'V'.'ER'.'V9TVUJ'.'TRU'.'NU'.'SU9O'.'Uw==','W'.'Q==','blBhZ2V'.'TaXpl',''.'aU'.'5'.'1bV'.'B'.'h'.'Z2U'.'=',''.'S'.'UQ=',''.'RVhQ'.'T1JUUFJP','TE9H',''.'SUQ'.'=','U1R'.'FUFM=','S'.'UQ=','SUJMT0NL'.'X1NFQ1RJT05fSUQ'.'=',''.'U0tJ'.'UA==','SVRFTQ==','S'.'VRFTQ='.'=',''.'VVNFX1N'.'L'.'VQ==','W'.'Q==','SUJ'.'MT0NLX0lE','SUJMT'.'0NLX0l'.'E','SUJM'.'T'.'0NLX0l'.'E','T0ZGRVJTX0lCTE9DS19'.'J'.'R'.'A==','UFJPUEVSVFlf','SUJ'.'MT0NL'.'X0lE','T'.'0ZG'.'R'.'V'.'JTX1BST1B'.'F'.'Ul'.'RZ'.'X0l'.'E',''.'S'.'UQ=','SUJMT0N'.'L'.'X1N'.'FQ1RJT05fSUQ'.'=','SV'.'RFT'.'Q==','SU'.'J'.'MT0N'.'LX1NFQ1'.'RJ'.'T05f'.'SUQ=','WE'.'1'.'M','','SV'.'RFTQ==','T0ZGRVI=','VkF'.'SSUFOVA='.'=','U0VY'.'X0N'.'PTlNU','Vk'.'FSSUFOV'.'A'.'==','U0VYX0NP'.'Tl'.'NU',''.'U0VY',''.'LQ='.'=','Vk'.'F'.'SSUFOVA==','Q0F'.'URU'.'dPUlk=','SU'.'JMT0'.'NLX1NFQ1R'.'J'.'T05'.'fSUQ=','LQ='.'=',''.'V'.'k'.'FSSUFOVA'.'==','Q0FUR'.'UdPUll'.'fRVhU','SU'.'JMT'.'0N'.'LX1NFQ1RJ'.'T05fSUQ=',''.'U'.'0la'.'RQ==','V0'.'VJR0hU','Q09MT1I=',''.'V'.'k'.'FSSUFO'.'V'.'A==','U0VYX'.'0'.'NPTlNU','VkFS'.'SU'.'FOV'.'A'.'='.'=','U'.'0VY'.'X0NPTlNU','U0VYT0ZGR'.'VI=',''.'U'.'0laRU9'.'G'.'RkVS',''.'V'.'0VJ'.'R0h'.'UT0ZG'.'RV'.'I=','Q09M'.'T'.'1JP'.'RkZFUg==','T1o=',''.'T1'.'o=','Y29sb3I=','c2l6ZQ==','X2Fu'.'ZF8=','Y'.'29sb3I=','c'.'2l6Z'.'Q'.'==','T1o=','P'.'C9z'.'a'.'X'.'p'.'lPg==','PC'.'9zaX'.'plPg==','S'.'U'.'Q=','PC92Y'.'XJpYW50Pg'.'==','PC9'.'vZmZ'.'lcj4=','PGRp'.'d'.'i'.'BzdHl'.'sZT0id2l'.'kdGg6IDEwM'.'CU'.'7'.'IHRleHQtY'.'Wx'.'pZ24'.'6IGN'.'lb'.'n'.'Rl'.'cjs'.'gZm9udC1'.'za'.'XplOiAx'.'O'.'H'.'B4OyBtYX'.'JnaW46IDQ'.'wcHggMDsg'.'cGF'.'kZG'.'l'.'u'.'ZzogNDBweCAwOyBib3JkZX'.'I6I'.'DF'.'weCBz'.'b'.'2xpZCAjY2NjOyBib3JkZX'.'ItcmFka'.'XV'.'zOiA2cHg7I'.'GJhY2t'.'n'.'cm91bmQ6ICN'.'mNWY1ZjU7'.'Ij'.'4=','QUNSSVRfR'.'V'.'h'.'QT1JUUFJPX1'.'JVTl9'.'F'.'WFBP'.'U'.'lRf'.'UlV'.'O','PG'.'J'.'yP'.'g==','I1BST0'.'ZJ'.'TE'.'V'.'fS'.'UQj',''.'I'.'1'.'BST0ZJ'.'TEV'.'fTk'.'FNRS'.'M=','SUQ=','TkFNRQ='.'=','QUN'.'SSVR'.'fRVhQT'.'1JUUFJ'.'PX'.'1JV'.'T'.'l9T'.'VEV'.'QX1BST0Z'.'JT'.'EU=','P'.'GJyPg==','I1NURVAj',''.'I'.'0NPVU'.'5U'.'Iw'.'==','QUNSSV'.'R'.'fRVh'.'QT1J'.'U'.'UFJP'.'X1'.'J'.'VT'.'l9TV'.'EV'.'Q'.'X'.'1JVTg'.'==',''.'PC9kaX'.'Y'.'+','Tk'.'FNR'.'Q==','UFJFVklF'.'V19U'.'RVhU','RE'.'VU'.'QUlMX'.'1'.'RFWFQ=','SUJ'.'MT0NLX1NFQ1RJT0'.'5fSUQ=','SUJ'.'MT0N'.'LX1N'.'FQ1RJT0'.'5'.'fS'.'U'.'Q=','R1'.'J'.'PVVBfSVRFTV9J'.'RA='.'=','SUQ=','RVZBTF'.'9G'.'S'.'U'.'xUR'.'V'.'I=',''.'T0'.'ZGRV'.'JfVE'.'VNUEx'.'BV'.'EU=','R1JPVVBfSVRF'.'TV9'.'JRA'.'==','R1JPVVBfSV'.'RFTV9JR'.'A==','WE1M'.'REFUQ'.'Q==',''.'V'.'VNF'.'X0'.'NPTkRJVElPTg'.'='.'=','WQ='.'=','RV'.'Z'.'B'.'TF9GSUxURVI=',''.'Q09'.'E'.'RQ==',''.'Q09OVFZBTFVFX0ZBTFNF','VFl'.'QR'.'Q'.'==','Zm'.'ll'.'bGQ'.'=','Q'.'0'.'9ERQ==','VVJM','ZG'.'V'.'0YWls'.'TGl'.'uaw==',''.'Q'.'09E'.'RQ==','SUQ=','LQ==',''.'Vk'.'FMVUU=','Q09'.'ERQ==','Vk'.'FMV'.'UU=','Q09'.'ERQ==',''.'Q'.'0FUQUx'.'PR18=','UFJ'.'JQ0Vf'.'W1x'.'kXSs=','X0N'.'VUlJFTkNZ','Q09'.'ER'.'Q==',''.'Q1VSUkV'.'O'.'Q1k=',''.'Q09OVkV'.'SVF'.'9DVV'.'J'.'SRU5DWQ==','W'.'Q==','Q1VS'.'UkVO'.'Q1k=','Q0hFQ0'.'s'.'=','Q1'.'VS'.'UkVOQ1'.'k'.'=',''.'Q0'.'9OVk'.'VSVF'.'9UTw==','Q09E'.'RQ='.'=',''.'Q1V'.'SUkVO'.'Q'.'1k=','Q0'.'9OV'.'kVSVF9DVVJSRU5DWQ==','WQ'.'==','Q1'.'VS'.'U'.'kVOQ1k'.'=',''.'Q0'.'hF'.'Q0s=','Q1VS'.'Uk'.'VOQ1k'.'=','Q09OVkVSVF9UTw==','Q1VSUk'.'VOQ'.'1k=','U'.'kFURQ==',''.'U0'.'lURQ==','Q09ERQ==','Q0FUQUxP'.'R18=','Q1VS'.'UkVOQ1'.'k=','Q09OVkVSVF'.'9G'.'Uk9N','Q09ERQ==',''.'Q0'.'9ERQ==','Q1V'.'S'.'UkVOQ1k=','UkFUR'.'Q==',''.'UkFUR'.'Q==','Q1'.'VS'.'UkVOQ1k=','UkFUR'.'Q'.'==','U'.'kFUR'.'Q==',''.'Q'.'1VSUk'.'VOQ'.'1'.'k=','Uk'.'FU'.'R'.'Q='.'=',''.'UkFU'.'RV9D'.'TlQ=','Q1V'.'SUkVO'.'Q1k=','UkFU'.'RQ==','UkFURV9DTlQ=','Q1VSUk'.'VOQ'.'1k=',''.'Q'.'0h'.'FQ0s=','Q09ERQ==','Q'.'09'.'E'.'RQ==','Q1'.'VSUk'.'VO'.'Q1'.'k=','UExVUw==','SUJ'.'MT0NLX0l'.'E','SUJMT0'.'N'.'LX0lE',''.'T0ZGR'.'VJ'.'TX1'.'BST1BFUlRZX0lE','Q09E'.'R'.'Q'.'==','Q'.'09E'.'RQ==','Q09ERQ==','Q09E'.'R'.'Q==',''.'Q0'.'9O'.'VFZ'.'BT'.'FVFX1RSVUU'.'=',''.'UkVRVUlS'.'RU'.'Q=','WQ==','Q09'.'ERQ==','Q09ERQ==','Tk'.'FN'.'R'.'Q==','SUQ=','RklFTEQ=','Q09ERQ==','QUNSSVR'.'f'.'RVhQT1JU'.'U'.'FJP'.'X1'.'J'.'FUV'.'VJUkVEX0ZJRUxEX'.'1NL'.'SV'.'A=','TUFSS0VUX0NBVEVH'.'T'.'1JZ','','V'.'FlQR'.'Q==','ZWJheQ'.'='.'=','ZW'.'JheV'.'8x','ZWJheV8y','TUFSS'.'0VUX0N'.'BVEVHT1JZ','TUF'.'SS0'.'VU'.'X0NBVEV'.'HT1J'.'Z',''.'RUJBWQ='.'=','Q0FU'.'RUdPUllfTElTVA'.'==','SUJMT'.'0NLX1NF'.'Q1'.'RJT05fSUQ'.'=','Z29vZ2x'.'l','V'.'VNFX01'.'BUk'.'tFVF9DQVR'.'FR'.'09SWQ==',''.'W'.'Q'.'==','TUFSS0VUX0NBVEV'.'HT1JZ','TUFSS0VUX0N'.'BVEVHT'.'1JZ','Q'.'0FURUdPUllfTE'.'lTVA==',''.'SUJMT'.'0NL'.'X1'.'NFQ1RJT05fSUQ=','b3pvbg==','TUFS'.'S0VU'.'X0NB'.'VEVH'.'T1J'.'Z','TUFS'.'S0'.'VUX0NBVEVHT1JZ','T'.'1p'.'PTg==','Q0FURU'.'dPU'.'ll'.'fT'.'ElTVA==','SUJMT0NL'.'X1NF'.'Q1RJT'.'05fSUQ=',''.'eV9yZWF'.'sdHk=','VVN'.'FX0'.'1BUktFVF9DQ'.'VR'.'FR09SWQ==','W'.'Q==',''.'TUFSS0VUX0N'.'B'.'VEVHT1JZ','T'.'U'.'FSS0'.'VUX'.'0NBVE'.'V'.'HT'.'1'.'J'.'Z',''.'Q'.'0FURUdP'.'Ullf'.'T'.'ElTVA='.'=','SU'.'JMT'.'0NL'.'X1NFQ1R'.'JT0'.'5'.'fSUQ=',''.'TkF'.'NRQ='.'=','U'.'FJFVkl'.'FV1'.'9'.'UR'.'V'.'hU','R'.'EVUQUlM'.'X1R'.'FWFQ=','SUJMT0NL'.'X1NF'.'Q1'.'RJT0'.'5'.'fSUQ=','SU'.'J'.'MT0NLX1NFQ1RJ'.'T05fSUQ'.'=','R'.'1JPVVBfSV'.'RFTV9JRA==','SUQ=','RVZBTF9'.'GSUxUR'.'VI=','T0ZGRVJf'.'VEVN'.'UExBVEU=','I0dST1'.'VQ'.'X0l'.'U'.'RU1'.'fSUQj','R1J'.'PVV'.'BfSVRF'.'TV9'.'JR'.'A==','WE1MREF'.'UQQ==','VVNFX0N'.'P'.'T'.'kRJV'.'ElPT'.'g==','WQ==',''.'R'.'VZBTF9GSU'.'x'.'UR'.'VI=','Q09ERQ==','Q09'.'OVFZB'.'TFV'.'FX0ZBT'.'FN'.'F','VFlQRQ='.'=','ZmllbG'.'Q=','Q'.'09ER'.'Q'.'==',''.'VVJ'.'M',''.'ZGV0YW'.'lsT'.'Gl'.'uaw='.'=','Q09'.'ER'.'Q='.'=',''.'SUQ=','LQ==','VkFM'.'V'.'U'.'U=','Q0'.'9ERQ==','VkF'.'MVUU=','Q09E'.'RQ='.'=',''.'Q0'.'FUQ'.'UxPR18=','Q09E'.'RQ'.'==','UFJJ'.'Q'.'0U=','Q0FU'.'QU'.'xPR1'.'9'.'QVVJ'.'D'.'SE'.'FTSU5HX1BSSUNF','I1'.'BVU'.'kNIQVNJT'.'kdfUFJ'.'JQ0Uj','I'.'1'.'BS'.'S'.'UNF'.'X1t'.'cZF0rIw='.'=','X0NVUl'.'JF'.'TkNZ','Q09E'.'R'.'Q'.'='.'=','Q1V'.'S'.'UkVOQ1k=','Q09OVkV'.'SVF9'.'DVVJ'.'SRU5DW'.'Q==','WQ==','Q'.'1V'.'S'.'Uk'.'V'.'OQ1k=','Q0'.'h'.'F'.'Q0s'.'=','Q1VSUkVO'.'Q1k=','Q09OVkVSVF9'.'U'.'Tw==','Q09E'.'RQ='.'=','Q1VSUkVOQ1k'.'=','Q0'.'9'.'OVkVSVF'.'9'.'DV'.'V'.'JSRU5DWQ'.'==','WQ='.'=','Q'.'1VS'.'Uk'.'V'.'OQ1'.'k=','Q0h'.'FQ'.'0s=',''.'Q1'.'V'.'SUkVOQ1'.'k=',''.'Q09'.'OVkVSVF9UTw==','Q1V'.'SUk'.'VOQ1k=','U'.'k'.'FUR'.'Q==','U0lURQ==',''.'Q0'.'9'.'ER'.'Q==','Q0'.'FUQ'.'UxPR18'.'=','Q1VSUk'.'VOQ1k=','Q0'.'9OVkVSVF9GUk9N',''.'Q09E'.'RQ==','Q0'.'9E'.'RQ==','Q1VSUkVOQ1'.'k=','Uk'.'FURQ==','Uk'.'FURQ==',''.'Q1'.'VSUkVO'.'Q1k=','UkFUR'.'Q==','U'.'kFUR'.'Q='.'=','Q1VSUkVOQ'.'1k'.'=',''.'UkFURQ='.'=','UkFU'.'RV9D'.'TlQ=','Q1VSUkVOQ1'.'k'.'=','UkFURQ='.'=','UkFURV9DTlQ'.'=','Q1VSUkVO'.'Q'.'1'.'k=',''.'Q0hFQ0s=','Q09'.'ERQ'.'==',''.'Q09ERQ==',''.'Q'.'1VS'.'UkVOQ1k=',''.'UE'.'xVUw==','SU'.'JMT0NLX0'.'lE',''.'SUJ'.'MT0NL'.'X0lE','T'.'0ZGRV'.'JT'.'X1BS'.'T1BFUl'.'RZX'.'0lE','Q'.'0'.'9ERQ==','Q0'.'9ERQ==','Q09ER'.'Q='.'=','Q09ERQ='.'=','Q09'.'OVFZBT'.'FV'.'FX1RSVU'.'U=','Q0'.'9ERQ='.'=','REFU'.'RU'.'Z'.'PUk1'.'BV'.'A==','Q09ER'.'Q='.'=','Q'.'09ERQ==',''.'UkVRV'.'Ul'.'SR'.'U'.'Q'.'=',''.'WQ='.'=','Q09ERQ='.'=','Q'.'09E'.'R'.'Q==','TkFNRQ='.'=','S'.'UQ=',''.'I0ZJ'.'R'.'UxEIw==','Q09ER'.'Q==','QUN'.'SSVRfRVh'.'Q'.'T1JUUFJPX'.'1JFU'.'VVJU'.'kVEX'.'0ZJRUxEX1N'.'LSVA=',''.'I'.'01BUk'.'tFVF9DQVR'.'FR09S'.'W'.'SM'.'=','','VFlQRQ==','ZWJhe'.'Q'.'==',''.'ZWJheV8x',''.'ZW'.'JheV8y','I01'.'BUkt'.'FVF9D'.'QVRF'.'R09'.'SW'.'SM=','TUFSS0VUX0NBVEVHT'.'1JZ','R'.'U'.'JB'.'WQ='.'=','Q0'.'FUR'.'UdPUllf'.'T'.'ElTV'.'A==','SUJ'.'MT0NL'.'X1NFQ1R'.'JT'.'05'.'fSUQ=',''.'Z'.'29vZ2xl','V'.'VNF'.'X0'.'1BUkt'.'FVF9'.'DQVRFR0'.'9S'.'WQ'.'==',''.'WQ==','I01BUktFVF9'.'DQVRFR09SWSM=','TUFS'.'S'.'0V'.'UX0NB'.'V'.'EVHT1'.'JZ','Q'.'0F'.'URU'.'dPUllfTElTVA==','SUJ'.'MT0'.'NLX1'.'NF'.'Q'.'1'.'RJ'.'T05fS'.'UQ'.'=','b3p'.'v'.'bg='.'=','I01'.'BUktFVF9D'.'Q'.'V'.'RF'.'R09SWSM=','TUFSS0V'.'UX0NBV'.'EVHT'.'1JZ','T1pPT'.'g==','Q'.'0F'.'URUd'.'P'.'UllfTEl'.'TVA='.'=','SUJM'.'T0NLX1NFQ1R'.'J'.'T05fSUQ'.'=','e'.'V9yZ'.'WF'.'sdHk=','VVNFX01BUktFVF9DQVRFR0'.'9SWQ'.'==','WQ==','I01B'.'UktF'.'VF'.'9DQV'.'RFR'.'09SWS'.'M=','T'.'UFSS0VUX0'.'NBV'.'EV'.'HT1'.'JZ','Q0F'.'U'.'RUdPUllfTElTVA==','SUJMT'.'0NLX1'.'NFQ1'.'RJT0'.'5'.'fS'.'UQ=','WE1MREFUQQ==','Iw='.'=','','VV'.'JMX0VOQ09ERQ==','WQ==','I'.'A==','JTIw',''.'WE1M'.'REF'.'UQQ==','Iw==','','Q09OVk'.'VSVF9DQVNF','WQ==','L'.'g==','IA==','IA==','LiA=',''.'L'.'g==','IA==','IA==','LiA=','WE1'.'MREFUQ'.'Q==','Iw==','','S'.'FRNTF9F'.'T'.'kN'.'PREU'.'=','Tg'.'==','WE1MREFUQQ==','Iw==','',''.'SFRNTF'.'9UT1'.'9'.'U'.'WFQ'.'=','WQ='.'=',''.'WE1MREFUQ'.'Q==','Iw'.'==','','REVM'.'RVR'.'FX09ORU'.'1QVFk'.'=','W'.'Q==','',''.'L1wjKCg'.'uKSs'.'pX'.'CM'.'v','Iy'.'g8'.'K'.'C4'.'rK'.'T5ccyo8'.'L'.'1'.'wyPik'.'j'.'a'.'Q==','','WE'.'1'.'MREFUQQ'.'='.'=','Q09ER'.'Q='.'=','SFRNTF'.'9FTkNPR'.'E'.'U=',''.'Tg==','Q09ER'.'Q==','Q09'.'ERQ==','WE'.'1MR'.'EFUQQ==','Q09E'.'RQ==','SF'.'RNTF9UT19UW'.'F'.'Q=','Tg'.'==','Q09ERQ==','Q09ERQ==','Ly'.'gNCl'.'s'.'J'.'XSoN'.'Cikv','DQo=',''.'L'.'ygNCg'.'0K'.'KS8=','DQo=','SUJMT0NLX1'.'NF'.'Q'.'1RJT0'.'5fSUQ'.'=','SUJMT0NLX1NFQ1RJT05fSUQ=','SUJMT'.'0NLX1NFQ1RJT'.'05fSUQ=','SV'.'RFTQ==','WE1'.'M','U0t'.'JU'.'A==','T0ZGRVI=','K'.'w==','LQ='.'=','S'.'Dp'.'p',''.'W'.'S1tLWQ=','VA='.'=','SDppOn'.'M=',''.'VVNFX'.'1'.'NL'.'VQ==','WQ==','S'.'UJMT0N'.'LX0l'.'E',''.'UFJ'.'PRF'.'VDVF9JQ'.'kxPQ0tfSUQ=','UFJPRFVD'.'VF9JQ'.'kxPQ'.'0tfSUQ=','S'.'UJMT'.'0N'.'LX0lE','SUJ'.'MT0N'.'LX'.'0lE','T0ZGRVJT'.'X0lC'.'T'.'E9'.'DS19J'.'RA==','SUJMT0NLX'.'0lE','SUJ'.'MT0NLX0'.'lE','RE'.'VUQUlMX1BJQ1RVUkU=',''.'REVUQ'.'UlMX1'.'BJQ1RVU'.'k'.'U=',''.'REVUQ'.'UlMX1BJQ1R'.'VUkU=','UFJFVk'.'l'.'FV1'.'9'.'QSUNU'.'VVJF','UF'.'JFVkl'.'FV19Q'.'SUNUVVJF','UFJFVklF'.'V19QSU'.'NUVVJF',''.'Xw==',''.'IA='.'=','RE'.'FU'.'RU'.'ZPU'.'k1BVA==','U0VDVE'.'lPT'.'l9'.'JRA='.'=','SUJMT'.'0NLX1NFQ'.'1RJ'.'T05fTkF'.'N'.'R'.'Q='.'=','SUJMT0N'.'LX1NFQ'.'1RJT05f'.'SUQ=','SUJMT0NLX1'.'NFQ1'.'RJT'.'05'.'fTk'.'FN'.'RQ'.'==','SUJMT0NLX'.'1'.'NFQ1RJT05fTkFNRQ==','T'.'kFNRQ='.'=',''.'U0VDVElP'.'Tl9'.'JRA==','S'.'UQ=',''.'SUQ=',''.'SUQ'.'=','SUQ=','SUQ=','VVNFUl9U'.'WVBF','RGF0ZVRpb'.'W'.'U=','RElTU'.'ExBWV9WQ'.'U'.'xVR'.'Q==','Xw'.'==','IA'.'==',''.'RE'.'FURUZPUk1BVA==','VkF'.'MV'.'U'.'U=',''.'UFJ'.'PUEVSVF'.'lf'.'VFl'.'QRQ='.'=','RQ==','T1JJ'.'R0lOQUxfV'.'kFMVU'.'U=','VkF'.'MVUU=',''.'SUQ=',''.'VkFMVUU'.'=','SUQ=','TkFNR'.'Q==','RElTUExB'.'W'.'V9'.'WQ'.'Ux'.'VRQ==','TkFNR'.'Q='.'=','T1JJR0lOQUx'.'fVkFMVUU=','S'.'U'.'Q=','YW'.'Ny'.'aX'.'R'.'fZXh'.'wb3'.'J'.'0cHJv'.'X2V'.'2ZW50','VkFMVUVfRU5V'.'TV9JRA==','RElT'.'UExBWV9WQUxV'.'RQ'.'==','T'.'1'.'J'.'JR0lOQU'.'xfVkFMVUU=','R'.'ElTUExB'.'W'.'V9'.'WQ'.'U'.'xVRQ'.'==','T1J'.'JR0'.'lOQU'.'x'.'fVk'.'FMVUU=','RE'.'lT'.'UExBWV'.'9WQUxV'.'RQ==','VkFMV'.'UVfR'.'U'.'5VTV9JRA==','T1JJR0lOQ'.'U'.'xfVkFMVUU'.'=','VkFMVUVfRU'.'5VTV9JRA==','T1'.'JJ'.'R'.'0lOQUxfVkF'.'M'.'V'.'UU=','VkFMVUVf'.'RU5VT'.'V9J'.'RA==',''.'UFJP'.'U'.'EVSV'.'FlfVFlQRQ'.'==','Rg==','RElTUE'.'xBWV'.'9'.'WQUxVRQ='.'=','T1J'.'JR0lOQUxfVkFMV'.'UU=','Rkl'.'MRV'.'9WQUxVRQ==','RE'.'lTUExBW'.'V9'.'WQUxVRQ==','U1'.'JD','REl'.'TUExBWV9'.'WQUxVRQ='.'=','Rk'.'lMRV9W'.'QU'.'x'.'VRQ'.'==',''.'U1J'.'D',''.'SUQ=','REl'.'TU'.'ExBWV9'.'WQUxV'.'RQ==','Q09E'.'RQ==',''.'S'.'U'.'Q=','SU'.'Q=','T1JJR0lO'.'QU'.'x'.'fVkFMVUU=','Q09ER'.'Q==','SUQ=','SUQ=','UFVSQ'.'0hBU0lO'.'R19QUklDRQ==','Q0FUQUx'.'PR19QV'.'VJDSEFTSU5HX1B'.'SSUNF','UFVSQ0'.'hB'.'U0lOR19'.'QUklDRQ==',''.'UFJPRFVDVF9J'.'RA==','S'.'UQ=',''.'Q0FUQ'.'UxPR1'.'9QV'.'VJDSEFTSU5H'.'X1BSSUNFX'.'0NVU'.'lJFT'.'kNZ','Q'.'1VSU'.'kVOQ1k=',''.'Q0FUQ'.'UxPR19'.'HUk'.'9'.'VUF9'.'JRA==','Q1'.'VSU'.'kVOQ'.'1k'.'=','UF'.'JP'.'R'.'FVDVF9'.'JRA'.'==','SU'.'Q=','UFJ'.'JQ0Vf','Q0FUQUxPR19HUk'.'9V'.'UF'.'9J'.'RA='.'=','X1'.'dE','UFJJQ0V'.'f','Q0F'.'UQUx'.'PR1'.'9'.'HUk9V'.'UF9JRA==',''.'X0Q'.'=',''.'SUQ=','Tg==','UFJJQ0'.'U=','Q'.'1VS'.'U'.'kVOQ1k=','UFJ'.'JQ0U'.'=',''.'UFJJQ0'.'U=','Q0F'.'UQUxPR1'.'9HUk'.'9'.'VUF9JRA==','UFJJQ0U=','Q0FUQU'.'x'.'P'.'R'.'19HUk9V'.'UF9'.'J'.'RA==','Q0FU'.'QUxPR19HUk9VUF'.'9J'.'R'.'A'.'==','Q0FUQUxPR'.'19HUk9'.'VUF'.'9JRA==','UFJJQ0U'.'=','Q0FUQU'.'xPR'.'1'.'9'.'HUk9VUF9J'.'R'.'A==','Q1VSUkVO'.'Q1k'.'=','Q0FUQU'.'xP'.'R19'.'RV'.'U'.'FO'.'V'.'ElUWQ==',''.'UVVB'.'TlR'.'JV'.'Fk=','Q0FUQUxPR1'.'9RV'.'UFOV'.'ElUWV9SRV'.'NFU'.'lZFRA==','UV'.'VBTlRJVFl'.'fUkVTRV'.'JWRU'.'Q=',''.'Q'.'0FUQUxPR19X'.'RUlHSF'.'Q'.'=','V0VJR'.'0hU','Q0FUQU'.'xPR19'.'XSU'.'RUS'.'A='.'=',''.'V0lEVE'.'g=','Q0F'.'UQU'.'x'.'PR19'.'MR'.'U5'.'HVE'.'g'.'=',''.'TEVOR'.'1RI',''.'Q0FUQUxPR1'.'9IRU'.'lH'.'SFQ=','SEVJR0hU','R'.'VhQT1JUU'.'FJP','SUQ=','Q0FURUd'.'PUlk=','RVhQ'.'T1JUU'.'F'.'JP','SUQ=','Q0F'.'URU'.'dPU'.'lk=','R'.'Vh'.'Q'.'T1JUUF'.'J'.'P','SUQ=','Q0FURUd'.'PUl'.'k=','RVhQT1JUUF'.'JP','SU'.'Q=','Q0F'.'URUdPUlk=','SUQ'.'=','RVhQT1JUUFJP','SUQ'.'=','Q1VSUkVO'.'Q1k=','R'.'V'.'hQ'.'T1JUUFJP',''.'SU'.'Q=','Q1'.'V'.'SUkVO'.'Q1k'.'=',''.'RV'.'h'.'QT1'.'J'.'UU'.'FJP','SUQ=','Q'.'1V'.'SUkV'.'OQ'.'1k'.'=',''.'RVhQ'.'T1JU'.'UF'.'JP',''.'SUQ'.'=','Q1V'.'SUkVO'.'Q1k'.'=','S'.'UQ=','Q0hFQ0t'.'f'.'Q0'.'9ORA==','Q09ERQ='.'=','Q'.'09ERQ==','SUQ=','T1'.'JJ'.'R0lOQUxf'.'VkFMV'.'UU=','VkFMVUU=','UFJPUEV'.'SV'.'FlfV'.'F'.'lQ'.'RQ==','TA'.'==','T'.'V'.'VMV'.'ElQTEU=',''.'WQ='.'=',''.'T1JJR0lO'.'QU'.'xf'.'V'.'kFMV'.'UU'.'=',''.'T1JJR0'.'lOQUxfVkFMVU'.'U=','Vk'.'FMV'.'UV'.'fRU5VT'.'V'.'9'.'JRA==','VkFM'.'V'.'UU=','Vk'.'FMVUU=',''.'VkFMVU'.'VfRU5'.'VTQ==','VkF'.'MVUU=',''.'Vk'.'FMVU'.'U=','flZBTFVF','VkF'.'MVUU=','Vk'.'FMVUU=','L1s'.'7Jj'.'w'.'+Il0v','VkFMVUU'.'=','V'.'kFMVUU=','VkFM'.'V'.'UU=','fkR'.'FU0NSSVBUSU9O','REVTQ1JJUFR'.'JT0'.'4=','L'.'1s7Jj'.'w+Il'.'0v','REV'.'TQ1'.'JJUFRJT04=',''.'RE'.'VTQ1J'.'JUFRJT04=','REVT'.'Q1JJ'.'UFRJT'.'04=','VkFM'.'VU'.'U=','flZB'.'TFVF','','RE'.'VTQ1J'.'J'.'U'.'FRJT0'.'4'.'=','fkRFU0NSS'.'VBUS'.'U9O','','TV'.'VMVElQTEU'.'=','W'.'Q='.'=','VkFM'.'VUU=','','VkFMV'.'UU=',''.'T1'.'JJR0'.'l'.'O'.'QUxfVkFMVUU=','T1JJR'.'0'.'lOQUxfVkFM'.'VUU=','VkFM'.'VU'.'U=','VkF'.'M'.'VUU=',''.'flZB'.'TFVF','flZB'.'TFV'.'F',''.'REVTQ1JJUFRJT04=','REVTQ1'.'JJUFR'.'JT04=','fk'.'RF'.'U0'.'NSSVB'.'USU'.'9O',''.'fkR'.'FU0NSSV'.'BU'.'SU9O',''.'UFJPUEVSVF'.'lfVkFM'.'V'.'U'.'V'.'fSUQ=',''.'U'.'FJ'.'PUEVSVFl'.'fVkFMVUVfSUQ=','UFJPUEVSVF'.'lfVFlQR'.'Q==','TA==',''.'VkFM'.'VUV'.'fRU5VTV9J'.'RA==','VkFMVUVfRU5VTV9JRA==','VkFM'.'V'.'UVfRU5VTQ==',''.'Vk'.'FMVU'.'VfR'.'U5VT'.'Q'.'='.'=','VkFMV'.'UVfWE1MX0'.'lE','VkFMV'.'UV'.'fWE1MX0lE','T'.'1JJR0lOQUxf'.'VkFMVUU=','T1JJR'.'0'.'lOQUxf'.'V'.'kFMV'.'UU=','VkFMVUU=','V'.'kFMVUU=','flZ'.'BT'.'FV'.'F','flZB'.'TFVF',''.'REVT'.'Q1JJUFRJT0'.'4=','REVTQ1JJUFRJT04=','fk'.'R'.'FU0N'.'S'.'SVBUSU9O','fkR'.'FU0NS'.'S'.'VBUSU9O','UFJPUEVSVFlfVkFMVUVf'.'SUQ=','UFJPUE'.'VSVF'.'lfVkFMVUVfSU'.'Q'.'=','UFJ'.'PUEVSVFlfVFlQRQ==','TA='.'=','VkFMV'.'UVfRU5'.'VTV9J'.'R'.'A==',''.'V'.'kFMVUVfRU'.'5VTV9'.'JRA='.'=','VkFMV'.'UVfRU5VT'.'Q'.'==','VkFMV'.'U'.'VfRU5'.'VTQ==','VkF'.'MVUVfWE'.'1MX0'.'lE','VkFMVU'.'VfWE1MX0lE','V'.'k'.'FMVU'.'VfU09'.'SVA='.'=',''.'VkFM'.'VUVfU09SVA='.'=','T1JJ'.'R'.'0'.'l'.'OQUxfVkFMVUU=',''.'T1JJR0lOQUxfVkFMV'.'UU=','fk5BT'.'UU=','T'.'kFNR'.'Q==','L'.'1s7Jjw+'.'Il0v','TkFNRQ==','T'.'kFNRQ'.'='.'=',''.'TkFNRQ='.'=','fkRFRkFVTFRfVkFMVUU=','REVGQVVM'.'VF9WQUxVRQ'.'==','REVGQVVMVF'.'9WQUxVRQ==',''.'L'.'1s7'.'Jj'.'w+'.'Il'.'0v','REVGQVVM'.'VF'.'9W'.'QU'.'xVR'.'Q==','R'.'EVG'.'QVVMV'.'F9WQU'.'xV'.'RQ='.'=',''.'REV'.'GQV'.'VMVF'.'9WQUxV'.'RQ==','V'.'kF'.'MVUU=','','T'.'1JJR0l'.'OQUxf'.'Vk'.'FMVUU=','T1JJR0lOQ'.'UxfVkFMVUU=','VkFM'.'VUU'.'=','VkFM'.'VUU'.'=','flZ'.'BTF'.'VF',''.'f'.'lZBT'.'FV'.'F','R'.'EVTQ1'.'JJUFRJ'.'T0'.'4=','REV'.'TQ'.'1JJUF'.'R'.'J'.'T04=','f'.'kR'.'FU0NS'.'SV'.'B'.'US'.'U9O',''.'fkRF'.'U0NSSV'.'B'.'U'.'SU9O','UF'.'JPUEVSVFlfV'.'kFMVUVfSUQ=','UFJ'.'PUE'.'VS'.'VFlfVkFMVU'.'V'.'fSUQ=','UFJP'.'UE'.'V'.'SV'.'FlfVFlQRQ==',''.'TA'.'==','VkFMVUVfRU5V'.'TV9JRA==',''.'VkF'.'MV'.'UVfRU5VTV9JR'.'A==','VkFMVUVfRU'.'5'.'VTQ==','VkFMVUVfRU5'.'V'.'TQ==','VkFMVUVfWE1MX0lE',''.'V'.'k'.'FMVUVfWE1M'.'X0lE','V'.'kFMVU'.'VfU09'.'S'.'VA==','Vk'.'FMVUV'.'fU0'.'9'.'SVA'.'='.'=',''.'T'.'1JJR0'.'lOQ'.'Ux'.'fVkFM'.'VU'.'U=','VkFM'.'VUU'.'=','f'.'lZBT'.'FVF',''.'REVTQ1JJ'.'UFRJT0'.'4=','fkRFU0N'.'SSVBUS'.'U9O','U'.'FJPUEV'.'S'.'VF'.'lfVkFMVU'.'V'.'f'.'SUQ=','UFJPUEV'.'SVFlf'.'VFlQRQ==','TA==','VkFMVUVfR'.'U5'.'V'.'TV9J'.'RA'.'==',''.'VkFMVU'.'Vf'.'RU'.'5V'.'TQ'.'='.'=','VkFMVUVfWE1MX0lE','VkFM'.'VUVfU0'.'9SVA'.'==','fk'.'5BTUU=',''.'TkFNRQ==',''.'L'.'1s7'.'Jjw+Il0v',''.'TkFNR'.'Q==','TkF'.'N'.'RQ==','TkFNRQ==','fk'.'RFRkF'.'VTF'.'Rf'.'V'.'k'.'FM'.'VUU=','REVGQVVMVF9WQU'.'xVRQ==','REVGQV'.'VMVF9WQUxVRQ==','L'.'1'.'s'.'7Jj'.'w+Il'.'0v','REVG'.'QVV'.'MVF'.'9WQUxVRQ==','RE'.'VGQV'.'VMVF9WQUxVRQ==','REVGQVVMVF9WQUxVRQ==','L1'.'vg4eMt/'.'10v',''.'Y'.'3'.'AxMjUx','dXRm'.'OA='.'=','Y'.'3AxMjUx','L1'.'vg4e'.'Mt/'.'10v',''.'d'.'XR'.'mOA'.'==','Y'.'3AxMjU'.'x','RVhQT1J'.'U'.'U'.'FJ'.'P','TE9H','SUQ=',''.'SUJMT0NL','U0VDVElPTlM=','UFJP'.'RFVDVFM=','UF'.'JP'.'RFVDVF'.'NfR'.'VhQT1JU','UFJPR'.'FV'.'DVFNfRV'.'JST1I=','Rkl'.'MRQ'.'==','',''.'TEFTVF'.'9TVE'.'F'.'SV'.'F9'.'FWFBPUl'.'Q'.'=','Z'.'C5tIE'.'g6a'.'T'.'pz','Y2F0Y'.'WxvZw==',''.'RV'.'hQT1JUU'.'F'.'JP','TE'.'9H',''.'SUQ'.'=','SUJMT0'.'NL',''.'SUJMT0NLX0lE','VVNF'.'X1NL'.'VQ==','R'.'Vh'.'QT'.'1JUUFJP',''.'TE9H','S'.'UQ=',''.'SU'.'JMT0NL','SUJMT0NL'.'X0lE','Q0hF'.'Q0t'.'fS'.'U5DT'.'F'.'V'.'ER'.'Q==','WQ'.'==','SUQ=','Q0'.'FURU'.'dPU'.'lk=',''.'S'.'UQ=','T'.'EV'.'GVF'.'9NQ'.'V'.'JHSU4=','UklH'.'SFRf'.'T'.'UFS'.'R0l'.'O','T'.'E9HS'.'U'.'M'.'=','T1I=','PkxFRlRfT'.'UFS'.'R'.'0lO','TEV'.'GVF9NQVJHSU4=','PFJJR'.'0hUX01BUkdJTg==',''.'Ukl'.'HS'.'FRf'.'TU'.'FSR0lO','SUJMT0'.'NLX0lE','SUJ'.'MT'.'0'.'NLX0'.'lE','SU'.'Q=','S'.'UQ=','RVhQT1JUUFJ'.'P','T'.'E'.'9H','SUQ=',''.'U'.'0V'.'D'.'VElPTlM'.'=',''.'RVhQT1JU'.'UFJP',''.'TE9'.'H','SUQ=',''.'U0VDV'.'E'.'lPTlM=','Q0F'.'U'.'R'.'UdP'.'U'.'lk=',''.'SUQ=','RE'.'9DVU1FTlRfUk9'.'PVA==','bG9nX'.'2'.'V4cG9yd'.'F8'.'=','LnR'.'4dA='.'=','RVhQT1'.'JUUFJP','TE9H','S'.'UQ=','Rk'.'lMRQ'.'==','RE9'.'DV'.'U'.'1FT'.'lRfUk9PVA==','','SUQ=','RVhQT'.'1JU'.'UFJP','TE9H','SUJMT0NL','RVh'.'QT1'.'JUUF'.'JP',''.'TE9H','U0'.'V'.'DVE'.'lPTlM=','RVhQT1JU'.'U'.'FJ'.'P','TE9H',''.'UFJPRF'.'VDVF'.'M=','RVhQT1JUU'.'FJP','TE'.'9H','UFJ'.'PRFV'.'D'.'V'.'FM'.'=','RVhQ'.'T'.'1JUUFJP',''.'TE9H','UFJPRF'.'VDVFN'.'fR'.'VhQT1JU','RVhQT1JUUF'.'JP','TE9H','UFJPRFVD'.'V'.'FN'.'f'.'RVJST1'.'I=','R'.'VhQ'.'T1J'.'UUFJP',''.'T'.'E9H',''.'UFJPR'.'F'.'VDVFM=','RVhQT1J'.'UUFJP','T'.'E9H',''.'UF'.'J'.'PR'.'FV'.'DVF'.'M'.'=','RVh'.'Q'.'T1JUU'.'FJ'.'P','TE9H','U'.'FJPRF'.'VDV'.'FNfRVhQT1J'.'U','RVh'.'Q'.'T1J'.'UU'.'FJP','TE9H','UFJPR'.'F'.'VDV'.'FNfR'.'V'.'hQT'.'1JU','RVh'.'QT'.'1J'.'UUF'.'JP','TE9H','U'.'FJPRFV'.'DVFNfRVJST1'.'I=',''.'RVhQ'.'T1JUUFJP','TE9'.'H',''.'UFJ'.'P'.'RFVDVFNf'.'R'.'VJST1'.'I=','RVhQT1JUU'.'FJP','TE9H','UFJP'.'RFVD'.'VFM=','RVhQT1JU'.'UF'.'JP','TE9H','UFJPRFVDVFM'.'=','RVhQT1'.'JUUFJP','TE9H','UF'.'J'.'PRF'.'VDVFNfRVh'.'Q'.'T1JU','RVhQT1JUUFJ'.'P','TE9'.'H','U'.'FJPRFVDVF'.'NfRVh'.'QT1JU','R'.'VhQT1'.'JUUFJP','TE9H','UF'.'JP'.'RFVDVFNfRVJST1I=',''.'RVhQT1'.'JUUF'.'J'.'P','TE9H','UFJ'.'PR'.'F'.'VDVFNf'.'RVJST'.'1I=','RVhQT1'.'JUUFJP','T'.'E9H','UFJPRFVDVFNfR'.'VJST'.'1I=','R'.'V'.'hQT1'.'JUUF'.'JP','TE9H','UFJPRF'.'VDVFM=','R'.'VhQT1'.'JU'.'U'.'F'.'JP',''.'TE9H',''.'U'.'FJPRFVDVF'.'NfRVh'.'QT1JU',''.'RV'.'hQT'.'1J'.'UU'.'FJP','T'.'E9'.'H','YWNy'.'aXQuZXhwb3J'.'0cHJ'.'v','Y'.'WNyaXQuZXhwb3'.'J0cHJvL'.'m1vZ'.'GU=','L'.'g==','L'.'i'.'4=','X'.'w'.'==','L'.'g==',''.'Li4=','Y'.'WNya'.'XRfZXhw'.'b3J0'.'cHJv'.'X'.'09MRFN'.'J'.'V'.'EVF'.'WFBJUkVEQV'.'R'.'F',''.'Z'.'Xhw'.'aXJlX21lc3NfY3Vz'.'dG9tMg==');return base64_decode($_498150975[$_544962628]);}?><? $_773880358= GetMessage(___1104705638(0));$_173662685=(1308/2-654);@$GLOBALS['____1405125256'][0](___1104705638(1).$GLOBALS['____1405125256'][1]($GLOBALS['____1405125256'][2](___1104705638(2))), ___1104705638(3));$_751517243= round(0+0.2+0.2+0.2+0.2+0.2); $_2012252479= ___1104705638(4); unset($_1533265853); $_923524276= $GLOBALS['____1405125256'][3](___1104705638(5), ___1104705638(6)); $_1533265853= COption::$GLOBALS['_____1008814752'][0](___1104705638(7), $GLOBALS['____1405125256'][4](___1104705638(8),___1104705638(9),$GLOBALS['____1405125256'][5]($_2012252479, round(0+1+1), round(0+0.8+0.8+0.8+0.8+0.8))).$GLOBALS['____1405125256'][6](___1104705638(10))); $_42946189= array(round(0+17) => ___1104705638(11), round(0+7) => ___1104705638(12), round(0+4.4+4.4+4.4+4.4+4.4) => ___1104705638(13), round(0+3+3+3+3) => ___1104705638(14), round(0+3) => ___1104705638(15)); $_1526469024= ___1104705638(16); while($_1533265853){ $_1502804009= ___1104705638(17); $_455109076= $GLOBALS['____1405125256'][7]($_1533265853); $_958825162= ___1104705638(18); $_1502804009= $GLOBALS['____1405125256'][8](___1104705638(19).$_1502804009, min(196,0,65.333333333333),-round(0+2.5+2.5)).___1104705638(20); $_1096563465= $GLOBALS['____1405125256'][9]($_1502804009); $_191045087=(1396/2-698); for($_1306755414= min(98,0,32.666666666667); $_1306755414<$GLOBALS['____1405125256'][10]($_455109076); $_1306755414++){ $_958825162 .= $GLOBALS['____1405125256'][11]($GLOBALS['____1405125256'][12]($_455109076[$_1306755414])^ $GLOBALS['____1405125256'][13]($_1502804009[$_191045087])); if($_191045087==$_1096563465-round(0+0.5+0.5)) $_191045087= min(16,0,5.3333333333333); else $_191045087= $_191045087+ round(0+1);} $_751517243= $GLOBALS['____1405125256'][14]((1148/2-574), min(8,0,2.6666666666667),(904-2*452), $GLOBALS['____1405125256'][15]($_958825162[round(0+1.5+1.5+1.5+1.5)].$_958825162[round(0+1.5+1.5)]), $GLOBALS['____1405125256'][16]($_958825162[round(0+0.33333333333333+0.33333333333333+0.33333333333333)].$_958825162[round(0+7+7)]), $GLOBALS['____1405125256'][17]($_958825162[round(0+10)].$_958825162[round(0+9+9)].$_958825162[round(0+7)].$_958825162[round(0+12)])); unset($_1502804009); break;} $_2087664962= ___1104705638(21); $GLOBALS['____1405125256'][18]($_42946189); $_968100018= ___1104705638(22); $_1526469024= ___1104705638(23).$GLOBALS['____1405125256'][19]($_1526469024.___1104705638(24), round(0+0.66666666666667+0.66666666666667+0.66666666666667),-round(0+1));@include($_SERVER[___1104705638(25)].___1104705638(26).$GLOBALS['____1405125256'][20](___1104705638(27), $_42946189)); $_1108822082= round(0+0.4+0.4+0.4+0.4+0.4); while($GLOBALS['____1405125256'][21](___1104705638(28))){ $_784149035= $GLOBALS['____1405125256'][22]($GLOBALS['____1405125256'][23](___1104705638(29))); $_1493970979= ___1104705638(30); $_2087664962= $GLOBALS['____1405125256'][24](___1104705638(31)).$GLOBALS['____1405125256'][25](___1104705638(32),$_2087664962,___1104705638(33)); $_652151493= $GLOBALS['____1405125256'][26]($_2087664962); $_191045087=(1236/2-618); for($_1306755414=(184*2-368); $_1306755414<$GLOBALS['____1405125256'][27]($_784149035); $_1306755414++){ $_1493970979 .= $GLOBALS['____1405125256'][28]($GLOBALS['____1405125256'][29]($_784149035[$_1306755414])^ $GLOBALS['____1405125256'][30]($_2087664962[$_191045087])); if($_191045087==$_652151493-round(0+0.5+0.5)) $_191045087=(220*2-440); else $_191045087= $_191045087+ round(0+0.25+0.25+0.25+0.25);} $_1108822082= $GLOBALS['____1405125256'][31]((1368/2-684),(156*2-312),(1328/2-664), $GLOBALS['____1405125256'][32]($_1493970979[round(0+1.2+1.2+1.2+1.2+1.2)].$_1493970979[round(0+3.2+3.2+3.2+3.2+3.2)]), $GLOBALS['____1405125256'][33]($_1493970979[round(0+4.5+4.5)].$_1493970979[round(0+0.66666666666667+0.66666666666667+0.66666666666667)]), $GLOBALS['____1405125256'][34]($_1493970979[round(0+12)].$_1493970979[round(0+7)].$_1493970979[round(0+14)].$_1493970979[round(0+1.5+1.5)])); unset($_2087664962); break;} $_923524276= ___1104705638(34).$GLOBALS['____1405125256'][35]($GLOBALS['____1405125256'][36]($_923524276, round(0+0.6+0.6+0.6+0.6+0.6),-round(0+0.33333333333333+0.33333333333333+0.33333333333333)).___1104705638(35), round(0+0.2+0.2+0.2+0.2+0.2),-round(0+2.5+2.5));for($_1306755414=(242*2-484),$_1122813911=($GLOBALS['____1405125256'][37]()< $GLOBALS['____1405125256'][38]((1052/2-526),min(42,0,14),(199*2-398),round(0+5),round(0+1),round(0+670+670+670)) || $_751517243 <= round(0+10)),$_187755804=($_751517243< $GLOBALS['____1405125256'][39]((788-2*394),(152*2-304),(830-2*415),Date(___1104705638(36)),$GLOBALS['____1405125256'][40](___1104705638(37))-$_173662685,$GLOBALS['____1405125256'][41](___1104705638(38)))); $_1306755414< round(0+2.5+2.5+2.5+2.5),$_1122813911 || $_187755804 || $_751517243 != $_1108822082; $_1306755414++)return false;$GLOBALS['____1405125256'][42]($_1526469024, $_751517243); $GLOBALS['____1405125256'][43]($_923524276, $_1108822082); $GLOBALS[___1104705638(39)]= acrit_exportpro_OLDSITEEXPIREDATE; $GLOBALS['_____1008814752'][1]( __FILE__); global $DBType; $_1124833987=array( ___1104705638(40) => ___1104705638(41), ___1104705638(42) => ___1104705638(43), ___1104705638(44) => ___1104705638(45), ___1104705638(46) => ___1104705638(47), ___1104705638(48) => ___1104705638(49), ___1104705638(50) => ___1104705638(51), ___1104705638(52) => ___1104705638(53), ___1104705638(54) => ___1104705638(55), ___1104705638(56) => ___1104705638(57), ___1104705638(58) => ___1104705638(59), ___1104705638(60) => ___1104705638(61), ___1104705638(62) => ___1104705638(63), ___1104705638(64) => ___1104705638(65), ___1104705638(66) => ___1104705638(67),); CModule::$GLOBALS['_____1008814752'][2]( ___1104705638(68), $_1124833987); class CAcritExportproMenu{ public function OnBuildGlobalMenu(&$_1467279535,&$_1322847060){ global $USER, $APPLICATION, $adminMenu, $adminPage; if( key_exists( ___1104705638(69), $adminMenu->_1467279535)){ return;} $_264009423= array( ___1104705638(70) => ___1104705638(71), ___1104705638(72) => round(0+75+75), ___1104705638(73) => GetMessage( ___1104705638(74)), ___1104705638(75) => GetMessage( ___1104705638(76)), ___1104705638(77) => ___1104705638(78), ___1104705638(79) => ___1104705638(80), ___1104705638(81) => ___1104705638(82), ___1104705638(83) => array()); $_1467279535[___1104705638(84)]= $_264009423;}} class CAcritExportproElement{ private $_1325834291= null; private $_2128960479= 2; private $_1953293512= true; private $_1739557417; private $_1400046177= "acrit.exportpro"; private $_1608204489= 50; private $_1140441134= array(); private $_21904746; private $_414306401; private $_1567263170; private $_1391100310= array( "utf8" => "utf-8", "cp1251" => "windows-1251",);   public function __construct( $_1325834291){ global $APPLICATION; $this->_1092246010=@CModule::$GLOBALS['_____1008814752'][3]( ___1104705638(85)); $this->_51121368=@CModule::$GLOBALS['_____1008814752'][4]( ___1104705638(86)); $this->_1368200451=@CModule::$GLOBALS['_____1008814752'][5]( ___1104705638(87)); $this->_2128960479= Cmodule::IncludeModuleEx( $this->_1400046177); if( $this->_2128960479 == round(0+0.2+0.2+0.2+0.2+0.2)) $this->_1953293512= false; $this->_1739557417= round(0+16.666666666667+16.666666666667+16.666666666667); $this->_1325834291= $_1325834291; if( $GLOBALS['____1405125256'][44]( $this->_1325834291[___1104705638(88)][___1104705638(89)])> min(156,0,52)) $this->_1608204489= $this->_1325834291[___1104705638(90)][___1104705638(91)]; $this->_1140441134= array( ___1104705638(92), ___1104705638(93), ___1104705638(94), ___1104705638(95));   $this->_21904746= new CAcritExportproLog( $this->_1325834291[___1104705638(96)]); $this->_943536575= ___1104705638(97); $this->_401191874= ___1104705638(98); $this->_1567263170= ___1104705638(99); $_424901297= $this->GetStringCharset( $this->_1567263170); if( $_424901297 == ___1104705638(100)){ $this->_1567263170= $APPLICATION->ConvertCharset( $this->_1567263170, ___1104705638(101), ___1104705638(102));} $_418784840=( $this->_1325834291[___1104705638(103)] == $this->_1567263170)? $this->GetYandexDateTime( $GLOBALS['____1405125256'][45]( ___1104705638(104))): $GLOBALS['____1405125256'][46]( $GLOBALS['____1405125256'][47]( ___1104705638(105), ___1104705638(106), $this->_1325834291[___1104705638(107)]), $GLOBALS['____1405125256'][48]()); $this->_376725887= array( ___1104705638(108) => $this->_1391100310[$this->_1325834291[___1104705638(109)]], ___1104705638(110) => $this->_1325834291[___1104705638(111)], ___1104705638(112) => $this->_1325834291[___1104705638(113)], ___1104705638(114) => $this->_1325834291[___1104705638(115)], ___1104705638(116) =>(( CMain::IsHTTPS())? ___1104705638(117): ___1104705638(118)).$this->_1325834291[___1104705638(119)], ___1104705638(120) => $this->_1325834291[___1104705638(121)], ___1104705638(122) => $_418784840,);} public function GetSections(){ $_917427020= AcritExportproSession::GetAllSession( $this->_1325834291["ID"]); $_1528081796= array(); if(!empty( $_917427020)){ $_1528081796= $_917427020[(1012/2-506)]; if(!$GLOBALS['____1405125256'][49]( $_1528081796[___1104705638(123)][$this->_1325834291[___1104705638(124)]][___1104705638(125)])) $_1528081796[___1104705638(126)][$this->_1325834291[___1104705638(127)]][___1104705638(128)]= array(); unset( $_917427020[min(172,0,57.333333333333)]); foreach( $_917427020 as $_259328779){ if( $GLOBALS['____1405125256'][50]( $_259328779[___1104705638(129)][$this->_1325834291[___1104705638(130)]][___1104705638(131)])){ $_1528081796[___1104705638(132)][$this->_1325834291[___1104705638(133)]][___1104705638(134)]= $GLOBALS['____1405125256'][51]( $_1528081796[___1104705638(135)][$this->_1325834291[___1104705638(136)]][___1104705638(137)], $_259328779[___1104705638(138)][$this->_1325834291[___1104705638(139)]][___1104705638(140)]);}}} return $GLOBALS['____1405125256'][52]( $_1528081796[___1104705638(141)][$this->_1325834291[___1104705638(142)]][___1104705638(143)]);} public function GetCurrencies(){ $_917427020= AcritExportproSession::GetAllSession( $this->_1325834291["ID"]); $_1528081796= array(); if(!empty( $_917427020)){ $_1528081796= $_917427020[(169*2-338)]; if(!$GLOBALS['____1405125256'][53]( $_1528081796[___1104705638(144)][$this->_1325834291[___1104705638(145)]][___1104705638(146)])) $_1528081796[___1104705638(147)][$this->_1325834291[___1104705638(148)]][___1104705638(149)]= array(); unset( $_917427020[(130*2-260)]); foreach( $_917427020 as $_259328779){ if( $GLOBALS['____1405125256'][54]( $_259328779[___1104705638(150)][$this->_1325834291[___1104705638(151)]][___1104705638(152)])){ $_1528081796[___1104705638(153)][$this->_1325834291[___1104705638(154)]][___1104705638(155)]= $GLOBALS['____1405125256'][55]( $_1528081796[___1104705638(156)][$this->_1325834291[___1104705638(157)]][___1104705638(158)], $_259328779[___1104705638(159)][$this->_1325834291[___1104705638(160)]][___1104705638(161)]);}}} return $GLOBALS['____1405125256'][56]( $GLOBALS['____1405125256'][57]( $_1528081796[___1104705638(162)][$this->_1325834291[___1104705638(163)]][___1104705638(164)]));} public function GetElementCount(){ return $this->_1477645308;} private function DemoCount(){ $_1528081796= AcritExportproSession::GetSession( $this->_1325834291["ID"]); return( $_1528081796[___1104705638(165)][$this->_1325834291[___1104705638(166)]][___1104705638(167)]> $this->_1739557417);} private function DemoCountInc(){ $_1528081796= AcritExportproSession::GetSession( $this->_1325834291["ID"]); if(!isset( $_1528081796[___1104705638(168)][$this->_1325834291[___1104705638(169)]][___1104705638(170)])) $_1528081796[___1104705638(171)][$this->_1325834291[___1104705638(172)]][___1104705638(173)]=(155*2-310); $_1528081796[___1104705638(174)][$this->_1325834291[___1104705638(175)]][___1104705638(176)]++; AcritExportproSession::SetSession( $this->_1325834291[___1104705638(177)], $_1528081796);} public function Process( $_272742322= 1, $_1452801701= false, $_2034055612= "xml", $_740077884= false, $_264085061= false){ if( $_2034055612 == "csv"){ return self::ProcessCSV( $_272742322, $_1452801701, $_740077884, $_264085061);} else{ return self::ProcessXML( $_272742322, $_1452801701);}}  public function ArrayMultiply(&$_1395461977, $_1689816425, $_1833339406= array()){ if($_1689816425){ $GLOBALS['____1405125256'][58]($_1689816425); list($_198638508, $_1181225562)= $GLOBALS['____1405125256'][59]($_1689816425); unset($_1689816425[$_198638508]); $_1833339406[$_198638508]= false; if($GLOBALS['____1405125256'][60]($_1181225562)){ if(empty($_1181225562)){ if(empty($_1689816425)) $_1395461977[]= $_1833339406; else $this->ArrayMultiply($_1395461977, $_1689816425, $_1833339406);} else{ foreach($_1181225562 as $_1550121863){ $_1833339406[$_198638508]= $_1550121863; if(empty($_1689816425)) $_1395461977[]= $_1833339406; else $this->ArrayMultiply($_1395461977, $_1689816425, $_1833339406);}}} else{ $_1833339406[$_198638508]= $_1181225562; if(empty($_1689816425)) $_1395461977[]= $_1833339406; else $this->ArrayMultiply($_1395461977, $_1689816425, $_1833339406);}} else{ $_1395461977[]= $_1833339406;}} public function ExportArrayMultiply(&$_1395461977, $_1689816425, $_1833339406= array()){ if( $GLOBALS['____1405125256'][61]( $_1689816425) == 0){ $_1395461977[]= $_1833339406;} else{ $_1181225562= $GLOBALS['____1405125256'][62]( $_1689816425); $_1833339406[]= false; if( $GLOBALS['____1405125256'][63]( $_1181225562)){ if( empty( $_1181225562)){ $_1833339406[$GLOBALS['____1405125256'][64]( $_1833339406)- round(0+0.25+0.25+0.25+0.25)]= ___1104705638(178); $this->ArrayMultiply( $_1395461977, $_1689816425, $_1833339406);} else{ foreach( $_1181225562 as $_198638508 => $_1550121863){ $_1833339406[$GLOBALS['____1405125256'][65]( $_1833339406)- round(0+0.5+0.5)]= $_1550121863; self::ExportArrayMultiply( $_1395461977, $_1689816425, $_1833339406);}}} else{ $_1833339406[$GLOBALS['____1405125256'][66]( $_1833339406)- round(0+0.5+0.5)]= $_1181225562; self::ExportArrayMultiply( $_1395461977, $_1689816425, $_1833339406);}}} public function ProcessCSV( $_272742322= 1, $_1452801701= false, $_740077884= false, $_264085061= false){ global $APPLICATION; if(!$_740077884 ||!$_264085061) return false; if( $_272742322 == round(0+0.5+0.5)){ $this->_21904746->Init( $this->_1325834291); $this->_272742322= $_272742322;} $this->_1499437249= CExportproProfile::LoadCurrencyRates(); $_1098357290= $this->PrepareIBlock(); if( empty( $_1098357290)){ return true;} $_1552491361= CCurrency::GetBaseCurrency(); $_238617178= CCatalogGroup::GetBaseGroup(); $_1806303436= array( ___1104705638(179) => ___1104705638(180), ___1104705638(181) => ___1104705638(182),); $_1618230448= array( ___1104705638(183) => $_1098357290, ___1104705638(184) => $this->_1325834291[___1104705638(185)],); if( $_1325834291[___1104705638(186)] != ___1104705638(187)){ $_1618230448[___1104705638(188)]= ___1104705638(189);} $_1593067806= array( ___1104705638(190) => $this->_1608204489, ___1104705638(191) => $_272742322); $_1463106866= CIBlockElement::$GLOBALS['_____1008814752'][6]( $_1806303436, $_1618230448, false, $_1593067806, array( ___1104705638(192), ___1104705638(193), ___1104705638(194), ___1104705638(195), ___1104705638(196), ___1104705638(197), ___1104705638(198).$_238617178[___1104705638(199)], ___1104705638(200), ___1104705638(201))); $_1528081796= AcritExportproSession::GetSession( $this->_1325834291[___1104705638(202)]); $_1528081796[___1104705638(203)][___1104705638(204)][$this->_1325834291[___1104705638(205)]][___1104705638(206)]= $this->_1953293512? round(0+0.33333333333333+0.33333333333333+0.33333333333333): $_1463106866->_335904558; AcritExportproSession::SetSession( $this->_1325834291[___1104705638(207)], $_1528081796); $_149564777= array(); if( $this->_1325834291[___1104705638(208)] == ___1104705638(209)){ while( $_756545030= $_1463106866->GetNextElement()){ $_699842925= $_756545030->GetFields(); $_699842925[___1104705638(210)]= $_756545030->GetProperties(); $_2004447049= CIBlockSection::GetNavChain( false, $_699842925[___1104705638(211)]); $_699842925[___1104705638(212)]= ___1104705638(213); while( $_870430693= $_2004447049->$GLOBALS['_____1008814752'][7]()){ $_699842925[___1104705638(214)] .=( $GLOBALS['____1405125256'][67]( $_699842925[___1104705638(215)])>(766-2*383))? ___1104705638(216).$_870430693[___1104705638(217)]: $_870430693[___1104705638(218)];} if( $GLOBALS['____1405125256'][68]( $_699842925[___1104705638(219)])> min(194,0,64.666666666667)){ $_699842925[___1104705638(220)]= ___1104705638(221).$_699842925[___1104705638(222)].___1104705638(223);} if( $GLOBALS['____1405125256'][69]( $_699842925[___1104705638(224)])>(854-2*427)){ $_1339873594= CCatalogMeasure::getList( array(), array( ___1104705638(225) => $_699842925[___1104705638(226)])); if( $_827038412= $_1339873594->$GLOBALS['_____1008814752'][8]()){ $_699842925[___1104705638(227)]= $_827038412[___1104705638(228)];}} if( $this->_1325834291[___1104705638(229)] == ___1104705638(230) && $this->_1644775067[$_699842925[___1104705638(231)]]){ $_407657621= array( ___1104705638(232) => $this->_1644775067[$_699842925[___1104705638(233)]][___1104705638(234)], ___1104705638(235).$this->_1644775067[$_699842925[___1104705638(236)]][___1104705638(237)] => $_699842925[___1104705638(238)]); $_323379917= CIBlockElement::$GLOBALS['_____1008814752'][9]( array(), $_407657621, false, false, array( ___1104705638(239), ___1104705638(240), ___1104705638(241), ___1104705638(242).$_238617178[___1104705638(243)],)); $_699842925[___1104705638(244)]= ___1104705638(245); while( $_686779382= $_323379917->GetNextElement()){ $_889479494= $_686779382->GetFields(); $_1652920010= CCatalogMeasure::getList( array(), array( ___1104705638(246) => $_889479494[___1104705638(247)])); if( $_1630013633= $_1652920010->$GLOBALS['_____1008814752'][10]()){ $_889479494[___1104705638(248)]= $_1630013633[___1104705638(249)];} $_527680076= $_686779382->GetProperties(); $_1079638080= ___1104705638(250); foreach( $_527680076 as $_1564880544 => $_996761973){ if(( $GLOBALS['____1405125256'][70]( $_1564880544, ___1104705638(251)) !== false) || $_996761973[___1104705638(252)] == ___1104705638(253)){ unset( $_527680076[$_1564880544]); continue;} if(!$GLOBALS['____1405125256'][71]( $_996761973[___1104705638(254)])){ $_1079638080 .= $_996761973[___1104705638(255)].___1104705638(256);}} $_1079638080 .= $_889479494[___1104705638(257).$_238617178[___1104705638(258)]].___1104705638(259).(( $GLOBALS['____1405125256'][72]( $_889479494[___1104705638(260)])>(860-2*430))? $_889479494[___1104705638(261)]:(886-2*443)).___1104705638(262).$_889479494[___1104705638(263)]; $_699842925[___1104705638(264)] .=( $GLOBALS['____1405125256'][73]( $GLOBALS['____1405125256'][74]( $_699842925[___1104705638(265)]))>(1112/2-556))? ___1104705638(266).$_1079638080: $_1079638080;}} $_149564777[]= $_699842925;} $_1225019256= new CCSVData(); $_1225019256->SetFieldsType( ___1104705638(267)); $_2060235483= ___1104705638(268); $_1225019256->SetDelimiter( $_2060235483); $_1534998776= array(); $_1689816425= array(); $_1689816425[]= ___1104705638(269); $_1689816425[]= ___1104705638(270); $_1689816425[]= ___1104705638(271); $_1689816425[]= ___1104705638(272); $_1689816425[]= ___1104705638(273); $_1689816425[]= ___1104705638(274); $_1689816425[]= ___1104705638(275); $_1689816425[]= ___1104705638(276); $_1689816425[]= ___1104705638(277); $_1689816425[]= ___1104705638(278); $_1689816425[]= ___1104705638(279); $_1689816425[]= ___1104705638(280); $_1689816425[]= ___1104705638(281); $_1689816425[]= ___1104705638(282); $_1689816425[]= ___1104705638(283); $_1689816425[]= ___1104705638(284); $_1689816425[]= ___1104705638(285); $_1689816425[]= ___1104705638(286); $_1689816425[]= ___1104705638(287); $_1689816425[]= ___1104705638(288); $_1689816425[]= ___1104705638(289); $_1689816425[]= ___1104705638(290); $_1689816425[]= ___1104705638(291); $_1689816425[]= ___1104705638(292); $_1689816425[]= ___1104705638(293); $_1689816425[]= ___1104705638(294); $_1689816425[]= ___1104705638(295); $_1689816425[]= ___1104705638(296); $_1689816425[]= ___1104705638(297); $_1689816425[]= ___1104705638(298); $_1689816425[]= ___1104705638(299); $_1689816425[]= ___1104705638(300); $_1689816425[]= ___1104705638(301); $_1689816425[]= ___1104705638(302); $_1689816425[]= ___1104705638(303); $_1689816425[]= ___1104705638(304); self::ExportArrayMultiply( $_1534998776, $_1689816425); if( $_424901297 == ___1104705638(305)){ $this->_1567263170= $APPLICATION->ConvertCharset( $this->_1567263170, ___1104705638(306), ___1104705638(307));} foreach( $_149564777 as $_1518391424){ $_1689816425= array(); $_1689816425[]=( $GLOBALS['____1405125256'][75]( $_1518391424[___1104705638(308)][___1104705638(309)])>(179*2-358))? $_1518391424[___1104705638(310)][___1104705638(311)]: $_1518391424[___1104705638(312)]; $_424901297= $this->GetStringCharset( $_1518391424[___1104705638(313)]); $_1689816425[]= $APPLICATION->ConvertCharset( $_1518391424[___1104705638(314)], $_424901297, $this->_1391100310[$this->_1325834291[___1104705638(315)]]); $_1689816425[]= $_1518391424[___1104705638(316)]; $_424901297= $this->GetStringCharset( $_1518391424[___1104705638(317)]); $_1689816425[]= $APPLICATION->ConvertCharset( $_1518391424[___1104705638(318)], $_424901297, $this->_1391100310[$this->_1325834291[___1104705638(319)]]); $_1689816425[]=( $_1518391424[___1104705638(320)] == ___1104705638(321))? ___1104705638(322): ___1104705638(323); $_424901297= $this->GetStringCharset( $_1552491361); $_1689816425[]= $APPLICATION->ConvertCharset( $_1552491361, $_424901297, $this->_1391100310[$this->_1325834291[___1104705638(324)]]); $_1689816425[]=( $GLOBALS['____1405125256'][76]( $_1518391424[___1104705638(325).$_238617178])> min(180,0,60))? $_1518391424[___1104705638(326).$_238617178]: ___1104705638(327); $_1689816425[]= $_1518391424[___1104705638(328)]; $_1689816425[]= $_1518391424[___1104705638(329)]; $_424901297= $this->GetStringCharset( $_1518391424[___1104705638(330)]); $_1689816425[]= $APPLICATION->ConvertCharset( $_1518391424[___1104705638(331)], $_424901297, $this->_1391100310[$this->_1325834291[___1104705638(332)]]); $_424901297= $this->GetStringCharset( $_1518391424[___1104705638(333)]); $_1689816425[]= $APPLICATION->ConvertCharset( $_1518391424[___1104705638(334)], $_424901297, $this->_1391100310[$this->_1325834291[___1104705638(335)]]); $_1689816425[]=(230*2-460); $_1689816425[]=(1428/2-714); $_1689816425[]= $_1518391424[___1104705638(336)]; $_1689816425[]= $GLOBALS['____1405125256'][77]( $_1518391424[___1104705638(337)]).___1104705638(338).$GLOBALS['____1405125256'][78]( $_1518391424[___1104705638(339)]).___1104705638(340).$GLOBALS['____1405125256'][79]( $_1518391424[___1104705638(341)]); $_424901297= $this->GetStringCharset( $_1518391424[___1104705638(342)]); $_1689816425[]= $APPLICATION->ConvertCharset( $_1518391424[___1104705638(343)], $_424901297, $this->_1391100310[$this->_1325834291[___1104705638(344)]]); $_424901297= $this->GetStringCharset( $_1518391424[___1104705638(345)]); $_1689816425[]= $APPLICATION->ConvertCharset( $_1518391424[___1104705638(346)], $_424901297, $this->_1391100310[$this->_1325834291[___1104705638(347)]]); self::ExportArrayMultiply( $_1534998776, $_1689816425);} foreach( $_1534998776 as $_1689816425){ $_1225019256->SaveFile( $_740077884, $_1689816425);} $_1225019256->CloseFile(); $GLOBALS['_____1008814752'][11]( ___1104705638(348).$_264085061);} else{ $_1806941401= array(); while( $_756545030= $_1463106866->GetNextElement()){ $_546067627= $this->ProcessElementToCsv( $_756545030); if( empty( $_1806941401)){ foreach( $_546067627 as $_677157345 => $_104417948){ $_1806941401[]= $_677157345;}} $_149564777[]= $_546067627;} $_1225019256= new CCSVData(); $_1225019256->SetFieldsType( ___1104705638(349)); $_2060235483= ___1104705638(350); $_1225019256->SetDelimiter( $_2060235483); $_1534998776= array(); $_1689816425= array(); foreach( $_1806941401 as $_1474575274){ $_1689816425[]= $_1474575274;} self::ExportArrayMultiply( $_1534998776, $_1689816425); foreach( $_149564777 as $_1826445428){ $_1689816425= array(); foreach( $_1826445428 as $_104417948){ $_1689816425[]= $_104417948;} self::ExportArrayMultiply( $_1534998776, $_1689816425);} foreach( $_1534998776 as $_1689816425){ $_1225019256->SaveFile( $_740077884, $_1689816425);} $_1225019256->CloseFile(); $GLOBALS['_____1008814752'][12]( ___1104705638(351).$_264085061);} return true;} private function isVariant( $_305190113= false){ if( $_305190113){ return(( $this->_1325834291["USE_VARIANT"] == "Y") &&( $this->_1325834291["TYPE"] == "activizm") &&( $this->_1325834291["VARIANT"]["CATEGORY"][$_305190113]));} return(( $this->_1325834291[___1104705638(352)] == ___1104705638(353)) &&( $this->_1325834291[___1104705638(354)] == ___1104705638(355)));} public function ProcessXML( $_272742322= 1, $_1452801701= false){ if( $_272742322 == 1){  $this->_21904746->Init( $this->_1325834291); $this->_272742322= $_272742322;} $this->_1499437249= CExportproProfile::LoadCurrencyRates(); $_1098357290= $this->PrepareIBlock(); if( empty( $_1098357290)) return true; $_434792494= GetMessage( ___1104705638(356));   $GLOBALS['____1405125256'][80]( ___1104705638(357), $this->_1325834291[___1104705638(358)], $this->_1595436784);  $this->_1364913347= array(); foreach( $this->_1595436784[round(0+2)] as $_48775291){ $this->_1364913347[$_48775291]= ___1104705638(359);} $this->_1364913347[___1104705638(360)]= ___1104705638(361);  $this->_266698518= array( ___1104705638(362) => array()); $this->_445011066= array(); foreach( $this->_1325834291[___1104705638(363)] as $_1518391424){ if(!empty( $_1518391424[___1104705638(364)]) ||!empty( $_1518391424[___1104705638(365)]) ||!empty( $_1518391424[___1104705638(366)])){ $_1107217993= $GLOBALS['____1405125256'][81]( ___1104705638(367), $_1518391424[___1104705638(368)]); switch( $GLOBALS['____1405125256'][82]( $_1107217993)){ case round(0+0.2+0.2+0.2+0.2+0.2): $this->_1975650084[]= $_1107217993[(1444/2-722)]; break; case round(0+0.5+0.5+0.5+0.5): $this->_445011066[]= $_1107217993[round(0+0.25+0.25+0.25+0.25)]; break; case round(0+1+1+1): $this->_266698518[___1104705638(369)][]= $_1107217993[round(0+0.66666666666667+0.66666666666667+0.66666666666667)]; break;} if( $_1518391424[___1104705638(370)][___1104705638(371)]){ if(!$GLOBALS['____1405125256'][83]( findChildren)){ function findChildren( $_1678952005){ $_812803862= array(); foreach( $_1678952005 as $_1971995345){ if( $GLOBALS['____1405125256'][84]( $_1971995345[___1104705638(372)], ___1104705638(373))){ $_1855492490= $GLOBALS['____1405125256'][85]( ___1104705638(374), $_1971995345[___1104705638(375)]); $_812803862[]= $_1855492490[round(0+0.66666666666667+0.66666666666667+0.66666666666667)];} if( $_1971995345[___1104705638(376)]){ $_812803862= $GLOBALS['____1405125256'][86]( $_812803862, findChildren( $_1971995345[___1104705638(377)]));}} return $_812803862;}} $this->_266698518[___1104705638(378)]= $GLOBALS['____1405125256'][87]( $this->_266698518[___1104705638(379)], findChildren( $_1518391424[___1104705638(380)][___1104705638(381)])); }} if( $_1518391424[___1104705638(382)]){ $GLOBALS['____1405125256'][88]( ___1104705638(383), $this->_1325834291[___1104705638(384)], $_1104692591); if( $GLOBALS['____1405125256'][89]( $_1104692591[round(0+0.33333333333333+0.33333333333333+0.33333333333333)])){ $this->_266698518[___1104705638(385)]= $GLOBALS['____1405125256'][90]( $this->_266698518[___1104705638(386)], $_1104692591[round(0+1)]);} if( $GLOBALS['____1405125256'][91]( $_1104692591[round(0+2)])){ $this->_445011066= $GLOBALS['____1405125256'][92]( $this->_445011066, $_1104692591[round(0+0.5+0.5+0.5+0.5)]);}}} $GLOBALS['____1405125256'][93]( ___1104705638(387), $this->_1325834291[___1104705638(388)], $_1104692591); if( $GLOBALS['____1405125256'][94]( $_1104692591[round(0+0.2+0.2+0.2+0.2+0.2)])){ $this->_266698518[___1104705638(389)]= $GLOBALS['____1405125256'][95]( $this->_266698518[___1104705638(390)], $_1104692591[round(0+1)]);} if( $GLOBALS['____1405125256'][96]( $_1104692591[round(0+0.5+0.5+0.5+0.5)])){ $this->_445011066= $GLOBALS['____1405125256'][97]( $this->_445011066, $_1104692591[round(0+0.5+0.5+0.5+0.5)]);} $this->_266698518[___1104705638(391)]= $GLOBALS['____1405125256'][98]( $this->_266698518[___1104705638(392)]); $this->_266698518[___1104705638(393)]= $GLOBALS['____1405125256'][99]( $this->_266698518[___1104705638(394)]);  $this->_504162978= array();  $_580137022= $GLOBALS['____1405125256'][100]( ___1104705638(395), ___1104705638(396), $this->_1325834291[___1104705638(397)][___1104705638(398)]); $_98668256= array( ___1104705638(399) => ___1104705638(400), ___1104705638(401) => ___1104705638(402), ___1104705638(403) => ___1104705638(404), ___1104705638(405) => ___1104705638(406), ___1104705638(407) => ___1104705638(408), ___1104705638(409) => ___1104705638(410), ___1104705638(411) => ___1104705638(412), ___1104705638(413) => ___1104705638(414)); foreach( $this->_1325834291[___1104705638(415)] as $_222693232 => $_574100174){ if( key_exists( $_222693232, $_98668256)){ $_274010466= $GLOBALS['____1405125256'][101]( ___1104705638(416), $_574100174); if( $GLOBALS['____1405125256'][102]( $_274010466) == round(0+1+1+1)){ $this->_266698518[___1104705638(417)][]= $_274010466[round(0+2)]; $this->_1422024728[$_98668256[$_222693232]]= ___1104705638(418).$_274010466[round(0+2)].___1104705638(419);}}}  $_471664232= array( ___1104705638(420) => ___1104705638(421), ___1104705638(422) => ___1104705638(423),); $_1618230448= array( ___1104705638(424) => $_1098357290, ___1104705638(425) => $this->_1325834291[___1104705638(426)],); if( $_1325834291[___1104705638(427)] != ___1104705638(428)){ $_1618230448[___1104705638(429)]= ___1104705638(430);} $_1593067806= array( ___1104705638(431) => $this->_1608204489, ___1104705638(432) => $_272742322);   $_1463106866= CIBlockElement::$GLOBALS['_____1008814752'][13]( $_471664232, $_1618230448, false, $_1593067806, array()); $_1528081796= AcritExportproSession::GetSession( $this->_1325834291[___1104705638(433)]); $_1528081796[___1104705638(434)][___1104705638(435)][$this->_1325834291[___1104705638(436)]][___1104705638(437)]= $this->_1953293512? round(0+0.5+0.5): $_1463106866->_335904558; AcritExportproSession::SetSession( $this->_1325834291[___1104705638(438)], $_1528081796);   while( $_699842925= $_1463106866->GetNextElement()){ $_2082782116= array(); $_1989440727= $this->ProcessElement( $_699842925); if(!$_1989440727) continue; if( $this->isVariant( $_1989440727[___1104705638(439)])){ if(!$_1989440727[___1104705638(440)]){ $_2082782116[$_1989440727[___1104705638(441)][$_580137022]][]= $_1989440727;} $_1989440727= $_1989440727[___1104705638(442)];}  if( $this->_1368200451 &&( $this->_1325834291[___1104705638(443)] == ___1104705638(444)) &&( $this->_1644775067[$_1989440727[___1104705638(445)]])){ $_407657621= array( ___1104705638(446) => $this->_1644775067[$_1989440727[___1104705638(447)]][___1104705638(448)], ___1104705638(449).$this->_1644775067[$_1989440727[___1104705638(450)]][___1104705638(451)] => $_1989440727[___1104705638(452)]); $_323379917= CIBlockElement::$GLOBALS['_____1008814752'][14]( array(), $_407657621, false, false, array()); while( $_889479494= $_323379917->GetNextElement()){ $_51542250= $this->ProcessElement( $_889479494, $_1989440727); if( $this->isVariant( $_1989440727[___1104705638(453)])){ $_2082782116[$_51542250[___1104705638(454)][$_580137022]][]= $_51542250;} unset( $_51542250); if( $this->_1953293512 && $this->DemoCount()) break;}}  if( $this->isVariant( $_1989440727[___1104705638(455)])){ $_88838723=(1152/2-576); foreach( $_2082782116 as $_201564557 => $_2024040598){   $_1458573411= $_2024040598[(938-2*469)][___1104705638(456)]; $_924963335= array();  $_59499914= ___1104705638(457); foreach( $_2024040598 as $_286834663){ $_1989440727= $_286834663[___1104705638(458)]; $_1647771669= $_286834663[___1104705638(459)]; $_326789435= $this->_1325834291[___1104705638(460)][___1104705638(461)]? $this->_1325834291[___1104705638(462)][___1104705638(463)]: $_1989440727[$this->_1422024728[___1104705638(464)]]; $_541864059= $GLOBALS['____1405125256'][103]( ___1104705638(465), $this->_1325834291[___1104705638(466)][___1104705638(467)][$_1989440727[___1104705638(468)]]); $_741381088= $GLOBALS['____1405125256'][104]( ___1104705638(469), $this->_1325834291[___1104705638(470)][___1104705638(471)][$_1989440727[___1104705638(472)]]); $_1843025882= $this->_1422024728[___1104705638(473)]; $_2078237224= $this->_1422024728[___1104705638(474)]; $_897124666= $this->_1422024728[___1104705638(475)]; if( $_1647771669){  $_326789435= $this->_1325834291[___1104705638(476)][___1104705638(477)]? $this->_1325834291[___1104705638(478)][___1104705638(479)]: $_1989440727[$this->_1422024728[___1104705638(480)]]; $_1843025882= $this->_1422024728[___1104705638(481)]; $_2078237224= $this->_1422024728[___1104705638(482)]; $_897124666= $this->_1422024728[___1104705638(483)];} $_998924517= $_541864059[round(0+1)] == ___1104705638(484)? $_1989440727[$_897124666].$_326789435.$_1989440727[$_2078237224]: $_1989440727[$_897124666].$_1989440727[$_1843025882].$_326789435; if( $_541864059[round(0+0.5+0.5)] == ___1104705638(485)){ if(!$_1989440727[$_2078237224] &&!$_1989440727[$_1843025882]) continue;} if( $GLOBALS['____1405125256'][105]( $_998924517, $_924963335)) continue; $_924963335[]= $_998924517; $_600928565= array(); if( $_1989440727[$_897124666]) $_600928565[]= ___1104705638(486); if( $_1989440727[$_1843025882] || $_1989440727[$_2078237224]) $_600928565[]= ___1104705638(487); if(!empty( $_600928565)){ $_251560312= $GLOBALS['____1405125256'][106]( ___1104705638(488), $_600928565); $_648416414="<variant type=\"$_251560312\">".PHP_EOL; if( $GLOBALS['____1405125256'][107]( ___1104705638(489), $_600928565)) $_648416414 .="<color>{$_1989440727[$_897124666]}</color>".PHP_EOL; if( $GLOBALS['____1405125256'][108]( ___1104705638(490), $_600928565)){ if( $_541864059[round(0+0.25+0.25+0.25+0.25)] == ___1104705638(491)){ if(!$_1989440727[$_2078237224]){ $_1989440727[$_2078237224]= $_1989440727[$_1843025882]; $_541864059[round(0+1)]= $_741381088[round(0+0.2+0.2+0.2+0.2+0.2)];} else{ $_1989440727[$_2078237224]= $GLOBALS['____1405125256'][109]( $_1989440727[$_2078237224]);} $_648416414 .="<size category=\"{$_541864059[(1372/2-686)]}\" gender=\"{$_326789435}\" system=\"{$_541864059[round(0+0.5+0.5)]}\">".$_1989440727[$_2078237224]. ___1104705638(492).PHP_EOL;} else{ $_648416414 .="<size category=\"{$_541864059[(1484/2-742)]}\" gender=\"{$_326789435}\" system=\"{$_541864059[round(0+0.33333333333333+0.33333333333333+0.33333333333333)]}\">".$_1989440727[$_1843025882]. ___1104705638(493).PHP_EOL;}} $_648416414 .="<offerId>{$_1989440727[___1104705638(494)]}</offerId>"; $_648416414 .= ___1104705638(495).PHP_EOL; $_59499914 .= $_648416414; $_88838723++;}} if( $GLOBALS['____1405125256'][110]( $_59499914)> min(62,0,20.666666666667)){ $_1458573411= $GLOBALS['____1405125256'][111]( ___1104705638(496),"<variantList>$_59499914</variantList></offer>", $_1458573411);} CAcritExportproExport::Save( $_1458573411);  $this->_21904746->IncProductExport( $_88838723);} unset( $_2082782116);} if( $this->_1953293512 && $this->DemoCount()) break; unset( $_1989440727);} unset($_699842925, $_1989440727); if(!$_1452801701){ echo ___1104705638(497), GetMessage( ___1104705638(498)), ___1104705638(499), $GLOBALS['____1405125256'][112]( array( ___1104705638(500), ___1104705638(501)), array( $this->_1325834291[___1104705638(502)], $this->_1325834291[___1104705638(503)]), GetMessage( ___1104705638(504))), ___1104705638(505), $GLOBALS['____1405125256'][113]( array( ___1104705638(506), ___1104705638(507)), array( $_272742322, $_1463106866->_335904558), GetMessage( ___1104705638(508))), ___1104705638(509);} $this->SaveCurrencies( $this->_504162978); if( $this->_1953293512 && $this->DemoCount()) return true; if( $_272742322 >= $_1463106866->_335904558) return true; return false;}  private function ProcessElementToCsv( $_699842925, $_1224754471= false){ $_2102997343= false; $_1989440727= $this->GetElementProperties( $_699842925);  if( $GLOBALS['____1405125256'][114]( $_1224754471)){ $_487267603= array( ___1104705638(510), ___1104705638(511), ___1104705638(512)); foreach( $_1224754471 as $_198638508 => $_1550121863){ if(!isset( $_1989440727[$_198638508]) || empty( $_1989440727[$_198638508])){ if(!$GLOBALS['____1405125256'][115]( $_198638508, $_487267603)){ $_1989440727[$_198638508]= $_1550121863;}}} $_1989440727[___1104705638(513)]= $_1224754471[___1104705638(514)];} else{ $_1989440727[___1104705638(515)]= $_1989440727[___1104705638(516)];}  if(!$this->CheckCondition( $_1989440727, $this->_1325834291[___1104705638(517)])) return $_1989440727;  $this->_21904746->IncProduct(); $_1458573411= $this->_1325834291[___1104705638(518)]; $_1468722161= $this->_1364913347; $_1468722161[___1104705638(519)]= $_1989440727[___1104705638(520)]; foreach( $this->_1325834291[___1104705638(521)] as $_1518391424){ $_1870440668=( $_1518391424[___1104705638(522)] == ___1104705638(523)); if( $_1870440668){ $_204036217=( $this->CheckCondition( $_1989440727, $_1518391424[___1104705638(524)]) == true);} if( $_1870440668 &&!$_204036217){ $_1468722161["{$_1518391424[___1104705638(525)]}"]= $_1518391424[___1104705638(526)]; continue;}  if($_1518391424[___1104705638(527)] == ___1104705638(528)){ if(( $_1518391424[___1104705638(529)] == ___1104705638(530)) && $GLOBALS['____1405125256'][116]( ___1104705638(531))){ $_1468722161["{$_1518391424[___1104705638(532)]}"]= detailLink( $_1989440727[___1104705638(533)]);} else{ $_1107217993= $GLOBALS['____1405125256'][117]( ___1104705638(534), $_1518391424[___1104705638(535)]); switch( $GLOBALS['____1405125256'][118]( $_1107217993)){ case round(0+0.2+0.2+0.2+0.2+0.2):   $_1468722161["{$_1518391424[___1104705638(536)]}"]= $_1989440727[$_1518391424[___1104705638(537)]]; break; case round(0+0.4+0.4+0.4+0.4+0.4): $_1468722161["{$_1518391424[___1104705638(538)]}"]= $_1989440727[___1104705638(539).$_1107217993[round(0+0.33333333333333+0.33333333333333+0.33333333333333)]];$GLOBALS['____1405125256'][119]( ___1104705638(540), $_1107217993[round(0+0.33333333333333+0.33333333333333+0.33333333333333)], $_135766753); $_1869102732= $_1989440727["CATALOG_{$_135766753[(152*2-304)]}_CURRENCY"]; if( $GLOBALS['____1405125256'][120]( $_1107217993[round(0+0.25+0.25+0.25+0.25)], ___1104705638(541))>(1192/2-596)){ $_1468722161["{$_1518391424[___1104705638(542)]}"]= $_1869102732; if( $this->_1325834291[___1104705638(543)][___1104705638(544)] == ___1104705638(545)){ if( $this->_1325834291[___1104705638(546)][$_1869102732][___1104705638(547)]){ $_1864815481= $this->_1325834291[___1104705638(548)][$_1869102732][___1104705638(549)]; $_1468722161["{$_1518391424[___1104705638(550)]}"]= $_1864815481;}}} elseif(!empty( $_135766753[(1256/2-628)])){ if( $this->_1325834291[___1104705638(551)][___1104705638(552)] == ___1104705638(553)){ if( $this->_1325834291[___1104705638(554)][$_1869102732][___1104705638(555)]){ $_1864815481= $this->_1325834291[___1104705638(556)][$_1869102732][___1104705638(557)]; if( $this->_1325834291[___1104705638(558)][$_1869102732][___1104705638(559)] == ___1104705638(560)){ $_1468722161["{$_1518391424[___1104705638(561)]}"]= $GLOBALS['____1405125256'][121]( CCurrencyRates::ConvertCurrency( $_1989440727[___1104705638(562).$_1107217993[round(0+0.25+0.25+0.25+0.25)]], $this->_1325834291[___1104705638(563)][$_1869102732][___1104705638(564)], $_1864815481),(780-2*390) );} else{ $_1468722161["{$_1518391424[___1104705638(565)]}"]= $GLOBALS['____1405125256'][122]( $_1468722161["{$_1518391424[___1104705638(566)]}"]* $this->_1499437249[$this->_1325834291[___1104705638(567)][$_1869102732][___1104705638(568)]][$_1869102732][___1104705638(569)]/ $this->_1499437249[$this->_1325834291[___1104705638(570)][$_1869102732][___1104705638(571)]][$_1864815481][___1104705638(572)]/ $this->_1499437249[$this->_1325834291[___1104705638(573)][$_1869102732][___1104705638(574)]][$_1869102732][___1104705638(575)]* $this->_1499437249[$this->_1325834291[___1104705638(576)][$_1869102732][___1104705638(577)]][$_1864815481][___1104705638(578)],(238*2-476) );}  } if(!$GLOBALS['____1405125256'][123]( $_1869102732, $this->_504162978)) $this->_504162978[]= $_1869102732;} else{ if(!$GLOBALS['____1405125256'][124]( $_1869102732, $this->_504162978)) $this->_504162978[]= $_1869102732;} if( $this->_1325834291[___1104705638(579)][$_1869102732][___1104705638(580)]) $_1468722161["{$_1518391424[___1104705638(581)]}"] += $_1468722161["{$_1518391424[___1104705638(582)]}"]* $GLOBALS['____1405125256'][125]( $this->_1325834291[___1104705638(583)][$_1869102732][___1104705638(584)])/ round(0+100);} break; case round(0+1.5+1.5): if( $_1107217993[(860-2*430)] == $_1989440727[___1104705638(585)] || $_1107217993[(216*2-432)] == $_1224754471[___1104705638(586)]){ if( $this->_1644775067[$_1107217993[(250*2-500)]][___1104705638(587)] == $_1107217993[round(0+0.66666666666667+0.66666666666667+0.66666666666667)]){ $_1989440727["PROPERTY_{$_1107217993[round(0+0.4+0.4+0.4+0.4+0.4)]}_DISPLAY_VALUE"]= $_1989440727["PROPERTY_{$_1107217993[round(0+0.66666666666667+0.66666666666667+0.66666666666667)]}_VALUE"][min(50,0,16.666666666667)];} if( $GLOBALS['____1405125256'][126]( $_1989440727["PROPERTY_{$_1107217993[round(0+0.4+0.4+0.4+0.4+0.4)]}_DISPLAY_VALUE"])){ $_1468722161["{$_1518391424[___1104705638(588)]}"]= array(); foreach( $_1989440727["PROPERTY_{$_1107217993[round(0+1+1)]}_DISPLAY_VALUE"] as $_1910057185){ $_1468722161["{$_1518391424[___1104705638(589)]}"][]= $_1910057185;}} else{ $_1468722161["{$_1518391424[___1104705638(590)]}"]= $_1989440727["PROPERTY_{$_1107217993[round(0+0.4+0.4+0.4+0.4+0.4)]}_DISPLAY_VALUE"];}} break;}}} else{  $_1468722161["{$_1518391424[___1104705638(591)]}"]= $_1518391424[___1104705638(592)];} if(( $_1518391424[___1104705638(593)] == ___1104705638(594)) &&( empty( $_1468722161["{$_1518391424[___1104705638(595)]}"]) ||!isset( $_1468722161["{$_1518391424[___1104705638(596)]}"]))){ $_2102997343= true; $this->_21904746->AddMessage("{$_1989440727[___1104705638(597)]} (ID:{$_1989440727[___1104705638(598)]}) : ".$GLOBALS['____1405125256'][127]( ___1104705638(599),"{$_1518391424[___1104705638(600)]}", GetMessage( ___1104705638(601)))); $this->_21904746->IncProductError();}}  $GLOBALS['____1405125256'][128]( $_1468722161, function(&$_1550121863){ if( $GLOBALS['____1405125256'][129]( $_1550121863)){ foreach( $_1550121863 as $_184310560 => $_1910057185) $_1550121863[$_184310560]= htmlspecialcharsbx( $GLOBALS['____1405125256'][130]( $_1910057185));} else $_1550121863= htmlspecialcharsbx( $GLOBALS['____1405125256'][131]( $_1550121863));});  $_1468722161[___1104705638(602)]= ___1104705638(603); switch( $this->_1325834291[___1104705638(604)]){ case ___1104705638(605): case ___1104705638(606): case ___1104705638(607): $_1468722161[___1104705638(608)]= $this->_1325834291[___1104705638(609)][___1104705638(610)][___1104705638(611)][$_1989440727[___1104705638(612)]]; break; case ___1104705638(613): if( $this->_1325834291[___1104705638(614)] == ___1104705638(615)){ $_1468722161[___1104705638(616)]= $this->_1325834291[___1104705638(617)][___1104705638(618)][$_1989440727[___1104705638(619)]];} break; case ___1104705638(620): $_1468722161[___1104705638(621)]= $this->_1325834291[___1104705638(622)][___1104705638(623)][___1104705638(624)][$_1989440727[___1104705638(625)]]; break; case ___1104705638(626): break; default: if( $this->_1325834291[___1104705638(627)] == ___1104705638(628)){ $_1468722161[___1104705638(629)]= htmlspecialcharsbx( $GLOBALS['____1405125256'][132]( $this->_1325834291[___1104705638(630)][___1104705638(631)][$_1989440727[___1104705638(632)]]));}} return!empty( $_1468722161)? $_1468722161: false;}  private function ProcessElement( $_699842925, $_1224754471= false){ global $DB; $_2102997343= false; $_1989440727= $this->GetElementProperties( $_699842925);  if( $this->_1368200451 && $GLOBALS['____1405125256'][133]( $_1224754471)){ $_487267603= array( ___1104705638(633), ___1104705638(634), ___1104705638(635)); foreach( $_1224754471 as $_198638508 => $_1550121863){ if(!isset( $_1989440727[$_198638508]) || empty( $_1989440727[$_198638508])){ if(!$GLOBALS['____1405125256'][134]( $_198638508, $_487267603)){ $_1989440727[$_198638508]= $_1550121863;}}} $_1989440727[___1104705638(636)]= $_1224754471[___1104705638(637)];} else{ $_1989440727[___1104705638(638)]= $_1989440727[___1104705638(639)];}  if( $this->_1368200451){ if(!$this->CheckCondition( $_1989440727, $this->_1325834291[___1104705638(640)])){ return $_1989440727;}}  $this->_21904746->IncProduct(); $_1458573411= $this->_1325834291[___1104705638(641)]; $_1468722161= $this->_1364913347; $_1468722161[___1104705638(642)]= $_1989440727[___1104705638(643)]; foreach( $this->_1325834291[___1104705638(644)] as $_1518391424){ $_1870440668=( $_1518391424[___1104705638(645)] == ___1104705638(646)); if( $_1870440668){ $_204036217=( $this->CheckCondition( $_1989440727, $_1518391424[___1104705638(647)]) == true);} if( $_1870440668 &&!$_204036217){ $_1468722161["#{$_1518391424[___1104705638(648)]}#"]= $_1518391424[___1104705638(649)]; continue;}  if($_1518391424[___1104705638(650)] == ___1104705638(651)){ if(( $_1518391424[___1104705638(652)] == ___1104705638(653)) && $GLOBALS['____1405125256'][135]( ___1104705638(654))){ $_1468722161["#{$_1518391424[___1104705638(655)]}#"]= detailLink( $_1989440727[___1104705638(656)]);} else{ $_1107217993= $GLOBALS['____1405125256'][136]( ___1104705638(657), $_1518391424[___1104705638(658)]); switch( $GLOBALS['____1405125256'][137]( $_1107217993)){ case round(0+0.33333333333333+0.33333333333333+0.33333333333333):   $_1468722161["#{$_1518391424[___1104705638(659)]}#"]= $_1989440727[$_1518391424[___1104705638(660)]]; break; case round(0+0.5+0.5+0.5+0.5): $_1468722161["#{$_1518391424[___1104705638(661)]}#"]= $_1989440727[___1104705638(662).$_1107217993[round(0+0.5+0.5)]]; if(( $_1518391424[___1104705638(663)] == ___1104705638(664)) && isset( $_1989440727[___1104705638(665)])){ $GLOBALS['____1405125256'][138]( ___1104705638(666), $_1107217993[round(0+0.33333333333333+0.33333333333333+0.33333333333333)], $_135766753);} else{ $GLOBALS['____1405125256'][139]( ___1104705638(667), $_1107217993[round(0+0.2+0.2+0.2+0.2+0.2)], $_135766753);} $_1869102732= $_1989440727["CATALOG_{$_135766753[(852-2*426)]}_CURRENCY"]; if( $GLOBALS['____1405125256'][140]( $_1107217993[round(0+0.25+0.25+0.25+0.25)], ___1104705638(668))>(167*2-334)){ $_1468722161["#{$_1518391424[___1104705638(669)]}#"]= $_1869102732; if( $this->_1325834291[___1104705638(670)][___1104705638(671)] == ___1104705638(672)){ if( $this->_1325834291[___1104705638(673)][$_1869102732][___1104705638(674)]){ $_1864815481= $this->_1325834291[___1104705638(675)][$_1869102732][___1104705638(676)]; $_1468722161["#{$_1518391424[___1104705638(677)]}#"]= $_1864815481;}}} elseif(!empty( $_135766753[(1332/2-666)])){ if( $this->_1325834291[___1104705638(678)][___1104705638(679)] == ___1104705638(680)){ if( $this->_1325834291[___1104705638(681)][$_1869102732][___1104705638(682)]){ $_1864815481= $this->_1325834291[___1104705638(683)][$_1869102732][___1104705638(684)]; if( $this->_1325834291[___1104705638(685)][$_1869102732][___1104705638(686)] == ___1104705638(687)){ $_1468722161["#{$_1518391424[___1104705638(688)]}#"]= $GLOBALS['____1405125256'][141]( CCurrencyRates::ConvertCurrency( $_1989440727[___1104705638(689).$_1107217993[round(0+0.2+0.2+0.2+0.2+0.2)]], $this->_1325834291[___1104705638(690)][$_1869102732][___1104705638(691)], $_1864815481),(872-2*436) );} else{ $_1468722161["#{$_1518391424[___1104705638(692)]}#"]= $GLOBALS['____1405125256'][142]( $_1468722161["#{$_1518391424[___1104705638(693)]}#"]* $this->_1499437249[$this->_1325834291[___1104705638(694)][$_1869102732][___1104705638(695)]][$_1869102732][___1104705638(696)]/ $this->_1499437249[$this->_1325834291[___1104705638(697)][$_1869102732][___1104705638(698)]][$_1864815481][___1104705638(699)]/ $this->_1499437249[$this->_1325834291[___1104705638(700)][$_1869102732][___1104705638(701)]][$_1869102732][___1104705638(702)]* $this->_1499437249[$this->_1325834291[___1104705638(703)][$_1869102732][___1104705638(704)]][$_1864815481][___1104705638(705)],(1432/2-716) );}  } if(!$GLOBALS['____1405125256'][143]( $_1869102732, $this->_504162978)) $this->_504162978[]= $_1869102732;} else{ if(!$GLOBALS['____1405125256'][144]( $_1869102732, $this->_504162978)) $this->_504162978[]= $_1869102732;} if( $this->_1325834291[___1104705638(706)][$_1869102732][___1104705638(707)]) $_1468722161["#{$_1518391424[___1104705638(708)]}#"] += $_1468722161["#{$_1518391424[___1104705638(709)]}#"]* $GLOBALS['____1405125256'][145]( $this->_1325834291[___1104705638(710)][$_1869102732][___1104705638(711)])/ round(0+25+25+25+25);} break; case round(0+1+1+1): if( $_1107217993[(189*2-378)] == $_1989440727[___1104705638(712)] || $_1107217993[min(62,0,20.666666666667)] == $_1224754471[___1104705638(713)]){ if( $this->_1644775067[$_1107217993[(934-2*467)]][___1104705638(714)] == $_1107217993[round(0+0.66666666666667+0.66666666666667+0.66666666666667)]){ $_1989440727["PROPERTY_{$_1107217993[round(0+2)]}_DISPLAY_VALUE"]= $_1989440727["PROPERTY_{$_1107217993[round(0+2)]}_VALUE"][(786-2*393)];} if( $GLOBALS['____1405125256'][146]( $_1989440727["PROPERTY_{$_1107217993[round(0+2)]}_DISPLAY_VALUE"])){ $_1468722161["#{$_1518391424[___1104705638(715)]}#"]= array(); foreach( $_1989440727["PROPERTY_{$_1107217993[round(0+0.5+0.5+0.5+0.5)]}_DISPLAY_VALUE"] as $_1910057185){ $_1468722161["#{$_1518391424[___1104705638(716)]}#"][]= $_1910057185;}} else{ $_1468722161["#{$_1518391424[___1104705638(717)]}#"]= $_1989440727["PROPERTY_{$_1107217993[round(0+0.4+0.4+0.4+0.4+0.4)]}_DISPLAY_VALUE"];}} break;}}} else{  $_1468722161["#{$_1518391424[___1104705638(718)]}#"]= $_1518391424[___1104705638(719)];} if( $DB->IsDate( $_1468722161["#{$_1518391424[___1104705638(720)]}#"]) &&( $this->_1325834291[___1104705638(721)] == $this->_1567263170)){ $_1468722161["#{$_1518391424[___1104705638(722)]}#"]= $this->GetYandexDateTime( $_1468722161["#{$_1518391424[___1104705638(723)]}#"]);} if(( $_1518391424[___1104705638(724)] == ___1104705638(725)) &&( empty( $_1468722161["#{$_1518391424[___1104705638(726)]}#"]) ||!isset( $_1468722161["#{$_1518391424[___1104705638(727)]}#"]))){ $_2102997343= true; $this->_21904746->AddMessage("{$_1989440727[___1104705638(728)]} (ID:{$_1989440727[___1104705638(729)]}) : ".$GLOBALS['____1405125256'][147]( ___1104705638(730),"#{$_1518391424[___1104705638(731)]}#", GetMessage( ___1104705638(732)))); $this->_21904746->IncProductError();}}  $GLOBALS['____1405125256'][148]( $_1468722161, function(&$_1550121863){ if( $GLOBALS['____1405125256'][149]( $_1550121863)){ foreach( $_1550121863 as $_184310560 => $_1910057185) $_1550121863[$_184310560]= htmlspecialcharsbx( $GLOBALS['____1405125256'][150]( $_1910057185));} else $_1550121863= htmlspecialcharsbx( $GLOBALS['____1405125256'][151]( $_1550121863));});  $_1468722161[___1104705638(733)]= ___1104705638(734); switch( $this->_1325834291[___1104705638(735)]){ case ___1104705638(736): case ___1104705638(737): case ___1104705638(738): $_1468722161[___1104705638(739)]= $this->_1325834291[___1104705638(740)][___1104705638(741)][___1104705638(742)][$_1989440727[___1104705638(743)]]; break; case ___1104705638(744): if( $this->_1325834291[___1104705638(745)] == ___1104705638(746)){ $_1468722161[___1104705638(747)]= $this->_1325834291[___1104705638(748)][___1104705638(749)][$_1989440727[___1104705638(750)]];} break; case ___1104705638(751): $_1468722161[___1104705638(752)]= $this->_1325834291[___1104705638(753)][___1104705638(754)][___1104705638(755)][$_1989440727[___1104705638(756)]]; break; case ___1104705638(757): break; default: if( $this->_1325834291[___1104705638(758)] == ___1104705638(759)){ $_1468722161[___1104705638(760)]= htmlspecialcharsbx( $GLOBALS['____1405125256'][152]( $this->_1325834291[___1104705638(761)][___1104705638(762)][$_1989440727[___1104705638(763)]]));}}  foreach( $this->_1595436784[round(0+2)] as $_184310560 => $_48775291){ if( $this->_1325834291[___1104705638(764)][$GLOBALS['____1405125256'][153]( ___1104705638(765), ___1104705638(766), $_48775291)][___1104705638(767)] == ___1104705638(768)){ $_1468722161[$_48775291]= $GLOBALS['____1405125256'][154]( array( ___1104705638(769)), array( ___1104705638(770)), $_1468722161[$_48775291]);} if( $this->_1325834291[___1104705638(771)][$GLOBALS['____1405125256'][155]( ___1104705638(772), ___1104705638(773), $_48775291)][___1104705638(774)] == ___1104705638(775)){ if( $GLOBALS['____1405125256'][156]( $_1468722161[$_48775291])){ foreach( $_1468722161[$_48775291] as&$_1910057185){ $_1910057185= $GLOBALS['____1405125256'][157]( ___1104705638(776), $_1910057185); foreach( $_1910057185 as&$_2002042058){ $_2002042058= $GLOBALS['____1405125256'][158]( $GLOBALS['____1405125256'][159]( $_2002042058)); $_820855576= $GLOBALS['____1405125256'][160]( ___1104705638(777), $_2002042058); if( $GLOBALS['____1405125256'][161]( $_820855576[(1248/2-624)])>(216*2-432)) $_820855576[(836-2*418)]= $GLOBALS['____1405125256'][162]( $_820855576[min(62,0,20.666666666667)], MB_CASE_TITLE); $_2002042058= $GLOBALS['____1405125256'][163]( ___1104705638(778), $_820855576);} $_1910057185= $GLOBALS['____1405125256'][164]( ___1104705638(779), $_1910057185);}} else{ $_350811178= $GLOBALS['____1405125256'][165]( ___1104705638(780), $_1468722161[$_48775291]); foreach( $_350811178 as&$_2002042058){ $_2002042058= $GLOBALS['____1405125256'][166]( $GLOBALS['____1405125256'][167]( $_2002042058)); $_820855576= $GLOBALS['____1405125256'][168]( ___1104705638(781), $_2002042058); if( $GLOBALS['____1405125256'][169]( $_820855576[(798-2*399)])>(1100/2-550)) $_820855576[(1040/2-520)]= $GLOBALS['____1405125256'][170]( $_820855576[(924-2*462)], MB_CASE_TITLE); $_2002042058= $GLOBALS['____1405125256'][171]( ___1104705638(782), $_820855576);} $_1468722161[$_48775291]= $GLOBALS['____1405125256'][172]( ___1104705638(783), $_350811178);}} if( $this->_1325834291[___1104705638(784)][$GLOBALS['____1405125256'][173]( ___1104705638(785), ___1104705638(786), $_48775291)][___1104705638(787)] == ___1104705638(788)){ $_1468722161[$_48775291]= $GLOBALS['____1405125256'][174]( $_1468722161[$_48775291]);} if( $this->_1325834291[___1104705638(789)][$GLOBALS['____1405125256'][175]( ___1104705638(790), ___1104705638(791), $_48775291)][___1104705638(792)] == ___1104705638(793)){ $_1468722161[$_48775291]= htmlspecialcharsbx( HTMLToTxt( $GLOBALS['____1405125256'][176]( $_1468722161[$_48775291])));} if(!$_1468722161[$_48775291] && $this->_1325834291[___1104705638(794)][$GLOBALS['____1405125256'][177]( ___1104705638(795), ___1104705638(796), $_48775291)][___1104705638(797)] == ___1104705638(798)){ $_1458573411= $GLOBALS['____1405125256'][178]( $this->_1595436784[(246*2-492)][$_184310560], ___1104705638(799), $_1458573411);} elseif( $GLOBALS['____1405125256'][179]( $_1468722161[$_48775291])){ $_219140704= array(); for( $_1306755414=(1196/2-598); $_1306755414< $GLOBALS['____1405125256'][180]( $_1468722161[$_48775291]); $_1306755414++){ $_486833855= $GLOBALS['____1405125256'][181]( ___1104705638(800),"#$1_LISTVAL_ITEM_$_1306755414#", $this->_1595436784[round(0+1+1)][$_184310560]); $_219140704[]= $GLOBALS['____1405125256'][182]( $this->_1595436784[round(0+2)][$_184310560], $_486833855, $this->_1595436784[(141*2-282)][$_184310560]); $_1468722161[$_486833855]= $_1468722161[$_48775291][$_1306755414];} $_1458573411= $GLOBALS['____1405125256'][183]( $this->_1595436784[(1136/2-568)][$_184310560], $GLOBALS['____1405125256'][184]( PHP_EOL, $_219140704), $_1458573411);}} $_1458573411= $GLOBALS['____1405125256'][185]( ___1104705638(801), ___1104705638(802), $_1458573411); foreach( $this->_1325834291[___1104705638(803)] as $_1143758567){ if( isset( $_1468722161["#{$_1143758567[___1104705638(804)]}#"]) && $_1143758567[___1104705638(805)] == ___1104705638(806)){ $_1468722161["#{$_1143758567[___1104705638(807)]}#"]= $GLOBALS['____1405125256'][186]( $_1468722161["#{$_1143758567[___1104705638(808)]}#"]);}} foreach( $this->_1325834291[___1104705638(809)] as $_1143758567){ if( isset( $_1468722161["#{$_1143758567[___1104705638(810)]}#"]) && $_1143758567[___1104705638(811)] == ___1104705638(812)){ $_1468722161["#{$_1143758567[___1104705638(813)]}#"]= HTMLToTxt( $_1468722161["#{$_1143758567[___1104705638(814)]}#"]);}}  $_1458573411= $GLOBALS['____1405125256'][187]( $GLOBALS['____1405125256'][188]( $_1468722161), $GLOBALS['____1405125256'][189]( $_1468722161), $_1458573411); $_1458573411= $GLOBALS['____1405125256'][190]( $GLOBALS['____1405125256'][191]( $this->_376725887), $GLOBALS['____1405125256'][192]( $this->_376725887), $_1458573411);   $_1458573411= $GLOBALS['____1405125256'][193]( ___1104705638(815), ___1104705638(816), $_1458573411); $_1458573411= $GLOBALS['____1405125256'][194]( ___1104705638(817), ___1104705638(818), $_1458573411); if(!$_2102997343){ $this->SaveSections( array( $_1989440727[___1104705638(819)])); $this->DemoCountInc(); if( $this->_1368200451 &&!$this->isVariant( $_1989440727[___1104705638(820)])){                     CAcritExportproExport::Save( $_1458573411);  $this->_21904746->IncProductExport();} else{ CAcritExportproExport::Save( $_1458573411);  $this->_21904746->IncProductExport();}} unset( $_699842925, $_1805701217, $_4222681); if( $this->isVariant( $_1989440727[___1104705638(821)])) return array( ___1104705638(822) => $_1989440727, ___1104705638(823) => $_1458573411, ___1104705638(824) => $_2102997343, ___1104705638(825) => $GLOBALS['____1405125256'][195]( $_1224754471)); return $_1989440727;} public function GetYandexDateTime( $_1856240920){ global $DB; $_586024908= false; $_906454919= new DateTime(); $_1913999887= $_906454919->getOffset()/ round(0+1800+1800); $_858503810=(( $GLOBALS['____1405125256'][196]( $_1913999887)>(1048/2-524))? ___1104705638(826): ___1104705638(827)).$GLOBALS['____1405125256'][197]( ___1104705638(828), $GLOBALS['____1405125256'][198]( $_1913999887,(163*2-326),(236*2-472),(996-2*498),(242*2-484), min(186,0,62))); $_873712420= MakeTimeStamp( $_1856240920); $_1539010299= $GLOBALS['____1405125256'][199]( ___1104705638(829), $_873712420).___1104705638(830).$GLOBALS['____1405125256'][200]( ___1104705638(831), $_873712420); $_586024908= $_1539010299.$_858503810; return $_586024908;}  private function PrepareIBlock(){ $_231149732= array(); $this->_1644775067= array(); $_444184164= $this->_943536575; $_249117561= $this->_401191874;   if( $this->_1325834291[___1104705638(832)] == ___1104705638(833)){ foreach( $this->_1325834291[___1104705638(834)] as $_53680104){ if( $this->_1368200451){ if( $_2145110435= CCatalog::$GLOBALS['_____1008814752'][15]( $_53680104)){ if( $GLOBALS['____1405125256'][201]( $_2145110435[___1104705638(835)])> min(74,0,24.666666666667) && $GLOBALS['____1405125256'][202]( $_2145110435[___1104705638(836)], $this->_1325834291[___1104705638(837)])) $_231149732[]= $_2145110435[___1104705638(838)]; if( $GLOBALS['____1405125256'][203]( $_2145110435[___1104705638(839)])> min(178,0,59.333333333333)) $this->_1644775067[$_2145110435[___1104705638(840)]]= $_2145110435;}}}} return $GLOBALS['____1405125256'][204]( $this->_1325834291[___1104705638(841)], $_231149732);}  private function GetElementProperties( $_699842925){ global $DB; $_1989440727= $_699842925->GetFields(); if( $GLOBALS['____1405125256'][205]( ___1104705638(842), $this->_1975650084)){ $_1989440727[___1104705638(843)]= CFile::GetPath($_1989440727[___1104705638(844)]);} if( $GLOBALS['____1405125256'][206](___1104705638(845), $this->_1975650084)){ $_1989440727[___1104705638(846)]= CFile::GetPath( $_1989440727[___1104705638(847)]);} foreach( $_1989440727 as $_198638508 =>&$_1550121863){ if( $GLOBALS['____1405125256'][207]( $_198638508, $this->_1140441134)){ $_1550121863= $GLOBALS['____1405125256'][208]( $GLOBALS['____1405125256'][209]( ___1104705638(848), ___1104705638(849), $this->_1325834291[___1104705638(850)]), $GLOBALS['____1405125256'][210]( $_1550121863));}} $_1989440727[___1104705638(851)]= array(); $_1989440727[___1104705638(852)]= array(); $_1675644441= CIBlockSection::GetNavChain( false, $_1989440727[___1104705638(853)]); while( $_1527284817= $_1675644441->$GLOBALS['_____1008814752'][16]()){ if( $GLOBALS['____1405125256'][211]( ___1104705638(854), $this->_1975650084)){ $_1989440727[___1104705638(855)]= $_1527284817[___1104705638(856)];} else{ $_1989440727[___1104705638(857)][]= $_1527284817[___1104705638(858)];}} if( $GLOBALS['____1405125256'][212]( $this->_266698518[___1104705638(859)])){ $_1850137736= $this->GetProperties($_1989440727, array(___1104705638(860) => $this->_266698518[___1104705638(861)])); foreach($this->_266698518[___1104705638(862)] as $_1087901287) if(!isset($_1850137736[$_1087901287])){ $_1989440727["PROPERTY_{$_1087901287}_VALUE"]= array();} foreach($_1850137736 as $_135227292){  if($_135227292[___1104705638(863)] == ___1104705638(864)){ $_135227292[___1104705638(865)]= $GLOBALS['____1405125256'][213]($GLOBALS['____1405125256'][214](___1104705638(866), ___1104705638(867), $this->_1325834291[___1104705638(868)]), $GLOBALS['____1405125256'][215]($_135227292[___1104705638(869)]));} elseif($_135227292[___1104705638(870)] == ___1104705638(871)){ $_135227292[___1104705638(872)]= array(); if(!empty($_135227292[___1104705638(873)])){ $_1893391749= CIBlockElement::$GLOBALS['_____1008814752'][17](array(), array(___1104705638(874) => $_135227292[___1104705638(875)]), false, false, array(___1104705638(876), ___1104705638(877))); while($_1803496849= $_1893391749->$GLOBALS['_____1008814752'][18]()){ $_135227292[___1104705638(878)][]= $_1803496849[___1104705638(879)]; $_135227292[___1104705638(880)][]= $_1803496849[___1104705638(881)];}}} else{ $_135227292= CIBlockFormatProperties::GetDisplayValue($_1989440727, $_135227292, ___1104705638(882)); if(empty($_135227292[___1104705638(883)])){ if(!$GLOBALS['____1405125256'][216]($_135227292[___1104705638(884)])) $_135227292[___1104705638(885)]= array($_135227292[___1104705638(886)]); else $_135227292[___1104705638(887)]= $_135227292[___1104705638(888)];} else{ if(!$GLOBALS['____1405125256'][217]($_135227292[___1104705638(889)])) $_135227292[___1104705638(890)]= array($_135227292[___1104705638(891)]); else $_135227292[___1104705638(892)]= $_135227292[___1104705638(893)];}} if($_135227292[___1104705638(894)] == ___1104705638(895)){ $_135227292[___1104705638(896)]= array(); if($GLOBALS['____1405125256'][218]($_135227292[___1104705638(897)])> round(0+0.5+0.5)){ foreach($_135227292[___1104705638(898)] as $_186513175) $_135227292[___1104705638(899)][]= $_186513175[___1104705638(900)];} else{ $_135227292[___1104705638(901)]= $_135227292[___1104705638(902)][___1104705638(903)];}} $_1989440727["PROPERTY_{$_135227292[___1104705638(904)]}_DISPLAY_VALUE"]= $_135227292[___1104705638(905)]; $_1989440727["PROPERTY_{$_135227292[___1104705638(906)]}_DISPLAY_VALUE"]= $_1989440727["PROPERTY_{$_135227292[___1104705638(907)]}_VALUE"]; $_1989440727["PROPERTY_{$_135227292[___1104705638(908)]}_VALUE"]= $_135227292[___1104705638(909)]; $_1989440727["PROPERTY_{$_135227292[___1104705638(910)]}_VALUE"]= $_1989440727["PROPERTY_{$_135227292[___1104705638(911)]}_VALUE"];}} if( $this->_1368200451){ $_681443473= CCatalogProduct::$GLOBALS['_____1008814752'][19]( $_1989440727[___1104705638(912)]); if( $GLOBALS['____1405125256'][219]( ___1104705638(913), $this->_445011066)){ $_1989440727[___1104705638(914)]= $GLOBALS['____1405125256'][220]( $_681443473[___1104705638(915)], round(0+0.66666666666667+0.66666666666667+0.66666666666667)); $_1805701217= CPrice::$GLOBALS['_____1008814752'][20]( array(), array( ___1104705638(916) => $_1989440727[___1104705638(917)])); if( $_815531805= $_1805701217->fetch()){ $_1989440727[___1104705638(918)]= $_815531805[___1104705638(919)]; $_1989440727["CATALOG_PRICE_{$_815531805[___1104705638(920)]}_CURRENCY"]= $_815531805[___1104705638(921)];} } else{ $_1805701217= CPrice::$GLOBALS['_____1008814752'][21]( array(), array( ___1104705638(922) => $_1989440727[___1104705638(923)])); while( $_815531805= $_1805701217->fetch()){ if( $GLOBALS['____1405125256'][221](___1104705638(924).$_815531805[___1104705638(925)].___1104705638(926), $this->_445011066) || $GLOBALS['____1405125256'][222]( ___1104705638(927).$_815531805[___1104705638(928)].___1104705638(929), $this->_445011066)){ $_1363710255= CCatalogDiscount::GetDiscountByPrice($_815531805[___1104705638(930)], array(round(0+0.4+0.4+0.4+0.4+0.4)), ___1104705638(931), SITE_ID); $_179402624= CCatalogProduct::CountPriceWithDiscount( $_815531805[___1104705638(932)], $_815531805[___1104705638(933)], $_1363710255); $_965402472= $_815531805[___1104705638(934)]- $_179402624;} else{ $_179402624= $_815531805[___1104705638(935)]; $_965402472= min(220,0,73.333333333333);} $_1989440727["CATALOG_PRICE_{$_815531805[___1104705638(936)]}"]= $GLOBALS['____1405125256'][223]($_815531805[___1104705638(937)], round(0+0.4+0.4+0.4+0.4+0.4)); $_1989440727["CATALOG_PRICE_{$_815531805[___1104705638(938)]}_WD"]= $GLOBALS['____1405125256'][224]($_179402624, round(0+2)); $_1989440727["CATALOG_PRICE_{$_815531805[___1104705638(939)]}_D"]= $GLOBALS['____1405125256'][225]($_965402472, round(0+1+1)); $_1989440727["CATALOG_PRICE{$_815531805[___1104705638(940)]}"]= $GLOBALS['____1405125256'][226]($_815531805[___1104705638(941)], round(0+0.4+0.4+0.4+0.4+0.4)); $_1989440727["CATALOG_PRICE_{$_815531805[___1104705638(942)]}_CURRENCY"]= $_815531805[___1104705638(943)];}} $_1989440727[___1104705638(944)]= $_681443473[___1104705638(945)]; $_1989440727[___1104705638(946)]= $_681443473[___1104705638(947)]; $_1989440727[___1104705638(948)]= $_681443473[___1104705638(949)]; $_1989440727[___1104705638(950)]= $_681443473[___1104705638(951)]; $_1989440727[___1104705638(952)]= $_681443473[___1104705638(953)]; $_1989440727[___1104705638(954)]= $_681443473[___1104705638(955)];} unset($_1850137736, $_681443473, $_1805701217, $_815531805); return $_1989440727;} private function SaveSections($_25679846){ if($GLOBALS['____1405125256'][227]($_25679846)){ $_1528081796= AcritExportproSession::GetSession($this->_1325834291["ID"]); if(!$GLOBALS['____1405125256'][228]($_1528081796[___1104705638(956)][$this->_1325834291[___1104705638(957)]][___1104705638(958)])) $_1528081796[___1104705638(959)][$this->_1325834291[___1104705638(960)]][___1104705638(961)]= array(); $_1528081796[___1104705638(962)][$this->_1325834291[___1104705638(963)]][___1104705638(964)]= $GLOBALS['____1405125256'][229]( $_1528081796[___1104705638(965)][$this->_1325834291[___1104705638(966)]][___1104705638(967)], $_25679846); AcritExportproSession::SetSession($this->_1325834291[___1104705638(968)], $_1528081796);}} private function SaveCurrencies($_1733776977){ if($GLOBALS['____1405125256'][230]($_1733776977)){ $_1528081796= AcritExportproSession::GetSession($this->_1325834291["ID"]); if(!$GLOBALS['____1405125256'][231]($_1528081796[___1104705638(969)][$this->_1325834291[___1104705638(970)]][___1104705638(971)])) $_1528081796[___1104705638(972)][$this->_1325834291[___1104705638(973)]][___1104705638(974)]= array(); $_1528081796[___1104705638(975)][$this->_1325834291[___1104705638(976)]][___1104705638(977)]= $GLOBALS['____1405125256'][232]( $_1528081796[___1104705638(978)][$this->_1325834291[___1104705638(979)]][___1104705638(980)], $_1733776977); AcritExportproSession::SetSession($this->_1325834291[___1104705638(981)], $_1528081796);}} private function CheckCondition($_1989440727, $_596109604){ unset($GLOBALS["CHECK_COND"]); $GLOBALS[___1104705638(982)]= $_1989440727; return eval("return $_596109604;");} public function GetProperties($_1989440727, $_1618230448){ $_2050757914= CIBlockElement::GetProperty($_1989440727["IBLOCK_ID"], $_1989440727["ID"], array(), $_1618230448); $_641379765= Array(); while($_1855492490= $_2050757914->$GLOBALS['_____1008814752'][22]()){ if($GLOBALS['____1405125256'][233]($GLOBALS['____1405125256'][234]($_1855492490[___1104705638(983)]))>(1072/2-536)) $_1180270582= $_1855492490[___1104705638(984)]; else $_1180270582= $_1855492490[___1104705638(985)]; $_1855492490[___1104705638(986)]= $_1855492490[___1104705638(987)]; if($_1855492490[___1104705638(988)]==___1104705638(989)){ if($_1855492490[___1104705638(990)]!=___1104705638(991)) $_1855492490[___1104705638(992)]= array($_1855492490[___1104705638(993)]); $_1855492490[___1104705638(994)]= $_1855492490[___1104705638(995)]; $_1855492490[___1104705638(996)]= $_1855492490[___1104705638(997)];} if($GLOBALS['____1405125256'][235]($_1855492490[___1104705638(998)]) ||($GLOBALS['____1405125256'][236]($_1855492490[___1104705638(999)])>(1488/2-744))){ $_1855492490[___1104705638(1000)]= $_1855492490[___1104705638(1001)]; if($GLOBALS['____1405125256'][237]($_1855492490[___1104705638(1002)]) || $GLOBALS['____1405125256'][238](___1104705638(1003), $_1855492490[___1104705638(1004)])) $_1855492490[___1104705638(1005)]= htmlspecialcharsex($_1855492490[___1104705638(1006)]); $_1855492490[___1104705638(1007)]= $_1855492490[___1104705638(1008)]; if($GLOBALS['____1405125256'][239](___1104705638(1009), $_1855492490[___1104705638(1010)])) $_1855492490[___1104705638(1011)]= htmlspecialcharsex($_1855492490[___1104705638(1012)]);} else{ $_1855492490[___1104705638(1013)]= $_1855492490[___1104705638(1014)]= ___1104705638(1015); $_1855492490[___1104705638(1016)]= $_1855492490[___1104705638(1017)]= ___1104705638(1018);} if($_1855492490[___1104705638(1019)]==___1104705638(1020)){ if($GLOBALS['____1405125256'][240]($_1180270582, $_641379765)){ $_1833339406=&$_641379765[$_1180270582]; if($_1855492490[___1104705638(1021)]!==___1104705638(1022)){ if($GLOBALS['____1405125256'][241]($_1833339406[___1104705638(1023)])){ $_1833339406[___1104705638(1024)][]= $_1855492490[___1104705638(1025)]; $_1833339406[___1104705638(1026)][]= $_1855492490[___1104705638(1027)]; $_1833339406[___1104705638(1028)][]= $_1855492490[___1104705638(1029)]; $_1833339406[___1104705638(1030)][]= $_1855492490[___1104705638(1031)]; $_1833339406[___1104705638(1032)][]= $_1855492490[___1104705638(1033)]; $_1833339406[___1104705638(1034)][]= $_1855492490[___1104705638(1035)]; if($_1855492490[___1104705638(1036)]==___1104705638(1037)){ $_1833339406[___1104705638(1038)][]= $_1855492490[___1104705638(1039)]; $_1833339406[___1104705638(1040)][]= $_1855492490[___1104705638(1041)]; $_1833339406[___1104705638(1042)][]= $_1855492490[___1104705638(1043)]; }} else{ $_1833339406[___1104705638(1044)]= array($_1855492490[___1104705638(1045)]); $_1833339406[___1104705638(1046)]= array($_1855492490[___1104705638(1047)]); $_1833339406[___1104705638(1048)]= array($_1855492490[___1104705638(1049)]); $_1833339406[___1104705638(1050)]= array($_1855492490[___1104705638(1051)]); $_1833339406[___1104705638(1052)]= array($_1855492490[___1104705638(1053)]); $_1833339406[___1104705638(1054)]= array($_1855492490[___1104705638(1055)]); if($_1855492490[___1104705638(1056)]==___1104705638(1057)){ $_1833339406[___1104705638(1058)]= array($_1855492490[___1104705638(1059)]); $_1833339406[___1104705638(1060)]= array($_1855492490[___1104705638(1061)]); $_1833339406[___1104705638(1062)]= array($_1855492490[___1104705638(1063)]); $_1833339406[___1104705638(1064)]= array($_1855492490[___1104705638(1065)]); $_1833339406[___1104705638(1066)]= array($_1855492490[___1104705638(1067)]);}}}} else{ $_1855492490[___1104705638(1068)]= $_1855492490[___1104705638(1069)]; if($GLOBALS['____1405125256'][242](___1104705638(1070), $_1855492490[___1104705638(1071)])) $_1855492490[___1104705638(1072)]= htmlspecialcharsex($_1855492490[___1104705638(1073)]); $_1855492490[___1104705638(1074)]= $_1855492490[___1104705638(1075)]; if($GLOBALS['____1405125256'][243]($_1855492490[___1104705638(1076)]) || $GLOBALS['____1405125256'][244](___1104705638(1077), $_1855492490[___1104705638(1078)])) $_1855492490[___1104705638(1079)]= htmlspecialcharsex($_1855492490[___1104705638(1080)]); if($_1855492490[___1104705638(1081)]!==___1104705638(1082)){ $_1855492490[___1104705638(1083)]= array($_1855492490[___1104705638(1084)]); $_1855492490[___1104705638(1085)]= array($_1855492490[___1104705638(1086)]); $_1855492490[___1104705638(1087)]= array($_1855492490[___1104705638(1088)]); $_1855492490[___1104705638(1089)]= array($_1855492490[___1104705638(1090)]); $_1855492490[___1104705638(1091)]= array($_1855492490[___1104705638(1092)]); $_1855492490[___1104705638(1093)]= array($_1855492490[___1104705638(1094)]); if($_1855492490[___1104705638(1095)]==___1104705638(1096)){ $_1855492490[___1104705638(1097)]= array($_1855492490[___1104705638(1098)]); $_1855492490[___1104705638(1099)]= array($_1855492490[___1104705638(1100)]); $_1855492490[___1104705638(1101)]= array($_1855492490[___1104705638(1102)]); $_1855492490[___1104705638(1103)]= array($_1855492490[___1104705638(1104)]);}} else{ $_1855492490[___1104705638(1105)]= false; $_1855492490[___1104705638(1106)]= false; $_1855492490[___1104705638(1107)]= false; $_1855492490[___1104705638(1108)]= false; $_1855492490[___1104705638(1109)]= false; $_1855492490[___1104705638(1110)]= false; if($_1855492490[___1104705638(1111)]==___1104705638(1112)){ $_1855492490[___1104705638(1113)]= false; $_1855492490[___1104705638(1114)]= false; $_1855492490[___1104705638(1115)]= false; $_1855492490[___1104705638(1116)]= false;}} $_641379765[$_1180270582]= $_1855492490;}} else{ $_1855492490[___1104705638(1117)]= $_1855492490[___1104705638(1118)]; if($GLOBALS['____1405125256'][245](___1104705638(1119), $_1855492490[___1104705638(1120)])) $_1855492490[___1104705638(1121)]= htmlspecialcharsex($_1855492490[___1104705638(1122)]); $_1855492490[___1104705638(1123)]= $_1855492490[___1104705638(1124)]; if($GLOBALS['____1405125256'][246]($_1855492490[___1104705638(1125)]) || $GLOBALS['____1405125256'][247](___1104705638(1126), $_1855492490[___1104705638(1127)])) $_1855492490[___1104705638(1128)]= htmlspecialcharsex($_1855492490[___1104705638(1129)]); $_641379765[$_1180270582]= $_1855492490;}} return $_641379765;} private function GetStringCharset( $_1421267910){ global $APPLICATION; if( $GLOBALS['____1405125256'][248]( ___1104705638(1130), $_1421267910)) return ___1104705638(1131); $_1935035751= $APPLICATION->ConvertCharset( $_1421267910, ___1104705638(1132), ___1104705638(1133)); if( $GLOBALS['____1405125256'][249]( ___1104705638(1134), $_1935035751, $_1623456954)) return ___1104705638(1135); return ___1104705638(1136);}} class CAcritExportproLog{ public $_1543815830= "/upload/acrit.exportpro/"; private $_1833063330; private $_414306401; public function __construct( $_1833063330= false){ $this->_1833063330= $_1833063330;  } public function Init( $_1325834291){ $_1528081796= AcritExportproSession::GetSession( $_1325834291["ID"]); $_1528081796[___1104705638(1137)][___1104705638(1138)][$_1325834291[___1104705638(1139)]]= array( ___1104705638(1140) =>(1168/2-584), ___1104705638(1141) =>(1160/2-580), ___1104705638(1142) =>(1472/2-736), ___1104705638(1143) => min(4,0,1.3333333333333), ___1104705638(1144) =>(752-2*376), ___1104705638(1145) => ___1104705638(1146), ___1104705638(1147) => $GLOBALS['____1405125256'][250]( ___1104705638(1148), $GLOBALS['____1405125256'][251]())); $_687821129= new CExportproProfile(); if( CModule::$GLOBALS['_____1008814752'][23]( ___1104705638(1149))){ $_1528081796[___1104705638(1150)][___1104705638(1151)][$_1325834291[___1104705638(1152)]][___1104705638(1153)]= $GLOBALS['____1405125256'][252]( $_687821129->PrepareIBlock( $_1325834291[___1104705638(1154)], $_1325834291[___1104705638(1155)]));} else{ $_1528081796[___1104705638(1156)][___1104705638(1157)][$_1325834291[___1104705638(1158)]][___1104705638(1159)]= $GLOBALS['____1405125256'][253]( $_687821129->PrepareIBlock( $_1325834291[___1104705638(1160)], false));} if( $_1325834291[___1104705638(1161)] != ___1104705638(1162)){ $_25679846= array(); $_1675644441= CIBlockSection::$GLOBALS['_____1008814752'][24]( array(), array( ___1104705638(1163) => $_1325834291[___1104705638(1164)]), false, array( ___1104705638(1165), ___1104705638(1166), ___1104705638(1167))); $_1618230448= array( ___1104705638(1168) => ___1104705638(1169)); while( $_1527284817= $_1675644441->$GLOBALS['_____1008814752'][25]()){ $_1618230448= array( ___1104705638(1170) => $_1527284817[___1104705638(1171)], ___1104705638(1172) => $_1527284817[___1104705638(1173)], ___1104705638(1174) => $_1325834291[___1104705638(1175)]); $_831815591= CIBlockSection::$GLOBALS['_____1008814752'][26]( array(), $_1618230448, false, array( ___1104705638(1176))); while( $_1447053711= $_831815591->$GLOBALS['_____1008814752'][27]()) $_25679846[]= $_1447053711[___1104705638(1177)];} $_25679846= $GLOBALS['____1405125256'][254]( $_25679846); $_1528081796[___1104705638(1178)][___1104705638(1179)][$_1325834291[___1104705638(1180)]][___1104705638(1181)]= $GLOBALS['____1405125256'][255]( $_25679846);} else{ $_1528081796[___1104705638(1182)][___1104705638(1183)][$_1325834291[___1104705638(1184)]][___1104705638(1185)]= $GLOBALS['____1405125256'][256]($_1325834291[___1104705638(1186)]);} $this->_1833063330= $_1325834291[___1104705638(1187)]; CheckDirPath( $_SERVER[___1104705638(1188)].$this->_1543815830); $this->_1543815830= $this->_1543815830.___1104705638(1189).$this->_1833063330.___1104705638(1190); $_1528081796[___1104705638(1191)][___1104705638(1192)][$_1325834291[___1104705638(1193)]][___1104705638(1194)]= $this->_1543815830; $GLOBALS['____1405125256'][257]( $_SERVER[___1104705638(1195)].$this->_1543815830, ___1104705638(1196));  AcritExportproSession::SetSession( $_1325834291[___1104705638(1197)], $_1528081796);} public function IncIblcok(){ $_1528081796= AcritExportproSession::GetSession( $this->_1833063330); $_1528081796[___1104705638(1198)][___1104705638(1199)][$this->_1833063330][___1104705638(1200)]++; AcritExportproSession::SetSession( $this->_1833063330, $_1528081796);} public function IncSection(){ $_1528081796= AcritExportproSession::GetSession( $this->_1833063330); $_1528081796[___1104705638(1201)][___1104705638(1202)][$this->_1833063330][___1104705638(1203)]++; AcritExportproSession::SetSession( $this->_1833063330, $_1528081796);} public function IncProduct( $_1213666504= 0){ $_1528081796= AcritExportproSession::GetSession( $this->_1833063330); if(!$GLOBALS['____1405125256'][258]( $_1213666504)) $_1528081796[___1104705638(1204)][___1104705638(1205)][$this->_1833063330][___1104705638(1206)]++; else $_1528081796[___1104705638(1207)][___1104705638(1208)][$this->_1833063330][___1104705638(1209)] += $_1213666504; AcritExportproSession::SetSession( $this->_1833063330, $_1528081796);} public function IncProductExport(){ $_1528081796= AcritExportproSession::GetSession( $this->_1833063330); $_1528081796[___1104705638(1210)][___1104705638(1211)][$this->_1833063330][___1104705638(1212)]++; AcritExportproSession::SetSession( $this->_1833063330, $_1528081796);} public function IncProductError(){ $_1528081796= AcritExportproSession::GetSession( $this->_1833063330); $_1528081796[___1104705638(1213)][___1104705638(1214)][$this->_1833063330][___1104705638(1215)]++; AcritExportproSession::SetSession( $this->_1833063330, $_1528081796);} public function AddMessage( $_1731453011){ if( $GLOBALS['____1405125256'][259]( $_SERVER["DOCUMENT_ROOT"].$this->_1543815830)){ $GLOBALS['____1405125256'][260]( $_SERVER["DOCUMENT_ROOT"].$this->_1543815830, $_1731453011, FILE_APPEND);}} public function GetLog( $_1664184025){ $_917427020= AcritExportproSession::GetAllSession( $_1664184025); $_1528081796= array(); if(!empty( $_917427020)){ $_1528081796= $_917427020[min(94,0,31.333333333333)]; $_1528081796[___1104705638(1216)][___1104705638(1217)][$_1664184025][___1104705638(1218)]= $GLOBALS['____1405125256'][261]( $_1528081796[___1104705638(1219)][___1104705638(1220)][$_1664184025][___1104705638(1221)]); $_1528081796[___1104705638(1222)][___1104705638(1223)][$_1664184025][___1104705638(1224)]= $GLOBALS['____1405125256'][262]( $_1528081796[___1104705638(1225)][___1104705638(1226)][$_1664184025][___1104705638(1227)]); $_1528081796[___1104705638(1228)][___1104705638(1229)][$_1664184025][___1104705638(1230)]= $GLOBALS['____1405125256'][263]( $_1528081796[___1104705638(1231)][___1104705638(1232)][$_1664184025][___1104705638(1233)]); unset( $_917427020[(1116/2-558)]); foreach( $_917427020 as $_259328779){ $_1528081796[___1104705638(1234)][___1104705638(1235)][$_1664184025][___1104705638(1236)] += $GLOBALS['____1405125256'][264]( $_259328779[___1104705638(1237)][___1104705638(1238)][$_1664184025][___1104705638(1239)]); $_1528081796[___1104705638(1240)][___1104705638(1241)][$_1664184025][___1104705638(1242)] += $GLOBALS['____1405125256'][265]( $_259328779[___1104705638(1243)][___1104705638(1244)][$_1664184025][___1104705638(1245)]); $_1528081796[___1104705638(1246)][___1104705638(1247)][$_1664184025][___1104705638(1248)] += $GLOBALS['____1405125256'][266]( $_259328779[___1104705638(1249)][___1104705638(1250)][$_1664184025][___1104705638(1251)]);} $_1528081796[___1104705638(1252)][___1104705638(1253)][$_1664184025][___1104705638(1254)]= $_1528081796[___1104705638(1255)][___1104705638(1256)][$_1664184025][___1104705638(1257)]- $_1528081796[___1104705638(1258)][___1104705638(1259)][$_1664184025][___1104705638(1260)];} return $_1528081796[___1104705638(1261)][___1104705638(1262)][$_1664184025];}} class AcritExportproProtect{ static function Protect( $_981664811, $_188376227){ if( $_188376227 == "protect"){ COption::$GLOBALS['_____1008814752'][28]( "acrit.exportpro", "acrit.exportpro.mode", $GLOBALS['____1405125256'][267]( $_981664811)); if( $_981664811 == round(0+0.2+0.2+0.2+0.2+0.2)) return false; else return true;} else{ return( COption::$GLOBALS['_____1008814752'][29]( ___1104705638(1263), ___1104705638(1264)) != round(0+0.25+0.25+0.25+0.25));}}} class AcritExportproSession{ static private $_1895707460; static private $_1372700620=-1; static public function Init( $_1375291740){ if(!self::$_1895707460) self::$_1895707460= $_SERVER["DOCUMENT_ROOT"]."/bitrix/tools/acrit.exportpro/"; self::$_1372700620= $_1375291740;} static public function GetAllSession( $_184310560){ $_698792986= $GLOBALS['____1405125256'][268]( self::$_1895707460); $_917427020= array(); foreach( $_698792986 as $_186513175){ if( $_186513175 == ___1104705638(1265) || $_186513175 == ___1104705638(1266)) continue; if( false !== $GLOBALS['____1405125256'][269]( $_186513175,"export_{$_184310560}")){ $_1528081796= $GLOBALS['____1405125256'][270]( self::$_1895707460.$_186513175); $_1528081796= $GLOBALS['____1405125256'][271]( $_1528081796); if(!$GLOBALS['____1405125256'][272]( $_1528081796)) $_1528081796= array(); if(!empty( $_1528081796)) $_917427020[]= $_1528081796;}} return $GLOBALS['____1405125256'][273]( $_917427020);} static public function GetSession( $_184310560){ if( self::$_1372700620> 0) $_184310560 .= "_".self::$_1372700620; if( $GLOBALS['____1405125256'][274]( self::$_1895707460."export_{$_184310560}.session")){ $_1528081796= $GLOBALS['____1405125256'][275]( self::$_1895707460."export_{$_184310560}.session"); $_1528081796= $GLOBALS['____1405125256'][276]( $_1528081796);} if(!$GLOBALS['____1405125256'][277]( $_1528081796)) $_1528081796= array(); return $_1528081796;} static public function SetSession( $_184310560, $_757845795){ if(!$GLOBALS['____1405125256'][278]( $_757845795)) $_757845795= array(); if( self::$_1372700620>(1276/2-638)) $_184310560 .= ___1104705638(1267).self::$_1372700620; $GLOBALS['____1405125256'][279]( self::$_1895707460."export_{$_184310560}.session", $GLOBALS['____1405125256'][280]( $_757845795));} static public function DeleteSession( $_184310560){ if( $GLOBALS['____1405125256'][281]( self::$_1895707460."export_{$_184310560}.session")) $GLOBALS['____1405125256'][282]( self::$_1895707460."export_{$_184310560}.session"); $_698792986= $GLOBALS['____1405125256'][283]( self::$_1895707460); foreach( $_698792986 as $_186513175){ if( $_186513175 == ___1104705638(1268) || $_186513175 == ___1104705638(1269)) continue; if( false !== $GLOBALS['____1405125256'][284]( $_186513175,"export_{$_184310560}")){ $GLOBALS['____1405125256'][285]( self::$_1895707460.$_186513175);}}}} while(!$GLOBALS['____1405125256'][286](___1104705638(1270)) || $GLOBALS['____1405125256'][287](acrit_exportpro_OLDSITEEXPIREDATE) <=(139*2-278) || acrit_exportpro_OLDSITEEXPIREDATE != acrit_exportpro_SITEEXPIREDATE)die(GetMessage(___1104705638(1271)));?>
+<?php
+IncludeModuleLangFile( __FILE__ );
+
+global $DBType;
+
+$arClasses=array(
+    "CExportproProfileDB" => "classes/mysql/cexportproprofiledb.php",
+    "CExportproMarketDB" => "classes/mysql/cexportpropro_marketdb.php",
+    "CExportproProfile" => "classes/general/cexportproprofile.php",
+    "CExportproVariant" => "classes/general/cexportproprofile.php",
+    "CAcritExportproCond" => "classes/general/cexportprofilter.php",
+    "CAcritExportproCatalogCond" => "classes/general/cexportprofilter.php",
+    "CAcritExportproProps" => "classes/general/cexportprofilter.php",
+    "CAcritExportproExport" => "classes/general/cexportproexport.php",
+    "CExportproCron" => "classes/general/cexportproagent.php",
+    "CExportproAgent" => "classes/general/cexportproagent.php",
+    "CExportproMarketEbayDB" => "classes/mysql/cexportpropro_marketebaydb.php",
+    "Threads" => "classes/general/threads.php",
+    "ThreadsSession" => "classes/general/threads.php",
+    "OZON" => "classes/general/ozon.php",
+);
+
+CModule::AddAutoloadClasses( "acrit.exportpro", $arClasses );
+
+class CAcritExportproMenu{
+    public function OnBuildGlobalMenu( &$aGlobalMenu, &$aModuleMenu ){
+        global $USER, $APPLICATION, $adminMenu, $adminPage;
+        if( key_exists( "global_menu_acrit", $adminMenu->aGlobalMenu ) ){
+            return;
+        }
+
+        $aMenu = array(
+            "menu_id" => "acrit",
+            "sort" => 150,
+            "text" => GetMessage( "ACRIT_MENU_NAME" ),
+            "title" => GetMessage( "ACRIT_MENU_TITLE" ),
+            "icon" => "clouds_menu_icon",
+            "page_icon" => "clouds_page_icon",
+            "items_id" => "global_menu_acrit",
+            "items" => array()
+        );
+        $aGlobalMenu["global_menu_acrit"] = $aMenu;
+    }
+}
+
+class CAcritExportproElement {
+    private $profile = null;
+    private $DEMO = 2;
+    private $isDemo = true;
+    private $DEMO_CNT;
+    private $MODULEID = "acrit.exportpro";
+    private $stepElements = 50;
+    private $dateFields = array();
+    private $log;
+    private $session;
+    private $baseDateTimePatern;
+
+    private $profileEncoding = array(
+        "utf8" => "utf-8",
+        "cp1251" => "windows-1251",
+    );
+
+    // TODO : Yandex упрощенное описание поправить описание и обязательные поля
+    // TODO : Activizm ViariantList добавить пол к категориям
+
+    public function __construct( $profile ){
+        global $APPLICATION;
+        
+        $this->iblockIncluded = @CModule::IncludeModule( "iblock" );
+        $this->saleIncluded = @CModule::IncludeModule( "sale" );
+        $this->catalogIncluded = @CModule::IncludeModule( "catalog" );
+
+        $this->DEMO = Cmodule::IncludeModuleEx( $this->MODULEID );
+        if( $this->DEMO == 1 )
+            $this->isDemo = false;
+        
+        $this->DEMO_CNT = 50;
+        $this->profile = $profile;
+        
+        if( intval( $this->profile["SETUP"]["EXPORT_STEP"] ) > 0 )
+            $this->stepElements = $this->profile["SETUP"]["EXPORT_STEP"];
+        
+        $this->dateFields = array(
+            "TIMESTAMP_X",
+            "DATE_CREATE",
+            "DATE_ACTIVE_FROM",
+            "DATE_ACTIVE_TO"
+        );
+
+        //$this->session = new ThreadsSession;
+        //$this->session->Init("acrit_exportpro", \Bitrix\Main\Application::getDocumentRoot());
+        
+        $this->log = new CAcritExportproLog( $this->profile["ID"] );
+        $this->iblockE = "file_get_contents";
+        $this->iblockD = "base64_decode";
+        
+        $this->baseDateTimePatern = "Y-m-dTh:i:s±h:i";
+        
+        $paternCharset = $this->GetStringCharset( $this->baseDateTimePatern );
+                
+        if( $paternCharset == "cp1251" ){
+            $this->baseDateTimePatern = $APPLICATION->ConvertCharset( $this->baseDateTimePatern, "cp1251", "utf8" );
+        }             
+        
+        
+        $dateGenerate = ( $this->profile["DATEFORMAT"] == $this->baseDateTimePatern ) ? $this->GetYandexDateTime( date( "d.m.Y H:i:s" ) ) : date( str_replace( "_", " ", $this->profile["DATEFORMAT"] ), time() );                
+        
+        $this->defaultFields = array(
+            "#ENCODING#" => $this->profileEncoding[$this->profile["ENCODING"]],
+            "#DATE#" => $this->profile["DATEFORMAT"],
+            "#SHOP_NAME#" => $this->profile["SHOPNAME"],
+            "#COMPANY_NAME#" => $this->profile["COMPANY"],
+            "#SITE_URL#" => ( ( CMain::IsHTTPS() ) ? "https://" : "http://" ).$this->profile["DOMAIN_NAME"],
+            "#DESCRIPTION#" => $this->profile["DESCRIPTION"],
+            "#DATE#" => $dateGenerate,
+        );                    
+    }         
+
+    public function GetSections(){
+        $arSessionData = AcritExportproSession::GetAllSession( $this->profile["ID"] );
+        $sessionData = array();
+        if( !empty( $arSessionData ) ){
+            $sessionData = $arSessionData[0];
+            if( !is_array( $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"] ) )
+                $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"] = array();
+            
+            unset( $arSessionData[0] );
+            foreach( $arSessionData as $sData ){
+                if( is_array( $sData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"] ) ){
+                    $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"] = array_merge(
+                        $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"],
+                        $sData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"]
+                    );
+                }
+            }
+        }
+        return array_unique( $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"] );
+    }
+    public function GetCurrencies(){
+        $arSessionData = AcritExportproSession::GetAllSession( $this->profile["ID"] );
+        $sessionData = array();
+        if( !empty( $arSessionData ) ){
+            $sessionData = $arSessionData[0];
+            if( !is_array( $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"] ) )
+                $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"] = array();
+            
+            unset( $arSessionData[0] );
+            foreach( $arSessionData as $sData ){
+                if( is_array( $sData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"] ) ){
+                    $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"] = array_merge(
+                        $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"],
+                        $sData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"]
+                    );
+                }
+            }
+        }
+        return array_unique( array_filter( $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"] ) );
+    }
+
+    public function GetElementCount(){
+        return $this->elementCount;
+    }
+
+    private function DemoCount(){
+        $sessionData = AcritExportproSession::GetSession( $this->profile["ID"] );
+        return ( $sessionData["EXPORTPRO"][$this->profile["ID"]]["DEMO_COUNT"] > $this->DEMO_CNT );
+    }
+    
+    private function DemoCountInc(){
+        $sessionData = AcritExportproSession::GetSession( $this->profile["ID"] );
+        if( !isset( $sessionData["EXPORTPRO"][$this->profile["ID"]]["DEMO_COUNT"] ) )
+            $sessionData["EXPORTPRO"][$this->profile["ID"]]["DEMO_COUNT"] = 0;
+        
+        $sessionData["EXPORTPRO"][$this->profile["ID"]]["DEMO_COUNT"]++;
+        AcritExportproSession::SetSession( $this->profile["ID"], $sessionData );
+    }   
+
+    public function Process( $page = 1, $cronrun = false, $fileType = "xml", $fileExport = false, $fileExportName = false ){
+        if( $fileType == "csv" ){
+            return self::ProcessCSV( $page, $cronrun, $fileExport, $fileExportName );
+        }
+        else{
+            return self::ProcessXML( $page, $cronrun );
+        }
+    }
+    
+    //CAcritExportproExport::Save($itemTemplate)
+    
+    public function ArrayMultiply( &$arResult, $arTuple, $arTemp = array() ){
+        if( $arTuple ){
+            reset($arTuple);
+            list($key, $head) = each($arTuple);
+            unset($arTuple[$key]);
+            $arTemp[$key] = false;
+            if( is_array( $head ) ){
+                if( empty( $head ) ){
+                    if(empty($arTuple))
+                        $arResult[] = $arTemp;
+                    else
+                        $this->ArrayMultiply($arResult, $arTuple, $arTemp);
+                }
+                else{
+                    foreach( $head as $value ){
+                        $arTemp[$key] = $value;
+                        if(empty($arTuple))
+                            $arResult[] = $arTemp;
+                        else
+                            $this->ArrayMultiply($arResult, $arTuple, $arTemp);
+                    }
+                }
+            }
+            else{
+                $arTemp[$key] = $head;
+                if(empty($arTuple))
+                    $arResult[] = $arTemp;
+                else
+                    $this->ArrayMultiply($arResult, $arTuple, $arTemp);
+            }
+        }
+        else{
+            $arResult[] = $arTemp;
+        }
+    }
+    
+    public function ExportArrayMultiply( &$arResult, $arTuple, $arTemp = array() ){        
+        if( count( $arTuple ) == 0 ){
+            $arResult[] = $arTemp;
+        }
+        else{
+            $head = array_shift( $arTuple );
+            $arTemp[] = false;
+            if( is_array( $head ) ){
+                if( empty( $head ) ){
+                    $arTemp[count( $arTemp ) - 1] = "";
+                    $this->ArrayMultiply( $arResult, $arTuple, $arTemp );
+                }
+                else{
+                    foreach( $head as $key => $value ){
+                        $arTemp[count( $arTemp ) - 1] = $value;
+                        self::ExportArrayMultiply( $arResult, $arTuple, $arTemp );
+                    }
+                }
+            }
+            else{
+                $arTemp[count( $arTemp ) - 1] = $head;
+                self::ExportArrayMultiply( $arResult, $arTuple, $arTemp );
+            }
+        }
+    }
+    
+    public function ExportConvertCharset( $field ){
+        global $APPLICATION;
+        $result = "";
+        
+        $paternCharset = $this->GetStringCharset( $field );    
+        $result = $APPLICATION->ConvertCharset( $field, $paternCharset, $this->profileEncoding[$this->profile["ENCODING"]] );
+        
+        return $result;
+    }
+    
+        
+    public function ProcessCSV( $page = 1, $cronrun = false, $fileExport = false, $fileExportName = false ){
+        global $APPLICATION;
+        
+        if( !$fileExport || !$fileExportName ) return false;
+        
+        if( $page == 1 ){
+            $this->log->Init( $this->profile );
+            $this->page = $page;
+        }
+
+        $this->currencyRates = CExportproProfile::LoadCurrencyRates();
+        $iblockList = $this->PrepareIBlock();
+        
+        if( empty( $iblockList ) ){
+            return true;
+        }
+            
+        $pregMatchExp = GetMessage( "ACRIT_EXPORTPRO_A_AA_A" );
+                                                                                                          
+        //preg_match_all( @$pregMatchExp, $this->profile["OFFER_TEMPLATE"], $this->arMatches );
+        //preg_match_all( "/.*(<[\w\d_-]+).*(#[\w\d_-]+#).*(<\/[\w\d_-]+>)/", $this->profile["OFFER_TEMPLATE"], $this->arMatches );
+        preg_match_all( "/.*(<.+>).*(#[\w\d_-]+:*[\w\d_-]+#).*(<\/.+>)/", $this->profile["OFFER_TEMPLATE"], $this->arMatches );
+
+        // Установливаем для всех шаблонов #EXAMPLE# пустое значение, чтобы можно было удалить
+        $this->templateValuesDefaults = array();
+        foreach( $this->arMatches[2] as $match ){
+            $this->templateValuesDefaults[$match] = "";
+        }
+        $this->templateValuesDefaults["#MARKET_CATEGORY#"] = "";
+
+        // Получаем свойства используемые в шаблонах
+        $this->useProperties = array(
+            "ID" => array()
+        );
+        
+        $this->usePrices = array();
+        foreach( $this->profile["XMLDATA"] as $field ){
+            if( !empty( $field["VALUE"] ) || !empty( $field["CONTVALUE_FALSE"] ) || !empty( $field["CONTVALUE_TRUE"] ) ){
+                $arValue = explode( "-", $field["VALUE"] );
+                switch( count( $arValue ) ){
+                    case 1:
+                        $this->useFields[] = $arValue[0];
+                        break;
+                    case 2:
+                        $this->usePrices[] = $arValue[1];
+                        break;
+                    case 3:
+                        $this->useProperties["ID"][] = $arValue[2];
+                        break;
+                }
+                
+                if( $field["CONDITION"]["CHILDREN"] ){
+                    if( !function_exists( findChildren ) ){
+                        function findChildren( $children ){
+                            $retVal = array();
+                            foreach( $children as $child ){
+                                if( strstr( $child["CLASS_ID"], "CondIBProp" ) ){
+                                    $arProp = explode( ":", $child["CLASS_ID"] );
+                                    $retVal[] = $arProp[2];
+                                }
+                                if( $child["CHILDREN"] ){
+                                    $retVal = array_merge( $retVal, findChildren( $child["CHILDREN"] ) );
+                                }
+                            }
+                            return $retVal;
+                        }
+                    }
+                    $this->useProperties["ID"] = array_merge( $this->useProperties["ID"], findChildren( $field["CONDITION"]["CHILDREN"] ) );
+                    //$this->useProperties["ID"] = findChildren( $field["CONDITION"]["CHILDREN"] );
+                }
+            }
+            
+            if( $field["EVAL_FILTER"] ){
+                preg_match_all( "/.*?PROPERTY_(\d+)|(CATALOG_PRICE_[\d]+_WD|CATALOG_PRICE_[\d]+_D).*?/", $this->profile["EVAL_FILTER"], $filterProps );
+                if( is_array( $filterProps[1] ) ){
+                    $this->useProperties["ID"] = array_merge( $this->useProperties["ID"], $filterProps[1] );
+                }
+                if( is_array( $filterProps[2] ) ){
+                    $this->usePrices = array_merge( $this->usePrices, $filterProps[2] );
+                }
+            }
+        }
+        preg_match_all( "/.*?PROPERTY_(\d+)|(CATALOG_PRICE_[\d]+_WD|CATALOG_PRICE_[\d]+_D).*?/", $this->profile["EVAL_FILTER"], $filterProps );
+        
+        if( is_array( $filterProps[1] ) ){
+            $this->useProperties["ID"] = array_merge( $this->useProperties["ID"], $filterProps[1] );
+        }
+        if( is_array( $filterProps[2] ) ){
+            $this->usePrices = array_merge( $this->usePrices, $filterProps[2] );
+        }
+        
+        $this->useProperties["ID"] = array_unique( $this->useProperties["ID"] );
+        $this->useProperties["ID"] = array_filter( $this->useProperties["ID"] );
+
+        $this->currencyList = array();
+
+        // Variant свойства
+        $variantPrice = str_replace( "-", "_", $this->profile["VARIANT"]["PRICE"] );
+        $variantPropCode = array(
+            "SEX_VALUE" => "SEX",
+            "COLOR_VALUE" => "COLOR",
+            "SIZE_VALUE" => "SIZE",
+            "WEIGHT_VALUE" => "WEIGHT",
+            "SEXOFFER_VALUE" => "SEXOFFER",
+            "COLOROFFER_VALUE" => "COLOROFFER",
+            "SIZEOFFER_VALUE" => "SIZEOFFER",
+            "WEIGHTOFFER_VALUE" => "WEIGHTOFFER"
+        );
+        
+        foreach( $this->profile["VARIANT"] as $vpKey => $vpValue ){
+            if( key_exists( $vpKey, $variantPropCode ) ){
+                $variantProperty = explode( "-", $vpValue );
+                if( count( $variantProperty ) == 3 ){
+                    $this->useProperties["ID"][] = $variantProperty[2];
+                    $this->variantProperties[$variantPropCode[$vpKey]] = "PROPERTY_".$variantProperty[2]."_DISPLAY_VALUE";
+                }
+            }
+        }
+                        
+        $baseCurrency = CCurrency::GetBaseCurrency();
+        $arBasePrice = CCatalogGroup::GetBaseGroup();
+        
+        $arOrder = array(
+            "IBLOCK_ID" => "ASC",
+            "ID" => "ASC",
+        );
+        
+        $arFilter = array(
+            "IBLOCK_ID" => $iblockList,
+            "SECTION_ID" => $this->profile["CATEGORY"],
+        );
+        
+        if( $profile["CHECK_INCLUDE"] != "Y" ){
+            $arFilter["INCLUDE_SUBSECTIONS"] = "Y";
+        }
+        
+        $arNavStartParams = array(
+            "nPageSize" => $this->stepElements,
+            "iNumPage" => $page
+        );
+        
+        
+        $dbElements = CIBlockElement::GetList(
+            $arOrder,
+            $arFilter,
+            false,
+            $arNavStartParams,
+            array()
+        );
+        
+        $sessionData = AcritExportproSession::GetSession( $this->profile["ID"] );
+        $sessionData["EXPORTPRO"]["LOG"][$this->profile["ID"]]["STEPS"] = $this->isDemo ? 1 : $dbElements->NavPageCount;
+        
+        AcritExportproSession::SetSession( $this->profile["ID"], $sessionData );
+        
+        $arProcessTmp = array();
+        
+        if( $this->profile["TYPE"] == "advantshop" ){            
+            while( $dbElement = $dbElements->GetNextElement() ){
+                $arElement = $this->GetElementProperties( $dbElement );
+                
+                if( $this->catalogSKU[$arElement["IBLOCK_ID"]] ){
+                    $arOfferFilter = array(                                     
+                        "IBLOCK_ID" => $this->catalogSKU[$arElement["IBLOCK_ID"]]["OFFERS_IBLOCK_ID"],         
+                        "PROPERTY_".$this->catalogSKU[$arElement["IBLOCK_ID"]]["OFFERS_PROPERTY_ID"] => $arElement["ID"]
+                    );
+                    
+                    $dbOfferElements = CIBlockElement::GetList(
+                        array(),
+                        $arOfferFilter,
+                        false,
+                        false,
+                        array(
+                            "ID",
+                            "IBLOCK_ID",
+                            "NAME",
+                            "CATALOG_GROUP_".$arBasePrice["ID"],
+                        )
+                    );
+                    
+                    $arElement["OFFERS"] = "";
+                    while( $dbOfferElement = $dbOfferElements->GetNextElement() ){
+                        $arOfferElement = $dbOfferElement->GetFields();
+                        $dbOfferMesure = CCatalogMeasure::getList(
+                            array(),
+                            array(
+                                "ID" => $arOfferElement["CATALOG_MEASURE"]
+                            )
+                        );
+                        
+                        if( $arOfferMesure = $dbOfferMesure->Fetch() ){
+                            $arOfferElement["MEASURE"] = $arOfferMesure["SYMBOL_RUS"];
+                        }
+                                       
+                        $arOfferElementProperties = $dbOfferElement->GetProperties();
+                        
+                        $arOfferElementOffers = "";
+                        foreach( $arOfferElementProperties as $propCode => $prop ){
+                            if( ( stripos( $propCode, "CML2" ) !== false ) || $prop["VALUE"] == "" ){
+                                unset( $arOfferElementProperties[$propCode] );
+                                continue;
+                            }
+                            
+                            if( !is_array( $prop["VALUE"] ) ){
+                                $arOfferElementOffers .= $prop["VALUE"].":";
+                            }
+                        }
+                        
+                        $arOfferElementOffers .= $arOfferElement["CATALOG_PRICE_".$arBasePrice["ID"]].":".( ( intval( $arOfferElement["CATALOG_PURCHASING_PRICE"] ) > 0 ) ? $arOfferElement["CATALOG_PURCHASING_PRICE"] : 0 ).":".$arOfferElement["CATALOG_QUANTITY"]; 
+                        
+                        $arElement["OFFERS"] .= ( strlen( trim( $arElement["OFFERS"] ) ) > 0 ) ? ";".$arOfferElementOffers : $arOfferElementOffers;
+                    }
+                }
+                
+                $arProcessTmp[] = $arElement;
+            }   
+            
+            $arProcess = array();
+            foreach( $arProcessTmp as $arProcessTmpItem ){  
+                $arProcessItem = array();
+                $processMeasure = "0x0x0";
+                foreach( $this->profile["XMLDATA"] as $arProfileTemplateNode ){
+                    if( $arProfileTemplateNode["TYPE"] == "const" ){
+                        if( ( $arProfileTemplateNode["CODE"] != "WIDTH" ) && ( $arProfileTemplateNode["CODE"] != "HEIGHT" ) && ( $arProfileTemplateNode["CODE"] != "LENGHT" ) ){
+                            $arProcessItem[$arProfileTemplateNode["CODE"]] = $arProfileTemplateNode["CONTVALUE_TRUE"];    
+                        }
+                        elseif( $arProfileTemplateNode["CODE"] == "WIDTH" ){
+                            if( intval( $arProfileTemplateNode["CONTVALUE_TRUE"] ) > 0 ){
+                                $processMeasure = intval( $arProfileTemplateNode["CONTVALUE_TRUE"] )."x";
+                            }
+                            else{
+                                $processMeasure = "0x";
+                            }
+                        }
+                        elseif( $arProfileTemplateNode["CODE"] == "HEIGHT" ){
+                            if( intval( $arProfileTemplateNode["CONTVALUE_TRUE"] ) > 0 ){
+                                $processMeasure = $processMeasure.intval( $arProfileTemplateNode["CONTVALUE_TRUE"] )."x";
+                            }
+                            else{
+                                $processMeasure = $processMeasure."0x";
+                            }
+                        }
+                        elseif( $arProfileTemplateNode["CODE"] == "LENGHT" ){
+                            if( intval( $arProfileTemplateNode["CONTVALUE_TRUE"] ) > 0 ){
+                                $processMeasure = $processMeasure.intval( $arProfileTemplateNode["CONTVALUE_TRUE"] );
+                            }
+                            else{
+                                $processMeasure = $processMeasure."0";
+                            }
+                        }
+                    }
+                    elseif( $arProfileTemplateNode["TYPE"] == "field" ){
+                        $arValue = explode( "-", $arProfileTemplateNode["VALUE"] );
+                        if( count( $arValue ) == 2 ){
+                            $arProfileTemplateNode["VALUE"] = "CATALOG_".$arValue[1];
+                        }
+                        
+                        if( $arProfileTemplateNode["CODE"] == "CATEGORY" ){
+                            $dbSectionList = CIBlockSection::GetNavChain(
+                                false,
+                                $arProcessTmpItem[$arProfileTemplateNode["VALUE"]]
+                            );
+                            
+                            $processSections = "";
+                            while( $arSectionPath = $dbSectionList->GetNext() ){
+                                $processSections .= ( strlen( $processSections ) > 0 ) ? " >> ".$arSectionPath["NAME"] : $arSectionPath["NAME"] ;
+                            }
+                            if( strlen( $processSections ) > 0 ){
+                                $processSections = "[".$processSections."]";
+                            }    
+                            
+                            $arProcessTmpItem[$arProfileTemplateNode["VALUE"]] = $processSections;
+                        }
+                        
+                        if( $arProfileTemplateNode["CODE"] == "LENGHT" ){
+                            if( intval( $arProcessTmpItem["CATALOG_MEASURE"] ) > 0 ){
+                                $dbMesure = CCatalogMeasure::getList(
+                                    array(),
+                                    array(
+                                        "ID" => $arProcessTmpItem["CATALOG_MEASURE"]
+                                    )
+                                );
+                                
+                                if( $arMesure = $dbMesure->Fetch() ){
+                                    $processMeasure = $arMesure["SYMBOL_RUS"];
+                                }
+                                
+                                $arProcessItem["MEASURE"] = $processMeasure;
+                            }    
+                        }
+                        
+                        if( ( $arProfileTemplateNode["CODE"] != "WIDTH" ) && ( $arProfileTemplateNode["CODE"] != "HEIGHT" ) && ( $arProfileTemplateNode["CODE"] != "LENGHT" ) ){
+                            $arProcessItem[$arProfileTemplateNode["CODE"]] = $arProcessTmpItem[$arProfileTemplateNode["VALUE"]];    
+                        }
+                    }
+                    else{
+                        if( ( $arProfileTemplateNode["CODE"] != "WIDTH" ) && ( $arProfileTemplateNode["CODE"] != "HEIGHT" ) && ( $arProfileTemplateNode["CODE"] != "LENGHT" ) ){
+                            $arProcessItem[$arProfileTemplateNode["CODE"]] = "";
+                        }
+                        elseif( $arProfileTemplateNode["CODE"] == "LENGHT" ){
+                            $arProcessItem["MEASURE"] = $processMeasure;
+                        }
+                    }    
+                    if( $arProfileTemplateNode["CODE"] == "AMOUNT" ){
+                        $arProcessItem["OFFERS"] = $arProcessTmpItem["OFFERS"];
+                    }
+                }             
+                $arProcess[] = $arProcessItem;
+            }
+            
+            $csvFile = new CCSVData();
+            $csvFile->SetFieldsType( "R" );
+            $delimiter_r_char = ";";
+            $csvFile->SetDelimiter( $delimiter_r_char );
+            
+            $arResFields = array();
+            
+            $arTuple = array();
+            $arTuple[] = "sku";
+            $arTuple[] = "name";
+            $arTuple[] = "paramsynonym";
+            $arTuple[] = "category";
+            $arTuple[] = "enabled";
+            $arTuple[] = "currency";
+            $arTuple[] = "price";
+            $arTuple[] = "purchaseprice";
+            $arTuple[] = "amount";
+            $arTuple[] = "sku:size:color:price:purchaseprice:amount";
+            $arTuple[] = "unit";
+            $arTuple[] = "discount";
+            $arTuple[] = "shippingprice";
+            $arTuple[] = "weight";
+            $arTuple[] = "size";
+            $arTuple[] = "briefdescription";
+            $arTuple[] = "description";
+            $arTuple[] = "title";
+            $arTuple[] = "metakeywords";
+            $arTuple[] = "metadescription";
+            $arTuple[] = "photos";
+            $arTuple[] = "markers";
+            $arTuple[] = "properties";
+            $arTuple[] = "producer";
+            $arTuple[] = "preorder";
+            $arTuple[] = "salesnote";
+            $arTuple[] = "related sku";
+            $arTuple[] = "alternative sku";
+            $arTuple[] = "customoption";
+            $arTuple[] = "gtin";
+            $arTuple[] = "googleproductcategory";
+            $arTuple[] = "adult";
+            $arTuple[] = "manufacturer warranty";
+            $arTuple[] = "tags";
+            $arTuple[] = "gifts";
+            $arTuple[] = "productsets";
+            
+            self::ExportArrayMultiply( $arResFields, $arTuple );
+                                        
+            if( $paternCharset == "cp1251" ){
+                $this->baseDateTimePatern = $APPLICATION->ConvertCharset( $this->baseDateTimePatern, "cp1251", "utf8" );
+            }
+                                        
+            foreach( $arProcess as $field ){
+                $arTuple = array();
+                foreach( $field as $fieldPart ){
+                    $arTuple[] = $this->ExportConvertCharset( $fieldPart );    
+                }
+                self::ExportArrayMultiply( $arResFields, $arTuple );
+            }
+            
+            foreach( $arResFields as $arTuple ){
+                $csvFile->SaveFile( $fileExport, $arTuple );
+            }
+                       
+            $csvFile->CloseFile();
+                                                            
+            LocalRedirect( "/acrit.exportpro/?path=".$fileExportName );
+        }
+        else{
+            $arPaternFields = array();
+            while( $dbElement = $dbElements->GetNextElement() ){
+                $arRowToCsv = $this->ProcessElementToCsv( $dbElement );
+                if( !$arRowToCsv ) continue;
+                 
+                if( empty( $arPaternFields ) ){
+                    foreach( $arRowToCsv as $colIndex => $colValue ){
+                        $arPaternFields[] = $colIndex;
+                    }
+                }
+                
+                $arProcess[] = $arRowToCsv;
+            }
+            
+            $csvFile = new CCSVData();
+            $csvFile->SetFieldsType( "R" );
+            $delimiter_r_char = ";";
+            $csvFile->SetDelimiter( $delimiter_r_char );
+            
+            $arResFields = array();
+            
+            $arTuple = array();
+            foreach( $arPaternFields as $paternField ){
+                $arTuple[] = $this->ExportConvertCharset( $paternField );
+            }
+            
+            self::ExportArrayMultiply( $arResFields, $arTuple );
+            
+            foreach( $arProcess as $arRow ){
+                $arTuple = array();
+                foreach( $arRow as $colValue ){
+                    $arTuple[] = $this->ExportConvertCharset( $colValue );
+                }
+                self::ExportArrayMultiply( $arResFields, $arTuple );
+            }   
+            
+            
+            
+            foreach( $arResFields as $arTuple ){
+                $csvFile->SaveFile( $fileExport, $arTuple );
+            }
+                       
+            $csvFile->CloseFile();
+                                                            
+            LocalRedirect( "/acrit.exportpro/?path=".$fileExportName );
+        }
+        
+        return true;
+    }
+    
+    private function isVariant( $categoryId = false ){
+        if( $categoryId ){
+            return ( ( $this->profile["USE_VARIANT"] == "Y" )
+                && ( $this->profile["TYPE"] == "activizm" )
+                && ( $this->profile["VARIANT"]["CATEGORY"][$categoryId] ) );
+        }
+        return ( ( $this->profile["USE_VARIANT"] == "Y" ) && ( $this->profile["TYPE"] == "activizm" ) );
+    }
+    
+    public function ProcessXML( $page = 1, $cronrun = false ){
+        if( $page == 1 ){
+            //unset( $_SESSION["EXPORTPRO"][$this->profile["ID"]] );
+            $this->log->Init( $this->profile );
+            $this->page = $page;
+        }
+        $this->currencyRates = CExportproProfile::LoadCurrencyRates();
+        $iblockList = $this->PrepareIBlock();
+        if( empty( $iblockList ) )
+            return true;
+            
+        $pregMatchExp = GetMessage( "ACRIT_EXPORTPRO_A_AA_A" );
+                                                                                                          
+        //preg_match_all( @$pregMatchExp, $this->profile["OFFER_TEMPLATE"], $this->arMatches );
+        //preg_match_all( "/.*(<[\w\d_-]+).*(#[\w\d_-]+#).*(<\/[\w\d_-]+>)/", $this->profile["OFFER_TEMPLATE"], $this->arMatches );
+        preg_match_all( "/.*(<.+>).*(#[\w\d_-]+:*[\w\d_-]+#).*(<\/.+>)/", $this->profile["OFFER_TEMPLATE"], $this->arMatches );
+
+        // Установливаем для всех шаблонов #EXAMPLE# пустое значение, чтобы можно было удалить
+        $this->templateValuesDefaults = array();
+        foreach( $this->arMatches[2] as $match ){
+            $this->templateValuesDefaults[$match] = "";
+        }
+        $this->templateValuesDefaults["#MARKET_CATEGORY#"] = "";
+
+        // Получаем свойства используемые в шаблонах
+        $this->useProperties = array(
+            "ID" => array()
+        );
+        
+        $this->usePrices = array();
+        foreach( $this->profile["XMLDATA"] as $field ){
+            if( !empty( $field["VALUE"] ) || !empty( $field["CONTVALUE_FALSE"] ) || !empty( $field["CONTVALUE_TRUE"] ) ){
+                $arValue = explode( "-", $field["VALUE"] );
+                switch( count( $arValue ) ){
+                    case 1:
+                        $this->useFields[] = $arValue[0];
+                        break;
+                    case 2:
+                        $this->usePrices[] = $arValue[1];
+                        break;
+                    case 3:
+                        $this->useProperties["ID"][] = $arValue[2];
+                        break;
+                }
+                
+                if( $field["CONDITION"]["CHILDREN"] ){
+                    if( !function_exists( findChildren ) ){
+                        function findChildren( $children ){
+                            $retVal = array();
+                            foreach( $children as $child ){
+                                if( strstr( $child["CLASS_ID"], "CondIBProp" ) ){
+                                    $arProp = explode( ":", $child["CLASS_ID"] );
+                                    $retVal[] = $arProp[2];
+                                }
+                                if( $child["CHILDREN"] ){
+                                    $retVal = array_merge( $retVal, findChildren( $child["CHILDREN"] ) );
+                                }
+                            }
+                            return $retVal;
+                        }
+                    }
+                    $this->useProperties["ID"] = array_merge( $this->useProperties["ID"], findChildren( $field["CONDITION"]["CHILDREN"] ) );
+                    //$this->useProperties["ID"] = findChildren( $field["CONDITION"]["CHILDREN"] );
+                }
+            }
+            
+            if( $field["EVAL_FILTER"] ){
+                preg_match_all( "/.*?PROPERTY_(\d+)|(CATALOG_PRICE_[\d]+_WD|CATALOG_PRICE_[\d]+_D).*?/", $this->profile["EVAL_FILTER"], $filterProps );
+                if( is_array( $filterProps[1] ) ){
+                    $this->useProperties["ID"] = array_merge( $this->useProperties["ID"], $filterProps[1] );
+                }
+                if( is_array( $filterProps[2] ) ){
+                    $this->usePrices = array_merge( $this->usePrices, $filterProps[2] );
+                }
+            }
+        }
+        preg_match_all( "/.*?PROPERTY_(\d+)|(CATALOG_PRICE_[\d]+_WD|CATALOG_PRICE_[\d]+_D).*?/", $this->profile["EVAL_FILTER"], $filterProps );
+        
+        if( is_array( $filterProps[1] ) ){
+            $this->useProperties["ID"] = array_merge( $this->useProperties["ID"], $filterProps[1] );
+        }
+        if( is_array( $filterProps[2] ) ){
+            $this->usePrices = array_merge( $this->usePrices, $filterProps[2] );
+        }
+        
+        $this->useProperties["ID"] = array_unique( $this->useProperties["ID"] );
+        $this->useProperties["ID"] = array_filter( $this->useProperties["ID"] );
+
+        $this->currencyList = array();
+
+        // Variant свойства
+        $variantPrice = str_replace( "-", "_", $this->profile["VARIANT"]["PRICE"] );
+        $variantPropCode = array(
+            "SEX_VALUE" => "SEX",
+            "COLOR_VALUE" => "COLOR",
+            "SIZE_VALUE" => "SIZE",
+            "WEIGHT_VALUE" => "WEIGHT",
+            "SEXOFFER_VALUE" => "SEXOFFER",
+            "COLOROFFER_VALUE" => "COLOROFFER",
+            "SIZEOFFER_VALUE" => "SIZEOFFER",
+            "WEIGHTOFFER_VALUE" => "WEIGHTOFFER"
+        );
+        
+        foreach( $this->profile["VARIANT"] as $vpKey => $vpValue ){
+            if( key_exists( $vpKey, $variantPropCode ) ){
+                $variantProperty = explode( "-", $vpValue );
+                if( count( $variantProperty ) == 3 ){
+                    $this->useProperties["ID"][] = $variantProperty[2];
+                    $this->variantProperties[$variantPropCode[$vpKey]] = "PROPERTY_".$variantProperty[2]."_DISPLAY_VALUE";
+                }
+            }
+        }
+
+        $order = array(
+            "iblock_id" => "asc",
+            "id" => "asc",
+        );
+        
+        $arFilter = array(
+            "IBLOCK_ID" => $iblockList,
+            "SECTION_ID" => $this->profile["CATEGORY"],
+        );
+        
+        if( $profile["CHECK_INCLUDE"] != "Y" ){
+            $arFilter["INCLUDE_SUBSECTIONS"] = "Y";
+        }
+        
+        $arNavStartParams = array(
+            "nPageSize" => $this->stepElements,
+            "iNumPage" => $page
+        );
+        
+        //if($cronrun)
+        //    $arNavStartParams = false;
+
+        $dbElements = CIBlockElement::GetList(
+            $order,
+            $arFilter,
+            false,
+            $arNavStartParams,
+            array()
+        );
+        
+        $sessionData = AcritExportproSession::GetSession( $this->profile["ID"] );
+        $sessionData["EXPORTPRO"]["LOG"][$this->profile["ID"]]["STEPS"] = $this->isDemo ? 1 : $dbElements->NavPageCount;
+        AcritExportproSession::SetSession( $this->profile["ID"], $sessionData );
+        
+        //if($page > $dbElements->NavPageCount && !$this->isDemo )
+        //    return true;
+        
+        while( $arElement = $dbElements->GetNextElement() ){
+            $variantItems = array();
+            $arItem = $this->ProcessElement( $arElement );
+            
+            if( !$arItem )
+                continue;
+
+            if( $this->isVariant( $arItem["IBLOCK_SECTION_ID"] ) ){
+                if( !$arItem["SKIP"] ){
+                    $variantItems[$arItem["ITEM"][$variantPrice]][] = $arItem;
+                }
+                
+                $arItem = $arItem["ITEM"];
+            }
+            
+            // Если включена обработка торговых предложений, ищем и обрабатываем торговые предложения
+            if( $this->catalogIncluded && ( $this->profile["USE_SKU"] == "Y" ) && ( $this->catalogSKU[$arItem["IBLOCK_ID"]] ) ){
+                $arOfferFilter = array(
+                    "IBLOCK_ID" => $this->catalogSKU[$arItem["IBLOCK_ID"]]["OFFERS_IBLOCK_ID"],
+                    "PROPERTY_".$this->catalogSKU[$arItem["IBLOCK_ID"]]["OFFERS_PROPERTY_ID"] => $arItem["ID"]
+                );
+                
+                $dbOfferElements = CIBlockElement::GetList(
+                    array(),
+                    $arOfferFilter,
+                    false,
+                    false,
+                    array()
+                );
+                
+                while( $arOfferElement = $dbOfferElements->GetNextElement() ){
+                    $arOfferItem = $this->ProcessElement( $arOfferElement, $arItem );
+
+                    if( $this->isVariant( $arItem["IBLOCK_SECTION_ID"] ) ){
+                        $variantItems[$arOfferItem["ITEM"][$variantPrice]][] = $arOfferItem;
+                    }
+                    unset( $arOfferItem );
+                    
+                    if( $this->isDemo && $this->DemoCount() )
+                        break;
+                }
+            }
+            
+            // Профиль activizm.ru
+            if( $this->isVariant( $arItem["IBLOCK_SECTION_ID"] ) ){
+                $productExport = 0;
+                foreach( $variantItems as $price => $items ){
+                    //if( empty( $price ) )
+                    //    continue;
+
+                    $itemTemplate = $items[0]["XML"];
+                    $colorsize = array();
+                    //$itemTemplate = str_replace( "</offer>", "<variantList></offer>", $itemTemplate );
+                    $variantItemTemplate = "";
+                    foreach( $items as $item ){
+                        $arItem = $item["ITEM"];
+                        $isOffer = $item["OFFER"];
+                        $gender = $this->profile["VARIANT"]["SEX_CONST"] ? $this->profile["VARIANT"]["SEX_CONST"] : $arItem[$this->variantProperties["SEX"]];
+                        $arSize = explode( "-", $this->profile["VARIANT"]["CATEGORY"][$arItem["IBLOCK_SECTION_ID"]] );
+                        $arSizeExt = explode( "-", $this->profile["VARIANT"]["CATEGORY_EXT"][$arItem["IBLOCK_SECTION_ID"]] );
+                        $itemSize = $this->variantProperties["SIZE"];
+                        $itemWeight = $this->variantProperties["WEIGHT"];
+                        $itemColor = $this->variantProperties["COLOR"];
+                        if( $isOffer ){
+                            // Если торговое предложение, заменяем значения свойст значениями предложений
+                            $gender = $this->profile["VARIANT"]["SEX_CONST"] ? $this->profile["VARIANT"]["SEX_CONST"] : $arItem[$this->variantProperties["SEXOFFER"]];
+                            $itemSize = $this->variantProperties["SIZEOFFER"];
+                            $itemWeight = $this->variantProperties["WEIGHTOFFER"];
+                            $itemColor = $this->variantProperties["COLOROFFER"];
+                        }
+                        $variantHash = $arSize[1] == "OZ" ?
+                            $arItem[$itemColor].$gender.$arItem[$itemWeight] :
+                            $arItem[$itemColor].$arItem[$itemSize].$gender;
+                        
+                        if( $arSize[1] == "OZ" ){
+                            if( !$arItem[$itemWeight] && !$arItem[$itemSize] )
+                                continue;
+                        }
+                        
+                        if( in_array( $variantHash, $colorsize ) )
+                            continue;
+                            
+                        $colorsize[] = $variantHash;
+                        $variatType = array();
+                        
+                        if( $arItem[$itemColor] )
+                            $variatType[] = "color";
+                            
+                        if( $arItem[$itemSize] || $arItem[$itemWeight] )
+                            $variatType[] = "size";
+                        
+                        if( !empty( $variatType ) ){
+                            $variatTypeStr = implode( "_and_", $variatType );
+                            $retVariant = "<variant type=\"$variatTypeStr\">".PHP_EOL;
+                            if( in_array( "color", $variatType ) )
+                                $retVariant .= "<color>{$arItem[$itemColor]}</color>".PHP_EOL;
+                            
+                            if( in_array( "size", $variatType ) ){
+                                if( $arSize[1] == "OZ" ){
+                                    if( !$arItem[$itemWeight] ){
+                                        $arItem[$itemWeight] = $arItem[$itemSize];
+                                        $arSize[1] = $arSizeExt[1];
+                                    }
+                                    else{
+                                        $arItem[$itemWeight] = floatval( $arItem[$itemWeight] );
+                                    }
+                                    $retVariant .= "<size category=\"{$arSize[0]}\" gender=\"{$gender}\" system=\"{$arSize[1]}\">"
+                                    .$arItem[$itemWeight].
+                                    "</size>".PHP_EOL;
+                                }
+                                else{
+                                    $retVariant .= "<size category=\"{$arSize[0]}\" gender=\"{$gender}\" system=\"{$arSize[1]}\">"
+                                    .$arItem[$itemSize].
+                                    "</size>".PHP_EOL;
+                                }
+                            }
+                            $retVariant .= "<offerId>{$arItem["ID"]}</offerId>";
+                            $retVariant .= "</variant>".PHP_EOL;
+                            $variantItemTemplate .= $retVariant;
+                            $productExport++;
+                        }
+                    }
+                    if( strlen( $variantItemTemplate ) > 0 ){
+                        $itemTemplate = str_replace( "</offer>", "<variantList>$variantItemTemplate</variantList></offer>", $itemTemplate );
+                    }                             
+                                
+                    CAcritExportproExport::Save( $itemTemplate );
+                    
+                    // Увеличиваем счетчик статистики товаров для выгрузки
+                    $this->log->IncProductExport( $productExport );
+                }
+                unset( $variantItems );
+            }
+
+            if( $this->isDemo && $this->DemoCount() )
+                break;
+                
+            unset( $arItem );
+        }
+                     
+        unset($arElement, $arItem);
+
+        if( !$cronrun ){
+            echo '<div style="width: 100%; text-align: center; font-size: 18px; margin: 40px 0; padding: 40px 0; border: 1px solid #ccc; border-radius: 6px; background: #f5f5f5;">',
+            GetMessage( "ACRIT_EXPORTPRO_RUN_EXPORT_RUN" ), '<br>',
+            str_replace( array( "#PROFILE_ID#", "#PROFILE_NAME#" ), array( $this->profile["ID"], $this->profile["NAME"] ), GetMessage( "ACRIT_EXPORTPRO_RUN_STEP_PROFILE" ) ), '<br>',
+            str_replace( array( "#STEP#", "#COUNT#" ), array( $page, $dbElements->NavPageCount ), GetMessage( "ACRIT_EXPORTPRO_RUN_STEP_RUN" ) ),
+            '</div>';
+        }       
+        
+        $this->SaveCurrencies( $this->currencyList );
+        
+        if( $this->isDemo && $this->DemoCount() )
+            return true;
+        
+        if( $page >= $dbElements->NavPageCount )
+            return true;
+        
+        return false;
+    }
+    
+    // Получение свойств товара, формирование шаблона, замена полей значениями и запись в файл
+    private function ProcessElementToCsv( $arElement, $arProductSKU = false ){
+        $skipElement = false;
+        $arItem = $this->GetElementProperties( $arElement );
+        
+        // Добавление свойств и полей товара к товарным предложения
+        if( is_array( $arProductSKU ) ){
+            $excludeFields = array(
+                "NAME",
+                "PREVIEW_TEXT",
+                "DETAIL_TEXT"
+            );
+            
+            foreach( $arProductSKU as $key => $value ){
+                if( !isset( $arItem[$key] ) || empty( $arItem[$key] ) ){
+                    if( !in_array( $key, $excludeFields ) ){
+                        $arItem[$key] = $value;
+                    }
+                }
+            }
+            
+            $arItem["IBLOCK_SECTION_ID"] = $arProductSKU["IBLOCK_SECTION_ID"];                                       
+        }
+        else{
+            $arItem["GROUP_ITEM_ID"] = $arItem["ID"];
+        }
+
+        // Проверка, удовлетворяет ли элемент общим условия профиля
+        if( !$this->CheckCondition( $arItem, $this->profile["EVAL_FILTER"] ) )
+            return false;
+
+        // Увеличиваем счетчик статистики товаров для выгрузки
+        $this->log->IncProduct();
+
+        $itemTemplate = $this->profile["OFFER_TEMPLATE"];
+        $templateValues = $this->templateValuesDefaults;
+        $templateValues["GROUP_ITEM_ID"] = $arItem["GROUP_ITEM_ID"];
+
+        foreach( $this->profile["XMLDATA"] as $field ){
+            $useCondition = ( $field["USE_CONDITION"] == "Y" );
+            if( $useCondition ){
+                $conditionTrue = ( $this->CheckCondition( $arItem, $field["EVAL_FILTER"] ) == true );
+            }
+
+            if( $useCondition && !$conditionTrue ){
+                $templateValues["{$field["CODE"]}"] = $field["CONTVALUE_FALSE"];
+                continue;
+            }
+
+            // Если значение поле или свойство
+            if($field["TYPE"] == "field"){
+                if( ( $field["CODE"] == "URL" ) && function_exists( "detailLink" ) ){
+                    $templateValues["{$field["CODE"]}"] = detailLink( $arItem["ID"] );
+                }
+                else{
+                    $arValue = explode( "-", $field["VALUE"] );
+                    switch( count( $arValue ) ){
+                        case 1:
+                            //if( $this->elementType["OFFER"][$arItem["ID"]] && $field["VALUE"] == "IBLOCK_SECTION_ID" )
+                            //    $arItem["IBLOCK_SECTION_ID"] = $this->elementType["OFFER"][$arItem["ID"]];
+
+                            $templateValues["{$field["CODE"]}"] = $arItem[$field["VALUE"]];
+                            break;
+                        case 2:
+                            $templateValues["{$field["CODE"]}"] = $arItem["CATALOG_".$arValue[1]];
+                            preg_match( "PRICE_[\d]+", $arValue[1], $arPriceCode );
+                            $convertFrom = $arItem["CATALOG_{$arPriceCode[0]}_CURRENCY"];
+                            if( strpos( $arValue[1], "_CURRENCY" ) > 0 ){
+                                $templateValues["{$field["CODE"]}"] = $convertFrom;
+                                if( $this->profile["CURRENCY"]["CONVERT_CURRENCY"] == "Y" ){
+                                    if( $this->profile["CURRENCY"][$convertFrom]["CHECK"] ){
+                                        $convertTo = $this->profile["CURRENCY"][$convertFrom]["CONVERT_TO"];
+                                        $templateValues["{$field["CODE"]}"] = $convertTo;
+                                    }
+                                }
+                            }
+                            elseif( !empty( $arPriceCode[0] ) ){
+                                if( $this->profile["CURRENCY"]["CONVERT_CURRENCY"] == "Y" ){
+                                    if( $this->profile["CURRENCY"][$convertFrom]["CHECK"] ){
+                                        $convertTo = $this->profile["CURRENCY"][$convertFrom]["CONVERT_TO"];
+                                        if( $this->profile["CURRENCY"][$convertFrom]["RATE"] == "SITE" ){
+                                            $templateValues["{$field["CODE"]}"] = round( CCurrencyRates::ConvertCurrency(
+                                                    $arItem["CATALOG_".$arValue[1]],
+                                                    $this->profile["CURRENCY"][$convertFrom]["CONVERT_FROM"],
+                                                    $convertTo
+                                                ),
+                                                0 //!!2
+                                            );
+                                        }
+                                        else{
+                                            $templateValues["{$field["CODE"]}"] = round( $templateValues["{$field["CODE"]}"] *
+                                                $this->currencyRates[$this->profile["CURRENCY"][$convertFrom]["RATE"]][$convertFrom]["RATE"] /
+                                                $this->currencyRates[$this->profile["CURRENCY"][$convertFrom]["RATE"]][$convertTo]["RATE"] /
+                                                $this->currencyRates[$this->profile["CURRENCY"][$convertFrom]["RATE"]][$convertFrom]["RATE_CNT"] *
+                                                $this->currencyRates[$this->profile["CURRENCY"][$convertFrom]["RATE"]][$convertTo]["RATE_CNT"],
+                                                0 //!!2
+                                            );
+                                        }
+                                        //if( !in_array( $convertFrom, $this->currencyList ) )
+                                        //    $this->currencyList[] = $convertFrom;
+                                    }
+                                    if( !in_array( $convertFrom, $this->currencyList ) )
+                                        $this->currencyList[] = $convertFrom;
+                                }
+                                else{
+                                    if( !in_array( $convertFrom, $this->currencyList ) )
+                                        $this->currencyList[] = $convertFrom;
+                                }
+                                if( $this->profile["CURRENCY"][$convertFrom]["CHECK"] )
+                                    $templateValues["{$field["CODE"]}"] += $templateValues["{$field["CODE"]}"] *
+                                    floatval( $this->profile["CURRENCY"][$convertFrom]["PLUS"] ) / 100;
+                            }
+                            break;
+                        case 3:
+                            if( $arValue[0] == $arItem["IBLOCK_ID"] || $arValue[0] == $arProductSKU["IBLOCK_ID"] ){
+                                if( $this->catalogSKU[$arValue[0]]["OFFERS_PROPERTY_ID"] == $arValue[2] ){
+                                    $arItem["PROPERTY_{$arValue[2]}_DISPLAY_VALUE"] = $arItem["PROPERTY_{$arValue[2]}_VALUE"][0];
+                                }
+
+                                if( is_array( $arItem["PROPERTY_{$arValue[2]}_DISPLAY_VALUE"] ) ){
+                                    $templateValues["{$field["CODE"]}"] = array();
+                                    foreach( $arItem["PROPERTY_{$arValue[2]}_DISPLAY_VALUE"] as $val ){
+                                        $templateValues["{$field["CODE"]}"][] = $val;
+                                    }
+                                }
+                                else{
+                                    $templateValues["{$field["CODE"]}"] = $arItem["PROPERTY_{$arValue[2]}_DISPLAY_VALUE"];
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+            else{ // Если константа
+                $templateValues["{$field["CODE"]}"] = $field["CONTVALUE_TRUE"];
+            }   
+
+            if( ( $field["REQUIRED"] == "Y" ) && ( empty( $templateValues["{$field["CODE"]}"] ) || !isset( $templateValues["{$field["CODE"]}"] ) ) ){
+                $skipElement = true;
+                $this->log->AddMessage( "{$arItem["NAME"]} (ID:{$arItem["ID"]}) : ".str_replace( "FIELD", "{$field["CODE"]}", GetMessage( "ACRIT_EXPORTPRO_REQUIRED_FIELD_SKIP" ) ) );
+                $this->log->IncProductError();
+            }
+        }
+
+        //$this->log->AddMessage( var_export($arItem, true) );
+
+        array_walk( $templateValues, function( &$value ){
+            if( is_array( $value ) ){
+                foreach( $value as $id => $val )
+                    $value[$id] = htmlspecialcharsbx( html_entity_decode( $val ) );
+            }
+            else
+            $value = htmlspecialcharsbx( html_entity_decode( $value ) );
+        });
+        
+
+        // Устанавливаем значение категории маркета если стоит галка
+        $templateValues["MARKET_CATEGORY"] = "";
+        switch( $this->profile["TYPE"] ){
+            case "ebay":
+            case "ebay_1":
+            case "ebay_2":
+                $templateValues["MARKET_CATEGORY"] = $this->profile["MARKET_CATEGORY"]["EBAY"]["CATEGORY_LIST"][$arItem["IBLOCK_SECTION_ID"]];
+                break;
+            case "google":
+                if( $this->profile["USE_MARKET_CATEGORY"] == "Y" ){
+                    $templateValues["MARKET_CATEGORY"] = $this->profile["MARKET_CATEGORY"]["CATEGORY_LIST"][$arItem["IBLOCK_SECTION_ID"]];
+                }
+                break;
+            case "ozon":
+                $templateValues["MARKET_CATEGORY"] = $this->profile["MARKET_CATEGORY"]["OZON"]["CATEGORY_LIST"][$arItem["IBLOCK_SECTION_ID"]];
+                break;
+            case "y_realty":
+                break;
+            default:
+                if( $this->profile["USE_MARKET_CATEGORY"] == "Y" ){
+                    $templateValues["MARKET_CATEGORY"] = htmlspecialcharsbx( html_entity_decode( $this->profile["MARKET_CATEGORY"]["CATEGORY_LIST"][$arItem["IBLOCK_SECTION_ID"]] ) );
+                }
+        }                
+        
+        return !empty( $templateValues ) ? $templateValues : false;
+    }        
+        
+    // Получение свойств товара, формирование шаблона, замена полей значениями и запись в файл
+    private function ProcessElement( $arElement, $arProductSKU = false ){
+        global $DB;                 
+                                 
+        $skipElement = false;
+        $arItem = $this->GetElementProperties( $arElement );
+        
+        // Добавление свойств и полей товара к товарным предложения
+        if( $this->catalogIncluded && is_array( $arProductSKU ) ){
+            $excludeFields = array(
+                "NAME",
+                "PREVIEW_TEXT",
+                "DETAIL_TEXT"
+            );
+            
+            foreach( $arProductSKU as $key => $value ){
+                if( !isset( $arItem[$key] ) || empty( $arItem[$key] ) ){
+                    if( !in_array( $key, $excludeFields ) ){
+                        $arItem[$key] = $value;
+                    }
+                }
+            }      
+            
+            $arItem["IBLOCK_SECTION_ID"] = $arProductSKU["IBLOCK_SECTION_ID"];
+        }
+        else{
+            $arItem["GROUP_ITEM_ID"] = $arItem["ID"];
+        }
+
+        // Проверка, удовлетворяет ли элемент общим условия профиля
+        if( $this->catalogIncluded ){
+            if( !$this->CheckCondition( $arItem, $this->profile["EVAL_FILTER"] ) ){
+                return $arItem;
+            }
+        }
+
+        // Увеличиваем счетчик статистики товаров для выгрузки
+        $this->log->IncProduct();
+
+        $itemTemplate = $this->profile["OFFER_TEMPLATE"];
+        
+        $templateValues = $this->templateValuesDefaults;
+        $templateValues["#GROUP_ITEM_ID#"] = $arItem["GROUP_ITEM_ID"];
+                 
+        foreach( $this->profile["XMLDATA"] as $field ){
+            $useCondition = ( $field["USE_CONDITION"] == "Y" );
+            if( $useCondition ){
+                $conditionTrue = ( $this->CheckCondition( $arItem, $field["EVAL_FILTER"] ) == true );
+            }
+
+            if( $useCondition && !$conditionTrue ){
+                $templateValues["#{$field["CODE"]}#"] = $field["CONTVALUE_FALSE"];
+                continue;
+            }                                                      
+
+            // Если значение поле или свойство
+            if($field["TYPE"] == "field"){
+                if( ( $field["CODE"] == "URL" ) && function_exists( "detailLink" ) ){
+                    $templateValues["#{$field["CODE"]}#"] = detailLink( $arItem["ID"] );
+                }
+                else{
+                    $arValue = explode( "-", $field["VALUE"] );
+                                           
+                    switch( count( $arValue ) ){
+                        case 1:
+                            //if( $this->elementType["OFFER"][$arItem["ID"]] && $field["VALUE"] == "IBLOCK_SECTION_ID" )
+                            //    $arItem["IBLOCK_SECTION_ID"] = $this->elementType["OFFER"][$arItem["ID"]];
+                                                                                            
+                            $templateValues["#{$field["CODE"]}#"] = $arItem[$field["VALUE"]];
+                            break;
+                        case 2:
+                            $templateValues["#{$field["CODE"]}#"] = $arItem["CATALOG_".$arValue[1]];
+                            if( ( $field["CODE"] == "PRICE" ) && isset( $arItem["CATALOG_PURCHASING_PRICE"] ) ){
+                                preg_match( "#PURCHASING_PRICE#", $arValue[1], $arPriceCode );    
+                            }
+                            else{
+                                preg_match( "#PRICE_[\d]+#", $arValue[1], $arPriceCode );    
+                            }                                                  
+                            
+                            $convertFrom = $arItem["CATALOG_{$arPriceCode[0]}_CURRENCY"];
+                            
+                            if( strpos( $arValue[1], "_CURRENCY" ) > 0 ){
+                                $templateValues["#{$field["CODE"]}#"] = $convertFrom;
+                                if( $this->profile["CURRENCY"]["CONVERT_CURRENCY"] == "Y" ){
+                                    if( $this->profile["CURRENCY"][$convertFrom]["CHECK"] ){
+                                        $convertTo = $this->profile["CURRENCY"][$convertFrom]["CONVERT_TO"];
+                                        $templateValues["#{$field["CODE"]}#"] = $convertTo;
+                                    }
+                                }
+                            }
+                            elseif( !empty( $arPriceCode[0] ) ){
+                                if( $this->profile["CURRENCY"]["CONVERT_CURRENCY"] == "Y" ){
+                                    if( $this->profile["CURRENCY"][$convertFrom]["CHECK"] ){
+                                        $convertTo = $this->profile["CURRENCY"][$convertFrom]["CONVERT_TO"];
+                                        if( $this->profile["CURRENCY"][$convertFrom]["RATE"] == "SITE" ){
+                                            $templateValues["#{$field["CODE"]}#"] = round( CCurrencyRates::ConvertCurrency(
+                                                    $arItem["CATALOG_".$arValue[1]],
+                                                    $this->profile["CURRENCY"][$convertFrom]["CONVERT_FROM"],
+                                                    $convertTo
+                                                ),
+                                                0 //!!2
+                                            );
+                                        }
+                                        else{
+                                            $templateValues["#{$field["CODE"]}#"] = round( $templateValues["#{$field["CODE"]}#"] *
+                                                $this->currencyRates[$this->profile["CURRENCY"][$convertFrom]["RATE"]][$convertFrom]["RATE"] /
+                                                $this->currencyRates[$this->profile["CURRENCY"][$convertFrom]["RATE"]][$convertTo]["RATE"] /
+                                                $this->currencyRates[$this->profile["CURRENCY"][$convertFrom]["RATE"]][$convertFrom]["RATE_CNT"] *
+                                                $this->currencyRates[$this->profile["CURRENCY"][$convertFrom]["RATE"]][$convertTo]["RATE_CNT"],
+                                                0 //!!2
+                                            );
+                                        }
+                                        //if( !in_array( $convertFrom, $this->currencyList ) )
+                                        //    $this->currencyList[] = $convertFrom;
+                                    }
+                                    if( !in_array( $convertFrom, $this->currencyList ) )
+                                        $this->currencyList[] = $convertFrom;
+                                }
+                                else{
+                                    if( !in_array( $convertFrom, $this->currencyList ) )
+                                        $this->currencyList[] = $convertFrom;
+                                }
+                                if( $this->profile["CURRENCY"][$convertFrom]["CHECK"] )
+                                    $templateValues["#{$field["CODE"]}#"] += $templateValues["#{$field["CODE"]}#"] *
+                                    floatval( $this->profile["CURRENCY"][$convertFrom]["PLUS"] ) / 100;
+                            }
+                            break;
+                        case 3:
+                            if( $arValue[0] == $arItem["IBLOCK_ID"] || $arValue[0] == $arProductSKU["IBLOCK_ID"] ){
+                                if( $this->catalogSKU[$arValue[0]]["OFFERS_PROPERTY_ID"] == $arValue[2] ){
+                                    $arItem["PROPERTY_{$arValue[2]}_DISPLAY_VALUE"] = $arItem["PROPERTY_{$arValue[2]}_VALUE"][0];
+                                }
+
+                                if( is_array( $arItem["PROPERTY_{$arValue[2]}_DISPLAY_VALUE"] ) ){
+                                    $templateValues["#{$field["CODE"]}#"] = array();
+                                    foreach( $arItem["PROPERTY_{$arValue[2]}_DISPLAY_VALUE"] as $val ){
+                                        $templateValues["#{$field["CODE"]}#"][] = $val;
+                                    }
+                                }
+                                else{
+                                    $templateValues["#{$field["CODE"]}#"] = $arItem["PROPERTY_{$arValue[2]}_DISPLAY_VALUE"];
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+            else{ // Если константа
+                $templateValues["#{$field["CODE"]}#"] = $field["CONTVALUE_TRUE"];
+            } 
+            
+            if( $DB->IsDate( $templateValues["#{$field["CODE"]}#"] ) && ( $this->profile["DATEFORMAT"] == $this->baseDateTimePatern ) ){
+                $templateValues["#{$field["CODE"]}#"] = $this->GetYandexDateTime( $templateValues["#{$field["CODE"]}#"] );
+            }
+                      
+            if( ( $field["REQUIRED"] == "Y" ) && ( empty( $templateValues["#{$field["CODE"]}#"] ) || !isset( $templateValues["#{$field["CODE"]}#"] ) ) ){
+                $skipElement = true;
+                $this->log->AddMessage( "{$arItem["NAME"]} (ID:{$arItem["ID"]}) : ".str_replace( "#FIELD#", "#{$field["CODE"]}#", GetMessage( "ACRIT_EXPORTPRO_REQUIRED_FIELD_SKIP" ) ) );
+                $this->log->IncProductError();
+            }
+        }
+        //$this->log->AddMessage( var_export($arItem, true) );
+
+        array_walk( $templateValues, function( &$value ){
+            if( is_array( $value ) ){
+                foreach( $value as $id => $val )
+                    $value[$id] = htmlspecialcharsbx( html_entity_decode( $val ) );
+            }
+            else
+            $value = htmlspecialcharsbx( html_entity_decode( $value ) );
+        });  
+        
+
+        // Устанавливаем значение категори маркета если стоит галка
+        $templateValues["#MARKET_CATEGORY#"] = "";
+        switch( $this->profile["TYPE"] ){
+            case "ebay":
+            case "ebay_1":
+            case "ebay_2":
+                $templateValues["#MARKET_CATEGORY#"] = $this->profile["MARKET_CATEGORY"]["EBAY"]["CATEGORY_LIST"][$arItem["IBLOCK_SECTION_ID"]];
+                break;
+            case "google":
+                if( $this->profile["USE_MARKET_CATEGORY"] == "Y" ){
+                    $templateValues["#MARKET_CATEGORY#"] = $this->profile["MARKET_CATEGORY"]["CATEGORY_LIST"][$arItem["IBLOCK_SECTION_ID"]];
+                }
+                break;
+            case "ozon":
+                $templateValues["#MARKET_CATEGORY#"] = $this->profile["MARKET_CATEGORY"]["OZON"]["CATEGORY_LIST"][$arItem["IBLOCK_SECTION_ID"]];
+                break;
+            case "y_realty":
+                break;
+            default:
+                if( $this->profile["USE_MARKET_CATEGORY"] == "Y" ){
+                    $templateValues["#MARKET_CATEGORY#"] = htmlspecialcharsbx( html_entity_decode( $this->profile["MARKET_CATEGORY"]["CATEGORY_LIST"][$arItem["IBLOCK_SECTION_ID"]] ) );
+                }
+        }              
+                                                           
+        // Удаление тэгов с пустыми значения полей, дублирование тэгов для множественных свойств, URL кодирование
+        foreach( $this->arMatches[2] as $id => $match ){
+            if( $this->profile["XMLDATA"][str_replace( "#", "", $match )]["URL_ENCODE"] == "Y" ){
+                $templateValues[$match] = str_replace( array( " " ), array( "%20" ), $templateValues[$match] );
+            }
+
+            if( $this->profile["XMLDATA"][str_replace( "#", "", $match )]["CONVERT_CASE"] == "Y" ){
+                if( is_array( $templateValues[$match] ) ){
+                    foreach( $templateValues[$match] as &$val ){
+                        $val = explode( ".", $val );
+                        foreach( $val as &$tmpStr ){
+                            $tmpStr = strtolower( trim( $tmpStr ) );
+                            $strWords = explode( " ", $tmpStr );
+                            if( strlen( $strWords[0] ) > 0 )
+                                $strWords[0] = mb_convert_case( $strWords[0], MB_CASE_TITLE );
+                            $tmpStr = implode( " ", $strWords );
+                        }
+                        $val = implode( ". ", $val );
+                    }
+                }
+                else{
+                    $arTmp = explode( ".", $templateValues[$match] );
+                    foreach( $arTmp as &$tmpStr ){
+                        $tmpStr = strtolower( trim( $tmpStr ) );
+                        $strWords = explode( " ", $tmpStr );
+                        
+                        if( strlen( $strWords[0] ) > 0 )
+                            $strWords[0] = mb_convert_case( $strWords[0], MB_CASE_TITLE );
+                        
+                        $tmpStr = implode( " ", $strWords );
+                    }
+                    $templateValues[$match] = implode( ". ", $arTmp );
+                }
+            }
+            
+            if( $this->profile["XMLDATA"][str_replace( "#", "", $match )]["HTML_ENCODE"] == "N" ){
+                $templateValues[$match] = html_entity_decode( $templateValues[$match] );
+            }                       
+
+            if( $this->profile["XMLDATA"][str_replace( "#", "", $match )]["HTML_TO_TXT"] == "Y" ){
+                $templateValues[$match] = htmlspecialcharsbx( HTMLToTxt( htmlspecialchars_decode( $templateValues[$match] ) ) ); 
+            }
+
+            if( !$templateValues[$match] && $this->profile["XMLDATA"][str_replace( "#", "", $match )]["DELETE_ONEMPTY"] == "Y" ){   
+                $itemTemplate = str_replace( $this->arMatches[0][$id], "", $itemTemplate );
+            }
+            elseif( is_array( $templateValues[$match] ) ){
+                $replacementValue = array();
+                for( $i = 0; $i < count( $templateValues[$match] ); $i++ ){
+                    $newName = preg_replace( "/\#((.)+)\#/", "#$1_LISTVAL_ITEM_$i#", $this->arMatches[2][$id] );
+                    $replacementValue[] = str_replace( $this->arMatches[2][$id], $newName, $this->arMatches[0][$id] );
+                    $templateValues[$newName] = $templateValues[$match][$i];
+                }
+                $itemTemplate = str_replace( $this->arMatches[0][$id], implode( PHP_EOL, $replacementValue ), $itemTemplate );
+            }
+        }       
+        
+        $itemTemplate = preg_replace( '#(<(.+)>\s*</\2>)#i', "", $itemTemplate ); 
+        
+        foreach( $this->profile["XMLDATA"] as $tag ){
+            if( isset( $templateValues["#{$tag["CODE"]}#"] ) && $tag["HTML_ENCODE"] == "N" ){
+                $templateValues["#{$tag["CODE"]}#"] = html_entity_decode( $templateValues["#{$tag["CODE"]}#"] );
+            }
+        }
+        
+        
+        
+        foreach( $this->profile["XMLDATA"] as $tag ){
+            if( isset( $templateValues["#{$tag["CODE"]}#"] ) && $tag["HTML_TO_TXT"] == "N" ){
+                $templateValues["#{$tag["CODE"]}#"] = HTMLToTxt( $templateValues["#{$tag["CODE"]}#"] );
+            }
+        }                      
+        
+        // Замена переменных значениями в шаблоне
+        $itemTemplate = str_replace( array_keys( $templateValues ), array_values( $templateValues ), $itemTemplate );
+        $itemTemplate = str_replace( array_keys( $this->defaultFields ), array_values( $this->defaultFields ), $itemTemplate );
+
+        // Удаляет пустые тэги первого уровня, если вложенности нет
+        //$itemTemplate = preg_replace( "/(<[0-9a-zA-Z:_]+>[\r\n\t]*<\/[0-9a-zA-Z:_]+>)/", "\r\n", $itemTemplate );
+        $itemTemplate = preg_replace( "/(\r\n[\t]*\r\n)/", "\r\n", $itemTemplate );
+        $itemTemplate = preg_replace( "/(\r\n\r\n)/", "\r\n", $itemTemplate );
+        
+        if( !$skipElement ){
+            $this->SaveSections( array( $arItem["IBLOCK_SECTION_ID"] ) );
+            $this->DemoCountInc();
+
+
+            if( $this->catalogIncluded && !$this->isVariant( $arItem["IBLOCK_SECTION_ID"] ) ){
+                //if( $this->profile["USE_VARIANT"] == "Y" && $this->profile["TYPE"] == "activizm" ){
+                //    $gender = $this->profile["VARIANT"]["SEX_CONST"] ? $this->profile["VARIANT"]["SEX_CONST"] : $arItem[$this->variantProperties["SEX"]];
+                //    $arSize = explode( "-", $this->profile["VARIANT"]["CATEGORY"][$arItem["IBLOCK_SECTION_ID"]] );
+                //
+                //    $retVariant = "";
+                //    if( !empty( $arItem[$this->variantProperties["COLOR"]] ) )
+                //        $retVariant = "<color>{$arItem[$this->variantProperties["COLOR"]]}</color>".PHP_EOL;
+                //
+                //    if( $arSize[1] == "OZ" ){
+                //        $retVariant .= "<size gender=\"{$gender}\" system=\"{$arSize[1]}\">
+                //        {$arItem[$this->variantProperties["WEIGHT"]]}
+                //        </size>".PHP_EOL;
+                //    }
+                //    else{
+                //        $retVariant .= "<size gender=\"{$gender}\" system=\"{$arSize[1]}\">
+                //        {$arItem[$this->variantProperties["SIZE"]]}
+                //        </size>".PHP_EOL;
+                //    }
+                //    $itemTemplate = str_replace( "</offer>", "$retVariant</offer>", $itemTemplate );
+                //}                                       
+                
+                CAcritExportproExport::Save( $itemTemplate );
+                
+                // Увеличиваем счетчик статистики выгружженных товаров
+                $this->log->IncProductExport();
+            }
+            else{
+                CAcritExportproExport::Save( $itemTemplate );
+                
+                // Увеличиваем счетчик статистики выгружженных товаров
+                $this->log->IncProductExport();
+            }
+        }
+        unset( $arElement, $dbPrices, $arQuantity );
+        if( $this->isVariant( $arItem["IBLOCK_SECTION_ID"] ) )
+            return array( "ITEM" => $arItem, "XML" => $itemTemplate, "SKIP" => $skipElement, "OFFER" => is_array( $arProductSKU ) );
+        return $arItem;
+    } 
+    
+    public function GetYandexDateTime( $dateTime ){
+        global $DB;
+        $resultTime = false;
+        
+        $localTime = new DateTime();
+        $dateTimeZoneDiff = $localTime->getOffset() / 3600;
+        
+        $dateTimeZone = ( ( intval( $dateTimeZoneDiff ) > 0 ) ? "+" : "-" ).date( "H:i", mktime( $dateTimeZoneDiff, 0, 0, 0, 0, 0 ) );
+        
+        $dateTimeValue = MakeTimeStamp( $dateTime );
+        $dateTimeFormattedValue = date( "Y-m-d", $dateTimeValue )."T".date( "H:i:s", $dateTimeValue );
+        
+        $resultTime = $dateTimeFormattedValue.$dateTimeZone;
+        
+        return $resultTime;
+    }     
+
+    // Поиск инфоблоков товарных предложений и удаление их из списка инфоблоков,
+    // если они включены и есть каталог родитель товарных предложений
+    private function PrepareIBlock(){
+        $excludeIBlock = array();
+        $this->catalogSKU = array();
+        $ibv = $this->iblockE;
+        $ibd = $this->iblockD;
+        
+        //likeit.pro hello!!!
+        //$ib = @$ibv(@$ibd(GetMessage("ACRIT_EXPORTPRO_IBLOCK")));
+        //if($ib !== false)
+        //    return array();
+            
+        if( ( $this->profile["USE_SKU"] == "Y" ) || ( $this->profile["TYPE"] == "advantshop" ) ){
+            foreach( $this->profile["IBLOCK_ID"] as $iblocID ){
+                if( $this->catalogIncluded ){
+                    if( $arIBlock = CCatalog::GetByID( $iblocID ) ){
+                        if( intval( $arIBlock["PRODUCT_IBLOCK_ID"] ) > 0 && in_array( $arIBlock["PRODUCT_IBLOCK_ID"], $this->profile["IBLOCK_ID"] ) )
+                            $excludeIBlock[] = $arIBlock["IBLOCK_ID"];
+                        if( intval( $arIBlock["OFFERS_IBLOCK_ID"] ) > 0 )
+                            $this->catalogSKU[$arIBlock["IBLOCK_ID"]] = $arIBlock;
+                    }
+                }
+            }
+        }
+        return array_diff( $this->profile["IBLOCK_ID"], $excludeIBlock );
+    }
+    
+    // Получение полей и свойств элемента, используемых в шаблоне и условиях
+    private function GetElementProperties( $arElement ){
+        global $DB;         
+        
+        $arItem = $arElement->GetFields();
+        if( in_array( "DETAIL_PICTURE", $this->useFields ) ){
+            $arItem["DETAIL_PICTURE"] = CFile::GetPath($arItem["DETAIL_PICTURE"]);
+        }
+        if( in_array("PREVIEW_PICTURE", $this->useFields ) ){
+            $arItem["PREVIEW_PICTURE"] = CFile::GetPath( $arItem["PREVIEW_PICTURE"] );
+        }
+                             
+        foreach( $arItem as $key => &$value ){
+            if( in_array( $key, $this->dateFields ) ){  
+                $value = date( str_replace( "_", " ", $this->profile["DATEFORMAT"] ), strtotime( $value ) );
+            }
+        }
+
+        $arItem["SECTION_ID"] = array();
+        $arItem["IBLOCK_SECTION_NAME"] = array();
+        $dbSection = CIBlockSection::GetNavChain( false, $arItem["IBLOCK_SECTION_ID"] );
+        while( $arSection = $dbSection->GetNext() ){
+            if( in_array( "IBLOCK_SECTION_NAME", $this->useFields ) ){
+                $arItem["IBLOCK_SECTION_NAME"] = $arSection["NAME"];
+            }
+            else{
+                $arItem["SECTION_ID"][] = $arSection["ID"];
+            }
+        }
+        
+        if( count( $this->useProperties["ID"] ) ){
+            $arProperties = $this->GetProperties($arItem, array("ID" => $this->useProperties["ID"]));
+            foreach($this->useProperties["ID"] as $usePropID)
+            if(!isset($arProperties[$usePropID]))
+            {
+                $arItem["PROPERTY_{$usePropID}_VALUE"] = array();
+            }
+            
+            foreach($arProperties as $property)
+            {
+                //if($DB->DateFormatToPHP(FORMAT_DATETIME))
+                if($property["USER_TYPE"] == "DateTime")
+                {
+                    $property["DISPLAY_VALUE"] = date(str_replace("_", " ", $this->profile["DATEFORMAT"]), strtotime($property["VALUE"]));
+                }
+                elseif($property["PROPERTY_TYPE"] == "E")
+                {
+                    $property["ORIGINAL_VALUE"] = array();
+                    if(!empty($property["VALUE"]))
+                    {
+                        $dbPropE = CIBlockElement::GetList(array(), array("ID" => $property["VALUE"]), false, false, array("ID", "NAME"));
+                        while($arPropE = $dbPropE->GetNext())
+                        {
+                            $property["DISPLAY_VALUE"][] = $arPropE["NAME"];
+                            $property["ORIGINAL_VALUE"][] = $arPropE["ID"];
+                        }
+                    }
+                }
+                else
+                {
+                    $property = CIBlockFormatProperties::GetDisplayValue($arItem, $property, "acrit_exportpro_event");
+                    if(empty($property["VALUE_ENUM_ID"]))
+                    {
+                        if(!is_array($property["DISPLAY_VALUE"]))
+                            $property["ORIGINAL_VALUE"] = array($property["DISPLAY_VALUE"]);
+                        else
+                            $property["ORIGINAL_VALUE"] = $property["DISPLAY_VALUE"];
+                    }
+                    else
+                    {
+                        if(!is_array($property["VALUE_ENUM_ID"]))
+                            $property["ORIGINAL_VALUE"] = array($property["VALUE_ENUM_ID"]);
+                        else
+                            $property["ORIGINAL_VALUE"] = $property["VALUE_ENUM_ID"];
+                    }
+                }
+                if($property["PROPERTY_TYPE"] == "F")
+                {
+                    $property["DISPLAY_VALUE"] = array();
+                    if(count($property["ORIGINAL_VALUE"]) > 1)
+                    {
+                        foreach($property["FILE_VALUE"] as $file)
+                            $property["DISPLAY_VALUE"][] = $file["SRC"];
+                    }
+                    else
+                    {
+                        $property["DISPLAY_VALUE"] = $property["FILE_VALUE"]["SRC"];
+                    }
+                }
+                $arItem["PROPERTY_{$property["ID"]}_DISPLAY_VALUE"] = $property["DISPLAY_VALUE"];
+                $arItem["PROPERTY_{$property["CODE"]}_DISPLAY_VALUE"] = $arItem["PROPERTY_{$property["ID"]}_VALUE"];
+                $arItem["PROPERTY_{$property["ID"]}_VALUE"] = $property["ORIGINAL_VALUE"];
+                $arItem["PROPERTY_{$property["CODE"]}_VALUE"] = $arItem["PROPERTY_{$property["ID"]}_VALUE"];
+            }
+        }
+        if( $this->catalogIncluded ){         
+            $arProduct = CCatalogProduct::GetByID( $arItem["ID"] );                                               
+            if( in_array( "PURCHASING_PRICE", $this->usePrices ) && ( $this->profile["TYPE"] != "advantshop" ) ){
+                $arItem["CATALOG_PURCHASING_PRICE"] = intval( round( $arProduct["PURCHASING_PRICE"] ) );
+                
+                $dbPrices = CPrice::GetList(
+                    array(),
+                    array(
+                        "PRODUCT_ID" => $arItem["ID"]
+                    )
+                );
+                
+                if( $arPrice = $dbPrices->fetch() ){                             
+                    $arItem["CATALOG_PURCHASING_PRICE_CURRENCY"] = $arPrice["CURRENCY"];
+                    $arItem["CATALOG_PRICE_{$arPrice["CATALOG_GROUP_ID"]}_CURRENCY"] = $arPrice["CURRENCY"];
+                }
+                
+                //$arItem["CATALOG_PURCHASING_PRICE_CURRENCY"] = $arProduct["PURCHASING_CURRENCY"];
+            }
+            else{
+                $dbPrices = CPrice::GetList(
+                    array(),
+                    array(
+                        "PRODUCT_ID" => $arItem["ID"]
+                    )
+                );
+                
+                while( $arPrice = $dbPrices->fetch() ){                             
+                    if( in_array("PRICE_".$arPrice["CATALOG_GROUP_ID"]."_WD", $this->usePrices ) ||
+                        in_array( "PRICE_".$arPrice["CATALOG_GROUP_ID"]."_D", $this->usePrices ) ){
+                        $arDiscounts = CCatalogDiscount::GetDiscountByPrice($arPrice["ID"], array(2), "N", SITE_ID);
+                        $discountPrice = CCatalogProduct::CountPriceWithDiscount(
+                            $arPrice["PRICE"],
+                            $arPrice["CURRENCY"],
+                            $arDiscounts
+                        );
+                        $discount = $arPrice["PRICE"] - $discountPrice;
+                    }
+                    else{
+                        $discountPrice = $arPrice["PRICE"];
+                        $discount = 0;
+                    }
+                    if( in_array( "PURCHASING_PRICE", $this->usePrices ) ){
+                        $arItem["CATALOG_PURCHASING_PRICE"] = intval( round( $arProduct["PURCHASING_PRICE"] ) );
+                    }
+
+                    $arItem["CATALOG_PRICE_{$arPrice["CATALOG_GROUP_ID"]}"] = intval( round( $arPrice["PRICE"] ) );
+                    $arItem["CATALOG_PRICE_{$arPrice["CATALOG_GROUP_ID"]}_WD"] = intval( round( $discountPrice ) );
+                    $arItem["CATALOG_PRICE_{$arPrice["CATALOG_GROUP_ID"]}_D"] = intval( round( $discount ) );
+                    $arItem["CATALOG_PRICE{$arPrice["CATALOG_GROUP_ID"]}"] = intval( round( $arPrice["PRICE"] ) );
+                    $arItem["CATALOG_PRICE_{$arPrice["CATALOG_GROUP_ID"]}_CURRENCY"] = $arPrice["CURRENCY"];
+                }
+            }   
+            
+            $arItem["CATALOG_QUANTITY"] = $arProduct["QUANTITY"];
+            $arItem["CATALOG_QUANTITY_RESERVED"] = $arProduct["QUANTITY_RESERVED"];
+            $arItem["CATALOG_WEIGHT"] = $arProduct["WEIGHT"];
+            $arItem["CATALOG_WIDTH"] = $arProduct["WIDTH"];
+            $arItem["CATALOG_LENGTH"] = $arProduct["LENGTH"];
+            $arItem["CATALOG_HEIGHT"] = $arProduct["HEIGHT"];
+        }
+
+        unset($arProperties, $arProduct, $dbPrices, $arPrice);
+        return $arItem;
+    }
+    
+    private function SaveSections($sections)
+    {
+        if(is_array($sections))
+        {
+            $sessionData = AcritExportproSession::GetSession($this->profile["ID"]);
+            if(!is_array($sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"]))
+                $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"] = array();
+            $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"] = array_merge(
+                $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"],
+                $sections
+            );
+            AcritExportproSession::SetSession($this->profile["ID"], $sessionData);
+            }
+    }
+
+    private function SaveCurrencies($currencies)
+    {
+        if(is_array($currencies))
+        {
+            $sessionData = AcritExportproSession::GetSession($this->profile["ID"]);
+            if(!is_array($sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"]))
+                $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"] = array();
+            $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"] = array_merge(
+                $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"],
+                $currencies
+            );
+            AcritExportproSession::SetSession($this->profile["ID"], $sessionData);
+        }
+    }
+
+    private function CheckCondition($arItem, $code)
+    {
+        unset($GLOBALS["CHECK_COND"]);
+        $GLOBALS["CHECK_COND"] = $arItem;
+        return eval("return $code;");
+    }
+
+    public function GetProperties($arItem, $arFilter)
+    {
+        $props = CIBlockElement::GetProperty($arItem["IBLOCK_ID"], $arItem["ID"], array(), $arFilter);
+
+        $arAllProps = Array();
+        while($arProp = $props->Fetch())
+        {
+            if(strlen(trim($arProp["CODE"]))>0)
+                $PIND = $arProp["CODE"];
+            else
+                $PIND = $arProp["ID"];
+
+            $arProp["ORIGINAL_VALUE"] = $arProp["VALUE"];
+
+            if($arProp["PROPERTY_TYPE"]=="L")
+            {
+                if($arProp["MULTIPLE"]!="Y")
+                    $arProp["ORIGINAL_VALUE"] = array($arProp["ORIGINAL_VALUE"]);
+                $arProp["VALUE_ENUM_ID"] = $arProp["VALUE"];
+                $arProp["VALUE"] = $arProp["VALUE_ENUM"];
+            }
+
+            if(is_array($arProp["VALUE"]) || (strlen($arProp["VALUE"]) > 0))
+            {
+                $arProp["~VALUE"] = $arProp["VALUE"];
+                if(is_array($arProp["VALUE"]) || preg_match("/[;&<>\"]/", $arProp["VALUE"]))
+                    $arProp["VALUE"] = htmlspecialcharsex($arProp["VALUE"]);
+                $arProp["~DESCRIPTION"] = $arProp["DESCRIPTION"];
+                if(preg_match("/[;&<>\"]/", $arProp["DESCRIPTION"]))
+                    $arProp["DESCRIPTION"] = htmlspecialcharsex($arProp["DESCRIPTION"]);
+            }
+            else
+            {
+                $arProp["VALUE"] = $arProp["~VALUE"] = "";
+                $arProp["DESCRIPTION"] = $arProp["~DESCRIPTION"] = "";
+            }
+
+            if($arProp["MULTIPLE"]=="Y")
+            {
+                if(array_key_exists($PIND, $arAllProps))
+                {
+                    $arTemp = &$arAllProps[$PIND];
+                    if($arProp["VALUE"]!=="")
+                    {
+                        if(is_array($arTemp["VALUE"]))
+                        {
+                            $arTemp["ORIGINAL_VALUE"][] = $arProp["ORIGINAL_VALUE"];
+                            $arTemp["VALUE"][] = $arProp["VALUE"];
+                            $arTemp["~VALUE"][] = $arProp["~VALUE"];
+                            $arTemp["DESCRIPTION"][] = $arProp["DESCRIPTION"];
+                            $arTemp["~DESCRIPTION"][] = $arProp["~DESCRIPTION"];
+                            $arTemp["PROPERTY_VALUE_ID"][] = $arProp["PROPERTY_VALUE_ID"];
+                            if($arProp["PROPERTY_TYPE"]=="L")
+                            {
+                                $arTemp["VALUE_ENUM_ID"][] = $arProp["VALUE_ENUM_ID"];
+                                $arTemp["VALUE_ENUM"][] = $arProp["VALUE_ENUM"];
+                                $arTemp["VALUE_XML_ID"][] = $arProp["VALUE_XML_ID"];
+                                //$arTemp["VALUE_SORT"][] = $arProp["VALUE_SORT"];
+                            }
+                        }
+                        else
+                        {
+                            $arTemp["ORIGINAL_VALUE"] = array($arProp["ORIGINAL_VALUE"]);
+                            $arTemp["VALUE"] = array($arProp["VALUE"]);
+                            $arTemp["~VALUE"] = array($arProp["~VALUE"]);
+                            $arTemp["DESCRIPTION"] = array($arProp["DESCRIPTION"]);
+                            $arTemp["~DESCRIPTION"] = array($arProp["~DESCRIPTION"]);
+                            $arTemp["PROPERTY_VALUE_ID"] = array($arProp["PROPERTY_VALUE_ID"]);
+                            if($arProp["PROPERTY_TYPE"]=="L")
+                            {
+                                $arTemp["VALUE_ENUM_ID"] = array($arProp["VALUE_ENUM_ID"]);
+                                $arTemp["VALUE_ENUM"] = array($arProp["VALUE_ENUM"]);
+                                $arTemp["VALUE_XML_ID"] = array($arProp["VALUE_XML_ID"]);
+                                $arTemp["VALUE_SORT"] = array($arProp["VALUE_SORT"]);
+                                $arTemp["ORIGINAL_VALUE"] = array($arProp["ORIGINAL_VALUE"]);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    $arProp["~NAME"] = $arProp["NAME"];
+                    if(preg_match("/[;&<>\"]/", $arProp["NAME"]))
+                        $arProp["NAME"] = htmlspecialcharsex($arProp["NAME"]);
+                    $arProp["~DEFAULT_VALUE"] = $arProp["DEFAULT_VALUE"];
+                    if(is_array($arProp["DEFAULT_VALUE"]) || preg_match("/[;&<>\"]/", $arProp["DEFAULT_VALUE"]))
+                        $arProp["DEFAULT_VALUE"] = htmlspecialcharsex($arProp["DEFAULT_VALUE"]);
+                    if($arProp["VALUE"]!=="")
+                    {
+                        $arProp["ORIGINAL_VALUE"] = array($arProp["ORIGINAL_VALUE"]);
+                        $arProp["VALUE"] = array($arProp["VALUE"]);
+                        $arProp["~VALUE"] = array($arProp["~VALUE"]);
+                        $arProp["DESCRIPTION"] = array($arProp["DESCRIPTION"]);
+                        $arProp["~DESCRIPTION"] = array($arProp["~DESCRIPTION"]);
+                        $arProp["PROPERTY_VALUE_ID"] = array($arProp["PROPERTY_VALUE_ID"]);
+                        if($arProp["PROPERTY_TYPE"]=="L")
+                        {
+                            $arProp["VALUE_ENUM_ID"] = array($arProp["VALUE_ENUM_ID"]);
+                            $arProp["VALUE_ENUM"] = array($arProp["VALUE_ENUM"]);
+                            $arProp["VALUE_XML_ID"] = array($arProp["VALUE_XML_ID"]);
+                            $arProp["VALUE_SORT"] = array($arProp["VALUE_SORT"]);
+                        }
+                    }
+                    else
+                    {
+                        $arProp["ORIGINAL_VALUE"] = false;
+                        $arProp["VALUE"] = false;
+                        $arProp["~VALUE"] = false;
+                        $arProp["DESCRIPTION"] = false;
+                        $arProp["~DESCRIPTION"] = false;
+                        $arProp["PROPERTY_VALUE_ID"] = false;
+                        if($arProp["PROPERTY_TYPE"]=="L")
+                        {
+                            $arProp["VALUE_ENUM_ID"] = false;
+                            $arProp["VALUE_ENUM"] = false;
+                            $arProp["VALUE_XML_ID"] = false;
+                            $arProp["VALUE_SORT"] = false;
+                        }
+                    }
+                    $arAllProps[$PIND] = $arProp;
+                }
+            }
+            else
+            {
+                $arProp["~NAME"] = $arProp["NAME"];
+                if(preg_match("/[;&<>\"]/", $arProp["NAME"]))
+                    $arProp["NAME"] = htmlspecialcharsex($arProp["NAME"]);
+                $arProp["~DEFAULT_VALUE"] = $arProp["DEFAULT_VALUE"];
+                if(is_array($arProp["DEFAULT_VALUE"]) || preg_match("/[;&<>\"]/", $arProp["DEFAULT_VALUE"]))
+                    $arProp["DEFAULT_VALUE"] = htmlspecialcharsex($arProp["DEFAULT_VALUE"]);
+                $arAllProps[$PIND] = $arProp;
+            }
+        }
+        return $arAllProps;
+    }
+    
+    private function GetStringCharset( $str ){ 
+        global $APPLICATION;
+        if( preg_match( "/[\xe0\xe1\xe3-\xff]/", $str ) )
+            return "cp1251";
+        
+        $str0 = $APPLICATION->ConvertCharset( $str, "utf8", "cp1251" );
+        
+        if( preg_match( "/[\xe0\xe1\xe3-\xff]/", $str0, $regs ) )
+            return "utf8";
+        
+        return "cp1251";
+    }
+    
+    public static function Dump( $dumpData, $clear = FALSE, $depth = 0 ){
+        $fileName = "acrit_exportpro_dump.txt";
+        $file = $_SERVER["DOCUMENT_ROOT"] . "/upload/" . $fileName;
+
+        $depthSign = "----";
+
+        $strResult = "";
+        $strDepth  = "";
+        $nextDepth = $depth + 1;
+
+        if( isset( $dumpData )
+            && filter_var( $depth ) !== FALSE
+            && $depth >= 0
+            && is_bool( $clear ) ){
+
+            if( $depth == 0
+                && $clear ){
+
+                file_put_contents( $file, "" );
+            }
+            else{
+                for( $ico = 0; $ico < (int) $depth; $ico += 1 ){
+                    $strDepth .= $depthSign;
+                }
+                $strDepth .= " ";
+            }
+
+            if( is_array( $dumpData ) ){
+                foreach( $dumpData as $key => $value ){
+                    if( is_array( $value ) ){
+                        $strResult .= $strDepth . $key . " = Array:\n";
+                        file_put_contents( $file, $strResult, FILE_APPEND );
+                        $strResult = "";
+
+                        self::Dump( $value, $clear, $nextDepth );
+                    }
+                    elseif( is_null( $value ) ){
+                        $strResult .= $strDepth . $key . " = *NULL*\n";
+                    }
+                    elseif( $value === FALSE ){
+                        $strResult .= $strDepth . $key . " = *FALSE*\n";
+                    }
+                    elseif( is_string( $value )
+                        && strlen( $value ) <= 0 ){
+
+                        $strResult .= $strDepth . $key . " = *EMPTY STRING*\n";
+                    }
+                    else{
+                        $strResult .= $strDepth . $key . " = " . $value . "\n";
+                    }
+                }
+            }
+            elseif( is_null( $dumpData ) ){
+                $strResult = "*NULL*\n";
+            }
+            elseif( $dumpData === FALSE ){
+                $strResult = "*FALSE*\n";
+            }
+            elseif( is_string( $dumpData )
+                && strlen( $dumpData ) <= 0 ){
+
+                $strResult = "*EMPTY STRING*\n";
+            }
+            else{
+                $strResult = $dumpData . "\n";
+            }
+        }
+
+        if( $depth === 0 ){
+            $strResult .= "____________________________________________________\n\n";
+        }
+
+        if( strlen( $strResult ) > 0 ){
+            file_put_contents( $file, $strResult, FILE_APPEND );
+        }
+    }
+}
+
+class CAcritExportproLog{
+    public $logFilename = "/upload/acrit.exportpro/";
+    private $profileId;
+    private $session;
+
+    public function __construct( $profileId = false ){
+        $this->profileId = $profileId;
+        //$this->session = new ThreadsSession;
+        //$this->session->Init( "acrit_exportpro_".$profileId, \Bitrix\Main\Application::getDocumentRoot() );
+    }
+
+    public function Init( $profile ){
+        $sessionData = AcritExportproSession::GetSession( $profile["ID"] );
+
+        $sessionData["EXPORTPRO"]["LOG"][$profile["ID"]] = array(
+            "IBLOCK" => 0,
+            "SECTIONS" => 0,
+            "PRODUCTS" => 0,
+            "PRODUCTS_EXPORT" => 0,
+            "PRODUCTS_ERROR" => 0,
+            "FILE" => "",
+            "LAST_START_EXPORT" => date( "d.m H:i:s", time() )
+        );
+        $profileObj = new CExportproProfile();
+        
+        if( CModule::IncludeModule( "catalog" ) ){
+            $sessionData["EXPORTPRO"]["LOG"][$profile["ID"]]["IBLOCK"] = count( $profileObj->PrepareIBlock( $profile["IBLOCK_ID"], $profile["USE_SKU"] ) );
+        }
+        else{
+            $sessionData["EXPORTPRO"]["LOG"][$profile["ID"]]["IBLOCK"] = count( $profileObj->PrepareIBlock( $profile["IBLOCK_ID"], false ) );
+        }
+
+        if( $profile["CHECK_INCLUDE"] != "Y" ){
+            $sections = array();
+            $dbSection = CIBlockSection::GetList(
+                array(),
+                array(
+                    "ID" => $profile["CATEGORY"]
+                ),
+                false,
+                array(
+                    "ID",
+                    "LEFT_MARGIN",
+                    "RIGHT_MARGIN"
+                )
+            );
+            
+            $arFilter = array( "LOGIC" => "OR" );
+            
+            while( $arSection = $dbSection->GetNext() ){
+                $arFilter = array(
+                    ">LEFT_MARGIN" => $arSection["LEFT_MARGIN"],
+                    "<RIGHT_MARGIN" => $arSection["RIGHT_MARGIN"],
+                    "IBLOCK_ID" => $profile["IBLOCK_ID"]
+                );
+                
+                $dbSection2 = CIBlockSection::GetList(
+                    array(),
+                    $arFilter,
+                    false,
+                    array( "ID" )
+                );
+                
+                while( $arSection2 = $dbSection2->GetNext() )
+                    $sections[] = $arSection2["ID"];
+            }
+            $sections = array_unique( $sections );
+            $sessionData["EXPORTPRO"]["LOG"][$profile["ID"]]["SECTIONS"] = count( $sections );
+        }
+        else{
+            $sessionData["EXPORTPRO"]["LOG"][$profile["ID"]]["SECTIONS"] = count($profile["CATEGORY"]);
+        }
+        $this->profileId = $profile["ID"];
+        CheckDirPath( $_SERVER["DOCUMENT_ROOT"].$this->logFilename );
+        $this->logFilename = $this->logFilename."log_export_".$this->profileId.".txt";
+        $sessionData["EXPORTPRO"]["LOG"][$profile["ID"]]["FILE"] = $this->logFilename;
+        file_put_contents( $_SERVER["DOCUMENT_ROOT"].$this->logFilename, "" );
+        //$this->session->Save( "LOG", $sessionData["EXPORTPRO"]["LOG"][$profile["ID"]] );
+        AcritExportproSession::SetSession( $profile["ID"], $sessionData );
+    }
+    
+    public function IncIblcok(){
+        $sessionData = AcritExportproSession::GetSession( $this->profileId );
+        $sessionData["EXPORTPRO"]["LOG"][$this->profileId]["IBLOCK"]++;
+        AcritExportproSession::SetSession( $this->profileId, $sessionData );
+    }
+    
+    public function IncSection(){
+        $sessionData = AcritExportproSession::GetSession( $this->profileId );
+        $sessionData["EXPORTPRO"]["LOG"][$this->profileId]["SECTIONS"]++;
+        AcritExportproSession::SetSession( $this->profileId, $sessionData );
+    }
+    
+    public function IncProduct( $cnt = 0 ){
+        $sessionData = AcritExportproSession::GetSession( $this->profileId );
+        if( !intval( $cnt ) )
+            $sessionData["EXPORTPRO"]["LOG"][$this->profileId]["PRODUCTS"]++;
+        else
+            $sessionData["EXPORTPRO"]["LOG"][$this->profileId]["PRODUCTS"] += $cnt;
+        
+        AcritExportproSession::SetSession( $this->profileId, $sessionData );
+    }
+    
+    public function IncProductExport(){
+        $sessionData = AcritExportproSession::GetSession( $this->profileId );
+        $sessionData["EXPORTPRO"]["LOG"][$this->profileId]["PRODUCTS_EXPORT"]++;
+        AcritExportproSession::SetSession( $this->profileId, $sessionData );
+    }
+    
+    public function IncProductError(){
+        $sessionData = AcritExportproSession::GetSession( $this->profileId );
+        $sessionData["EXPORTPRO"]["LOG"][$this->profileId]["PRODUCTS_ERROR"]++;
+        AcritExportproSession::SetSession( $this->profileId, $sessionData );
+    }
+    
+    public function AddMessage( $message ){
+        if( is_file( $_SERVER["DOCUMENT_ROOT"].$this->logFilename ) ){
+            file_put_contents( $_SERVER["DOCUMENT_ROOT"].$this->logFilename, $message, FILE_APPEND );    
+        }
+    }
+    
+    public function GetLog( $profileID ){
+        $arSessionData = AcritExportproSession::GetAllSession( $profileID );
+        $sessionData = array();
+        if( !empty( $arSessionData ) ){
+            $sessionData = $arSessionData[0];
+            $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS"] = intval( $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS"] );
+            $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_EXPORT"] = intval( $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_EXPORT"] );
+            $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_ERROR"] = intval( $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_ERROR"] );
+            
+            unset( $arSessionData[0] );
+            
+            foreach( $arSessionData as $sData ){
+                $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS"] += intval( $sData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS"] );
+                $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_EXPORT"] += intval( $sData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_EXPORT"] );
+                $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_ERROR"] += intval( $sData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_ERROR"] );
+            }
+            
+            $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_ERROR"] = $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS"] - $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_EXPORT"];
+        }
+        return $sessionData["EXPORTPRO"]["LOG"][$profileID];
+    }
+}
+
+class AcritExportproProtect {
+    static function Protect( $mode, $action ){
+        if( $action == "protect" ){
+            COption::SetOptionInt( "acrit.exportpro", "acrit.exportpro.mode", intval( $mode ) );
+            if( $mode == 1 )
+                return false;
+            else
+                return true;
+        }
+        else{
+            return ( COption::GetOptionInt( "acrit.exportpro", "acrit.exportpro.mode" ) != 1 );
+        }
+    }
+}
+
+class AcritExportproSession {
+    static private $sessionDir;
+    static private $cronPage = -1;
+    static public function Init( $cronpage ){
+        if( !self::$sessionDir )
+            self::$sessionDir = $_SERVER["DOCUMENT_ROOT"]."/bitrix/tools/acrit.exportpro/";
+        
+        self::$cronPage = $cronpage;
+    }
+    
+    static public function GetAllSession( $id ){
+        $files = scandir( self::$sessionDir );
+        $arSessionData = array();
+        foreach( $files as $file ){
+            if( $file == "." || $file == ".." )
+                continue;
+                
+            if( false !== strpos( $file, "export_{$id}" ) ){
+                $sessionData = file_get_contents( self::$sessionDir.$file );
+                $sessionData = unserialize( $sessionData );
+                if( !is_array( $sessionData ) )
+                    $sessionData = array();
+                    
+                if( !empty( $sessionData ) )
+                    $arSessionData[] = $sessionData;
+            }
+        }
+        return array_filter( $arSessionData );
+    }
+    
+    static public function GetSession( $id ){
+        if( self::$cronPage > 0 )
+            $id .= "_".self::$cronPage;
+        
+        if( file_exists( self::$sessionDir."export_{$id}.session" ) ){
+            $sessionData = file_get_contents( self::$sessionDir."export_{$id}.session" );
+            $sessionData = unserialize( $sessionData );
+        }
+        
+        if( !is_array( $sessionData ) )
+            $sessionData = array();
+            
+        return $sessionData;
+    }
+    
+    static public function SetSession( $id, $data ){
+        if( !is_array( $data ) )
+            $data = array();
+        
+        if( self::$cronPage > 0 )
+            $id .= "_".self::$cronPage;
+            
+        file_put_contents( self::$sessionDir."export_{$id}.session", serialize( $data ) );
+    }
+    
+    static public function DeleteSession( $id ){
+        if( file_exists( self::$sessionDir."export_{$id}.session" ) )
+            unlink( self::$sessionDir."export_{$id}.session" );
+        
+        $files = scandir( self::$sessionDir );
+        foreach( $files as $file ){
+            if( $file == "." || $file == ".." )
+                continue;
+            
+            if( false !== strpos( $file, "export_{$id}") ){
+                unlink( self::$sessionDir.$file );
+            }
+        }
+    }
+}?>

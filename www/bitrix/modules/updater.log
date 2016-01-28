@@ -2443,3 +2443,59 @@
 2016-01-25 11:27:18 - CRUPDCF1 - Run updater '/bitrix/updates/update_m1453710438/acrit.exportpro/updater3.0.20.php': CopyFiles(install/themes, themes/)
 2016-01-25 11:27:18 - CRUPDCF1 - Run updater '/bitrix/updates/update_m1453710438/acrit.exportpro/updater3.0.20.php': CopyFiles(install/tools, tools/)
 2016-01-25 11:27:18 - CRUPDCF1 - Run updater '/bitrix/updates/update_m1453710438/acrit.exportpro/updater3.0.20.php': CopyFiles(install/public, /)
+2016-01-28 00:47:01 -  - exec CUpdateClient::GetUpdatesList
+2016-01-28 00:47:01 -  - exec CUpdateClient::CollectRequestData
+2016-01-28 00:47:01 -  - LICENSE_KEY=X&lang=ru&SUPD_VER=15.5.1&VERSION=15.5.10&TYPENC=E&SUPD_STS=1&SUPD_URS=0&SUPD_URSA=3&SUPD_DBS=MYSQL&XE=N&CLIENT_SITE=itprom.ru&CHHB=itprom.ru&CSAB=127.0.0.9&CANGZIP=Y&CLIENT_PHPVER=5.4.40&stable=Y&rerere=Y&bitm_main=15.5.10&bitm_clouds=16.0.0&bitm_fileman=16.0.0&bitm_blog=15.5.4&bitm_security=15.5.5&bitm_search=15.5.1&bitm_forum=15.5.3&bitm_conversion=15.5.5&bitm_seo=15.5.6&bitm_catalog=15.5.1&bitm_pull=15.5.8&bitm_highloadblock=15.5.0&bitm_sale=14.11.19&bitm_photogallery=15.0.0&bitm_perfmon=16.0.0&bitm_form=15.0.2&bitm_sender=15.5.3&bitm_vote=15.5.0&bitm_socialservices=15.5.3&bitm_translate=14.0.0&bitm_abtest=15.5.5&bitm_iblock=15.5.8&bitm_scale=14.5.2&bitm_subscribe=15.0.2&bitm_report=15.0.0&bitm_currency=16.0.0&bitm_compression=16.0.0&bitm_mobileapp=15.5.8&bitm_storeassist=16.0.0&bitm_bitrixcloud=16.0.0&bitm_eshopapp=15.0.0&bitl_en=&bitl_ru=&bith_ru=&bith_en=&SUPD_OFC=Small&SUPD_SRS=RU&SUPD_CMP=Y&SALE_15=N
+2016-01-28 00:47:01 -  - exec CUpdateClient::GetHTTPPage
+2016-01-28 00:47:01 -  - TIME GetUpdatesList(request) 0.238 sec
+2016-01-28 00:47:01 -  - exec CUpdateClient::ParseServerData
+2016-01-28 00:47:11 -  - exec CUpdateClient::LoadModulesUpdates
+2016-01-28 00:47:11 -  - exec CUpdateClient::CollectRequestData
+2016-01-28 00:47:11 -  - LICENSE_KEY=X&lang=ru&SUPD_VER=15.5.1&VERSION=15.5.10&TYPENC=E&SUPD_STS=1&SUPD_URS=0&SUPD_URSA=3&SUPD_DBS=MYSQL&XE=N&CLIENT_SITE=itprom.ru&CHHB=itprom.ru&CSAB=127.0.0.9&CANGZIP=Y&CLIENT_PHPVER=5.4.40&stable=Y&rerere=Y&bitm_main=15.5.10&bitm_clouds=16.0.0&bitm_fileman=16.0.0&bitm_blog=15.5.4&bitm_security=15.5.5&bitm_search=15.5.1&bitm_forum=15.5.3&bitm_conversion=15.5.5&bitm_seo=15.5.6&bitm_catalog=15.5.1&bitm_pull=15.5.8&bitm_highloadblock=15.5.0&bitm_sale=14.11.19&bitm_photogallery=15.0.0&bitm_perfmon=16.0.0&bitm_form=15.0.2&bitm_sender=15.5.3&bitm_vote=15.5.0&bitm_socialservices=15.5.3&bitm_translate=14.0.0&bitm_abtest=15.5.5&bitm_iblock=15.5.8&bitm_scale=14.5.2&bitm_subscribe=15.0.2&bitm_report=15.0.0&bitm_currency=16.0.0&bitm_compression=16.0.0&bitm_mobileapp=15.5.8&bitm_storeassist=16.0.0&bitm_bitrixcloud=16.0.0&bitm_eshopapp=15.0.0&bitl_en=&bitl_ru=&bith_ru=&bith_en=&requested_modules=photogallery&SUPD_OFC=Small&SUPD_SRS=RU&SUPD_CMP=Y&SALE_15=N
+2016-01-28 00:47:11 -  - exec CUpdateClient::GetHTTPPage
+2016-01-28 00:47:11 -  - TIME LoadModulesUpdates(request) 0.194 sec
+2016-01-28 00:47:11 -  - exec CUpdateClient::ParseServerData
+2016-01-28 00:47:11 - LMU01 - LoadModulesUpdates-Step
+2016-01-28 00:47:11 -  - exec CUpdateClient::LoadModulesUpdates
+2016-01-28 00:47:11 -  - exec CUpdateClient::CollectRequestData
+2016-01-28 00:47:11 -  - exec CUpdateClient::ParseServerData
+2016-01-28 00:47:11 - DOWNLOAD - Time - 0.41705203056335 sec
+2016-01-28 00:47:11 -  - exec CUpdateClient::UnGzipArchive
+2016-01-28 00:47:12 -  - TIME UnGzipArchive 0.029 sec
+2016-01-28 00:47:12 - CSURUS1 - Run updater '/bitrix/updates/update_m1453931231/photogallery/updater16.0.0.php'
+2016-01-28 00:47:12 - CRUPDCF1 - Run updater '/bitrix/updates/update_m1453931231/photogallery/updater16.0.0.php': CopyFiles(install/components, components)
+2016-01-28 00:47:12 -  - TIME UpdateStepModules 0.076 sec
+2016-01-28 00:47:12 - UPD_SUCCESS - Updated: photogallery (16.0.0)<br><li>Исправлены ошибки в загрузчике фотогалереи. <li>Из шаблона фотогалереи убран компонент flash-слайдшоу. <li>Исправлены другие ошибки в интерфейсах модуля.
+2016-01-28 00:47:12 -  - exec CUpdateClient::LoadModulesUpdates
+2016-01-28 00:47:12 -  - exec CUpdateClient::CollectRequestData
+2016-01-28 00:47:12 -  - LICENSE_KEY=X&lang=ru&SUPD_VER=15.5.1&VERSION=15.5.10&TYPENC=E&SUPD_STS=1&SUPD_URS=0&SUPD_URSA=3&SUPD_DBS=MYSQL&XE=N&CLIENT_SITE=itprom.ru&CHHB=itprom.ru&CSAB=127.0.0.9&CANGZIP=Y&CLIENT_PHPVER=5.4.40&stable=Y&rerere=Y&bitm_main=15.5.10&bitm_clouds=16.0.0&bitm_fileman=16.0.0&bitm_blog=15.5.4&bitm_security=15.5.5&bitm_search=15.5.1&bitm_forum=15.5.3&bitm_conversion=15.5.5&bitm_seo=15.5.6&bitm_catalog=15.5.1&bitm_pull=15.5.8&bitm_highloadblock=15.5.0&bitm_sale=14.11.19&bitm_photogallery=16.0.0&bitm_perfmon=16.0.0&bitm_form=15.0.2&bitm_sender=15.5.3&bitm_vote=15.5.0&bitm_socialservices=15.5.3&bitm_translate=14.0.0&bitm_abtest=15.5.5&bitm_iblock=15.5.8&bitm_scale=14.5.2&bitm_subscribe=15.0.2&bitm_report=15.0.0&bitm_currency=16.0.0&bitm_compression=16.0.0&bitm_mobileapp=15.5.8&bitm_storeassist=16.0.0&bitm_bitrixcloud=16.0.0&bitm_eshopapp=15.0.0&bitl_en=&bitl_ru=&bith_ru=&bith_en=&requested_modules=photogallery&SUPD_OFC=Small&SUPD_SRS=RU&SUPD_CMP=Y&SALE_15=N
+2016-01-28 00:47:12 -  - exec CUpdateClient::GetHTTPPage
+2016-01-28 00:47:12 -  - TIME LoadModulesUpdates(request) 0.178 sec
+2016-01-28 00:47:12 -  - exec CUpdateClient::ParseServerData
+2016-01-28 00:47:12 - STEP - Finish - NOUPDATES
+2016-01-28 00:47:12 - STEP - Finish - NOUPDATES
+2016-01-28 01:14:45 -  - exec CUpdateClient::GetUpdatesList
+2016-01-28 01:14:45 -  - exec CUpdateClient::CollectRequestData
+2016-01-28 01:14:45 -  - LICENSE_KEY=X&lang=ru&SUPD_VER=15.5.1&VERSION=15.5.10&TYPENC=E&SUPD_STS=1&SUPD_URS=0&SUPD_URSA=3&SUPD_DBS=MYSQL&XE=N&CLIENT_SITE=itprom.ru&CHHB=itprom.ru&CSAB=127.0.0.9&CANGZIP=Y&CLIENT_PHPVER=5.4.40&stable=Y&rerere=Y&bitm_main=15.5.10&bitm_clouds=16.0.0&bitm_fileman=16.0.0&bitm_blog=15.5.4&bitm_security=15.5.5&bitm_search=15.5.1&bitm_forum=15.5.3&bitm_conversion=15.5.5&bitm_seo=15.5.6&bitm_catalog=15.5.1&bitm_pull=15.5.8&bitm_highloadblock=15.5.0&bitm_sale=14.11.19&bitm_photogallery=16.0.0&bitm_perfmon=16.0.0&bitm_form=15.0.2&bitm_sender=15.5.3&bitm_vote=15.5.0&bitm_socialservices=15.5.3&bitm_translate=14.0.0&bitm_abtest=15.5.5&bitm_iblock=15.5.8&bitm_scale=14.5.2&bitm_subscribe=15.0.2&bitm_report=15.0.0&bitm_currency=16.0.0&bitm_compression=16.0.0&bitm_mobileapp=15.5.8&bitm_storeassist=16.0.0&bitm_bitrixcloud=16.0.0&bitm_eshopapp=15.0.0&bitl_en=&bitl_ru=&bith_ru=&bith_en=&SUPD_OFC=Small&SUPD_SRS=RU&SUPD_CMP=Y&SALE_15=N
+2016-01-28 01:14:45 -  - exec CUpdateClient::GetHTTPPage
+2016-01-28 01:14:45 -  - TIME GetUpdatesList(request) 0.204 sec
+2016-01-28 01:14:45 -  - exec CUpdateClient::ParseServerData
+2016-01-28 01:14:57 -  - exec CUpdateClient::ActivateCoupon
+2016-01-28 01:14:57 -  - exec CUpdateClient::CollectRequestData
+2016-01-28 01:14:57 -  - LICENSE_KEY=X&lang=ru&SUPD_VER=15.5.1&VERSION=15.5.10&TYPENC=E&SUPD_STS=1&SUPD_URS=0&SUPD_URSA=3&SUPD_DBS=MYSQL&XE=N&CLIENT_SITE=itprom.ru&CHHB=itprom.ru&CSAB=127.0.0.9&CANGZIP=Y&CLIENT_PHPVER=5.4.40&stable=Y&rerere=Y&bitm_main=15.5.10&bitm_clouds=16.0.0&bitm_fileman=16.0.0&bitm_blog=15.5.4&bitm_security=15.5.5&bitm_search=15.5.1&bitm_forum=15.5.3&bitm_conversion=15.5.5&bitm_seo=15.5.6&bitm_catalog=15.5.1&bitm_pull=15.5.8&bitm_highloadblock=15.5.0&bitm_sale=14.11.19&bitm_photogallery=16.0.0&bitm_perfmon=16.0.0&bitm_form=15.0.2&bitm_sender=15.5.3&bitm_vote=15.5.0&bitm_socialservices=15.5.3&bitm_translate=14.0.0&bitm_abtest=15.5.5&bitm_iblock=15.5.8&bitm_scale=14.5.2&bitm_subscribe=15.0.2&bitm_report=15.0.0&bitm_currency=16.0.0&bitm_compression=16.0.0&bitm_mobileapp=15.5.8&bitm_storeassist=16.0.0&bitm_bitrixcloud=16.0.0&bitm_eshopapp=15.0.0&bitl_en=&bitl_ru=&bith_ru=&bith_en=&SUPD_OFC=Small&SUPD_SRS=RU&SUPD_CMP=Y&SALE_15=N&coupon=MPX-166XYUGKLM-A4N9FQVWE3&query_type=coupon
+2016-01-28 01:14:57 -  - exec CUpdateClient::GetHTTPPage
+2016-01-28 01:14:57 -  - TIME ActivateCoupon(request) 0.213 sec
+2016-01-28 01:14:57 -  - exec CUpdateClient::ParseServerData
+2016-01-28 01:14:57 - UPD_SUCCESS - Coupon activated
+2016-01-28 01:14:58 -  - exec CUpdateClient::GetUpdatesList
+2016-01-28 01:14:58 -  - exec CUpdateClient::CollectRequestData
+2016-01-28 01:14:58 -  - LICENSE_KEY=X&lang=ru&SUPD_VER=15.5.1&VERSION=15.5.10&TYPENC=E&SUPD_STS=1&SUPD_URS=0&SUPD_URSA=3&SUPD_DBS=MYSQL&XE=N&CLIENT_SITE=itprom.ru&CHHB=itprom.ru&CSAB=127.0.0.9&CANGZIP=Y&CLIENT_PHPVER=5.4.40&stable=Y&rerere=Y&bitm_main=15.5.10&bitm_clouds=16.0.0&bitm_fileman=16.0.0&bitm_blog=15.5.4&bitm_security=15.5.5&bitm_search=15.5.1&bitm_forum=15.5.3&bitm_conversion=15.5.5&bitm_seo=15.5.6&bitm_catalog=15.5.1&bitm_pull=15.5.8&bitm_highloadblock=15.5.0&bitm_sale=14.11.19&bitm_photogallery=16.0.0&bitm_perfmon=16.0.0&bitm_form=15.0.2&bitm_sender=15.5.3&bitm_vote=15.5.0&bitm_socialservices=15.5.3&bitm_translate=14.0.0&bitm_abtest=15.5.5&bitm_iblock=15.5.8&bitm_scale=14.5.2&bitm_subscribe=15.0.2&bitm_report=15.0.0&bitm_currency=16.0.0&bitm_compression=16.0.0&bitm_mobileapp=15.5.8&bitm_storeassist=16.0.0&bitm_bitrixcloud=16.0.0&bitm_eshopapp=15.0.0&bitl_en=&bitl_ru=&bith_ru=&bith_en=&SUPD_OFC=Small&SUPD_SRS=RU&SUPD_CMP=Y&SALE_15=N
+2016-01-28 01:14:58 -  - exec CUpdateClient::GetHTTPPage
+2016-01-28 01:14:59 -  - TIME GetUpdatesList(request) 0.46 sec
+2016-01-28 01:14:59 -  - exec CUpdateClient::ParseServerData
+2016-01-28 01:17:03 -  - exec CUpdateClient::GetUpdatesList
+2016-01-28 01:17:03 -  - exec CUpdateClient::CollectRequestData
+2016-01-28 01:17:03 -  - LICENSE_KEY=X&lang=ru&SUPD_VER=15.5.1&VERSION=15.5.10&TYPENC=E&SUPD_STS=1&SUPD_URS=0&SUPD_URSA=3&SUPD_DBS=MYSQL&XE=N&CLIENT_SITE=itprom.ru&CHHB=itprom.ru&CSAB=127.0.0.9&CANGZIP=Y&CLIENT_PHPVER=5.4.40&stable=Y&rerere=Y&bitm_main=15.5.10&bitm_clouds=16.0.0&bitm_fileman=16.0.0&bitm_blog=15.5.4&bitm_security=15.5.5&bitm_search=15.5.1&bitm_forum=15.5.3&bitm_conversion=15.5.5&bitm_seo=15.5.6&bitm_catalog=15.5.1&bitm_pull=15.5.8&bitm_highloadblock=15.5.0&bitm_sale=14.11.19&bitm_photogallery=16.0.0&bitm_perfmon=16.0.0&bitm_form=15.0.2&bitm_sender=15.5.3&bitm_vote=15.5.0&bitm_socialservices=15.5.3&bitm_translate=14.0.0&bitm_abtest=15.5.5&bitm_iblock=15.5.8&bitm_scale=14.5.2&bitm_subscribe=15.0.2&bitm_report=15.0.0&bitm_currency=16.0.0&bitm_compression=16.0.0&bitm_mobileapp=15.5.8&bitm_storeassist=16.0.0&bitm_bitrixcloud=16.0.0&bitm_eshopapp=15.0.0&bitl_en=&bitl_ru=&bith_ru=&bith_en=&SUPD_OFC=Small&SUPD_SRS=RU&SUPD_CMP=Y&SALE_15=N
+2016-01-28 01:17:03 -  - exec CUpdateClient::GetHTTPPage
+2016-01-28 01:17:04 -  - TIME GetUpdatesList(request) 0.215 sec
+2016-01-28 01:17:04 -  - exec CUpdateClient::ParseServerData

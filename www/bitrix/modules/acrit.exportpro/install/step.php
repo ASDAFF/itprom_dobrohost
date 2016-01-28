@@ -10,17 +10,17 @@ IncludeModuleLangFile(__FILE__);
 ?>
 
 <table id="instruction">
-	<!--<tr class="heading"><td colspan="2"><?=$h2?></td></tr>-->
-	<!--<tr>-->
-	<!--	<td align="center" colspan="2">-->
-	<!--		<ul>-->
-	<!--			<?foreach ($instruction as $line):?>-->
-	<!--				<li><?=$line?></li>-->
-	<!--			<?endforeach?>-->
-	<!--		</ul>-->
-	<!--	</td>-->
-	<!--</tr>-->
-	<!--<tr class="heading about "><td colspan="2"><?=implode('<br>', GetMessage('ACRIT_EXPORTPRO_ABOUT'))?></td></tr>-->
+	<?/*<tr class="heading"><td colspan="2"><?=$h2?></td></tr>
+    <tr>
+        <td align="center" colspan="2">
+            <ul>
+                <?foreach ($instruction as $line):?>
+                    <li><?=$line?></li>
+                <?endforeach?>
+            </ul>
+        </td>
+    </tr>
+    <tr class="heading about "><td colspan="2"><?=implode('<br>', GetMessage('ACRIT_EXPORTPRO_ABOUT'))?></td></tr>*/?>
 	<tr>
         <td>
             <?= GetMessage('ACRIT_EXPORTPRO_RECOMMENDS');?>

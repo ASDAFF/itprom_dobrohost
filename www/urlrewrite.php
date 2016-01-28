@@ -55,13 +55,13 @@ $arUrlRewrite = array(
 		"PATH" => "/catalog/index.php",
 	),
 	array(
-		"CONDITION" => "#^/kredit/#",
+		"CONDITION" => "#^/oplata/#",
 		"RULE" => "",
 		"ID" => "",
 		"PATH" => "/adults/index.php",
 	),
 	array(
-		"CONDITION" => "#^/oplata/#",
+		"CONDITION" => "#^/kredit/#",
 		"RULE" => "",
 		"ID" => "",
 		"PATH" => "/adults/index.php",
@@ -97,16 +97,16 @@ $arUrlRewrite = array(
 		"PATH" => "/staff/index.php",
 	),
 	array(
-		"CONDITION" => "#^/news/#",
-		"RULE" => "",
-		"ID" => "bitrix:news",
-		"PATH" => "/news/index.php",
-	),
-	array(
 		"CONDITION" => "#^/blog/#",
 		"RULE" => "",
 		"ID" => "bitrix:news",
 		"PATH" => "/blog/index.php",
+	),
+	array(
+		"CONDITION" => "#^/news/#",
+		"RULE" => "",
+		"ID" => "bitrix:news",
+		"PATH" => "/news/index.php",
 	),
 );
 

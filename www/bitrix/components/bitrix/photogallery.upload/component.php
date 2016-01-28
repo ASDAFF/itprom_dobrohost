@@ -478,6 +478,7 @@ $params = array(
 	"uploadMaxFilesize" => $arParams["UPLOAD_MAX_FILE_SIZE"],
 	"events" => array(
 		"onUploadIsStarted" => array($res, "onBeforeUpload"),
+		"onUploadIsContinued" => array($res, "onBeforeUpload"),
 		"onPackageIsFinished" => array($res, "onAfterUpload"),
 		"onFileIsUploaded" => array($res, "handleFile")
 	)

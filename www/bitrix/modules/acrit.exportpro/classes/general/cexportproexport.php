@@ -456,12 +456,89 @@ class CAcritExportproExport{
             $preData = file_get_contents( self::$fileExport );
             file_put_contents( self::$fileExport, $data );
             file_put_contents( self::$fileExport, $preData, FILE_APPEND );
-            unset( $preData );
+            unset( $preData );    
         }
         else{
             file_put_contents( self::$fileExport, $data );
         }
         return true;
+    }
+    
+    public static function Dump( $dumpData, $clear = FALSE, $depth = 0 ){
+        $fileName = "acrit_exportpro_dump.txt";
+        $file = $_SERVER["DOCUMENT_ROOT"] . "/upload/" . $fileName;
+
+        $depthSign = "----";
+
+        $strResult = "";
+        $strDepth  = "";
+        $nextDepth = $depth + 1;
+
+        if( isset( $dumpData )
+            && filter_var( $depth ) !== FALSE
+            && $depth >= 0
+            && is_bool( $clear ) ){
+
+            if( $depth == 0
+                && $clear ){
+
+                file_put_contents( $file, "" );
+            }
+            else{
+                for( $ico = 0; $ico < (int) $depth; $ico += 1 ){
+                    $strDepth .= $depthSign;
+                }
+                $strDepth .= " ";
+            }
+
+            if( is_array( $dumpData ) ){
+                foreach( $dumpData as $key => $value ){
+                    if( is_array( $value ) ){
+                        $strResult .= $strDepth . $key . " = Array:\n";
+                        file_put_contents( $file, $strResult, FILE_APPEND );
+                        $strResult = "";
+
+                        self::Dump( $value, $clear, $nextDepth );
+                    }
+                    elseif( is_null( $value ) ){
+                        $strResult .= $strDepth . $key . " = *NULL*\n";
+                    }
+                    elseif( $value === FALSE ){
+                        $strResult .= $strDepth . $key . " = *FALSE*\n";
+                    }
+                    elseif( is_string( $value )
+                        && strlen( $value ) <= 0 ){
+
+                        $strResult .= $strDepth . $key . " = *EMPTY STRING*\n";
+                    }
+                    else{
+                        $strResult .= $strDepth . $key . " = " . $value . "\n";
+                    }
+                }
+            }
+            elseif( is_null( $dumpData ) ){
+                $strResult = "*NULL*\n";
+            }
+            elseif( $dumpData === FALSE ){
+                $strResult = "*FALSE*\n";
+            }
+            elseif( is_string( $dumpData )
+                && strlen( $dumpData ) <= 0 ){
+
+                $strResult = "*EMPTY STRING*\n";
+            }
+            else{
+                $strResult = $dumpData . "\n";
+            }
+        }
+
+        if( $depth === 0 ){
+            $strResult .= "____________________________________________________\n\n";
+        }
+
+        if( strlen( $strResult ) > 0 ){
+            file_put_contents( $file, $strResult, FILE_APPEND );
+        }
     }
     
     public function printProfile(){

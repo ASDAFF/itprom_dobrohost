@@ -35,6 +35,7 @@ IncludeModuleLangFile(__FILE__);
 // 104 - ne najdena fotogalereya
 // 105 - ne najden pol'zovatel'
 
+
 // net prav
 // 110 - dlya dostupa neobhodimo avtorizovat'sya
 // 111 - net dostupa k infobloku
@@ -159,8 +160,8 @@ function PhotoFormatDate($strDate, $format="DD.MM.YYYY HH:MI:SS", $new_format="D
 	$new_format = str_replace("MI","I", $new_format);
 	$new_format = preg_replace("/([DMYIHS])\\1+/is".BX_UTF_PCRE_MODIFIER, "\\1", $new_format);
 	$new_format_len = strlen($new_format);
-	$arFormat = preg_split('[^0-9A-Za-z]', strtoupper($format));
-	$arDate = preg_split('[^0-9]', $strDate);
+	$arFormat = preg_split('/[^0-9A-Za-z]/', strtoupper($format));
+	$arDate = preg_split('/[^0-9]/', $strDate);
 	$arParsedDate=Array();
 	$bound = min(count($arFormat), count($arDate));
 
