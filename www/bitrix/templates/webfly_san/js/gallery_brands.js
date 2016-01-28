@@ -1,16 +1,21 @@
 $(document).ready(function() {
-    var options = {
-        auto: false,
-        visible: 8,
-        circular: false,
-        speed: 1000,
+
+    var carouselOptions = {
+        // auto: true,
+        circular: true,
+        autoWidth: true,
+        responsive: true,
+        visible: 4,
+        speed: 300,
         pause: true,
-        btnGo: $('div.nav a'),
-        btnNext: '.next_brands',
-        btnPrev: '.prev_brands',
-        activeClass: 'active'
+        btnPrev: function() {
+            return $(this).find('.prev_brands');
+        },
+        btnNext: function() {
+            return $(this).find('.next_brands');
+        }
     };
 
+    $('div.slideshow_brands').jCarouselLite(carouselOptions);
 
-    $('.slideshow_brands').jCarouselLite(options);
 });

@@ -341,7 +341,9 @@ $filterView = (COption::GetOptionString("main", "wizard_template_id", "eshop_ada
 			"compare" => array(
 				"ACTION_CODE" => "action",
 			),
-		)
+		),
+		"USE_BIG_DATA" => "Y",
+		"BIG_DATA_RCM_TYPE" => "any_similar",
 	),
 	false
 );?>
