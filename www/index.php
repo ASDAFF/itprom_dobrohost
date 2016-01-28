@@ -487,46 +487,50 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
 //}
 ?>
 
-    <div class="container_brands">
-        <div class="slideshow_brands">
-            <ul class="slides_brands">
-                <?
-                CModule::IncludeModule('highloadblock');
-                $rsData = \Bitrix\Highloadblock\HighloadBlockTable::getList(array('filter'=>array('ID'=>'5')));
-                if ( !($arData = $rsData->fetch()) ){
-                    echo 'Инфоблок не найден';
-                }
-                $Entity = \Bitrix\Highloadblock\HighloadBlockTable::compileEntity($arData);
+<?
+CModule::IncludeModule('highloadblock');
+$rsData = \Bitrix\Highloadblock\HighloadBlockTable::getList(array('filter'=>array('ID'=>'5')));
+if ( !($arData = $rsData->fetch()) ){
+    echo 'Инфоблок не найден';
+}
+$Entity = \Bitrix\Highloadblock\HighloadBlockTable::compileEntity($arData);
 
-                $Query = new \Bitrix\Main\Entity\Query($Entity);
+$Query = new \Bitrix\Main\Entity\Query($Entity);
 
-                //Зададим параметры запроса, любой параметр можно опустить
-                $Query->setSelect(array('*'));
+//Зададим параметры запроса, любой параметр можно опустить
+$Query->setSelect(array('*'));
 
-                //Выполним запрос
-                $result = $Query->exec();
+//Выполним запрос
+$result = $Query->exec();
 
-                //Получаем результат по привычной схеме
-                $result = new CDBResult($result);
-                $arLang = array();
+//Получаем результат по привычной схеме
+$result = new CDBResult($result);
+$arLang = array();
+?>
 
-                while ($row = $result->Fetch()){
-                    //test_dump($row);
-                    $resized_src = GetResizedImage($row["UF_FILE"], 250, 100)["src"];
-                    ?>
-                    <li class="slide_brands">
-                        <a href="/brands/<?=$row["UF_LINK"]?>/">
-                            <img src="<?= $resized_src ?>">
-                        </a>
-                    </li>
-                    <?
-                }
+<div class="container_brands">
+    <div class="slideshow_brands">
+        <ul class="slides_brands">
+            <? while ($row = $result->Fetch()){
+                $resized_src = GetResizedImage($row["UF_FILE"], 250, 100)["src"];
                 ?>
-            </ul>
-
-        </div>
-<!--        <a class='prev_brands' href="#"> &laquo; </a>-->
-<!--        <a class='next_brands' href="#"> &raquo; </a>-->
+                <li class="slide_brands">
+                    <a href="/brands/<?=$row["UF_LINK"]?>/">
+                        <div class="brand-image-wrapper">
+                            <img src="<?= $resized_src ?>">
+                        </div>
+                    </a>
+                </li>
+                <?
+            }
+            ?>
+        </ul>
+        <a href="#" class="prev_brands">&lt;</a>
+        <a href="#" class="next_brands">&gt;</a>
     </div>
 
-    <br><? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
+
+
+</div>
+
+<br><? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
