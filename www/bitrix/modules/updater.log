@@ -2499,3 +2499,9 @@
 2016-01-28 01:17:03 -  - exec CUpdateClient::GetHTTPPage
 2016-01-28 01:17:04 -  - TIME GetUpdatesList(request) 0.215 sec
 2016-01-28 01:17:04 -  - exec CUpdateClient::ParseServerData
+2016-01-29 06:05:43 -  - exec CUpdateClient::GetUpdatesList
+2016-01-29 06:05:43 -  - exec CUpdateClient::CollectRequestData
+2016-01-29 06:05:43 -  - LICENSE_KEY=X&lang=ru&SUPD_VER=15.5.1&VERSION=15.5.10&TYPENC=E&SUPD_STS=1&SUPD_URS=0&SUPD_URSA=3&SUPD_DBS=MYSQL&XE=N&CLIENT_SITE=itprom.ru&CHHB=itprom.ru&CSAB=127.0.0.9&CANGZIP=Y&CLIENT_PHPVER=5.4.40&stable=Y&rerere=Y&bitm_main=15.5.10&bitm_clouds=16.0.0&bitm_fileman=16.0.0&bitm_blog=15.5.4&bitm_security=15.5.5&bitm_search=15.5.1&bitm_forum=15.5.3&bitm_conversion=15.5.5&bitm_seo=15.5.6&bitm_catalog=15.5.1&bitm_pull=15.5.8&bitm_highloadblock=15.5.0&bitm_sale=14.11.19&bitm_photogallery=16.0.0&bitm_perfmon=16.0.0&bitm_form=15.0.2&bitm_sender=15.5.3&bitm_vote=15.5.0&bitm_socialservices=15.5.3&bitm_translate=14.0.0&bitm_abtest=15.5.5&bitm_iblock=15.5.8&bitm_scale=14.5.2&bitm_subscribe=15.0.2&bitm_report=15.0.0&bitm_currency=16.0.0&bitm_compression=16.0.0&bitm_mobileapp=15.5.8&bitm_storeassist=16.0.0&bitm_bitrixcloud=16.0.0&bitm_eshopapp=15.0.0&bitl_en=&bitl_ru=&bith_ru=&bith_en=&SUPD_OFC=Small&SUPD_SRS=RU&SUPD_CMP=Y&SALE_15=N
+2016-01-29 06:05:43 -  - exec CUpdateClient::GetHTTPPage
+2016-01-29 06:05:43 -  - TIME GetUpdatesList(request) 0.301 sec
+2016-01-29 06:05:43 -  - exec CUpdateClient::ParseServerData
