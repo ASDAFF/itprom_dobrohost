@@ -10,6 +10,13 @@ ErrorDocument 404 /404.php
 <IfModule mod_rewrite.c>
     Options +FollowSymLinks
     RewriteEngine On
+
+    # Removes index.php from ExpressionEngine URLs
+    RewriteCond %{THE_REQUEST} ^GET.*index\.php [NC]
+    RewriteCond %{REQUEST_URI} !/system/.* [NC]
+    RewriteCond %{REQUEST_URI} !^/bitrix/
+    RewriteRule (.*?)index\.php/*(.*) /$1$2 [R=301,NE,L]
+
     RewriteCond %{REQUEST_URI} !\?
     RewriteCond %{REQUEST_URI} !\&
     RewriteCond %{REQUEST_URI} !\=
