@@ -217,3 +217,73 @@ $this->setFrameMode(true);
     <?$APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR."include/catalog_sidebar.php"));?>
   </div>
 </div>
+
+<div class="bigdata-wrapper">
+  <?$APPLICATION->IncludeComponent("bitrix:catalog.bigdata.products", "element_bigdata", Array(
+	"ACTION_VARIABLE" => "action",	// Название переменной, в которой передается действие
+		"ADDITIONAL_PICT_PROP_4" => "MORE_PHOTO",	// Дополнительная картинка
+		"ADD_PROPERTIES_TO_BASKET" => "Y",	// Добавлять в корзину свойства товаров и предложений
+		"BASKET_URL" => "/personal/basket.php",	// URL, ведущий на страницу с корзиной покупателя
+		"CACHE_GROUPS" => "Y",	// Учитывать права доступа
+		"CACHE_TIME" => "3600",	// Время кеширования (сек.)
+		"CACHE_TYPE" => "A",	// Тип кеширования
+		"CART_PROPERTIES_4" => array(	// Свойства для добавления в корзину
+			0 => "",
+			1 => "",
+		),
+		"COMPONENT_TEMPLATE" => ".default",
+		"CONVERT_CURRENCY" => "Y",	// Показывать цены в одной валюте
+		"DEPTH" => "",	// Максимальная отображаемая глубина разделов
+		"DETAIL_URL" => "",	// URL, ведущий на страницу с содержимым элемента раздела
+		"HIDE_NOT_AVAILABLE" => "N",	// Не отображать товары, которых нет на складах
+		"IBLOCK_ID" => "4",	// Инфоблок
+		"IBLOCK_TYPE" => "catalog",	// Тип инфоблока
+		"ID" => $ElementID,	// Параметр ID продукта (для товарных рекомендаций)
+		"LABEL_PROP_4" => "-",	// Свойство меток товара
+		"LINE_ELEMENT_COUNT" => "3",	// Количество элементов, выводимых в одной строке
+		"MESS_BTN_BUY" => "Купить",	// Текст кнопки "Купить"
+		"MESS_BTN_DETAIL" => "Подробнее",	// Текст кнопки "Подробнее"
+		"MESS_BTN_SUBSCRIBE" => "Подписаться",	// Текст кнопки "Уведомить о поступлении"
+		"PAGE_ELEMENT_COUNT" => "4",	// Количество элементов на странице
+		"PARTIAL_PRODUCT_PROPERTIES" => "N",	// Разрешить частично заполненные свойства
+		"PRICE_CODE" => array(	// Тип цены
+			0 => "BASE",
+		),
+		"PRICE_VAT_INCLUDE" => "Y",	// Включать НДС в цену
+		"PRODUCT_ID_VARIABLE" => "id",	// Название переменной, в которой передается код товара для покупки
+		"PRODUCT_PROPS_VARIABLE" => "prop",	// Название переменной, в которой передаются характеристики товара
+		"PRODUCT_QUANTITY_VARIABLE" => "",	// Название переменной, в которой передается количество товара
+		"PRODUCT_SUBSCRIPTION" => "N",	// Разрешить оповещения для отсутствующих товаров
+		"PROPERTY_CODE_4" => array(	// Свойства для отображения
+			0 => "",
+			1 => "",
+		),
+		"RCM_TYPE" => "personal",	// Тип рекомендации
+		"SECTION_CODE" => "",	// Код раздела
+		"SECTION_ELEMENT_CODE" => "",	// Символьный код элемента, для которого будет выбран раздел
+		"SECTION_ELEMENT_ID" => "",	// ID элемента, для которого будет выбран раздел
+		"SECTION_ID" => "",	// ID раздела
+		"SHOW_DISCOUNT_PERCENT" => "N",	// Показывать процент скидки
+		"SHOW_FROM_SECTION" => "N",	// Показывать товары из раздела
+		"SHOW_IMAGE" => "Y",	// Показывать изображение
+		"SHOW_NAME" => "Y",	// Показывать название
+		"SHOW_OLD_PRICE" => "N",	// Показывать старую цену
+		"SHOW_PRICE_COUNT" => "1",	// Выводить цены для количества
+		"SHOW_PRODUCTS_4" => "Y",	// Показывать товары каталога
+		"TEMPLATE_THEME" => "blue",	// Цветовая тема
+		"USE_PRODUCT_QUANTITY" => "N",	// Разрешить указание количества товара
+		"PROPERTY_CODE_3" => array(	// Свойства для отображения
+			0 => "",
+			1 => "",
+		),
+		"CART_PROPERTIES_3" => array(	// Свойства для добавления в корзину
+			0 => "",
+			1 => "",
+		),
+		"ADDITIONAL_PICT_PROP_3" => "MORE_PHOTO",	// Дополнительная картинка
+		"OFFER_TREE_PROPS_3" => "",	// Свойства для отбора предложений
+		"CURRENCY_ID" => "RUB",	// Валюта, в которую будут сконвертированы цены
+	),
+	false
+);?>
+</div>
