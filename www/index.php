@@ -110,8 +110,8 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
                                     </ul>
 
                                 </div>
-                                <a class='prev' href="#"> &laquo; </a>
-                                <a class='next' href="#"> &raquo; </a>
+                                <a class='prev' href="#"> < </a>
+                                <a class='next' href="#"> > </a>
                             </div>
                         </div>
                         <? $APPLICATION->IncludeComponent(
