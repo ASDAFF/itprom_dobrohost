@@ -96,6 +96,7 @@ body{
 	margin:0;
 	color:#000;
 	font: 14px/18px 'ubunturegular', Arial, Helvetica, sans-serif;
+	background-attachment: fixed;
 }
 img{border-style:none;}
 a{

@@ -1,11 +1,12 @@
 .container_brands {
     max-width: 1260px;
     margin: 0 auto;
+    background-color: white;
 }
 .slideshow_brands {
     overflow: hidden;
-    padding: 0 20px;
-    margin-bottom: 20px;
+   // padding: 0 00px;
+    margin-bottom: 0px;
     //border: 1px solid #222;
 }
 .slides_brands {
@@ -46,7 +47,7 @@
     padding:12px 14px;
     position: absolute;
 
-    top: 40%;
+    top: 30%;
 }
 .next_brands:hover,
 .prev_brands:hover
