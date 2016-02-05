@@ -244,7 +244,7 @@ $this->setFrameMode(true);
 		"MESS_BTN_BUY" => "Купить",	// Текст кнопки "Купить"
 		"MESS_BTN_DETAIL" => "Подробнее",	// Текст кнопки "Подробнее"
 		"MESS_BTN_SUBSCRIBE" => "Подписаться",	// Текст кнопки "Уведомить о поступлении"
-		"PAGE_ELEMENT_COUNT" => "30",	// Количество элементов на странице
+		"PAGE_ELEMENT_COUNT" => "4",	// Количество элементов на странице
 		"PARTIAL_PRODUCT_PROPERTIES" => "N",	// Разрешить частично заполненные свойства
 		"PRICE_CODE" => array(	// Тип цены
 			0 => "BASE",

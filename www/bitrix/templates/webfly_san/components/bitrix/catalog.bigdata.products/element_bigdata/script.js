@@ -9,7 +9,7 @@ var BasketButton = function(params)
 {
 	BasketButton.superclass.constructor.apply(this, arguments);
 	this.nameNode = BX.create('span', {
-		props : { className : 'bx_medium bx_bt_button', id : this.id },
+		props : { className : 'link-basket', id : this.id },
 		text: params.text
 	});
 	this.buttonNode = BX.create('span', {

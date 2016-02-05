@@ -3,7 +3,6 @@
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CDatabase $DB */
-
 $frame = $this->createFrame()->begin("");
 
 $templateData = array(
@@ -24,6 +23,60 @@ $injectId = 'bigdata_recommeded_products_'.rand();
 	});
 
 </script>
+
+<script type="text/javascript">
+	/* Adding to basket */
+	addToBasket = function addToBacketEvent($) {
+		//console.log($(".link-basket").not(".added"));
+		$(".link-basket").not(".added").on("click", function () {
+			var wareId = $(this).attr("id").split('_')[2];
+			if (isNaN(wareId)) {
+				return false;
+			}
+			console.log(wareId);
+			var url = "<?=SITE_TEMPLATE_PATH?>/ajax/buy.php",
+				price = $(this).attr("price-val"),
+//            options = $(".options input:checked").map(function(){return $(this).data("optid");}).get(),
+				params = {id: wareId, cost: price};
+			if ($(this).is(".btn-credit")) $.extend(params, {credit: "<?=GetMessage("WF_CREDIT_BUY3")?>"});
+			$.post(url, params, function () {
+				BX.onCustomEvent('OnBasketChange');
+			});
+		});
+		$(".link-basket").addClass("added");
+		console.log("hi");
+	}
+	addToBacketAnimation = function addToBacketAnimationEvent($) {
+		$('.link-basket, .add-basket').not(".added1").on('click', function (event) {
+			if($(this).hasClass("no-animation")) return true;
+			var cartX = Math.ceil($(".basket-footer").offset().left),
+				cartY = Math.ceil($(".basket-footer").offset().top); //cart coordinates
+			var offsetX, offsetY;
+			offsetX = Math.ceil($(this).offset().left);
+			offsetY = Math.ceil($(this).offset().top);	//current button coordinates
+			var virtBtn;
+			if ($(this).is('.link-basket')) {
+				virtBtn = '#virtual';
+			}
+			else {
+				virtBtn = "#virtual2";
+			}
+			$(virtBtn).css({"left": offsetX + "px", "top": offsetY + "px"}).show(1).delay(1).queue(function () {
+				$(virtBtn).css({"top": cartY, "left": cartX, 'opacity': 0, 'transform': 'scale(0.3,0.3)'}).delay(800).queue(function () {
+					$(virtBtn).css({"top": 0, "left": 0, 'opacity': 1, 'transform': 'scale(1,1)'}).hide(1);
+					$("#addCart").fadeIn(600).delay(1500).fadeOut(400);
+					$(".basket-footer > .text").text('1').addClass('basket-count');
+					$(".basket-info").fadeIn(150);
+					$(this).dequeue();
+				});
+				$(this).dequeue();
+			});
+			event.preventDefault();
+		});
+		$('.link-basket, .add-basket').addClass("added1");
+	}
+</script>
+
 
 <?
 
@@ -190,6 +243,7 @@ if (!empty($arResult['ITEMS']))
 
 	?>
 		<div bigdata-list>
+			<div class="bx_item_list_title">Персональные рекомендации</div>
     <div class="product-catalog product-catalogXX">
         <ul id="accessories">
 	<?
@@ -233,7 +287,7 @@ if (!empty($arResult['ITEMS']))
 
         //====================
         ?>
-        <li class="bx_catalog_item wf-new  wf-hit " id="bx_1893346188_6459464594" >
+        <li class="bx_catalog_item wf-new  wf-hit " style="width: 25%">
             <div class="hold">
                 <div class="visual">
                     <a href="<? echo $arItem['DETAIL_PAGE_URL']; ?>">
@@ -247,10 +301,9 @@ if (!empty($arResult['ITEMS']))
                         </a>
                     </div>
                     <div class="box" style="border-bottom: 0;">
-                        <div class="col-left" style="width:85px;">
-                            <span class="price" id="bx_1893346188_6459464594_price" >
-                                <span class="my-digit">
-                                    <?
+                        <div class="col-left" style="width:150px;">
+                            <span class="price">
+                                <span class="my-digit"><?
                                     if (!empty($arItem['MIN_PRICE']))
                                     {
                                         if (isset($arItem['OFFERS']) && !empty($arItem['OFFERS']))
@@ -278,16 +331,44 @@ if (!empty($arResult['ITEMS']))
                                             ?> <span style="color: #a5a5a5;font-size: 12px;font-weight: normal;white-space: nowrap;text-decoration: line-through;"><? echo $arItem['MIN_PRICE']['PRINT_VALUE']; ?></span><?
                                         }
                                     }
-                                    ?>
-                                </span>&nbsp;<span class="rouble">&#8399;</span></span>
+                                    ?></span>&nbsp;<span class="rouble">&#8399;</span></span>
 <!--                            <span class="available">В наличии</span>-->
                         </div>
-<!--                        <a href="javascript:void(0);" class="link-basket" id="bx_1893346188_6459464594_buy_link">Купить</a>-->
-						<div class="bx_catalog_item_controls_blocktwo">
-							<a id="<? echo $arItemIDs['BUY_LINK']; ?>" class="bx_bt_button bx_medium" href="javascript:void(0)" rel="nofollow"><?
-								echo('' != $arParams['MESS_BTN_BUY'] ? $arParams['MESS_BTN_BUY'] : GetMessage('CT_BCS_TPL_MESS_BTN_BUY'));
-								?></a>
-						</div>
+                        <a href="javascript:void(0);" class="link-basket" id="bx_xx_<?=$arItem['ID']?>_buy_link"
+						price-val="<?
+                                    if (!empty($arItem['MIN_PRICE']))
+                                    {
+                                        if (isset($arItem['OFFERS']) && !empty($arItem['OFFERS']))
+                                        {
+                                            echo GetMessage(
+                                                'CVP_TPL_MESS_PRICE_SIMPLE_MODE',
+                                                array(
+                                                    '#PRICE#' => $arItem['MIN_PRICE']['VALUE'],
+                                                    '#MEASURE#' => GetMessage(
+                                                        'CVP_TPL_MESS_MEASURE_SIMPLE_MODE',
+                                                        array(
+                                                            '#VALUE#' => $arItem['MIN_PRICE']['CATALOG_MEASURE_RATIO'],
+                                                            '#UNIT#' => $arItem['MIN_PRICE']['CATALOG_MEASURE_NAME']
+                                                        )
+                                                    )
+                                                )
+                                            );
+                                        }
+                                        else
+                                        {
+                                            echo $arItem['MIN_PRICE']['VALUE'];
+                                        }
+                                        if ('Y' == $arParams['SHOW_OLD_PRICE'] && $arItem['MIN_PRICE']['DISCOUNT_VALUE'] < $arItem['MIN_PRICE']['VALUE'])
+                                        {
+                                            echo $arItem['MIN_PRICE']['VALUE']; ?></span><?
+                                        }
+                                    }
+                                    ?>">Купить</a>
+<!--						<div class="bx_catalog_item_controls_blocktwo">-->
+<!--							<a id="--><?// echo $arItemIDs['BUY_LINK']; ?><!--" class="bx_bt_button bx_medium" href="javascript:void(0)" rel="nofollow">--><?//
+//								echo('' != $arParams['MESS_BTN_BUY'] ? $arParams['MESS_BTN_BUY'] : GetMessage('CT_BCS_TPL_MESS_BTN_BUY'));
+//								?><!--</a>-->
+<!--						</div>-->
                     </div>
                 </div>
             </div>
@@ -301,7 +382,16 @@ if (!empty($arResult['ITEMS']))
 
 		</div>
 	</span>
+
+	<script type="application/javascript">
+		$(addToBasket);
+		$(addToBacketAnimation);
+	</script>
 <?
 }
 
+
+
 $frame->end();?>
+
+
