@@ -389,7 +389,20 @@ if (!empty($arResult['ITEMS']))
 	</script>
 <?
 }
-
+?>
+<script type="text/css">
+	.bx_item_list_title {
+		font-weight: bold;
+		color: #000;
+		background: #ebf4f8;
+		vertical-align: middle;
+		height: 38px;
+		text-align: center;
+		line-height: 38px;
+		font-size: 14px;
+	}
+</script>
+<?
 
 
 $frame->end();?>
