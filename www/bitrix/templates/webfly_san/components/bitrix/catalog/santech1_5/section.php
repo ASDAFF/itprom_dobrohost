@@ -15,13 +15,6 @@ $arResult["VARIABLES"]["SECTION_CODE_PATH"] = $_REQUEST["SECTION_CODE_PATH"];
 $arResult["VARIABLES"]["SECTION_CODE"] = $_REQUEST["SECTION_CODE"];
 
 
-
-//test_dump($arResult);
-//test_dump($_REQUEST);
-//test_dump($arParams);
-
-
-
 $this->setFrameMode(true);?>
 <?if ($arParams['USE_FILTER'] == 'Y'){
   $arFilter = array(
