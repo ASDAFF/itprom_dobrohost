@@ -3,7 +3,7 @@ Thumbs.db
 *.sql
 www/.idea/
 
-
+*.log
 log.txt
 
 www/upload/*
