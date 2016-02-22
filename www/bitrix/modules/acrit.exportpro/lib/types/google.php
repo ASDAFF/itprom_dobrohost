@@ -56,17 +56,17 @@ $profileTypes['google'] = array(
             "VALUE" => "",
             'TYPE' => 'const',
             "CONDITION" => array(
-                'CLASS_ID' => 'CondGroup',
-                'DATA' => array(
-                    'All' => 'AND',
-                    'True' => 'True'
+                "CLASS_ID" => "CondGroup",
+                "DATA" => array(
+                    "All" => "AND",
+                    "True" => "True"
                 ),
-                'CHILDREN' => array(
+                "CHILDREN" => array(
                     array(
-                        'CLASS_ID' => 'CondIBActive',
-                        'DATA' => array(
-                                'logic' => 'Equal',
-                                'value' => 'Y'
+                        "CLASS_ID" => "CondCatQuantity",
+                        "DATA" => array(
+                                "logic" => "EqGr",
+                                "value" => "1"
                         )
                     )
                 )
@@ -82,6 +82,8 @@ $profileTypes['google'] = array(
             "NAME"=>GetMessage("ACRIT_EXPORTPRO_GOOGLE_MERCHANT_PRICE"),
             'REQUIRED' => 'Y',
             'DELETE_ONEMPTY' => 'N',
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
         ),
         array(
             "CODE"=>"g:shipping_country",
@@ -160,6 +162,24 @@ $profileTypes['google'] = array(
     "ENCODING" => 'utf8',
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['google']["FIELDS"][7] = array(
+        "CODE" => "g:price",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_GOOGLE_MERCHANT_PRICE"),
+        "REQUIRED" => "Y",
+        'DELETE_ONEMPTY' => 'N',
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+}
+
+$profileTypes['google']['PORTAL_REQUIREMENTS'] = GetMessage('ACRIT_EXPORTPRO_GOOGLE_MERCHANT_PORTAL_REQUIREMENTS');
 $profileTypes['google']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_GOOGLE_MERCHANT_EXAMPLE');
 
 $profileTypes['google']['ITEMS_FORMAT'] = "<item>

@@ -57,18 +57,18 @@ IncludeModuleLangFile(__FILE__);
         <a class="adm-btn adm-btn-save" onclick="UpdateLog(this)" profileID="<?=$arProfile['ID']?>"><?=GetMessage('ACRIT_EXPORTPRO_LOG_UPDATE')?></a>
     </td>
 </tr>
-<!--<tr class="heading">
+<tr class="heading">
     <td colspan="2"><?=GetMessage("ACRIT_EXPORTPRO_LOG_ALL_STAT")?></td>
 </tr>
-<tr>
+<?/*<tr>
     <td colspan="2" align="center"><?=GetMessage("ACRIT_EXPORTPRO_LOG_OPEN")?><a href="/upload/acrit_exportpro/export_log.php">/upload/acrit_exportpro/export_log.php</a></td>
-</tr>
+</tr>*/?>
 <tr>
     <td width="40%" class="adm-detail-content-cell-l">
         <label for="PROFILE[SEND_LOG_EMAIL]"><?=GetMessage("ACRIT_EXPORTPRO_LOG_SEND_EMAIL")?></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r">
-        <input type="text" name="PROFILE[SEND_LOG_EMAIL]" placeholder="email@email.com" size="30" value="">
+        <input type="text" name="PROFILE[SEND_LOG_EMAIL]" placeholder="email@email.com" size="30" value="<?=$arProfile["SEND_LOG_EMAIL"];?>">
     </td>
-</tr>-->
+</tr>
 

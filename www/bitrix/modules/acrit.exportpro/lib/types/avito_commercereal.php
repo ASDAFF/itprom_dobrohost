@@ -81,6 +81,8 @@ $profileTypes['avito_commercereal'] = array(
         array(
 			"CODE" => "Price",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_AVITO_COMMERCEREAL_FIELD_PRICE"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
         array(
 			"CODE" => "ContactPhone",
@@ -103,6 +105,22 @@ $profileTypes['avito_commercereal'] = array(
 	"DATEFORMAT" => "Y-m-d",
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['avito_commercereal']["FIELDS"][15] = array(
+        "CODE" => "Price",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_AVITO_COMMERCEREAL_FIELD_PRICE"),
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+}
+
+$profileTypes['avito_commercereal']['PORTAL_REQUIREMENTS'] = GetMessage( 'ACRIT_EXPORTPRO_TYPE_AVITO_COMMERCEREAL_PORTAL_REQUIREMENTS' );
 $profileTypes['avito_commercereal']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_AVITO_COMMERCEREAL_EXAMPLE');
 
 $profileTypes['avito_commercereal']['CURRENCIES'] = "";

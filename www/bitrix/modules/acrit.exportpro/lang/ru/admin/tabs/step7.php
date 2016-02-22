@@ -1,5 +1,5 @@
 <?
-$MESS["ACRIT_EXPORTPRO_CURRENCU_RUB"] = "Белорусский рубль";
+$MESS["ACRIT_EXPORTPRO_CURRENCU_RUB"] = "Российский рубль";
 $MESS["ACRIT_EXPORTPRO_CURRENCU_HEAD_CURRENCY"] = "Валюта";
 $MESS["ACRIT_EXPORTPRO_CURRENCU_HEAD_RATE"] = "Курс";
 $MESS["ACRIT_EXPORTPRO_CURRENCU_HEAD_CORRECT"] = "Коррекция курса";
@@ -14,4 +14,6 @@ $MESS['ACRIT_EXPORTPRO_MARKET_CURRENCY_DESCRIPTION'] = "
     значениями(должны совпадать со значениями в настройках валют), будут сконвертированы в выбранные валюты(<b>\"Конвертировать в\"</b>)<br>
     в соответствии с выбранным курсом.
 ";
+
+$MESS["ACRIT_EXPORTPRO_CURRENCY_CONVERT_CURRENCY_HELP"] = "Используется для пересчета курсов валют к одной";
 ?>

@@ -55,6 +55,7 @@ $MESS['ACRIT_EXPORTPRO_AVITO_LAND_FIELD_WALLSTYPE'] = "Материал стен
 <br>";
 $MESS['ACRIT_EXPORTPRO_AVITO_LAND_FIELD_OPERATIONTYPE_VALUE'] = "Продам";
 
+$MESS["ACRIT_EXPORTPRO_TYPE_AVITO_LAND_PORTAL_REQUIREMENTS"] = "http://autoload.avito.ru/format/realty/";
 $MESS["ACRIT_EXPORTPRO_TYPE_AVITO_LAND_EXAMPLE"] = "
 <?xml version=\"1.0\"?>
 <Ads target=\"Avito.ru\" formatVersion=\"1\">

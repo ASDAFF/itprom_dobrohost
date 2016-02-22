@@ -22,6 +22,7 @@ $use_market_category = $arProfile['USE_MARKET_CATEGORY'] == 'Y' ? 'checked="chec
 ?>
 <tr>
     <td width="40%" class="adm-detaell-l">
+        <span id="hint_PROFILE[USE_MARKET_CATEGORY]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[USE_MARKET_CATEGORY]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_USE_MARKETCATEGORY_HELP" )?>' );</script>
         <label for="PROFILE[USE_MARKET_CATEGORY]"><?=GetMessage("ACRIT_EXPORTPRO_STEP1_USE_MARKETCATEGORY")?></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r">

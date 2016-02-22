@@ -13,6 +13,7 @@ $MESS["ACRIT_EXPORTPRO_AVITO_GENERAL_FIELD_CONTACTPHONE"] = "Контактны�
 $MESS["ACRIT_EXPORTPRO_AVITO_GENERAL_FIELD_ADSTATUS"] = "Статус объявления. Возможные значения:<br><b>Free, Premium, VIP, Highlight, PushUp, QuickSale, TurboSale</b>";
 
 
+$MESS["ACRIT_EXPORTPRO_TYPE_AVITO_GENERAL_PORTAL_REQUIREMENTS"] = "http://autoload.avito.ru/format/";
 $MESS["ACRIT_EXPORTPRO_TYPE_AVITO_GENERAL_EXAMPLE"] = "
 <?xml version=\"1.0\"?>
 <Ads target=\"Avito.ru\" formatVersion=\"1\">

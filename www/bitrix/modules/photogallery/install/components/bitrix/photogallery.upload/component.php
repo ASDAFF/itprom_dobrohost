@@ -57,7 +57,7 @@ if ($arParams["USE_WATERMARK"] == "Y")
 					$height = $imgArray[1];
 				}
 
-				$pathto = CTempFile::GetDirectoryName(1).'/'."watermark_".GetFileName($file["name"]);
+				$pathto = CTempFile::GetDirectoryName(1).'/'."watermark_".md5($file["name"]).GetFileExtension($file["name"]);
 				CheckDirPath($pathto);
 
 				$pathtoRel = substr($pathto, strlen($_SERVER["DOCUMENT_ROOT"]));

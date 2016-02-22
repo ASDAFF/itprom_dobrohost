@@ -39,6 +39,7 @@ $MESS['ACRIT_EXPORTPRO_AVITO_GARAGE_FIELD_OBJECTSUBTYPEMACHINE'] = "Тип ма�
 </ul></b>";
 $MESS['ACRIT_EXPORTPRO_AVITO_GARAGE_FIELD_SECURED'] = "Охраняемое место или гараж";
 
+$MESS["ACRIT_EXPORTPRO_TYPE_AVITO_GARAGE_PORTAL_REQUIREMENTS"] = "http://autoload.avito.ru/format/realty/";
 $MESS["ACRIT_EXPORTPRO_TYPE_AVITO_GARAGE_EXAMPLE"] = "
 <?xml version=\"1.0\"?>
 <Ads target=\"Avito.ru\" formatVersion=\"2\">

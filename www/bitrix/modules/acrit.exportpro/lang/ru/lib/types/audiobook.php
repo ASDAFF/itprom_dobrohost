@@ -33,6 +33,7 @@ $MESS["ACRIT_EXPORTPRO_MARKET_AUDIOBOOK_FIELD_UTM_MEDIUM_VALUE"] = "cpc";
 $MESS["ACRIT_EXPORTPRO_MARKET_AUDIOBOOK_FIELD_UTM_TERM"] = "UTM метка: ключевая фраза";
 $MESS["ACRIT_EXPORTPRO_MARKET_AUDIOBOOK_FIELD_UTM_CONTENT"] = "UTM метка: контейнер для дополнительной информации";
 $MESS["ACRIT_EXPORTPRO_MARKET_AUDIOBOOK_FIELD_UTM_CAMPAIGN"] = "UTM метка: название рекламной кампании";
+$MESS["ACRIT_EXPORTPRO_TYPE_MARKET_AUDIOBOOK_PORTAL_REQUIREMENTS"] = "https://yandex.ru/support/partnermarket/offers.xml#audiobook";
 $MESS["ACRIT_EXPORTPRO_TYPE_MARKET_AUDIOBOOK_EXAMPLE"] = "
 <offer id=\"12342\" type=\"audiobook\" available=\"true\" bid=\"17\">
     <url>http://best.seller.ru/product_page.asp?pid=14345</url>

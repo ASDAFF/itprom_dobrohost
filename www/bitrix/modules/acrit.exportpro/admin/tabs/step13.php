@@ -1,21 +1,18 @@
 <?php
 IncludeModuleLangFile(__FILE__);
 
-$ozonAppId = COption::GetOptionString('acrit.exportpro', "ozonAppId");
-$ozonAppKey = COption::GetOptionString('acrit.exportpro', "ozonAppKey");
+$ozonAppId = $arProfile["OZON_APPID"];
+$ozonAppKey = $arProfile["OZON_APPKEY"];
 
 $marketCategory = array();
-if(!empty($ozonAppId) && !empty($ozonAppKey))
-{
-	$ozon = new OZON($ozonAppId, $ozonAppKey);
+if( !empty( $ozonAppId ) && !empty( $ozonAppKey ) ){
+	$ozon = new OZON( $ozonAppId, $ozonAppKey );
 	$marketCategory = $ozon->GetAllTypes();
 }
-foreach($marketCategory as $key => $cat)
-{
+foreach( $marketCategory as $key => $cat ){
 	$marketCategory[$cat['ProductTypeId']] = $cat;
-	unset($marketCategory[$key]);
+	unset( $marketCategory[$key] );
 }
-
 ?>
 
 <tr align="center">

@@ -31,14 +31,20 @@ $profileTypes['lengow'] = array(
 			"CODE" => "PRICE_INCLUDING_TAX",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_LENGOW_FIELD_PRICE"),
 			"REQUIRED" => 'Y',
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
         array(
 			"CODE" => "BARRED_PRICE",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_LENGOW_FIELD_BARRED_PRICE"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
         array(
 			"CODE" => "SALE_PRICE",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_LENGOW_FIELD_SALE_PRICE"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
         array(
 			"CODE" => "CATEGORY",
@@ -96,7 +102,7 @@ $profileTypes['lengow'] = array(
         array(
 			"CODE" => "QUANTITY_IN_STOCK",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_LENGOW_FIELD_QUANTITY_IN_STOCK"),
-            "VALUE" => "CATALOG_QUANTITY",
+            "VALUE" => "CATALOG-QUANTITY",
             "TYPE" => 'field',
 		),
 		array(
@@ -105,17 +111,17 @@ $profileTypes['lengow'] = array(
 			"VALUE" => "",
             'TYPE' => 'const',
             "CONDITION" => array(
-                'CLASS_ID' => 'CondGroup',
-                'DATA' => array(
-                    'All' => 'AND',
-                    'True' => 'True'
+                "CLASS_ID" => "CondGroup",
+                "DATA" => array(
+                    "All" => "AND",
+                    "True" => "True"
                 ),
-                'CHILDREN' => array(
+                "CHILDREN" => array(
                     array(
-                        'CLASS_ID' => 'CondIBActive',
-                        'DATA' => array(
-                                'logic' => 'Equal',
-                                'value' => 'Y'
+                        "CLASS_ID" => "CondCatQuantity",
+                        "DATA" => array(
+                                "logic" => "EqGr",
+                                "value" => "1"
                         )
                     )
                 )
@@ -179,6 +185,8 @@ $profileTypes['lengow'] = array(
         array(
 			"CODE" => "CURRENCY",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_LENGOW_FIELD_CURRENCY"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "RUR",
 		),
 	),
 	"FORMAT" => '<?xml version="1.0" encoding="#ENCODING#"?>
@@ -187,6 +195,39 @@ $profileTypes['lengow'] = array(
 	"DATEFORMAT" => "Y-m-d_h:i",
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['lengow']["FIELDS"][3] = array(
+        "CODE" => "PRICE_INCLUDING_TAX",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_LENGOW_FIELD_PRICE"),
+        "REQUIRED" => "Y",
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+    
+    $profileTypes['lengow']["FIELDS"][4] = array(
+        "CODE" => "BARRED_PRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_LENGOW_FIELD_BARRED_PRICE"),
+        "REQUIRED" => "Y",
+        "TYPE" => "field",
+        "VALUE" => $basePriceCodeWithDiscount,
+    );
+    
+    $profileTypes['lengow']["FIELDS"][5] = array(
+        "CODE" => "SALE_PRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_LENGOW_FIELD_SALE_PRICE"),
+        "REQUIRED" => "Y",
+        "TYPE" => "field",
+        "VALUE" => $basePriceCodeWithDiscount,
+    );
+}
+
+$profileTypes['lengow']['PORTAL_REQUIREMENTS'] = GetMessage( 'ACRIT_EXPORTPRO_TYPE_LENGOW_PORTAL_REQUIREMENTS' );
 $profileTypes['lengow']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_LENGOW_EXAMPLE');
 
 $profileTypes['lengow']['CURRENCIES'] =

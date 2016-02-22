@@ -8,7 +8,7 @@ $MESS["SECURITY_SITE_CHECKER_REDIRECT_OFF_DETAIL"] = "Редирект на пр
 $MESS["SECURITY_SITE_CHECKER_REDIRECT_OFF_RECOMMENDATION"] = "Включить защиту редиректов: <a href=\"/bitrix/admin/security_redirect.php\" target=\"_blank\">Защита редиректов</a>";
 $MESS["SECURITY_SITE_CHECKER_ADMIN_SECURITY_LEVEL"] = "Уровень безопасности административной группы не является повышенным";
 $MESS["SECURITY_SITE_CHECKER_ADMIN_SECURITY_LEVEL_DETAIL"] = "Пониженный уровень безопасности административной группы может значительно помочь злоумышленнику";
-$MESS["SECURITY_SITE_CHECKER_ADMIN_SECURITY_LEVEL_RECOMMENDATION"] = "Повысить уровень безопасности административной группы";
+$MESS["SECURITY_SITE_CHECKER_ADMIN_SECURITY_LEVEL_RECOMMENDATION"] = "Ужесточить <a href=\"/bitrix/admin/group_edit.php?ID=1&tabControl_active_tab=edit2\"  target=\"_blank\">политики безопасности административной</a> группы или выбрать предопределенную настройку уровня безопасности \"Повышенный\".";
 $MESS["SECURITY_SITE_CHECKER_ERROR_REPORTING"] = "Уровень вывода ошибок должен быть \"только ошибки\" или \"не выводить\"";
 $MESS["SECURITY_SITE_CHECKER_ERROR_REPORTING_DETAIL"] = "Отображение предупреждений php может позволить узнать полный физический путь к вашему проекту";
 $MESS["SECURITY_SITE_CHECKER_ERROR_REPORTING_RECOMMENDATION"] = "Изменить уровень вывода ошибок на \"не выводить\": <a href=\"/bitrix/admin/settings.php?mid=main\" target=\"_blank\">Настройки главного модуля</a>";

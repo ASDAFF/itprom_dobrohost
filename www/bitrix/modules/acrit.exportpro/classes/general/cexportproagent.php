@@ -67,13 +67,21 @@ class CExportproAgent{
             }            
         }
         
-        $cronTask = "* * * * * php -f {$_SERVER["DOCUMENT_ROOT"]}/bitrix/modules/main/tools/cron_events.php";
-        
-        CheckDirPath( $_SERVER["DOCUMENT_ROOT"]."/bitrix/crontab/" );
-        file_put_contents( $_SERVER["DOCUMENT_ROOT"]."/bitrix/crontab/crontab.cfg", $cronTask.PHP_EOL );
+        if( file_exists( $_SERVER["DOCUMENT_ROOT"]."/bitrix/crontab/crontab.cfg" ) ){
+            $cfgFileSize = filesize( $_SERVER["DOCUMENT_ROOT"]."/bitrix/crontab/crontab.cfg" );
+            $fp = fopen( $_SERVER["DOCUMENT_ROOT"]."/bitrix/crontab/crontab.cfg", "rb" );
+            $cfgData = fread( $fp, $cfgFileSize );
+            fclose( $fp );
 
-        // Записываем новое значение в crontab
-        @exec( "crontab ".$_SERVER["DOCUMENT_ROOT"]."/bitrix/crontab/crontab.cfg" );
+            $cfgData = preg_replace( "#.*bitrix\/modules\/main\/tools\/cron_events.php(\r)*\n#i", "", $cfgData);
+            $cfgData = preg_replace( "#.*bitrix\/modules\/main\/tools\/cron_events.php#i", "", $cfgData);
+            
+            $cronTask = "* * * * * php -f {$_SERVER["DOCUMENT_ROOT"]}/bitrix/modules/main/tools/cron_events.php";
+            $cfgData .= PHP_EOL.$cronTask.PHP_EOL;
+            
+            file_put_contents( $_SERVER["DOCUMENT_ROOT"]."/bitrix/crontab/crontab.cfg", $cfgData );
+            @exec( "crontab ".$_SERVER["DOCUMENT_ROOT"]."/bitrix/crontab/crontab.cfg" );
+        }
         
         return $agent_ID;
     }

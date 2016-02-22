@@ -214,12 +214,16 @@ $profileTypes["y_realty"] = array(
             "CODE" => "PRICE_VALUE",
             "NAME" => GetMessage( "ACRIT_EXPORTPRO_REALTY_FIELD_PRICE_VALUE" ),
             "REQUIRED" => "Y",
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
         ),
         
         array(
             "CODE" => "PRICE_CURRENCY",
             "NAME" => GetMessage( "ACRIT_EXPORTPRO_REALTY_FIELD_PRICE_CURRENCY" ),
             "REQUIRED" => "Y",
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "RUR",
         ),
         
         array(
@@ -607,6 +611,23 @@ $profileTypes["y_realty"] = array(
     "DATEFORMAT" => "Y-m-d_h:i",
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['y_realty']["FIELDS"][38] = array(
+        "CODE" => "PRICE_VALUE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_REALTY_FIELD_PRICE_VALUE"),
+        "REQUIRED" => 'Y',
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+}
+
+$profileTypes["y_realty"]["PORTAL_REQUIREMENTS"] = GetMessage( "ACRIT_EXPORTPRO_TYPE_REALTY_PORTAL_REQUIREMENTS" );
 $profileTypes["y_realty"]["EXAMPLE"] = GetMessage( "ACRIT_EXPORTPRO_TYPE_REALTY_EXAMPLE" );
 
 $profileTypes["y_realty"]["ITEMS_FORMAT"] = "

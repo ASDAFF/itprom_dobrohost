@@ -49,6 +49,7 @@ $MESS["ACRIT_EXPORTPRO_TYPE_EBAY_MP30_PARAM_1_NAME"] = "Бренд";
 $MESS["ACRIT_EXPORTPRO_TYPE_EBAY_MP30_PARAM_2_NAME"] = "Коллекция";
 $MESS["ACRIT_EXPORTPRO_TYPE_EBAY_MP30_PARAM_3_NAME"] = "Тип механизма";
 $MESS["ACRIT_EXPORTPRO_TYPE_EBAY_MP30_PARAM_4_NAME"] = "Серийный номер";
+$MESS["ACRIT_EXPORTPRO_TYPE_EBAY_MP30_PORTAL_REQUIREMENTS"] = "http://pages.ebay.com/ru/ru-ru/kak-prodavat-na-ebay-spravka/mip-neobhodimie-dannie.html";
 $MESS["ACRIT_EXPORTPRO_TYPE_EBAY_MP30_EXAMPLE"] = "
 <offer available=\"true\" id=\"32865619\">
     <currencyId>RUR</currencyId>

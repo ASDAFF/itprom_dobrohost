@@ -40,10 +40,14 @@ $profileTypes["advantshop"] = array(
         array(
             "CODE" => "CURRENCY",
             "NAME" => GetMessage("ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_CURRENCY"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "RUR"
         ),
         array(
             "CODE" => "PRICE",
             "NAME" => GetMessage("ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_PRICE"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
         ),
         array(
             "CODE" => "PURCHASE_PRICE",
@@ -53,6 +57,30 @@ $profileTypes["advantshop"] = array(
             "CODE" => "AMOUNT",
             "NAME" => GetMessage("ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_AMOUNT"),
         ),
+        array(
+            "CODE" => "SKU_VENDOR_CODE",
+            "NAME" => GetMessage("ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_VENDOR_CODE"),
+        ),
+        array(
+            "CODE" => "SKU_SIZE",
+            "NAME" => GetMessage("ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_SIZE"),
+        ),
+        array(
+            "CODE" => "SKU_COLOR",
+            "NAME" => GetMessage("ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_COLOR"),
+        ),
+        array(
+            "CODE" => "SKU_PRICE",
+            "NAME" => GetMessage("ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_PRICE"),
+        ),
+        array(
+            "CODE" => "SKU_PURCHASEPRICE",
+            "NAME" => GetMessage("ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_PURCHASEPRICE"),
+        ),
+        array(
+            "CODE" => "SKU_AMOUNT",
+            "NAME" => GetMessage("ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_AMOUNT"),
+        ),        
         array(
             "CODE" => "UNIT",
             "NAME" => GetMessage("ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_UNIT"),
@@ -171,3 +199,20 @@ $profileTypes["advantshop"] = array(
         ),
     ),
 );
+
+$profileTypes["advantshop"]["PORTAL_REQUIREMENTS"] = GetMessage( "ACRIT_EXPORTPRO_TYPE_ADVANTSHOP_PORTAL_REQUIREMENTS" );
+
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['advantshop']["FIELDS"][6] = array(
+        "CODE" => "PRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_PRICE"),
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+}

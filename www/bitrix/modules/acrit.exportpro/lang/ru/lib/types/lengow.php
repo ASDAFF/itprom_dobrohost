@@ -34,6 +34,7 @@ $MESS["ACRIT_EXPORTPRO_LENGOW_FIELD_END_DATE_FOR_PROMO"] = "Дата оконч�
 $MESS["ACRIT_EXPORTPRO_LENGOW_FIELD_ECOTAX"] = "Стоимость утилизации товара.";
 $MESS["ACRIT_EXPORTPRO_LENGOW_FIELD_CURRENCY"] = "Текстовый код валюты (EUR).";
 
+$MESS["ACRIT_EXPORTPRO_TYPE_LENGOW_PORTAL_REQUIREMENTS"] = "http://www.lengow.com/guides/";
 $MESS["ACRIT_EXPORTPRO_TYPE_LENGOW_EXAMPLE"] = "
 <product>
     <Category><![CDATA[ Billets d'avion ]]></category>

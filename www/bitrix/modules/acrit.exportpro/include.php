@@ -4,6 +4,7 @@ IncludeModuleLangFile( __FILE__ );
 global $DBType;
 
 $arClasses=array(
+    "AcritLicence" => "classes/general/licence.php",
     "CExportproProfileDB" => "classes/mysql/cexportproprofiledb.php",
     "CExportproMarketDB" => "classes/mysql/cexportpropro_marketdb.php",
     "CExportproProfile" => "classes/general/cexportproprofile.php",
@@ -60,9 +61,6 @@ class CAcritExportproElement {
         "cp1251" => "windows-1251",
     );
 
-    // TODO : Yandex упрощенное описание поправить описание и обязательные поля
-    // TODO : Activizm ViariantList добавить пол к категориям
-
     public function __construct( $profile ){
         global $APPLICATION;
         
@@ -110,8 +108,8 @@ class CAcritExportproElement {
             "#DATE#" => $this->profile["DATEFORMAT"],
             "#SHOP_NAME#" => $this->profile["SHOPNAME"],
             "#COMPANY_NAME#" => $this->profile["COMPANY"],
-            "#SITE_URL#" => ( ( CMain::IsHTTPS() ) ? "https://" : "http://" ).$this->profile["DOMAIN_NAME"],
-            "#DESCRIPTION#" => $this->profile["DESCRIPTION"],
+            "#SITE_URL#" => $this->profile["SITE_PROTOCOL"]."://".$this->profile["DOMAIN_NAME"],
+            "#PROFILE_DESCRIPTION#" => $this->profile["DESCRIPTION"],
             "#DATE#" => $dateGenerate,
         );                    
     }         
@@ -282,14 +280,14 @@ class CAcritExportproElement {
         //preg_match_all( "/.*(<[\w\d_-]+).*(#[\w\d_-]+#).*(<\/[\w\d_-]+>)/", $this->profile["OFFER_TEMPLATE"], $this->arMatches );
         preg_match_all( "/.*(<.+>).*(#[\w\d_-]+:*[\w\d_-]+#).*(<\/.+>)/", $this->profile["OFFER_TEMPLATE"], $this->arMatches );
 
-        // Установливаем для всех шаблонов #EXAMPLE# пустое значение, чтобы можно было удалить
+        // Install for all templates #EXAMPLE# null value, so that you can remove
         $this->templateValuesDefaults = array();
         foreach( $this->arMatches[2] as $match ){
             $this->templateValuesDefaults[$match] = "";
         }
         $this->templateValuesDefaults["#MARKET_CATEGORY#"] = "";
 
-        // Получаем свойства используемые в шаблонах
+        // Get the properties used in the templates
         $this->useProperties = array(
             "ID" => array()
         );
@@ -355,7 +353,7 @@ class CAcritExportproElement {
 
         $this->currencyList = array();
 
-        // Variant свойства
+        // Variant properties
         $variantPrice = str_replace( "-", "_", $this->profile["VARIANT"]["PRICE"] );
         $variantPropCode = array(
             "SEX_VALUE" => "SEX",
@@ -416,7 +414,16 @@ class CAcritExportproElement {
         
         $arProcessTmp = array();
         
-        if( $this->profile["TYPE"] == "advantshop" ){            
+        if( $this->profile["TYPE"] == "advantshop" ){         
+            $defaultSKUProps = array(
+                "SKU_VENDOR_CODE",
+                "SKU_SIZE",
+                "SKU_COLOR",
+                "SKU_PURCHASEPRICE",
+                "SKU_PRICE",
+                "SKU_AMOUNT",
+            );                                
+           
             while( $dbElement = $dbElements->GetNextElement() ){
                 $arElement = $this->GetElementProperties( $dbElement );
                 
@@ -439,9 +446,16 @@ class CAcritExportproElement {
                         )
                     );
                     
-                    $arElement["OFFERS"] = "";
+                    $arElement["OFFERS"] = "";  
+                    
                     while( $dbOfferElement = $dbOfferElements->GetNextElement() ){
                         $arOfferElement = $dbOfferElement->GetFields();
+                        $arOfferElementProperties = $dbOfferElement->GetProperties();
+                        $arOfferCondElementProperties = $this->GetElementProperties( $dbOfferElement );
+                                  
+                        if( !$this->CheckCondition( $arOfferCondElementProperties, $this->profile["EVAL_FILTER"] ) )
+                            continue;
+                            
                         $dbOfferMesure = CCatalogMeasure::getList(
                             array(),
                             array(
@@ -451,23 +465,41 @@ class CAcritExportproElement {
                         
                         if( $arOfferMesure = $dbOfferMesure->Fetch() ){
                             $arOfferElement["MEASURE"] = $arOfferMesure["SYMBOL_RUS"];
-                        }
-                                       
-                        $arOfferElementProperties = $dbOfferElement->GetProperties();
-                        
+                        }                 
+                                                                                 
                         $arOfferElementOffers = "";
-                        foreach( $arOfferElementProperties as $propCode => $prop ){
-                            if( ( stripos( $propCode, "CML2" ) !== false ) || $prop["VALUE"] == "" ){
-                                unset( $arOfferElementProperties[$propCode] );
-                                continue;
-                            }
-                            
-                            if( !is_array( $prop["VALUE"] ) ){
-                                $arOfferElementOffers .= $prop["VALUE"].":";
-                            }
-                        }
                         
-                        $arOfferElementOffers .= $arOfferElement["CATALOG_PRICE_".$arBasePrice["ID"]].":".( ( intval( $arOfferElement["CATALOG_PURCHASING_PRICE"] ) > 0 ) ? $arOfferElement["CATALOG_PURCHASING_PRICE"] : 0 ).":".$arOfferElement["CATALOG_QUANTITY"]; 
+                        foreach( $defaultSKUProps as $skuPropCode ){
+                            if( $this->profile["XMLDATA"][$skuPropCode]["TYPE"] == "const" ){
+                                $fieldVal = $this->profile["XMLDATA"][$skuPropCode]["CONTVALUE_TRUE"];
+                            }
+                            elseif( $this->profile["XMLDATA"][$skuPropCode]["TYPE"] == "field" ){
+                                $arValue = explode( "-", $this->profile["XMLDATA"][$skuPropCode]["VALUE"] );
+                                if( count( $arValue ) == 2 ){
+                                    $fieldCode = "CATALOG_".$arValue[1];
+                                }
+                                elseif( count( $arValue ) == 3 ){
+                                    $fieldCode = "PROPERTY_".$arValue[2]."_DISPLAY_VALUE";
+                                }
+                                else{
+                                    $fieldCode = $this->profile["XMLDATA"][$skuPropCode]["VALUE"];
+                                }
+                                
+                                if( !isset( $arOfferCondElementProperties[$fieldCode] ) ){
+                                    $fieldVal = $arElement[$fieldCode];
+                                }
+                                else{
+                                    $fieldVal = $arOfferCondElementProperties[$fieldCode];    
+                                }
+                                
+                                if( is_array( $fieldVal ) && !empty( $fieldVal ) ){
+                                    $fieldVal = $fieldVal[0];
+                                }
+                            }
+                            else break;
+                            
+                            $arOfferElementOffers .= ( strlen( $arOfferElementOffers ) > 0 ) ? ":".$fieldVal : $fieldVal; 
+                        }
                         
                         $arElement["OFFERS"] .= ( strlen( trim( $arElement["OFFERS"] ) ) > 0 ) ? ";".$arOfferElementOffers : $arOfferElementOffers;
                     }
@@ -551,7 +583,7 @@ class CAcritExportproElement {
                         }
                         
                         if( ( $arProfileTemplateNode["CODE"] != "WIDTH" ) && ( $arProfileTemplateNode["CODE"] != "HEIGHT" ) && ( $arProfileTemplateNode["CODE"] != "LENGHT" ) ){
-                            $arProcessItem[$arProfileTemplateNode["CODE"]] = $arProcessTmpItem[$arProfileTemplateNode["VALUE"]];    
+                            $arProcessItem[$arProfileTemplateNode["CODE"]] = ( ( $arProfileTemplateNode["CODE"] == "PHOTOS" ) ? ( $this->profile["SITE_PROTOCOL"]."://".$this->profile["DOMAIN_NAME"] ) : "" ).$arProcessTmpItem[$arProfileTemplateNode["VALUE"]];    
                         }
                     }
                     else{
@@ -567,7 +599,7 @@ class CAcritExportproElement {
                     }
                 }             
                 $arProcess[] = $arProcessItem;
-            }
+            }  
             
             $csvFile = new CCSVData();
             $csvFile->SetFieldsType( "R" );
@@ -640,16 +672,48 @@ class CAcritExportproElement {
             $arPaternFields = array();
             while( $dbElement = $dbElements->GetNextElement() ){
                 $arRowToCsv = $this->ProcessElementToCsv( $dbElement );
-                if( !$arRowToCsv ) continue;
-                 
-                if( empty( $arPaternFields ) ){
-                    foreach( $arRowToCsv as $colIndex => $colValue ){
-                        $arPaternFields[] = $colIndex;
+
+                if( $arRowToCsv ){
+                    if( empty( $arPaternFields ) ){
+                        foreach( $arRowToCsv as $colIndex => $colValue ){
+                            $arPaternFields[] = $colIndex;
+                        }
                     }
+                    
+                    $arProcess[] = $arRowToCsv;    
                 }
                 
-                $arProcess[] = $arRowToCsv;
-            }
+                $arItem = $this->GetElementProperties( $dbElement );
+                
+                if( $this->catalogIncluded && ( $this->profile["USE_SKU"] == "Y" ) && ( $this->catalogSKU[$arItem["IBLOCK_ID"]] ) ){
+                    $arOfferFilter = array(
+                        "IBLOCK_ID" => $this->catalogSKU[$arItem["IBLOCK_ID"]]["OFFERS_IBLOCK_ID"],
+                        "PROPERTY_".$this->catalogSKU[$arItem["IBLOCK_ID"]]["OFFERS_PROPERTY_ID"] => $arItem["ID"]
+                    );
+                    
+                    $dbOfferElements = CIBlockElement::GetList(
+                        array(),
+                        $arOfferFilter,
+                        false,
+                        false,
+                        array()
+                    );
+                    
+                    while( $arOfferElement = $dbOfferElements->GetNextElement() ){
+                        $arOfferRowToCsv = $this->ProcessElementToCsv( $arOfferElement, $arItem );
+
+                        if( !$arOfferRowToCsv ) continue;
+                 
+                        if( empty( $arPaternFields ) ){
+                            foreach( $arOfferRowToCsv as $colIndex => $colValue ){
+                                $arPaternFields[] = $colIndex;
+                            }
+                        }
+                        
+                        $arProcess[] = $arOfferRowToCsv;
+                    }
+                }
+            }      
             
             $csvFile = new CCSVData();
             $csvFile->SetFieldsType( "R" );
@@ -673,15 +737,41 @@ class CAcritExportproElement {
                 self::ExportArrayMultiply( $arResFields, $arTuple );
             }   
             
-            
-            
             foreach( $arResFields as $arTuple ){
                 $csvFile->SaveFile( $fileExport, $arTuple );
             }
                        
             $csvFile->CloseFile();
                                                             
-            LocalRedirect( "/acrit.exportpro/?path=".$fileExportName );
+            if( $this->profile["USE_COMPRESS"] == "Y" ){
+                $originalName = $_SERVER["DOCUMENT_ROOT"].$fileExportName;
+                $zipPath = str_replace( "csv", "zip", $originalName );                
+                $packarc = CBXArchive::GetArchive( $zipPath );
+                
+                $fileQuickPath = $fileExportName;
+                $arFileQuickPath = explode( "/", $fileQuickPath );                
+                $fileQuickPathToDelete = "";
+                foreach( $arFileQuickPath as $filePathPartIndex => $filePathPart ){
+                    if( $filePathPartIndex < count( $arFileQuickPath ) - 1 ){
+                        $fileQuickPathToDelete .= $filePathPart."/";
+                    }
+                }
+                
+                $packarc->SetOptions(
+                    array(
+                        "COMPRESS" => true,
+                        "STEP_TIME" => COption::GetOptionString( "fileman", "archive_step_time", 30 ),
+                        "ADD_PATH" => false,
+                        "REMOVE_PATH" => $_SERVER["DOCUMENT_ROOT"].$fileQuickPathToDelete,
+                        "CHECK_PERMISSIONS" => false
+                    )
+                );
+                $pArcResult = $packarc->Pack( $originalName );
+                LocalRedirect( str_replace( $_SERVER["DOCUMENT_ROOT"], "", $zipPath ) );
+            }
+            else{
+                LocalRedirect( "/acrit.exportpro/?path=".$fileExportName );
+            }
         }
         
         return true;
@@ -713,14 +803,14 @@ class CAcritExportproElement {
         //preg_match_all( "/.*(<[\w\d_-]+).*(#[\w\d_-]+#).*(<\/[\w\d_-]+>)/", $this->profile["OFFER_TEMPLATE"], $this->arMatches );
         preg_match_all( "/.*(<.+>).*(#[\w\d_-]+:*[\w\d_-]+#).*(<\/.+>)/", $this->profile["OFFER_TEMPLATE"], $this->arMatches );
 
-        // Установливаем для всех шаблонов #EXAMPLE# пустое значение, чтобы можно было удалить
+        // Install for all templates #EXAMPLE# null value, so that you can remove
         $this->templateValuesDefaults = array();
         foreach( $this->arMatches[2] as $match ){
             $this->templateValuesDefaults[$match] = "";
         }
         $this->templateValuesDefaults["#MARKET_CATEGORY#"] = "";
 
-        // Получаем свойства используемые в шаблонах
+        // Get the properties used in the templates
         $this->useProperties = array(
             "ID" => array()
         );
@@ -786,7 +876,7 @@ class CAcritExportproElement {
 
         $this->currencyList = array();
 
-        // Variant свойства
+        // Variant properties
         $variantPrice = str_replace( "-", "_", $this->profile["VARIANT"]["PRICE"] );
         $variantPropCode = array(
             "SEX_VALUE" => "SEX",
@@ -861,7 +951,7 @@ class CAcritExportproElement {
                 $arItem = $arItem["ITEM"];
             }
             
-            // Если включена обработка торговых предложений, ищем и обрабатываем торговые предложения
+            // If you enable the processing trade offers, we look for and process trade offers
             if( $this->catalogIncluded && ( $this->profile["USE_SKU"] == "Y" ) && ( $this->catalogSKU[$arItem["IBLOCK_ID"]] ) ){
                 $arOfferFilter = array(
                     "IBLOCK_ID" => $this->catalogSKU[$arItem["IBLOCK_ID"]]["OFFERS_IBLOCK_ID"],
@@ -889,7 +979,7 @@ class CAcritExportproElement {
                 }
             }
             
-            // Профиль activizm.ru
+            // activizm.ru profile
             if( $this->isVariant( $arItem["IBLOCK_SECTION_ID"] ) ){
                 $productExport = 0;
                 foreach( $variantItems as $price => $items ){
@@ -910,7 +1000,7 @@ class CAcritExportproElement {
                         $itemWeight = $this->variantProperties["WEIGHT"];
                         $itemColor = $this->variantProperties["COLOR"];
                         if( $isOffer ){
-                            // Если торговое предложение, заменяем значения свойст значениями предложений
+                            // If trade offer, replace property values by trade offer values
                             $gender = $this->profile["VARIANT"]["SEX_CONST"] ? $this->profile["VARIANT"]["SEX_CONST"] : $arItem[$this->variantProperties["SEXOFFER"]];
                             $itemSize = $this->variantProperties["SIZEOFFER"];
                             $itemWeight = $this->variantProperties["WEIGHTOFFER"];
@@ -974,7 +1064,7 @@ class CAcritExportproElement {
                                 
                     CAcritExportproExport::Save( $itemTemplate );
                     
-                    // Увеличиваем счетчик статистики товаров для выгрузки
+                    // Increase the count statistics for export goods
                     $this->log->IncProductExport( $productExport );
                 }
                 unset( $variantItems );
@@ -995,7 +1085,7 @@ class CAcritExportproElement {
             str_replace( array( "#STEP#", "#COUNT#" ), array( $page, $dbElements->NavPageCount ), GetMessage( "ACRIT_EXPORTPRO_RUN_STEP_RUN" ) ),
             '</div>';
         }       
-        
+                                         
         $this->SaveCurrencies( $this->currencyList );
         
         if( $this->isDemo && $this->DemoCount() )
@@ -1003,16 +1093,16 @@ class CAcritExportproElement {
         
         if( $page >= $dbElements->NavPageCount )
             return true;
-        
+                          
         return false;
     }
     
-    // Получение свойств товара, формирование шаблона, замена полей значениями и запись в файл
+    // Getting the properties of the product, the formation of the pattern, the replacement values of fields and write to the file
     private function ProcessElementToCsv( $arElement, $arProductSKU = false ){
         $skipElement = false;
         $arItem = $this->GetElementProperties( $arElement );
         
-        // Добавление свойств и полей товара к товарным предложения
+        // Adding product properties and fields to trade offers
         if( is_array( $arProductSKU ) ){
             $excludeFields = array(
                 "NAME",
@@ -1034,11 +1124,11 @@ class CAcritExportproElement {
             $arItem["GROUP_ITEM_ID"] = $arItem["ID"];
         }
 
-        // Проверка, удовлетворяет ли элемент общим условия профиля
+        // Verification, whether the item meets the general conditions of profile
         if( !$this->CheckCondition( $arItem, $this->profile["EVAL_FILTER"] ) )
             return false;
 
-        // Увеличиваем счетчик статистики товаров для выгрузки
+        // Increase the count statistics for export goods
         $this->log->IncProduct();
 
         $itemTemplate = $this->profile["OFFER_TEMPLATE"];
@@ -1195,8 +1285,8 @@ class CAcritExportproElement {
         global $DB;                 
                                  
         $skipElement = false;
-        $arItem = $this->GetElementProperties( $arElement );
-        
+        $arItem = $this->GetElementProperties( $arElement );   
+                                               
         // Добавление свойств и полей товара к товарным предложения
         if( $this->catalogIncluded && is_array( $arProductSKU ) ){
             $excludeFields = array(
@@ -1213,11 +1303,12 @@ class CAcritExportproElement {
                 }
             }      
             
+            $arItem["ELEMENT_ID"] = $arProductSKU["ID"];
             $arItem["IBLOCK_SECTION_ID"] = $arProductSKU["IBLOCK_SECTION_ID"];
         }
         else{
             $arItem["GROUP_ITEM_ID"] = $arItem["ID"];
-        }
+        }                               
 
         // Проверка, удовлетворяет ли элемент общим условия профиля
         if( $this->catalogIncluded ){
@@ -1225,15 +1316,15 @@ class CAcritExportproElement {
                 return $arItem;
             }
         }
-
+                          
         // Увеличиваем счетчик статистики товаров для выгрузки
         $this->log->IncProduct();
 
-        $itemTemplate = $this->profile["OFFER_TEMPLATE"];
+        $itemTemplate = $this->profile["OFFER_TEMPLATE"];     
         
         $templateValues = $this->templateValuesDefaults;
         $templateValues["#GROUP_ITEM_ID#"] = $arItem["GROUP_ITEM_ID"];
-                 
+                   
         foreach( $this->profile["XMLDATA"] as $field ){
             $useCondition = ( $field["USE_CONDITION"] == "Y" );
             if( $useCondition ){
@@ -1249,6 +1340,7 @@ class CAcritExportproElement {
             if($field["TYPE"] == "field"){
                 if( ( $field["CODE"] == "URL" ) && function_exists( "detailLink" ) ){
                     $templateValues["#{$field["CODE"]}#"] = detailLink( $arItem["ID"] );
+                    $itemTemplate = str_replace( "?utm_source", "&amp;utm_source", $itemTemplate );
                 }
                 else{
                     $arValue = explode( "-", $field["VALUE"] );
@@ -1327,7 +1419,7 @@ class CAcritExportproElement {
                                     $templateValues["#{$field["CODE"]}#"] = array();
                                     foreach( $arItem["PROPERTY_{$arValue[2]}_DISPLAY_VALUE"] as $val ){
                                         $templateValues["#{$field["CODE"]}#"][] = $val;
-                                    }
+                                    }                                        
                                 }
                                 else{
                                     $templateValues["#{$field["CODE"]}#"] = $arItem["PROPERTY_{$arValue[2]}_DISPLAY_VALUE"];
@@ -1343,6 +1435,13 @@ class CAcritExportproElement {
             
             if( $DB->IsDate( $templateValues["#{$field["CODE"]}#"] ) && ( $this->profile["DATEFORMAT"] == $this->baseDateTimePatern ) ){
                 $templateValues["#{$field["CODE"]}#"] = $this->GetYandexDateTime( $templateValues["#{$field["CODE"]}#"] );
+                $dateTimeValue = MakeTimeStamp( "" );
+                $dateTimeFormattedValue = date( "Y-m-d", $dateTimeValue );
+                if( stripos( $templateValues["#{$field["CODE"]}#"], $dateTimeFormattedValue ) !== false ){
+                    $skipElement = true;
+                    $this->log->AddMessage( "{$arItem["NAME"]} (ID:{$arItem["ID"]}) : ".str_replace( "#FIELD#", "#{$field["CODE"]}#", GetMessage( "ACRIT_EXPORTPRO_REQUIRED_FIELD_SKIP" ) ) );
+                    $this->log->IncProductError();
+                }
             }
                       
             if( ( $field["REQUIRED"] == "Y" ) && ( empty( $templateValues["#{$field["CODE"]}#"] ) || !isset( $templateValues["#{$field["CODE"]}#"] ) ) ){
@@ -1350,7 +1449,21 @@ class CAcritExportproElement {
                 $this->log->AddMessage( "{$arItem["NAME"]} (ID:{$arItem["ID"]}) : ".str_replace( "#FIELD#", "#{$field["CODE"]}#", GetMessage( "ACRIT_EXPORTPRO_REQUIRED_FIELD_SKIP" ) ) );
                 $this->log->IncProductError();
             }
+        }                       
+        
+        if( ( intval( $templateValues["#OLDPRICE#"] ) > 0 ) 
+            && ( intval( $templateValues["#OLDPRICE#"] ) <= intval( $templateValues["#PRICE#"] ) ) ){
+            unset( $templateValues["#OLDPRICE#"] );
+        }                     
+        
+        /*if( intval( $templateValues["#GROSS_WEIGHT#"] ) > 0 ){
+            $templateValues["#GROSS_WEIGHT#"] = $templateValues["#GROSS_WEIGHT#"] * 1000;
         }
+                
+        if( intval( $templateValues["#CAPABILITY_WEIGHT#"] ) > 0 ){
+            $templateValues["#CAPABILITY_WEIGHT#"] = $templateValues["#CAPABILITY_WEIGHT#"] * 1000;
+        }*/
+                
         //$this->log->AddMessage( var_export($arItem, true) );
 
         array_walk( $templateValues, function( &$value ){
@@ -1360,10 +1473,9 @@ class CAcritExportproElement {
             }
             else
             $value = htmlspecialcharsbx( html_entity_decode( $value ) );
-        });  
-        
+        });                                         
 
-        // Устанавливаем значение категори маркета если стоит галка
+        // Устанавливаем значение категории маркета, если стоит галка
         $templateValues["#MARKET_CATEGORY#"] = "";
         switch( $this->profile["TYPE"] ){
             case "ebay":
@@ -1385,7 +1497,7 @@ class CAcritExportproElement {
                 if( $this->profile["USE_MARKET_CATEGORY"] == "Y" ){
                     $templateValues["#MARKET_CATEGORY#"] = htmlspecialcharsbx( html_entity_decode( $this->profile["MARKET_CATEGORY"]["CATEGORY_LIST"][$arItem["IBLOCK_SECTION_ID"]] ) );
                 }
-        }              
+        }                     
                                                            
         // Удаление тэгов с пустыми значения полей, дублирование тэгов для множественных свойств, URL кодирование
         foreach( $this->arMatches[2] as $id => $match ){
@@ -1426,14 +1538,14 @@ class CAcritExportproElement {
                 $templateValues[$match] = html_entity_decode( $templateValues[$match] );
             }                       
 
-            if( $this->profile["XMLDATA"][str_replace( "#", "", $match )]["HTML_TO_TXT"] == "Y" ){
+            if( ( $this->profile["XMLDATA"][str_replace( "#", "", $match )]["HTML_TO_TXT"] == "Y" ) && !is_array( $templateValues[$match] ) ){
                 $templateValues[$match] = htmlspecialcharsbx( HTMLToTxt( htmlspecialchars_decode( $templateValues[$match] ) ) ); 
             }
 
             if( !$templateValues[$match] && $this->profile["XMLDATA"][str_replace( "#", "", $match )]["DELETE_ONEMPTY"] == "Y" ){   
                 $itemTemplate = str_replace( $this->arMatches[0][$id], "", $itemTemplate );
             }
-            elseif( is_array( $templateValues[$match] ) ){
+            elseif( is_array( $templateValues[$match] ) ){ 
                 $replacementValue = array();
                 for( $i = 0; $i < count( $templateValues[$match] ); $i++ ){
                     $newName = preg_replace( "/\#((.)+)\#/", "#$1_LISTVAL_ITEM_$i#", $this->arMatches[2][$id] );
@@ -1442,35 +1554,50 @@ class CAcritExportproElement {
                 }
                 $itemTemplate = str_replace( $this->arMatches[0][$id], implode( PHP_EOL, $replacementValue ), $itemTemplate );
             }
-        }       
+        }                 
+                                
+        $itemTemplate = preg_replace( '#(<(.+)>\s*</\2>)#i', "", $itemTemplate );  
         
-        $itemTemplate = preg_replace( '#(<(.+)>\s*</\2>)#i', "", $itemTemplate ); 
+        if( 
+            ( ( strlen( trim( $this->profile["XMLDATA"]["LOCAL_DELIVERY_COST"]["VALUE"] ) ) <= 0 ) 
+                && ( strlen( trim( $this->profile["XMLDATA"]["LOCAL_DELIVERY_COST"]["CONTVALUE_TRUE"] ) ) <= 0 ) )
+            || ( ( strlen( trim( $this->profile["XMLDATA"]["LOCAL_DELIVERY_DAYS"]["VALUE"] ) ) <= 0 ) 
+                && ( strlen( trim( $this->profile["XMLDATA"]["LOCAL_DELIVERY_DAYS"]["CONTVALUE_TRUE"] ) ) <= 0 ) )
+        ){
+            $itemTemplate = preg_replace( '#<delivery-options>.*</delivery-options>#is', "", $itemTemplate ); 
+        }
         
         foreach( $this->profile["XMLDATA"] as $tag ){
             if( isset( $templateValues["#{$tag["CODE"]}#"] ) && $tag["HTML_ENCODE"] == "N" ){
                 $templateValues["#{$tag["CODE"]}#"] = html_entity_decode( $templateValues["#{$tag["CODE"]}#"] );
             }
-        }
-        
-        
+        }                 
         
         foreach( $this->profile["XMLDATA"] as $tag ){
             if( isset( $templateValues["#{$tag["CODE"]}#"] ) && $tag["HTML_TO_TXT"] == "N" ){
                 $templateValues["#{$tag["CODE"]}#"] = HTMLToTxt( $templateValues["#{$tag["CODE"]}#"] );
             }
-        }                      
-        
-        // Замена переменных значениями в шаблоне
-        $itemTemplate = str_replace( array_keys( $templateValues ), array_values( $templateValues ), $itemTemplate );
+        }                                        
+                                                                                                                            
+        // Set values
         $itemTemplate = str_replace( array_keys( $this->defaultFields ), array_values( $this->defaultFields ), $itemTemplate );
-
-        // Удаляет пустые тэги первого уровня, если вложенности нет
+        $itemTemplate = str_replace( array_keys( $templateValues ), array_values( $templateValues ), $itemTemplate );
+        
+        // Removes empty first level tags, if there is no nesting
         //$itemTemplate = preg_replace( "/(<[0-9a-zA-Z:_]+>[\r\n\t]*<\/[0-9a-zA-Z:_]+>)/", "\r\n", $itemTemplate );
         $itemTemplate = preg_replace( "/(\r\n[\t]*\r\n)/", "\r\n", $itemTemplate );
         $itemTemplate = preg_replace( "/(\r\n\r\n)/", "\r\n", $itemTemplate );
-        
+                               
         if( !$skipElement ){
-            $this->SaveSections( array( $arItem["IBLOCK_SECTION_ID"] ) );
+            $processElementId = ( intval( $arItem["ELEMENT_ID"] ) > 0 ) ? $arItem["ELEMENT_ID"] : $arItem["ID"];
+            $dbElementGroups = CIBlockElement::GetElementGroups( $processElementId, true );
+            $arItemSections = array();
+            while( $arElementGroups = $dbElementGroups->Fetch() ){
+                $arItemSections[] = $arElementGroups["ID"];
+            }
+            
+            $this->SaveSections( $arItemSections );
+            //$this->SaveSections( array( $arItem["IBLOCK_SECTION_ID"] ) );
             $this->DemoCountInc();
 
 
@@ -1562,7 +1689,7 @@ class CAcritExportproElement {
     // Получение полей и свойств элемента, используемых в шаблоне и условиях
     private function GetElementProperties( $arElement ){
         global $DB;         
-        
+                                  
         $arItem = $arElement->GetFields();
         if( in_array( "DETAIL_PICTURE", $this->useFields ) ){
             $arItem["DETAIL_PICTURE"] = CFile::GetPath($arItem["DETAIL_PICTURE"]);
@@ -1587,73 +1714,69 @@ class CAcritExportproElement {
             else{
                 $arItem["SECTION_ID"][] = $arSection["ID"];
             }
-        }
-        
+        }                                                             
+                                              
         if( count( $this->useProperties["ID"] ) ){
-            $arProperties = $this->GetProperties($arItem, array("ID" => $this->useProperties["ID"]));
-            foreach($this->useProperties["ID"] as $usePropID)
-            if(!isset($arProperties[$usePropID]))
-            {
-                $arItem["PROPERTY_{$usePropID}_VALUE"] = array();
-            }
-            
-            foreach($arProperties as $property)
-            {
-                //if($DB->DateFormatToPHP(FORMAT_DATETIME))
-                if($property["USER_TYPE"] == "DateTime")
-                {
-                    $property["DISPLAY_VALUE"] = date(str_replace("_", " ", $this->profile["DATEFORMAT"]), strtotime($property["VALUE"]));
+            $arProperties = $this->GetProperties( $arItem, array( "ID" => $this->useProperties["ID"] ) );
+            foreach( $this->useProperties["ID"] as $usePropID )
+                if( !isset( $arProperties[$usePropID] ) ){
+                    $arItem["PROPERTY_{$usePropID}_VALUE"] = array();
                 }
-                elseif($property["PROPERTY_TYPE"] == "E")
-                {
+            
+            foreach( $arProperties as $property ){              
+                //if($DB->DateFormatToPHP(FORMAT_DATETIME))
+                if( $property["USER_TYPE"] == "DateTime" ){
+                    $property["DISPLAY_VALUE"] = date( str_replace( "_", " ", $this->profile["DATEFORMAT"] ), strtotime( $property["VALUE"] ) );
+                }
+                elseif( $property["PROPERTY_TYPE"] == "E" ){
                     $property["ORIGINAL_VALUE"] = array();
-                    if(!empty($property["VALUE"]))
-                    {
-                        $dbPropE = CIBlockElement::GetList(array(), array("ID" => $property["VALUE"]), false, false, array("ID", "NAME"));
-                        while($arPropE = $dbPropE->GetNext())
-                        {
+                    if( !empty( $property["VALUE"] ) ){
+                        $dbPropE = CIBlockElement::GetList(
+                            array(),
+                            array(
+                                "ID" => $property["VALUE"]
+                            ),
+                            false,
+                            false,
+                            array( "ID", "NAME" )
+                        );
+                        while( $arPropE = $dbPropE->GetNext() ){
                             $property["DISPLAY_VALUE"][] = $arPropE["NAME"];
                             $property["ORIGINAL_VALUE"][] = $arPropE["ID"];
                         }
                     }
                 }
-                else
-                {
-                    $property = CIBlockFormatProperties::GetDisplayValue($arItem, $property, "acrit_exportpro_event");
-                    if(empty($property["VALUE_ENUM_ID"]))
-                    {
-                        if(!is_array($property["DISPLAY_VALUE"]))
-                            $property["ORIGINAL_VALUE"] = array($property["DISPLAY_VALUE"]);
+                else{                                                               
+                    $property = CIBlockFormatProperties::GetDisplayValue( $arItem, $property, "acrit_exportpro_event" );
+                    if( empty( $property["VALUE_ENUM_ID"] ) ){
+                        if( !is_array( $property["DISPLAY_VALUE"] ) )
+                            $property["ORIGINAL_VALUE"] = array( $property["DISPLAY_VALUE"] );
                         else
                             $property["ORIGINAL_VALUE"] = $property["DISPLAY_VALUE"];
                     }
-                    else
-                    {
-                        if(!is_array($property["VALUE_ENUM_ID"]))
-                            $property["ORIGINAL_VALUE"] = array($property["VALUE_ENUM_ID"]);
+                    else{
+                        if( !is_array( $property["VALUE_ENUM_ID"] ) )
+                            $property["ORIGINAL_VALUE"] = array( $property["VALUE_ENUM_ID"] );
                         else
                             $property["ORIGINAL_VALUE"] = $property["VALUE_ENUM_ID"];
                     }
                 }
-                if($property["PROPERTY_TYPE"] == "F")
-                {
+                if( $property["PROPERTY_TYPE"] == "F" ){
                     $property["DISPLAY_VALUE"] = array();
-                    if(count($property["ORIGINAL_VALUE"]) > 1)
-                    {
-                        foreach($property["FILE_VALUE"] as $file)
+                    if( count( $property["ORIGINAL_VALUE"] ) > 1 ){
+                        foreach( $property["FILE_VALUE"] as $file )
                             $property["DISPLAY_VALUE"][] = $file["SRC"];
                     }
-                    else
-                    {
+                    else{
                         $property["DISPLAY_VALUE"] = $property["FILE_VALUE"]["SRC"];
-                    }
+                    }                  
                 }
                 $arItem["PROPERTY_{$property["ID"]}_DISPLAY_VALUE"] = $property["DISPLAY_VALUE"];
                 $arItem["PROPERTY_{$property["CODE"]}_DISPLAY_VALUE"] = $arItem["PROPERTY_{$property["ID"]}_VALUE"];
                 $arItem["PROPERTY_{$property["ID"]}_VALUE"] = $property["ORIGINAL_VALUE"];
                 $arItem["PROPERTY_{$property["CODE"]}_VALUE"] = $arItem["PROPERTY_{$property["ID"]}_VALUE"];
-            }
-        }
+            }                    
+        }         
         if( $this->catalogIncluded ){         
             $arProduct = CCatalogProduct::GetByID( $arItem["ID"] );                                               
             if( in_array( "PURCHASING_PRICE", $this->usePrices ) && ( $this->profile["TYPE"] != "advantshop" ) ){
@@ -1716,160 +1839,140 @@ class CAcritExportproElement {
             $arItem["CATALOG_HEIGHT"] = $arProduct["HEIGHT"];
         }
 
-        unset($arProperties, $arProduct, $dbPrices, $arPrice);
+        unset( $arProperties, $arProduct, $dbPrices, $arPrice );
         return $arItem;
     }
     
-    private function SaveSections($sections)
-    {
-        if(is_array($sections))
-        {
-            $sessionData = AcritExportproSession::GetSession($this->profile["ID"]);
-            if(!is_array($sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"]))
+    private function SaveSections( $sections ){                             
+        if( is_array( $sections ) ){
+            $sessionData = AcritExportproSession::GetSession( $this->profile["ID"] );
+            
+            if( !is_array( $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"] ) )
                 $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"] = array();
+            
             $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"] = array_merge(
                 $sessionData["EXPORTPRO"][$this->profile["ID"]]["CATEGORY"],
                 $sections
             );
-            AcritExportproSession::SetSession($this->profile["ID"], $sessionData);
-            }
+            AcritExportproSession::SetSession( $this->profile["ID"], $sessionData );
+        }
     }
 
-    private function SaveCurrencies($currencies)
-    {
-        if(is_array($currencies))
-        {
-            $sessionData = AcritExportproSession::GetSession($this->profile["ID"]);
-            if(!is_array($sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"]))
+    private function SaveCurrencies( $currencies ){
+        if( is_array( $currencies ) ){
+            $sessionData = AcritExportproSession::GetSession( $this->profile["ID"] );
+            if( !is_array( $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"] ) )
                 $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"] = array();
             $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"] = array_merge(
                 $sessionData["EXPORTPRO"][$this->profile["ID"]]["CURRENCY"],
                 $currencies
             );
-            AcritExportproSession::SetSession($this->profile["ID"], $sessionData);
+            AcritExportproSession::SetSession( $this->profile["ID"], $sessionData );
         }
     }
 
-    private function CheckCondition($arItem, $code)
-    {
-        unset($GLOBALS["CHECK_COND"]);
+    private function CheckCondition( $arItem, $code ){
+        unset( $GLOBALS["CHECK_COND"] );
         $GLOBALS["CHECK_COND"] = $arItem;
-        return eval("return $code;");
+        return eval( "return $code;" );
     }
 
-    public function GetProperties($arItem, $arFilter)
-    {
-        $props = CIBlockElement::GetProperty($arItem["IBLOCK_ID"], $arItem["ID"], array(), $arFilter);
+    public function GetProperties( $arItem, $arFilter ){
+        $props = CIBlockElement::GetProperty( $arItem["IBLOCK_ID"], $arItem["ID"], array(), $arFilter );
 
         $arAllProps = Array();
-        while($arProp = $props->Fetch())
-        {
-            if(strlen(trim($arProp["CODE"]))>0)
+        while( $arProp = $props->Fetch() ){
+            if( strlen( trim( $arProp["CODE"] ) ) > 0 )
                 $PIND = $arProp["CODE"];
             else
                 $PIND = $arProp["ID"];
 
             $arProp["ORIGINAL_VALUE"] = $arProp["VALUE"];
 
-            if($arProp["PROPERTY_TYPE"]=="L")
-            {
-                if($arProp["MULTIPLE"]!="Y")
-                    $arProp["ORIGINAL_VALUE"] = array($arProp["ORIGINAL_VALUE"]);
+            if( $arProp["PROPERTY_TYPE"] == "L" ){
+                if( $arProp["MULTIPLE"] != "Y" )
+                    $arProp["ORIGINAL_VALUE"] = array( $arProp["ORIGINAL_VALUE"] );
                 $arProp["VALUE_ENUM_ID"] = $arProp["VALUE"];
                 $arProp["VALUE"] = $arProp["VALUE_ENUM"];
             }
 
-            if(is_array($arProp["VALUE"]) || (strlen($arProp["VALUE"]) > 0))
-            {
+            if( is_array( $arProp["VALUE"] ) || ( strlen( $arProp["VALUE"] ) > 0 ) ){
                 $arProp["~VALUE"] = $arProp["VALUE"];
-                if(is_array($arProp["VALUE"]) || preg_match("/[;&<>\"]/", $arProp["VALUE"]))
-                    $arProp["VALUE"] = htmlspecialcharsex($arProp["VALUE"]);
+                if( is_array( $arProp["VALUE"] ) || preg_match( "/[;&<>\"]/", $arProp["VALUE"] ) )
+                    $arProp["VALUE"] = htmlspecialcharsex( $arProp["VALUE"] );
                 $arProp["~DESCRIPTION"] = $arProp["DESCRIPTION"];
-                if(preg_match("/[;&<>\"]/", $arProp["DESCRIPTION"]))
-                    $arProp["DESCRIPTION"] = htmlspecialcharsex($arProp["DESCRIPTION"]);
+                if( preg_match("/[;&<>\"]/", $arProp["DESCRIPTION"] ) )
+                    $arProp["DESCRIPTION"] = htmlspecialcharsex( $arProp["DESCRIPTION"] );
             }
-            else
-            {
+            else{
                 $arProp["VALUE"] = $arProp["~VALUE"] = "";
                 $arProp["DESCRIPTION"] = $arProp["~DESCRIPTION"] = "";
             }
 
-            if($arProp["MULTIPLE"]=="Y")
-            {
-                if(array_key_exists($PIND, $arAllProps))
-                {
+            if( $arProp["MULTIPLE"] == "Y" ){
+                if( array_key_exists( $PIND, $arAllProps ) ){
                     $arTemp = &$arAllProps[$PIND];
-                    if($arProp["VALUE"]!=="")
-                    {
-                        if(is_array($arTemp["VALUE"]))
-                        {
+                    if( $arProp["VALUE"] !== "" ){
+                        if( is_array( $arTemp["VALUE"] ) ){
                             $arTemp["ORIGINAL_VALUE"][] = $arProp["ORIGINAL_VALUE"];
                             $arTemp["VALUE"][] = $arProp["VALUE"];
                             $arTemp["~VALUE"][] = $arProp["~VALUE"];
                             $arTemp["DESCRIPTION"][] = $arProp["DESCRIPTION"];
                             $arTemp["~DESCRIPTION"][] = $arProp["~DESCRIPTION"];
                             $arTemp["PROPERTY_VALUE_ID"][] = $arProp["PROPERTY_VALUE_ID"];
-                            if($arProp["PROPERTY_TYPE"]=="L")
-                            {
+                            if( $arProp["PROPERTY_TYPE"] == "L" ){
                                 $arTemp["VALUE_ENUM_ID"][] = $arProp["VALUE_ENUM_ID"];
                                 $arTemp["VALUE_ENUM"][] = $arProp["VALUE_ENUM"];
                                 $arTemp["VALUE_XML_ID"][] = $arProp["VALUE_XML_ID"];
                                 //$arTemp["VALUE_SORT"][] = $arProp["VALUE_SORT"];
                             }
                         }
-                        else
-                        {
-                            $arTemp["ORIGINAL_VALUE"] = array($arProp["ORIGINAL_VALUE"]);
-                            $arTemp["VALUE"] = array($arProp["VALUE"]);
-                            $arTemp["~VALUE"] = array($arProp["~VALUE"]);
-                            $arTemp["DESCRIPTION"] = array($arProp["DESCRIPTION"]);
-                            $arTemp["~DESCRIPTION"] = array($arProp["~DESCRIPTION"]);
-                            $arTemp["PROPERTY_VALUE_ID"] = array($arProp["PROPERTY_VALUE_ID"]);
-                            if($arProp["PROPERTY_TYPE"]=="L")
-                            {
-                                $arTemp["VALUE_ENUM_ID"] = array($arProp["VALUE_ENUM_ID"]);
-                                $arTemp["VALUE_ENUM"] = array($arProp["VALUE_ENUM"]);
-                                $arTemp["VALUE_XML_ID"] = array($arProp["VALUE_XML_ID"]);
-                                $arTemp["VALUE_SORT"] = array($arProp["VALUE_SORT"]);
-                                $arTemp["ORIGINAL_VALUE"] = array($arProp["ORIGINAL_VALUE"]);
+                        else{
+                            $arTemp["ORIGINAL_VALUE"] = array( $arProp["ORIGINAL_VALUE"] );
+                            $arTemp["VALUE"] = array( $arProp["VALUE"] );
+                            $arTemp["~VALUE"] = array( $arProp["~VALUE"] );
+                            $arTemp["DESCRIPTION"] = array( $arProp["DESCRIPTION"] );
+                            $arTemp["~DESCRIPTION"] = array( $arProp["~DESCRIPTION"] );
+                            $arTemp["PROPERTY_VALUE_ID"] = array( $arProp["PROPERTY_VALUE_ID"] );
+                            if( $arProp["PROPERTY_TYPE"] == "L" ){
+                                $arTemp["VALUE_ENUM_ID"] = array( $arProp["VALUE_ENUM_ID"] );
+                                $arTemp["VALUE_ENUM"] = array( $arProp["VALUE_ENUM"] );
+                                $arTemp["VALUE_XML_ID"] = array( $arProp["VALUE_XML_ID"] );
+                                $arTemp["VALUE_SORT"] = array( $arProp["VALUE_SORT"] );
+                                $arTemp["ORIGINAL_VALUE"] = array( $arProp["ORIGINAL_VALUE"] );
                             }
                         }
                     }
                 }
-                else
-                {
+                else{
                     $arProp["~NAME"] = $arProp["NAME"];
-                    if(preg_match("/[;&<>\"]/", $arProp["NAME"]))
-                        $arProp["NAME"] = htmlspecialcharsex($arProp["NAME"]);
+                    if( preg_match( "/[;&<>\"]/", $arProp["NAME"] ) )
+                        $arProp["NAME"] = htmlspecialcharsex( $arProp["NAME"] );
                     $arProp["~DEFAULT_VALUE"] = $arProp["DEFAULT_VALUE"];
-                    if(is_array($arProp["DEFAULT_VALUE"]) || preg_match("/[;&<>\"]/", $arProp["DEFAULT_VALUE"]))
-                        $arProp["DEFAULT_VALUE"] = htmlspecialcharsex($arProp["DEFAULT_VALUE"]);
-                    if($arProp["VALUE"]!=="")
-                    {
-                        $arProp["ORIGINAL_VALUE"] = array($arProp["ORIGINAL_VALUE"]);
-                        $arProp["VALUE"] = array($arProp["VALUE"]);
-                        $arProp["~VALUE"] = array($arProp["~VALUE"]);
-                        $arProp["DESCRIPTION"] = array($arProp["DESCRIPTION"]);
-                        $arProp["~DESCRIPTION"] = array($arProp["~DESCRIPTION"]);
-                        $arProp["PROPERTY_VALUE_ID"] = array($arProp["PROPERTY_VALUE_ID"]);
-                        if($arProp["PROPERTY_TYPE"]=="L")
-                        {
-                            $arProp["VALUE_ENUM_ID"] = array($arProp["VALUE_ENUM_ID"]);
-                            $arProp["VALUE_ENUM"] = array($arProp["VALUE_ENUM"]);
-                            $arProp["VALUE_XML_ID"] = array($arProp["VALUE_XML_ID"]);
-                            $arProp["VALUE_SORT"] = array($arProp["VALUE_SORT"]);
+                    if( is_array( $arProp["DEFAULT_VALUE"] ) || preg_match( "/[;&<>\"]/", $arProp["DEFAULT_VALUE"] ) )
+                        $arProp["DEFAULT_VALUE"] = htmlspecialcharsex( $arProp["DEFAULT_VALUE"] );
+                    if( $arProp["VALUE"] !== "" ){
+                        $arProp["ORIGINAL_VALUE"] = array( $arProp["ORIGINAL_VALUE"] );
+                        $arProp["VALUE"] = array( $arProp["VALUE"] );
+                        $arProp["~VALUE"] = array( $arProp["~VALUE"] );
+                        $arProp["DESCRIPTION"] = array( $arProp["DESCRIPTION"] );
+                        $arProp["~DESCRIPTION"] = array( $arProp["~DESCRIPTION"] );
+                        $arProp["PROPERTY_VALUE_ID"] = array( $arProp["PROPERTY_VALUE_ID"] );
+                        if( $arProp["PROPERTY_TYPE"] == "L" ){
+                            $arProp["VALUE_ENUM_ID"] = array( $arProp["VALUE_ENUM_ID"] );
+                            $arProp["VALUE_ENUM"] = array( $arProp["VALUE_ENUM"] );
+                            $arProp["VALUE_XML_ID"] = array( $arProp["VALUE_XML_ID"] );
+                            $arProp["VALUE_SORT"] = array( $arProp["VALUE_SORT"] );
                         }
                     }
-                    else
-                    {
+                    else{
                         $arProp["ORIGINAL_VALUE"] = false;
                         $arProp["VALUE"] = false;
                         $arProp["~VALUE"] = false;
                         $arProp["DESCRIPTION"] = false;
                         $arProp["~DESCRIPTION"] = false;
                         $arProp["PROPERTY_VALUE_ID"] = false;
-                        if($arProp["PROPERTY_TYPE"]=="L")
-                        {
+                        if( $arProp["PROPERTY_TYPE"] == "L" ){
                             $arProp["VALUE_ENUM_ID"] = false;
                             $arProp["VALUE_ENUM"] = false;
                             $arProp["VALUE_XML_ID"] = false;
@@ -1879,14 +1982,13 @@ class CAcritExportproElement {
                     $arAllProps[$PIND] = $arProp;
                 }
             }
-            else
-            {
+            else{
                 $arProp["~NAME"] = $arProp["NAME"];
-                if(preg_match("/[;&<>\"]/", $arProp["NAME"]))
-                    $arProp["NAME"] = htmlspecialcharsex($arProp["NAME"]);
+                if( preg_match( "/[;&<>\"]/", $arProp["NAME"] ) )
+                    $arProp["NAME"] = htmlspecialcharsex( $arProp["NAME"] );
                 $arProp["~DEFAULT_VALUE"] = $arProp["DEFAULT_VALUE"];
-                if(is_array($arProp["DEFAULT_VALUE"]) || preg_match("/[;&<>\"]/", $arProp["DEFAULT_VALUE"]))
-                    $arProp["DEFAULT_VALUE"] = htmlspecialcharsex($arProp["DEFAULT_VALUE"]);
+                if( is_array( $arProp["DEFAULT_VALUE"] ) || preg_match( "/[;&<>\"]/", $arProp["DEFAULT_VALUE"] ) )
+                    $arProp["DEFAULT_VALUE"] = htmlspecialcharsex( $arProp["DEFAULT_VALUE"] );
                 $arAllProps[$PIND] = $arProp;
             }
         }
@@ -2105,7 +2207,10 @@ class CAcritExportproLog{
         }
     }
     
-    public function GetLog( $profileID ){
+    public function GetLog( $profileID, $bSendEmailReport = true ){
+        $dbProfile = new CExportproProfileDB();
+        $arProfile = $dbProfile->GetByID( $profileID );
+        
         $arSessionData = AcritExportproSession::GetAllSession( $profileID );
         $sessionData = array();
         if( !empty( $arSessionData ) ){
@@ -2123,12 +2228,29 @@ class CAcritExportproLog{
             }
             
             $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_ERROR"] = $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS"] - $sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_EXPORT"];
+        }    
+        
+        if( $bSendEmailReport ){
+            $dbProfile = new CExportproProfileDB();
+            $arProfile = $dbProfile->GetByID( $profileID );
+            
+            if( check_email( $arProfile["SEND_LOG_EMAIL"] ) ){
+                $messageTitle = GetMessage( "ACRIT_LOG_SEND_TITLE" ).$arProfile["DOMAIN_NAME"];
+                $messageBlock = GetMessage( "ACRIT_LOG_SEND_OFFERS" ).$sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS"]."\n".
+                GetMessage( "ACRIT_LOG_SEND_OFFERS_TERM" ).$sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_EXPORT"]."\n".
+                GetMessage( "ACRIT_LOG_SEND_OFFERS_ERROR" ).$sessionData["EXPORTPRO"]["LOG"][$profileID]["PRODUCTS_ERROR"]."\n".
+                GetMessage( "ACRIT_LOG_SEND_DATE" ).$sessionData["EXPORTPRO"]["LOG"][$profileID]["LAST_START_EXPORT"]."\n\n".
+                GetMessage( "ACRIT_LOG_SEND_FILE" ).$arProfile["SITE_PROTOCOL"]."://".$arProfile["DOMAIN_NAME"].$sessionData["EXPORTPRO"]["LOG"][$profileID]["FILE"];            
+                
+                bxmail( $arProfile["SEND_LOG_EMAIL"], $messageTitle, $messageBlock );
+            }    
         }
+        
         return $sessionData["EXPORTPRO"]["LOG"][$profileID];
     }
 }
 
-class AcritExportproProtect {
+class AcritExportproProtect{
     static function Protect( $mode, $action ){
         if( $action == "protect" ){
             COption::SetOptionInt( "acrit.exportpro", "acrit.exportpro.mode", intval( $mode ) );

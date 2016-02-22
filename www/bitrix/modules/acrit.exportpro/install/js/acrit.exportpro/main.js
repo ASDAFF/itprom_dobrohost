@@ -22,6 +22,8 @@ $(function(){
         $('#tab_cont_step6').hide();
         $('#tab_cont_step10').hide();
         $('#tab_cont_step13').hide();
+        $('#tab_cont_step16').hide();
+        $('#tab_cont_step17').hide();
         $('#tab_cont_step12').hide();
         switch ($(this).val()) {
             case 'activizm':
@@ -32,7 +34,11 @@ $(function(){
                 $('#tab_cont_step12').show();
                 break;
             case 'ozon':
+                $('#tab_cont_step16').show();
                 $('#tab_cont_step13').show();
+                break;
+            case 'ua_hotline_ua':
+                $('#tab_cont_step17').show();
                 break;
             default:
                 $('#tab_cont_step6').show();
@@ -239,11 +245,17 @@ function ChangeFileType( value ){
         $fieldVal = $( '#URL_DATA_FILE' ).val();
         $fieldVal = $fieldVal.replace( '.xml', '.csv' );
         $( '#URL_DATA_FILE' ).val( $fieldVal );
+        $( '#export_step_value' ).val( 50000 );
+        $( '#export_step_value' ).prop( 'disabled', true );
+        $( '#tr_csv_info' ).show();
     }
     else{
         $fieldVal = $( '#URL_DATA_FILE' ).val();
         $fieldVal = $fieldVal.replace( '.csv', '.xml' );
         $( '#URL_DATA_FILE' ).val( $fieldVal );
+        $( '#export_step_value' ).val( 50 );
+        $( '#export_step_value' ).prop( 'disabled', false );
+        $( '#tr_csv_info' ).hide();
     }
 }
 

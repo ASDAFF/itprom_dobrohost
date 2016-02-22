@@ -28,6 +28,7 @@ $MESS["ACRIT_EXPORTPRO_GOOGLE_MERCHANT_UTM_MEDIUM_VALUE"] = "cpc";
 $MESS["ACRIT_EXPORTPRO_GOOGLE_MERCHANT_UTM_TERM"] = "UTM метка: ключевая фраза";
 $MESS["ACRIT_EXPORTPRO_GOOGLE_MERCHANT_UTM_CONTENT"] = "UTM метка: контейнер для дополнительной информации";
 $MESS["ACRIT_EXPORTPRO_GOOGLE_MERCHANT_UTM_CAMPAIGN"] = "UTM метка: название рекламной кампании";
+$MESS["ACRIT_EXPORTPRO_GOOGLE_MERCHANT_PORTAL_REQUIREMENTS"] = "https://support.google.com/merchants/?hl=ru#topic=3404818";
 $MESS["ACRIT_EXPORTPRO_GOOGLE_MERCHANT_EXAMPLE"] = "
 <item>
     <g:id>TV_123456</g:id>

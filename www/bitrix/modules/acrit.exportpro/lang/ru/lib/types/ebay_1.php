@@ -29,6 +29,7 @@ $MESS["ACRIT_EXPORTPRO_EBAY_1_FIELD_UTM_TERM"] = "UTM метка: ключева
 $MESS["ACRIT_EXPORTPRO_EBAY_1_FIELD_UTM_CONTENT"] = "UTM метка: контейнер для дополнительной информации";
 $MESS["ACRIT_EXPORTPRO_EBAY_1_FIELD_UTM_CAMPAIGN"] = "UTM метка: название рекламной кампании";
 
+$MESS["ACRIT_EXPORTPRO_TYPE_EBAY_1_PORTAL_REQUIREMENTS"] = "http://pages.ebay.com/ru/ru-ru/kak-prodavat-na-ebay-spravka/mip-neobhodimie-dannie.html";
 $MESS["ACRIT_EXPORTPRO_TYPE_EBAY_1_EXAMPLE"] = "
 <?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <ListingArray>
