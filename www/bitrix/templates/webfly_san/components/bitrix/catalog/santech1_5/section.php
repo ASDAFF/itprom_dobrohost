@@ -108,9 +108,9 @@ $this->setFrameMode(true);?>
   <div id="content">
     <div class="c1">
       <?$APPLICATION->IncludeComponent("bitrix:breadcrumb", "catalog", Array(
-          "START_FROM" => "0",	// ����� ������, ������� � �������� ����� ��������� ������������� �������
-          "PATH" => "/catalog/",	// ����, ��� �������� ����� ��������� ������������� ������� (�� ���������, ������� ����)
-          "SITE_ID" => "",	// C��� (��������������� � ������ ������������� ������, ����� DOCUMENT_ROOT � ������ ������)
+          "START_FROM" => "0",
+          "PATH" => "/catalog/",
+          "SITE_ID" => "",
         ),
         false
       );
@@ -143,8 +143,8 @@ $this->setFrameMode(true);?>
         else $sort = $_GET["sort"];
         $sortOrder = $_GET["sort_ord"];
       }else{
-        $sort = $arParams["ELEMENT_SORT_FIELD"];
-        $sortOrder = $arParams["ELEMENT_SORT_ORDER"];
+        $sort = "PROPERTY_DEPTH";//$arParams["ELEMENT_SORT_FIELD"];
+        $sortOrder = "asc";//$arParams["ELEMENT_SORT_ORDER"];
       }
       $sort2 = $arParams["ELEMENT_SORT_FIELD"];
       $sortOrder2 = $arParams["ELEMENT_SORT_ORDER"];
