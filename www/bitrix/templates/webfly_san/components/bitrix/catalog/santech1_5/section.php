@@ -14,7 +14,6 @@
 $arResult["VARIABLES"]["SECTION_CODE_PATH"] = $_REQUEST["SECTION_CODE_PATH"];
 $arResult["VARIABLES"]["SECTION_CODE"] = $_REQUEST["SECTION_CODE"];
 
-
 $this->setFrameMode(true);?>
 <?if ($arParams['USE_FILTER'] == 'Y'){
   $arFilter = array(
@@ -137,8 +136,8 @@ $this->setFrameMode(true);?>
         ),
         $component
         );?>
-      <?if(isset($_REQUEST["view"]) and $_REQUEST["view"] == "list") $sectionTemplate = "list";
-      else $sectionTemplate = "tiles";
+      <?if(isset($_REQUEST["view"]) and $_REQUEST["tiles"] == "tiles") $sectionTemplate = "tiles";
+      else $sectionTemplate = "list";
       if(!empty($_GET["sort"])){
         if($_GET["sort"] == "price") $sort = "catalog_PRICE_1";
         else $sort = $_GET["sort"];
