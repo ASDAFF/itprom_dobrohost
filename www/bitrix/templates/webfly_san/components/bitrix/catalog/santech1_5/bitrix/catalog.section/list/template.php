@@ -139,7 +139,9 @@ if (!empty($arResult['ITEMS'])) {
                 <p>
                   <?
                   $iterator = 1;
+                  //This foreach disabled, may be we will remove it soon
                   foreach($propsList as $value):?>
+                      <? break;?>
                     <?if(!empty($arItem["PROPERTIES"][$value]["VALUE"])):
                       if($iterator%4 == 0) echo "<br/>";?>
                       <span class="text-medium"><?=$arItem["PROPERTIES"][$value]["NAME"]?>:</span>
@@ -147,6 +149,32 @@ if (!empty($arResult['ITEMS'])) {
                       <?$iterator++;?>
                     <?endif;?>
                   <?endforeach;?>
+                  <?
+                    $p = $arItem["PROPERTIES"];
+                  //test_dump($p);
+                  ?>
+
+                  <? if ($p["BRAND_REF"]["NAME"] != null) { ?>
+                  <span class="text-medium">Производитель: </span>
+                  <span class="text-regular"><?=$p["BRAND_REF"]["NAME"]?></span>
+                  <br />
+                  <? } ?>
+
+                  <span class="text-medium">Размеры (ГxШxВ):</span>
+                  <span class="text-regular"><?=$p["DEPTH"]["VALUE"]?>x<?=$p["WIDTH"]["VALUE"]?>x<?=$p["HEIGHT"]["VALUE"]?> мм</span>
+                  <br />
+
+                  <? if ($p["HEAT_POWER"]["VALUE"] != null) { ?>
+                  <span class="text-medium">Мощность нагревателя:</span>
+                  <span class="text-regular"><?=$p["HEAT_POWER"]["VALUE"]?> Вт</span>
+                  <br />
+                  <? } ?>
+
+                  <? if ($p["IP_CLASS"]["VALUE"] != null) { ?>
+                  <span class="text-medium">Класс защиты:</span>
+                  <span class="text-regular"><?=$p["IP_CLASS"]["VALUE"]?></span>
+                  <br />
+                  <? } ?>
                 </p>
               </div>
               <div class="wrap-block">
