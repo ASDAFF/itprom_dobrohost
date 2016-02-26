@@ -88,7 +88,7 @@
 .icon-fb { background-position: -90px 0 !important; }
 .icon-twitter { background-position: -90px -40px !important; }
 .icon-youtube { background-position: -80px -80px !important; }
-.small-text { font-size: 12px; font-weight: normal; }
+.small-text { font-size: 14px; font-weight: normal; }
 .icon-vk, .icon-fb, .icon-twitter { width: 25px; margin-right: 0; }
 .header-phone { margin-right: 30px; margin-top: -10px; font-size: 22px;}
 .header-phone a { text-decoration: underline !important; display: block;}
