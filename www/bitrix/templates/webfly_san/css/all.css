@@ -711,7 +711,7 @@ form,fieldset{
 #nav > li > a > span{
 	display:inline-block;
 	vertical-align:middle;
-	color:#222;
+	color: #1277a5;
 }
 *+ html #nav > li > a > span > em{
 	display:block;
