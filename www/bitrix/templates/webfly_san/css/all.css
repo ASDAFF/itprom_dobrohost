@@ -678,7 +678,6 @@ form,fieldset{
 	padding:0;
 	height: 62px;
 	-webkit-font-smoothing: subpixel-antialiased;
-	color: #1277a5;
 	font-weight: bold;
 }
 #nav > li{
@@ -2939,6 +2938,7 @@ h5{
 #nav > li > a {
 	height: 58px;
 	padding: 5px 0 0;
+	color: #1277a5;
 }
 
 /*Edited October, 14 by Vanya */
