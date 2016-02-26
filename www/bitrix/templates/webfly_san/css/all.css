@@ -678,7 +678,6 @@ form,fieldset{
 	padding:0;
 	height: 62px;
 	-webkit-font-smoothing: subpixel-antialiased;
-	color: #1277a5;
 	font-weight: bold;
 }
 #nav > li{
@@ -707,12 +706,12 @@ form,fieldset{
 	display:block;
 	height: 53px;
 	padding: 9px 0 0;
-	color:#222;
+	color: #1277a5;
 }
 #nav > li > a > span{
 	display:inline-block;
 	vertical-align:middle;
-	color:#222;
+	color: #1277a5;
 }
 *+ html #nav > li > a > span > em{
 	display:block;
