@@ -677,7 +677,9 @@ form,fieldset{
 	margin:0;
 	padding:0;
 	height: 62px;
-	-webkit-font-smoothing: subpixel-antialiased
+	-webkit-font-smoothing: subpixel-antialiased;
+	color: #1277a5;
+	font-weight: bold;
 }
 #nav > li{
 	position:relative;
@@ -812,6 +814,7 @@ body > .drop-nav{
 }
 .drop-nav ul{
 	font: 18px/16px 'ubuntulight', Arial, Helvetica, sans-serif;
+	font-weight: bold;
 	margin:0;
 	padding:0;
 	list-style:none;
