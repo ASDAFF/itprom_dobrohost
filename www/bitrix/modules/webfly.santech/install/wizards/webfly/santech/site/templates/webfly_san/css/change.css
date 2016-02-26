@@ -493,7 +493,9 @@ ul.top_categories li:last-child .cat-img { right: 0; }
 .sale-header { text-align: left; background: #419dd0; padding-bottom: 5px; color: #fff;}
 .sale-header h4 { margin-bottom: 0; color: #fff;}
 .sale-container { background: #fff; margin: 10px 10px 10px 9px; }
+/*
 .small-text { font-size: 11px; }
+*/
 #counter { width: 135px;
 			height: 49px;
 			padding: 10px 5px 0;
