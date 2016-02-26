@@ -706,7 +706,7 @@ form,fieldset{
 	display:block;
 	height: 53px;
 	padding: 9px 0 0;
-	color:#222;
+	color: #1277a5;
 }
 #nav > li > a > span{
 	display:inline-block;
@@ -2938,7 +2938,6 @@ h5{
 #nav > li > a {
 	height: 58px;
 	padding: 5px 0 0;
-	color: #1277a5;
 }
 
 /*Edited October, 14 by Vanya */
