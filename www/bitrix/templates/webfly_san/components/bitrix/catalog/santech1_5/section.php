@@ -136,7 +136,7 @@ $this->setFrameMode(true);?>
         ),
         $component
         );?>
-      <?if(isset($_REQUEST["view"]) and $_REQUEST["tiles"] == "tiles") $sectionTemplate = "tiles";
+      <?if(isset($_REQUEST["view"]) and $_REQUEST["views"] == "tiles") $sectionTemplate = "tiles";
       else $sectionTemplate = "list";
       if(!empty($_GET["sort"])){
         if($_GET["sort"] == "price") $sort = "catalog_PRICE_1";
