@@ -331,7 +331,7 @@ function JCTitleSearch(arParams)
 		}
 		else
 		{
-			_this.RESULT.style.position = 'absolute';
+			_this.RESULT.style.position = 'fixed';
 			pos = BX.pos(_this.CONTAINER);
 		}
 		pos.width = pos.right - pos.left;
