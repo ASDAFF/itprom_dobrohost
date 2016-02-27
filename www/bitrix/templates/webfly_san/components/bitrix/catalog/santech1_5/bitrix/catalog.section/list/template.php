@@ -156,11 +156,11 @@ if (!empty($arResult['ITEMS'])) {
                   //test_dump($p);
                   ?>
 
-                  <? if ($p["BRAND_REF"]["NAME"] != null) { ?>
+                  <?/* if ($p["BRAND_REF"]["NAME"] != null) { */?><!--
                   <span class="text-medium">Производитель: </span>
-                  <span class="text-regular"><?=$p["BRAND_REF"]["VALUE"]?></span>
+                  <span class="text-regular"><?/*=$p["BRAND_REF"]["VALUE"]*/?></span>
                   <br />
-                  <? } ?>
+                  --><?/* } */?>
 
                   <span class="text-medium">Размеры (ГxШxВ):</span>
                   <span class="text-regular"><?=$p["DEPTH"]["VALUE"]?>x<?=$p["WIDTH"]["VALUE"]?>x<?=$p["HEIGHT"]["VALUE"]?> мм</span>
