@@ -13,9 +13,9 @@ $listUrl = str_replace('#BLOCK_ID#', intval($arParams['BLOCK_ID']),	$arParams['L
     $myRow = $arResult['row'];
     $GLOBALS['APPLICATION']->SetTitle(GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD",array("#BRAND_NAME#" => $myRow["UF_NAME"])));
     ?>
+	  <h1><?= GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD",array("#BRAND_NAME#" => $myRow["UF_NAME"]))?></h1>
       <div class="brand_photo_holder"><img src="<?= $myRow["UF_FILE"]?>"/></div>
-  <h1><?= GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD",array("#BRAND_NAME#" => $myRow["UF_NAME"]))?></h1>
-  <div class="brand_info"><p class="brand_announce"><?= $myRow["UF_DESCRIPTION"] ?></p>
+      <div class="brand_info"><p class="brand_announce"><?= $myRow["UF_DESCRIPTION"] ?></p>
       <p><?= $myRow["UF_FULL_DESCRIPTION"] ?></p>
 		</div>
 	<div class="clearfix">&nbsp;</div>
