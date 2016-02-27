@@ -238,7 +238,7 @@ require_once 'settings.php';
 					</span>
 				</span>
             </div>
-            <? $APPLICATION->IncludeComponent("bitrix:search.title", "stitle", Array(
+            <? $APPLICATION->IncludeComponent("bitrix:search.title", "visual", Array(
                     "SHOW_INPUT" => "Y",
                     "INPUT_ID" => "title-search-input",
                     "CONTAINER_ID" => "title-search",
