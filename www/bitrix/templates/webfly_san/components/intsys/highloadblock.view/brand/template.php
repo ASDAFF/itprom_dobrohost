@@ -26,8 +26,8 @@ $listUrl = str_replace('#BLOCK_ID#', intval($arParams['BLOCK_ID']), $arParams['L
         <div class="clearfix">&nbsp;</div>
         <h3 style="margin-bottom: 0;"><?= GetMessage("HLBLOCK_ROW_VIEW_PRODUCTION") ?>:</h3>
     </div>
-<? if (isset($_REQUEST["view"]) and $_REQUEST["view"] == "list") $sectionTemplate = "list";
-else $sectionTemplate = "tiles";
+<? if (isset($_REQUEST["view"]) and $_REQUEST["view"] == "tiles") $sectionTemplate = "tiles";
+else $sectionTemplate = "list";
 if (!empty($_GET["sort"])) {
     if ($_GET["sort"] == "price") $sort = "catalog_PRICE_1";
     else $sort = $_GET["sort"];
