@@ -21,5 +21,7 @@ p.main-h2-title-type01{
     padding-top: 11px;
     display: block;
     font-size: x-large;
+}
+.callback a {
     color: #fe6869 ;
 }
