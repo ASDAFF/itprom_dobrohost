@@ -305,7 +305,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
                             }
 
                             .box-hide {
-                                max-height: 135px;
+                                max-height: 300px;
                             }
 
                             .text-description-more {
