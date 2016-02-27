@@ -908,7 +908,7 @@ if (!is_array($arResult["ELEMENTS_LIST"]) || empty($arResult["ELEMENTS_LIST"]))
 				$io = CBXVirtualIo::GetInstance();
 				$fName = $io->ExtractNameFromPath($obFile["SRC"]);
 				$fPath = $io->ExtractPathFromPath($obFile["SRC"]);
-				$obFile["SRC"] = $fPath.'/'.urlencode($fName);
+				$obFile["SRC"] = $fPath.'/'.strtr($fName, array('%' => '%25', '#' => '%23', '?' => '%3F'));
 
 				if($ind = $arThumbsIndex[$fileId])
 				{

@@ -21,17 +21,17 @@ $profileTypes['wikimart_book'] = array(
 			"VALUE" => "",
             'TYPE' => 'const',
             "CONDITION" => array(
-                'CLASS_ID' => 'CondGroup',
-                'DATA' => array(
-                    'All' => 'AND',
-                    'True' => 'True'
+                "CLASS_ID" => "CondGroup",
+                "DATA" => array(
+                    "All" => "AND",
+                    "True" => "True"
                 ),
-                'CHILDREN' => array(
+                "CHILDREN" => array(
                     array(
-                        'CLASS_ID' => 'CondIBActive',
-                        'DATA' => array(
-                                'logic' => 'Equal',
-                                'value' => 'Y'
+                        "CLASS_ID" => "CondCatQuantity",
+                        "DATA" => array(
+                                "logic" => "EqGr",
+                                "value" => "1"
                         )
                     )
                 )
@@ -55,11 +55,15 @@ $profileTypes['wikimart_book'] = array(
 			"CODE" => "PRICE",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_WIKIMART_BOOK_FIELD_PRICE"),
 			"REQUIRED" => 'Y',
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
 		array(
 			"CODE" => "CURRENCYID",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_WIKIMART_BOOK_FIELD_CURRENCY"),
 			"REQUIRED" => 'Y',
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "RUR",
 		),
 		array(
 			"CODE" => "CATEGORYID",
@@ -190,24 +194,37 @@ $profileTypes['wikimart_book'] = array(
 	"DATEFORMAT" => "Y-m-d_h:i",
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['wikimart_book']["FIELDS"][4] = array(
+        "CODE" => "PRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_WIKIMART_BOOK_FIELD_PRICE"),
+        "REQUIRED" => 'Y',
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+}
+
 $profileTypes['wikimart_book']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_WIKIMART_BOOK_EXAMPLE');
 
 $profileTypes['wikimart_book']['CURRENCIES'] =
-    "<currency id='#CURRENCY#' rate='#RATE#' plus='#PLUS#'></currency>" . PHP_EOL;
+    "<currency id='#CURRENCY#' rate='#RATE#' />" . PHP_EOL;
 
 $profileTypes['wikimart_book']['SECTIONS'] =
     "<category id='#ID#'>#NAME#</category>" . PHP_EOL;
 
 $profileTypes['wikimart_book']['ITEMS_FORMAT'] = "
-<offer id=\"#ID#\" type=\"book\" available=\"#AVAILABLE#\" bid=\"#BID#\">
+<offer id=\"#ID#\" type=\"book\" available=\"#AVAILABLE#\">
     <url>#SITE_URL##URL#?utm_source=#UTM_SOURCE#&amp;utm_medium=#UTM_MEDIUM#&amp;utm_term=#UTM_TERM#&amp;utm_content=#UTM_CONTENT#&amp;utm_campaign=#UTM_CAMPAIGN#</url>
     <price>#PRICE#</price>
     <currencyId>#CURRENCYID#</currencyId>
     <categoryId>#CATEGORYID#</categoryId>
-    <market_category>#MARKET_CATEGORY#</market_category>
-    <picture>#SITE_URL##PICTURE#</picture>
-    <store>#STORE#</store>
-    <pickup>#PICKUP#</pickup>
+    <local_delivery_cost>#LOCAL_DELIVERY_COST#</local_delivery_cost>
     <author>#AUTHOR#</author>
     <name>#NAME#</name>
     <publisher>#PUBLISHER#</publisher>
@@ -219,8 +236,24 @@ $profileTypes['wikimart_book']['ITEMS_FORMAT'] = "
     <language>#LANGUAGE#</language>
     <binding>#BINDING#</binding>
     <page_extent>#PAGE_EXTENT#</page_extent>
-    <table_of_contents>#TABLE_OF_CONTENTS#</table_of_contents>
     <description>#DESCRIPTION#</description>
+    
+    <picture>#SITE_URL##PICTURE#</picture>
+    <store>#STORE#</store>
+    <pickup>#PICKUP#</pickup>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <table_of_contents>#TABLE_OF_CONTENTS#</table_of_contents>
+    
     <age>#AGE#</age>
 </offer>
 ";

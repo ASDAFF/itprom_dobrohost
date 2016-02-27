@@ -1,8 +1,4 @@
 <?
-$MESS["ACRIT_EXPORTPRO_OP_OZON_TITLE"] = "Настройки торговой площадки Ozon.ru";
-$MESS["ACRIT_EXPORTPRO_OP_OZON_APPID"] = "ApplicationId: ";
-$MESS["ACRIT_EXPORTPRO_OP_OZON_APPKEY"] = "Cекретный ключ приложения: ";
-$MESS["ACRIT_EXPORTPRO_OP_GENERAL_SETUP"] = "Общие настройки";
 $MESS["ACRIT_EXPORTPRO_OP_PHP_PATH"] = "Путь к php:";
 $MESS["MAIN_TAB_SUPPORT"] = "Техподдержка";
 $MESS["MAIN_TAB_TITLE_SUPPORT"] = "Техподдержка";

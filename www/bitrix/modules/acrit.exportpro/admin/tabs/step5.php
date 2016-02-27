@@ -41,6 +41,7 @@ $idCnt = 0;
             $deleteOnEmpty = $field['DELETE_ONEMPTY'] == 'N' ? '' : 'checked="checked"';
             $htmlEncode = $field['HTML_ENCODE'] == 'N' ? '' : 'checked="checked"';
             $htmlToTxt = $field['HTML_TO_TXT'] == 'N' ? '' : 'checked="checked"';
+            $skipUntermElement = $field['SKIP_UNTERM_ELEMENT'] == 'N' ? '' : 'checked="checked"';
             $urlEncode = $field['URL_ENCODE'] == 'Y' ? 'checked="checked"' : '';
             $convertCase = $field['CONVERT_CASE'] == 'Y' ? 'checked="checked"' : '';
         ?>
@@ -76,38 +77,51 @@ $idCnt = 0;
                 </div>
                 <span class="fieldset-item-delete">&times</span>
                 <div style="margin: 10px 0px 10px 15px;">
+                    <span id="hint_EXPORTPRO_FIELDSET_REQUIRED"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_EXPORTPRO_FIELDSET_REQUIRED' ), '<?=GetMessage( "ACRIT_EXPORTPRO_FIELDSET_REQUIRED_HELP" )?>' );</script>
                     <input type="checkbox" name="PROFILE[XMLDATA][<?=$id?>][REQUIRED]" value="Y" <?=$required?> />
                     <label for="PROFILE[XMLDATA][<?=$id?>][REQUIRED]"><?=GetMessage('ACRIT_EXPORTPRO_FIELDSET_REQUIRED')?></label>
                     
                     <div style="height: 5px;">&nbsp;</div>
                     
+                    <span id="hint_EXPORTPRO_FIELDSET_CONDITION"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_EXPORTPRO_FIELDSET_CONDITION' ), '<?=GetMessage( "ACRIT_EXPORTPRO_FIELDSET_CONDITION_HELP" )?>' );</script>
                     <input type="checkbox" name="PROFILE[XMLDATA][<?=$id?>][USE_CONDITION]" <?=$useCondition?> value="Y" data-id="<?=$id?>" onclick="ShowConditionBlock(this, <?=$idCnt?>)"/>
                     <label for="PROFILE[XMLDATA][<?=$id?>][USE_CONDITION]"><?=GetMessage('ACRIT_EXPORTPRO_FIELDSET_CONDITION')?></label>
                     
                     <div style="height: 5px;">&nbsp;</div>
                     
+                    <span id="hint_EXPORTPRO_FIELDSET_DELETE_ONEMPTY"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_EXPORTPRO_FIELDSET_DELETE_ONEMPTY' ), '<?=GetMessage( "ACRIT_EXPORTPRO_FIELDSET_DELETE_ONEMPTY_HELP" )?>' );</script>
                     <input type="checkbox" name="PROFILE[XMLDATA][<?=$id?>][DELETE_ONEMPTY]" <?=$deleteOnEmpty?> value="Y">
                     <label for="PROFILE[XMLDATA][<?=$id?>][DELETE_ONEMPTY]"><?=GetMessage('ACRIT_EXPORTPRO_FIELDSET_DELETE_ONEMPTY')?></label>
                     
                     <div style="height: 5px;">&nbsp;</div>
                     
+                    <span id="hint_EXPORTPRO_FIELDSET_URL_ENCODE"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_EXPORTPRO_FIELDSET_URL_ENCODE' ), '<?=GetMessage( "ACRIT_EXPORTPRO_FIELDSET_URL_ENCODE_HELP" )?>' );</script>
                     <input type="checkbox" name="PROFILE[XMLDATA][<?=$id?>][URL_ENCODE]" <?=$urlEncode?> value="Y">
                     <label for="PROFILE[XMLDATA][<?=$id?>][URL_ENCODE]"><?=GetMessage('ACRIT_EXPORTPRO_FIELDSET_URL_ENCODE')?></label>
                     
                     <div style="height: 5px;">&nbsp;</div>
-                                        
+                    
+                    <span id="hint_EXPORTPRO_FIELDSET_CONVERT_CASE"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_EXPORTPRO_FIELDSET_CONVERT_CASE' ), '<?=GetMessage( "ACRIT_EXPORTPRO_FIELDSET_CONVERT_CASE_HELP" )?>' );</script>                    
                     <input type="checkbox" name="PROFILE[XMLDATA][<?=$id?>][CONVERT_CASE]" <?=$convertCase?> value="Y">
                     <label for="PROFILE[XMLDATA][<?=$id?>][CONVERT_CASE]"><?=GetMessage('ACRIT_EXPORTPRO_FIELDSET_CONVERT_CASE')?></label>
                     
                     <div style="height: 5px;">&nbsp;</div>
                     
+                    <span id="hint_EXPORTPRO_FIELDSET_HTML_ENCODE"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_EXPORTPRO_FIELDSET_HTML_ENCODE' ), '<?=GetMessage( "ACRIT_EXPORTPRO_FIELDSET_HTML_ENCODE_HELP" )?>' );</script>
                     <input type="checkbox" name="PROFILE[XMLDATA][<?=$id?>][HTML_ENCODE]" <?=$htmlEncode?> value="Y">
                     <label for="PROFILE[XMLDATA][<?=$id?>][HTML_ENCODE]"><?=GetMessage('ACRIT_EXPORTPRO_FIELDSET_HTML_ENCODE')?></label>
                     
                     <div style="height: 5px;">&nbsp;</div>
                     
+                    <span id="hint_EXPORTPRO_FIELDSET_HTML_TO_TXT"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_EXPORTPRO_FIELDSET_HTML_TO_TXT' ), '<?=GetMessage( "ACRIT_EXPORTPRO_FIELDSET_HTML_TO_TXT_HELP" )?>' );</script>
                     <input type="checkbox" name="PROFILE[XMLDATA][<?=$id?>][HTML_TO_TXT]" <?=$htmlToTxt?> value="Y">
                     <label for="PROFILE[XMLDATA][<?=$id?>][HTML_TO_TXT]"><?=GetMessage('ACRIT_EXPORTPRO_FIELDSET_HTML_TO_TXT')?></label>
+                    
+                    <div style="height: 5px;">&nbsp;</div>
+                    
+                    <span id="hint_EXPORTPRO_FIELDSET_SKIP_UNTERM_ELEMENT"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_EXPORTPRO_FIELDSET_SKIP_UNTERM_ELEMENT' ), '<?=GetMessage( "ACRIT_EXPORTPRO_FIELDSET_SKIP_UNTERM_ELEMENT_HELP" )?>' );</script>
+                    <input type="checkbox" name="PROFILE[XMLDATA][<?=$id?>][SKIP_UNTERM_ELEMENT]" <?=$skipUntermElement?> value="Y">
+                    <label for="PROFILE[XMLDATA][<?=$id?>][SKIP_UNTERM_ELEMENT]"><?=GetMessage('ACRIT_EXPORTPRO_FIELDSET_SKIP_UNTERM_ELEMENT')?></label>
                 </div>
                 <div id="PROFILE_XMLDATA_<?=$id?>_CONDITION" class="condition-block <?=$hideCondition?>">
                 <?

@@ -43,10 +43,9 @@ class CAcritExportproExport{
         //    self::$fileExport = $_SERVER["DOCUMENT_ROOT"].$this->profile["SETUP"]["URL_DATA_FILE"]."export_".date( "d_m_Y_H_i" ).".xml";
         //else
         //    self::$fileExport = $_SERVER["DOCUMENT_ROOT"].$this->profile["SETUP"]["URL_DATA_FILE"];
-
+                                         
         self::$fileExport = $_SERVER["DOCUMENT_ROOT"].$this->profile["SETUP"]["URL_DATA_FILE"];
-        self::$fileExportUrl = ( ( CMain::IsHTTPS() ) ? "https://" : "http://" ).$this->profile["DOMAIN_NAME"].$this->profile["SETUP"]["URL_DATA_FILE"];
-        //self::$fileExportUrl = ( ( CMain::IsHTTPS() ) ? "https://" : "http://" )."akrit.face71.tmweb.ru".$this->profile["SETUP"]["URL_DATA_FILE"];
+        self::$fileExportUrl = $this->profile["SITE_PROTOCOL"]."://".$this->profile["DOMAIN_NAME"].$this->profile["SETUP"]["URL_DATA_FILE"];
         $this->originalName = self::$fileExport;
         if( empty( self::$fileExport ) || self::$fileExport == $_SERVER["DOCUMENT_ROOT"] ){
             if( !$exportstep || ( $exportstep == 1 ) ){
@@ -64,6 +63,7 @@ class CAcritExportproExport{
             CheckDirPath( dirname( self::$fileExport )."/" );
             $this->dynamicDownload = true;
         }
+        
         AcritExportproSession::SetSession( $profileID, $sessionData );
     }
 
@@ -123,6 +123,7 @@ class CAcritExportproExport{
         }
 
         $profileUtils = new CExportproProfile();
+        $profileUtils->GetProfileData();
         
         if( CModule::IncludeModule( "catalog" ) ){
             $obCond = new CAcritExportproCatalogCond();
@@ -192,7 +193,7 @@ class CAcritExportproExport{
             }
             if( !$allPages && $allPages != -1 && !$cronrun ){
                 $exportstep++;
-                $this->profile["LOG"] = $log->GetLog( $this->profile["ID"] );
+                $this->profile["LOG"] = $log->GetLog( $this->profile["ID"], false );
                 $this->dbMan->Update( $this->profile["ID"], $this->profile );
                 echo "<script>window.location=\"", $APPLICATION->GetCurPageParam( "exportstep=$exportstep", array( "exportstep", "unlock" ) ), "\"</script>";
                 die();
@@ -225,19 +226,23 @@ class CAcritExportproExport{
 				}
 								
 				$dateGenerate = ( $this->profile["DATEFORMAT"] == $basePatern ) ? $elementsObj->GetYandexDateTime( date( "d.m.Y H:i:s" ) ) : date( str_replace( "_", " ", $this->profile["DATEFORMAT"] ), time() );                
-				
+				                  
+                $currencyXML = ( $this->profile["TYPE"] == "ua_hotline_ua" ) ? 
+                                $this->GetUAHRate( $elementsObj->GetCurrencies() ) : 
+                                ( ( CModule::IncludeModule( "catalog" ) ) ? $this->GetCurrencyXML( $elementsObj->GetCurrencies() ) : "RUR" );
+                                           
                 $defaultFields = array(
                     "#ENCODING#" => $this->profileEncoding[$this->profile["ENCODING"]],
                     "#DATE#" => $this->profile["DATEFORMAT"],
                     "#SHOP_NAME#" => $this->profile["SHOPNAME"],
                     "#COMPANY_NAME#" => $this->profile["COMPANY"],
-                    "#SITE_URL#" => ( ( CMain::IsHTTPS() ) ? "https://" : "http://" ).$this->profile["DOMAIN_NAME"],
+                    "#SITE_URL#" => $this->profile["SITE_PROTOCOL"]."://".$this->profile["DOMAIN_NAME"],
                     "#DESCRIPTION#" => $this->profile["DESCRIPTION"],
                     "#CATEGORY#" => $this->GetCategoryXML( $elementsObj->GetSections() ),
-                    "#CURRENCY#" => ( CModule::IncludeModule( "catalog" ) ) ? $this->GetCurrencyXML( $elementsObj->GetCurrencies() ) : "RUR",
+                    "#CURRENCY#" => $currencyXML,
                     "#DATE#" => $dateGenerate,
                 );      
-                
+                               
                 $xmlHeader = explode( "#ITEMS#", $this->profile["FORMAT"] );
                 $xmlHeader[0] = str_replace( array_keys( $defaultFields ), array_values( $defaultFields ), $xmlHeader[0] );
                 $xmlHeader[1] = str_replace( array_keys( $defaultFields ), array_values( $defaultFields ), $xmlHeader[1] );
@@ -255,11 +260,37 @@ class CAcritExportproExport{
                 $this->Unlock();
                 AcritExportproSession::DeleteSession( $this->profile["ID"] );
 
+                if( $this->profile["USE_COMPRESS"] == "Y" ){
+                    $zipPath = ( stripos( $this->originalName, "xml" ) !== false ) ? str_replace( "xml", "zip", $this->originalName ) : str_replace( "csv", "zip", $this->originalName );
+                    $packarc = CBXArchive::GetArchive( $zipPath );
+                    
+                    $fileQuickPath = str_replace( $_SERVER["DOCUMENT_ROOT"], "", $this->originalName );
+                    $arFileQuickPath = explode( "/", $fileQuickPath );
+                    $fileQuickPathToDelete = "";
+                    foreach( $arFileQuickPath as $filePathPartIndex => $filePathPart ){
+                        if( $filePathPartIndex < count( $arFileQuickPath ) - 1 ){
+                            $fileQuickPathToDelete .= $filePathPart."/";
+                        }
+                    }
+                    
+                    $packarc->SetOptions(
+                        array(
+                            "COMPRESS" => true,
+                            "STEP_TIME" => COption::GetOptionString( "fileman", "archive_step_time", 30 ),
+                            "ADD_PATH" => false,
+                            "REMOVE_PATH" => $_SERVER["DOCUMENT_ROOT"].$fileQuickPathToDelete,
+                            "CHECK_PERMISSIONS" => false
+                        )
+                    );
+                    $pArcResult = $packarc->Pack( $this->originalName );
+                    LocalRedirect( str_replace( $_SERVER["DOCUMENT_ROOT"], "", $zipPath ) );
+                }
+                                   
                 if( !$cronrun )
                     LocalRedirect( str_replace( $_SERVER["DOCUMENT_ROOT"], "", $this->originalName ) );
                 
                 //LocalRedirect($APPLICATION->GetCurPageParam("end=Y", array("page")));
-                die();
+                //die();
             }
         }
 
@@ -283,7 +314,88 @@ class CAcritExportproExport{
     public function isLock()
     {
         return file_exists($this->lockDir."export_{$this->profile['ID']}_run.lock");  
+    }                         
+    
+    private function GetUAHRate(){
+        $baseCurrency = CCurrency::GetBaseCurrency();
+        
+        $currencyRates = CExportproProfile::LoadCurrencyRates();
+        $CURRENCIES = array();
+        if($this->profile['CURRENCY']['CONVERT_CURRENCY'] == 'Y')
+        {
+            $currencyTo = array();
+            foreach($currencies as $curr)
+            {
+                $curr2 = $this->profile['CURRENCY'][$curr]['CHECK'] == 'Y' ? $this->profile['CURRENCY'][$curr]['CONVERT_TO'] : $curr;
+                $rate = $baseCurrency == $curr2;
+                if($rate)
+                {
+                    $rate = 1;
+                }
+                else
+                {
+                    if(!key_exists($this->profile['CURRENCY'][$curr]['RATE'], $currencyRates))
+                    {
+                        $rate = CCurrencyRates::ConvertCurrency(1, $this->profile['CURRENCY'][$curr]['CONVERT_TO'], $baseCurrency);
+                    }
+                    else
+                    {
+                        $rate = $this->profile['CURRENCY'][$curr]['RATE'];
+                    }
+                }
+                foreach($currencyTo as $acur)
+                {
+                    if($acur['CURRENCY'] == $curr2)
+                        continue 2;
+                }
+                $currencyTo[] = array(
+                    'CURRENCY' => $curr2,
+                    'RATE' => $rate,
+                    'PLUS' => $this->profile['CURRENCY'][$curr]['PLUS'],
+                );
+            }
+            $currencies = $currencyTo;
+            unset($currencyTo);
+        }
+        else
+        {
+            $currencyTo = array();
+            foreach($currencies as $curr)
+            {
+                $rate = $baseCurrency == $curr;
+                if($rate)
+                {
+                    $rate = 1;
+                }
+                else
+                {
+                    if(!key_exists($this->profile['CURRENCY'][$curr]['RATE'], $currencyRates))
+                    {
+                        $rate = CCurrencyRates::ConvertCurrency(1, $curr, $baseCurrency);
+                    }
+                    else
+                    {
+                        $rate = $this->profile['CURRENCY'][$curr]['RATE'];
+                    }
+                }
+                foreach($currencyTo as $acur)
+                {
+                    if($acur['CURRENCY'] == $curr2)
+                        continue 2;
+                }
+                $currencyTo[] = array(
+                    'CURRENCY' => $curr,
+                    'RATE' => $rate,
+                    'PLUS' => $this->profile['CURRENCY'][$curr]['PLUS'],
+                );
+            }
+            $currencies = $currencyTo;
+            unset($currencyTo);
+        }
+        
+        return $rate;
     }
+     
     private function GetCurrencyXML($currencies)
     {
         $baseCurrency = CCurrency::GetBaseCurrency();
@@ -373,23 +485,43 @@ class CAcritExportproExport{
     }
     
     private function GetCategoryXML( $sections ){
+        $arTerminalPathSections = array();
+        foreach( $sections as $sectionId ){
+            $dbSectionList = CIBlockSection::GetNavChain(
+                false,
+                $sectionId
+            );
+            
+            while( $arSectionPath = $dbSectionList->GetNext() ){
+                $arTerminalPathSections[] = $arSectionPath["ID"];
+            }    
+        }
+        
+        sort( $arTerminalPathSections );
+        $arTerminalPathSections = array_unique( $arTerminalPathSections );
+        
         $sections = array_filter( $sections );
         if( empty( $sections ) )
             return "";
             
         $CATEGORIES = array();
+        
         $fields = array(
             "ID" => "ID",
             "NAME" => "NAME",
             "IBLOCK_SECTION_ID" => "PARENT_ID",
         );
+        
+        $arSectionFilter = array();
+        if( $this->profile["EXPORT_PARENT_CATEGORIES"] != "Y" ){
+            $arSectionFilter["ID"] = $sections;
+        }
+        
         $dbSection = CIBlockSection::GetList(
             array(
                 "ID" => "ASC"
             ),
-            array(
-                "ID" => $sections
-            ),
+            $arSectionFilter,
             false,
             array(
                 "ID",
@@ -398,16 +530,21 @@ class CAcritExportproExport{
             )
         );
         while( $arSection = $dbSection->GetNext() ){
+            if( !in_array( $arSection["ID"], $arTerminalPathSections ) ){
+                continue;
+            }
+            
             $sectionTempalte = $this->profile["CATEGORY_TEMPLATE"];
             
             if( $this->profile["EXPORT_PARENT_CATEGORIES"] == "Y" ){
                 $innerXmlCategory = simplexml_load_string( $sectionTempalte );
+                
                 if( $innerXmlCategory ){
                     $innerXmlCategory->addAttribute( "parentId", "#PARENT_ID#" );
                     $sectionInnerTempalte = str_replace( '<?xml version="1.0"?>', "", $innerXmlCategory->asXML() );
                 }    
             }
-                        
+            
             foreach( $arSection as $id => $value ){
                 $sectionFields["#$fields[$id]#"] = htmlspecialcharsbx( html_entity_decode( $value ) );
             }
@@ -453,10 +590,12 @@ class CAcritExportproExport{
         }
         elseif( $mode == self::PREPEND ){
             //$preData = file_get_contents( self::$fileExportUrl );
-            $preData = file_get_contents( self::$fileExport );
-            file_put_contents( self::$fileExport, $data );
-            file_put_contents( self::$fileExport, $preData, FILE_APPEND );
-            unset( $preData );    
+            //if( file_exists( self::$fileExport ) ){
+                $preData = file_get_contents( self::$fileExport );
+                file_put_contents( self::$fileExport, $data );
+                file_put_contents( self::$fileExport, $preData, FILE_APPEND );
+                unset( $preData );    
+            //}
         }
         else{
             file_put_contents( self::$fileExport, $data );

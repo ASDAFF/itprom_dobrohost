@@ -117,6 +117,7 @@ $MESS["ACRIT_EXPORTPRO_REALTY_FIELD_UTM_MEDIUM_VALUE"] = "cpc";
 $MESS["ACRIT_EXPORTPRO_REALTY_FIELD_UTM_TERM"] = "UTM метка: ключевая фраза";
 $MESS["ACRIT_EXPORTPRO_REALTY_FIELD_UTM_CONTENT"] = "UTM метка: контейнер для дополнительной информации";
 $MESS["ACRIT_EXPORTPRO_REALTY_FIELD_UTM_CAMPAIGN"] = "UTM метка: название рекламной кампании";
+$MESS["ACRIT_EXPORTPRO_TYPE_REALTY_PORTAL_REQUIREMENTS"] = "https://yandex.ru/support/realty/partners/requirements.xml";
 $MESS["ACRIT_EXPORTPRO_TYPE_REALTY_EXAMPLE"] = "
 <offer internal-id=\"7\">
     <type>продажа</type>

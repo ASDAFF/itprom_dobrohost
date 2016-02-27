@@ -31,7 +31,7 @@ $MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_STORE"] = "Покупка соо
 $MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_PICKUP"] = "Возможность зарезервировать выбранный товар и забрать его самостоятельно<br>Возможные значения: true, false";
 $MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_DELIVERY"] = "Возможность доставки<br>Возможные значения: true, false";
 $MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_LOCALDELIVERYCOST"] = "Стоимость доставки данного товара в своем регионе";
-$MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_LOCALDELIVERYDAYS"] = "Сроки доставки данного товара в своем регионе в рабочих днях. Если магазин готов доставить товары в день заказа (сегодня), используйте значение 0.";
+$MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_LOCALDELIVERYDAYS"] = "Сроки доставки данного товара в своем регионе в рабочих днях. Если магазин готов доставить товары в день заказа (сегодня), используйте значение 0.<br><br> <b>Внимание!</b><br>Убедитесь, что на странице партнерского интерфейса Информация о доставке выбран вариант Данные в прайс-листе. Чтобы попасть на страницу, нажмите ссылку изменить напротив параметра Стоимость доставки в своем регионе на странице Настройки -> Параметры размещения.";
 $MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_VENDOR"] = "Производитель. Не отображается в названии предложения";
 $MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_VENDORCODE"] = "Код товара (указывается код производителя)";
 $MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_SALESNOTES"] = "Элемент используется для отражения информации<br>о минимальной сумме заказа, минимальной партии<br>товара или необходимости предоплаты, а так же для<br>описания акций, скидок и распродаж.<br>Допустимая длина текста в элементе — 50 символов";
@@ -54,6 +54,7 @@ $MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_UTM_MEDIUM_VALUE"] = "cpc";
 $MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_UTM_TERM"] = "UTM метка: ключевая фраза";
 $MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_UTM_CONTENT"] = "UTM метка: контейнер для дополнительной информации";
 $MESS["ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_UTM_CAMPAIGN"] = "UTM метка: название рекламной кампании";
+$MESS["ACRIT_EXPORTPRO_TYPE_MARKET_VENDORMODEL_PORTAL_REQUIREMENTS"] = "https://yandex.ru/support/partnermarket/offers.xml#vendor";
 $MESS["ACRIT_EXPORTPRO_TYPE_MARKET_VENDORMODEL_EXAMPLE"] = "<offer id=\"12341\" type=\"vendor.model\" available=\"true\" bid=\"13\">
     <url>http://best.seller.ru/product_page.asp?pid=12344</url>
     <price>16800</price>

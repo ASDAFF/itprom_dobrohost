@@ -1,8 +1,8 @@
 <?php
 IncludeModuleLangFile(__FILE__);
 
-$profileTypes['ym_simple'] = array(
-	"CODE" => 'ym_simple',
+$profileTypes["ym_simple"] = array(
+	"CODE" => "ym_simple",
     "NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_NAME"),
 	"DESCRIPTION" => GetMessage("ACRIT_EXPORTPRO_PODDERJIVAETSA_ANDEK"),
 	"REG" => "http://market.yandex.ru/",
@@ -12,33 +12,33 @@ $profileTypes['ym_simple'] = array(
 			"CODE" => "ID",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_ID"),
             "VALUE" => "ID",
-			"REQUIRED" => 'Y',
-            "TYPE" => 'field',
+			"REQUIRED" => "Y",
+            "TYPE" => "field",
 		),
 		array(
 			"CODE" => "AVAILABLE",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_AVAILABLE"),
 			"VALUE" => "",
-            'TYPE' => 'const',
+            "TYPE" => "const",
             "CONDITION" => array(
-                'CLASS_ID' => 'CondGroup',
-                'DATA' => array(
-                    'All' => 'AND',
-                    'True' => 'True'
+                "CLASS_ID" => "CondGroup",
+                "DATA" => array(
+                    "All" => "AND",
+                    "True" => "True"
                 ),
-                'CHILDREN' => array(
+                "CHILDREN" => array(
                     array(
-                        'CLASS_ID' => 'CondIBActive',
-                        'DATA' => array(
-                                'logic' => 'Equal',
-                                'value' => 'Y'
+                        "CLASS_ID" => "CondCatQuantity",
+                        "DATA" => array(
+                                "logic" => "EqGr",
+                                "value" => "1"
                         )
                     )
                 )
             ),
-            'USE_CONDITION' => 'Y',
-            'CONTVALUE_TRUE' => 'true',
-            'CONTVALUE_FALSE' => 'false',
+            "USE_CONDITION" => "Y",
+            "CONTVALUE_TRUE" => "true",
+            "CONTVALUE_FALSE" => "false",
 		),
 		array(
 			"CODE" => "BID",
@@ -49,28 +49,34 @@ $profileTypes['ym_simple'] = array(
 			"CODE" => "URL",
 			"NAME" => "URL ".GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_URL"),
 			"VALUE" => "DETAIL_PAGE_URL",
-            "TYPE" => 'field',
+            "TYPE" => "field",
 		),
 		array(
 			"CODE" => "PRICE",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_PRICE"),
-			"REQUIRED" => 'Y',
+			"REQUIRED" => "Y",
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
 		array(
 			"CODE" => "OLDPRICE",
-			"NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_PRICE"),
+			"NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_OLDPRICE"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
 		array(
 			"CODE" => "CURRENCYID",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_CURRENCY"),
-			"REQUIRED" => 'Y',
+			"REQUIRED" => "Y",
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "RUR",
 		),
 		array(
 			"CODE" => "CATEGORYID",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_CATEGORY"),
 			"VALUE" => "IBLOCK_SECTION_ID",
-			"REQUIRED" => 'Y',
-            "TYPE" => 'field',
+			"REQUIRED" => "Y",
+            "TYPE" => "field",
 		),
 		array(
 			"CODE" => "PICTURE",
@@ -100,8 +106,8 @@ $profileTypes['ym_simple'] = array(
 			"CODE" => "NAME",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_NAME"),
 			"VALUE" => "NAME",
-            "REQUIRED" => 'Y',
-            "TYPE" => 'field',
+            "REQUIRED" => "Y",
+            "TYPE" => "field",
 		),
         array(
 			"CODE" => "VENDOR",
@@ -147,14 +153,14 @@ $profileTypes['ym_simple'] = array(
         array(
             "CODE" => "UTM_SOURCE",
             "NAME" => GetMessage( "ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_UTM_SOURCE" ),
-            "REQUIRED" => 'Y',
+            "REQUIRED" => "Y",
             "TYPE" => "const",
             "CONTVALUE_TRUE" => GetMessage( "ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_UTM_SOURCE_VALUE" )
         ),
         array(
             "CODE" => "UTM_MEDIUM",
             "NAME" => GetMessage( "ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_UTM_MEDIUM" ),
-            "REQUIRED" => 'Y',
+            "REQUIRED" => "Y",
             "TYPE" => "const",
             "CONTVALUE_TRUE" => GetMessage( "ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_UTM_MEDIUM_VALUE" )
         ),
@@ -199,15 +205,39 @@ $profileTypes['ym_simple'] = array(
 	"DATEFORMAT" => "Y-m-d_H:i",
 );
 
-$profileTypes['ym_simple']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_MARKET_SIMPLE_EXAMPLE');
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes["ym_simple"]["FIELDS"][4] = array(
+        "CODE" => "PRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_PRICE"),
+        "REQUIRED" => "Y",
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+    
+    $profileTypes["ym_simple"]["FIELDS"][5] = array(
+        "CODE" => "OLDPRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_SIMPLE_FIELD_OLDPRICE"),
+        "TYPE" => "field",
+        "VALUE" => $basePriceCodeWithDiscount,
+    );
+}
 
-$profileTypes['ym_simple']['CURRENCIES'] =
+$profileTypes["ym_simple"]["PORTAL_REQUIREMENTS"] = GetMessage("ACRIT_EXPORTPRO_TYPE_MARKET_SIMPLE_PORTAL_REQUIREMENTS");
+$profileTypes["ym_simple"]["EXAMPLE"] = GetMessage("ACRIT_EXPORTPRO_TYPE_MARKET_SIMPLE_EXAMPLE");
+
+$profileTypes["ym_simple"]["CURRENCIES"] =
     "<currency id='#CURRENCY#' rate='#RATE#' plus='#PLUS#'></currency>" . PHP_EOL;
 
-$profileTypes['ym_simple']['SECTIONS'] =
+$profileTypes["ym_simple"]["SECTIONS"] =
     "<category id='#ID#'>#NAME#</category>" . PHP_EOL;
 
-$profileTypes['ym_simple']['ITEMS_FORMAT'] = "
+$profileTypes["ym_simple"]["ITEMS_FORMAT"] = "
 <offer id=\"#ID#\" available=\"#AVAILABLE#\" bid=\"#BID#\">
     <url>#SITE_URL##URL#?utm_source=#UTM_SOURCE#&amp;utm_medium=#UTM_MEDIUM#&amp;utm_term=#UTM_TERM#&amp;utm_content=#UTM_CONTENT#&amp;utm_campaign=#UTM_CAMPAIGN#</url>
     <price>#PRICE#</price>
@@ -237,13 +267,13 @@ $profileTypes['ym_simple']['ITEMS_FORMAT'] = "
 </offer>
 ";
 
-$profileTypes['ym_simple']['LOCATION'] = array(
-	'yandex' => array(
-		'name' => GetMessage("ACRIT_EXPORTPRO_ANDEKS"),
-		'sub' => array(
-			'market' => array(
-				'name' => GetMessage("ACRIT_EXPORTPRO_VEBMASTER"),
-				'sub' => '',
+$profileTypes["ym_simple"]["LOCATION"] = array(
+	"yandex" => array(
+		"name" => GetMessage("ACRIT_EXPORTPRO_ANDEKS"),
+		"sub" => array(
+			"market" => array(
+				"name" => GetMessage("ACRIT_EXPORTPRO_VEBMASTER"),
+				"sub" => "",
 			)
 		)
 	),

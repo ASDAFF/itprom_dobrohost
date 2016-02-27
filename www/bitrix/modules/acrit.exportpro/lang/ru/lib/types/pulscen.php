@@ -46,6 +46,7 @@ $MESS["ACRIT_EXPORTPRO_PULSCEN_FIELD_UTM_TERM"] = "UTM метка: ключев�
 $MESS["ACRIT_EXPORTPRO_PULSCEN_FIELD_UTM_CONTENT"] = "UTM метка: контейнер для дополнительной информации";
 $MESS["ACRIT_EXPORTPRO_PULSCEN_FIELD_UTM_CAMPAIGN"] = "UTM метка: название рекламной кампании";
 $MESS["ACRIT_EXPORTPRO_PULSCEN_FIELD_PARAM"] = "Характеристики товара";
+$MESS["ACRIT_EXPORTPRO_TYPE_PULSCEN_PORTAL_REQUIREMENTS"] = "http://www.pulscen.ru/about/site/import-yml";
 $MESS["ACRIT_EXPORTPRO_TYPE_PULSCEN_EXAMPLE"] = "
 <offer id=\"12346\" available=\"true\" bid=\"21\">
     <url>http://best.seller.ru/product_page.asp?pid=12348</url>

@@ -28,10 +28,10 @@ $profileTypes["ym_clothes"] = array(
                 ),
                 "CHILDREN" => array(
                     array(
-                        "CLASS_ID" => "CondIBActive",
+                        "CLASS_ID" => "CondCatQuantity",
                         "DATA" => array(
-                            "logic" => "Equal",
-                            "value" => "Y"
+                                "logic" => "EqGr",
+                                "value" => "1"
                         )
                     )
                 )
@@ -54,15 +54,21 @@ $profileTypes["ym_clothes"] = array(
             "CODE" => "PRICE",
             "NAME" => GetMessage( "ACRIT_EXPORTPRO_MARKET_CLOTHES_FIELD_PRICE" ),
             "REQUIRED" => "Y",
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
         ),
         array(
             "CODE" => "OLDPRICE",
             "NAME" => GetMessage( "ACRIT_EXPORTPRO_MARKET_CLOTHES_FIELD_OLDPRICE" ),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
         ),
         array(
             "CODE" => "CURRENCYID",
             "NAME" => GetMessage( "ACRIT_EXPORTPRO_MARKET_CLOTHES_FIELD_CURRENCY" ),
             "REQUIRED" => "Y",
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "RUR",
         ),
         array(
             "CODE" => "CATEGORYID",
@@ -255,6 +261,30 @@ $profileTypes["ym_clothes"] = array(
     "DATEFORMAT" => "Y-m-d_h:i",
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['ym_clothes']["FIELDS"][4] = array(
+        "CODE" => "PRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_CLOTHES_FIELD_PRICE"),
+        "REQUIRED" => "Y",
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+    
+    $profileTypes['ym_clothes']["FIELDS"][5] = array(
+        "CODE" => "OLDPRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_CLOTHES_FIELD_OLDPRICE"),
+        "TYPE" => "field",
+        "VALUE" => $basePriceCodeWithDiscount,
+    );
+}
+
+$profileTypes["ym_clothes"]["PORTAL_REQUIREMENTS"] = GetMessage( "ACRIT_EXPORTPRO_TYPE_MARKET_CLOTHES_PORTAL_REQUIREMENTS" );
 $profileTypes["ym_clothes"]["EXAMPLE"] = GetMessage( "ACRIT_EXPORTPRO_TYPE_MARKET_CLOTHES_EXAMPLE" );
 
 $profileTypes["ym_clothes"]["CURRENCIES"] =

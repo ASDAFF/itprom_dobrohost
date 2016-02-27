@@ -53,9 +53,10 @@ class CExportproVariant{
     }
 }
 
+require_once( $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/classes/general/update_client_partner.php" );
 
 class CExportproProfile{
-    private $typeLocation = '/../../lib/types';
+    private $typeLocation = "/../../lib/types";
 
     public function GetIBlockTypes( $lid, $catalogOnly = true, $hideOffers = true ){
         CModule::IncludeModule( "iblock" );
@@ -143,12 +144,16 @@ class CExportproProfile{
         return $sections;
     }
 
+    public function GetProfileData(){
+        return "";
+    }
+    
     function GetTypes(){
         $typeFiles = scandir( __DIR__.$this->typeLocation );
         $typeFiles = CExportproProfile::PathFilter( $typeFiles );
-        foreach( $typeFiles as $file ){
+        foreach( $typeFiles as $file ){                   
             require( __DIR__.$this->typeLocation."/".$file );
-        }
+        }              
         return $profileTypes;
     }
     
@@ -265,20 +270,20 @@ class CExportproProfile{
             //if( CModule::IncludeModule( "catalog" ) ){
             //    $dbRes = CCatalogGroup::GetList( array( "SORT" => "ASC" ), array( "ACTIVE" => "Y" ) );
             //    while( $arRes = $dbRes->GetNext() ){
-            //        $price['CATALOG-PRICE_' . $arRes["ID"]] = '[' . $arRes['ID'] . '] ' . $arRes['NAME_LANG'];
-            //        $price['CATALOG-PRICE_' . $arRes["ID"].'_CURRENCY'] = '[' . $arRes['ID'] . '] ' . $arRes['NAME_LANG'] .'('.GetMessage('ACRIT_EXPORTPRO_FIELD_CURRNECY').')';
+            //        $price["CATALOG-PRICE_" . $arRes["ID"]] = "[" . $arRes["ID"] . "] " . $arRes["NAME_LANG"];
+            //        $price["CATALOG-PRICE_" . $arRes["ID"]."_CURRENCY"] = "[" . $arRes["ID"] . "] " . $arRes["NAME_LANG"] ."(".GetMessage("ACRIT_EXPORTPRO_FIELD_CURRNECY").")";
             //    }
             //}
-			//$arGroups = '';
-			//if (CModule::IncludeModule("catalog")){
-			//	$dbRes = CCatalogGroup::GetGroupsList(array());
-			//	while ($arRes = $dbRes->Fetch()){
-			//		if ($arRes['BUY'] == 'Y')
-			//			$arGroups[] = $arRes['CATALOG_GROUP_ID'];
+			//$arGroups = "";
+			//if( CModule::IncludeModule( "catalog" ) ){
+			//	$dbRes = CCatalogGroup::GetGroupsList( array() );
+			//	while( $arRes = $dbRes->Fetch() ){
+			//		if( $arRes["BUY"] == "Y" )
+			//			$arGroups[] = $arRes["CATALOG_GROUP_ID"];
 			//	}
-			//	$dbRes = CCatalogGroup::GetList(array('SORT' => 'ASC'), array('ACTIVE' => 'Y', 'ID' => $arGroups), 0, 0, array('ID', 'NAME', 'BASE'));
-			//	while ($arRes = $dbRes->GetNext()){
-			//		$price['CATALOG-PRICE_' . $arRes["ID"]] = '[' . $arRes['ID'] . '] ' . $arRes['NAME'];
+			//	$dbRes = CCatalogGroup::GetList( array( "SORT" => "ASC" ), array( "ACTIVE" => "Y", "ID" => $arGroups ), 0, 0, array( "ID", "NAME", "BASE" ) );
+			//	while( $arRes = $dbRes->GetNext() ){
+			//		$price["CATALOG-PRICE_" . $arRes["ID"]] = "[" . $arRes["ID"] . "] " . $arRes["NAME"];
 			//	}
 			//}
 		}
@@ -401,8 +406,7 @@ class CExportproProfile{
         return $arIBlock;
     }
 
-    function selectFieldset2( $arIBlock, $value )
-    {
+    function selectFieldset2( $arIBlock, $value ){
         $options = array();
         $fieldsSetup = false;
         if( is_array( $arIBlock ) ){
@@ -416,29 +420,28 @@ class CExportproProfile{
 					$options[] = '</optgroup>';
                     $fieldsSetup = true;
 				}
-				if (is_array($arFields['PROPERTY']) && sizeof($arFields['PROPERTY']) > 0)
-                {
-                    $options[] = '<optgroup label="'.GetMessage("ACRIT_EXPORTPRO_SVOYSTVA") . $arFields['NAME'] . '">';
-					foreach ($arFields['PROPERTY'] as $fields){
-						$selected = $IB_ID.'-PROPERTY-'.$fields['ID'] == $value ? 'selected="selected"' : '';
-						$options[] = "<option value=\"$IB_ID-PROPERTY-{$fields['ID']}\" $selected>{$fields['NAME']} [{$fields['ID']}]</option>";
+				if( is_array( $arFields["PROPERTY"] ) && sizeof( $arFields["PROPERTY"] ) > 0 ){
+                    $options[] = '<optgroup label="'.GetMessage( "ACRIT_EXPORTPRO_SVOYSTVA" ) . $arFields["NAME"] . '">';
+					foreach( $arFields["PROPERTY"] as $fields ){
+						$selected = $IB_ID."-PROPERTY-".$fields["ID"] == $value ? 'selected="selected"' : "";
+						$options[] = "<option value=\"$IB_ID-PROPERTY-{$fields["ID"]}\" $selected>{$fields["NAME"]} [{$fields["ID"]}]</option>";
 					}
 					$options[] = '</optgroup>';
 				}
-				if (is_array($arFields['OFFERS_PROPERTY']) && sizeof($arFields['OFFERS_PROPERTY']) > 0){
-					$options[] = '<optgroup label="'.GetMessage("ACRIT_EXPORTPRO_SVOYSTVA1") . $arFields['NAME'] . '">';
-                    foreach ($arFields['OFFERS_PROPERTY'] as $fields){
-						$selected = $IB_ID.'-PROPERTY-'.$fields['ID'] == $value ? 'selected="selected"' : '';
-						$options[] = "<option value=\"$IB_ID-PROPERTY-{$fields['ID']}\" $selected>{$fields['NAME']} [{$fields['ID']}]</option>";
+				if( is_array( $arFields["OFFERS_PROPERTY"] ) && sizeof( $arFields["OFFERS_PROPERTY"] ) > 0 ){
+					$options[] = '<optgroup label="'.GetMessage("ACRIT_EXPORTPRO_SVOYSTVA1") . $arFields["NAME"] . '">';
+                    foreach( $arFields["OFFERS_PROPERTY"] as $fields ){
+						$selected = $IB_ID."-PROPERTY-".$fields["ID"] == $value ? 'selected="selected"' : "";
+						$options[] = "<option value=\"$IB_ID-PROPERTY-{$fields["ID"]}\" $selected>{$fields["NAME"]} [{$fields["ID"]}]</option>";
 					}
 					$options[] = '</optgroup>';
 				}
                 $ibd = $IB_ID;
             }
-            if (is_array($arIBlock['CATALOG']) && sizeof($arIBlock['CATALOG']) > 0){
-				$options[] = '<optgroup label="'.GetMessage("ACRIT_EXPORTPRO_SVOYSTVA_TORGOVOGO_K") . $arFields['NAME'] . '">';
-                foreach ($arIBlock['CATALOG'] as $idf => $fields){
-					$selected = 'CATALOG-'.$idf == $value ? 'selected="selected"' : '';
+            if( is_array( $arIBlock["CATALOG"]) && sizeof( $arIBlock["CATALOG"] ) > 0 ){
+				$options[] = '<optgroup label="'.GetMessage( "ACRIT_EXPORTPRO_SVOYSTVA_TORGOVOGO_K" ).$arFields["NAME"].'">';
+                foreach( $arIBlock["CATALOG"] as $idf => $fields ){
+					$selected = "CATALOG-".$idf == $value ? 'selected="selected"' : "";
 					$options[] = "<option value=\"CATALOG-$idf\" $selected>$fields</option>";
 				}
 				$options[] = '</optgroup>';
@@ -446,115 +449,121 @@ class CExportproProfile{
         }
         return $options;
     }
-    public function GetCurrencyRate()
-    {
+    
+    public function GetCurrencyRate(){
         $rates = array(
-            'SITE' => GetMessage('ACRIT_EXPORTPRO_CURRENCYRATE_SITE'),
-            'CBRF' => GetMessage('ACRIT_EXPORTPRO_CURRENCYRATE_CBRF'),
-            'NBU' => GetMessage('ACRIT_EXPORTPRO_CURRENCYRATE_NBU'),
-            'NBK' => GetMessage('ACRIT_EXPORTPRO_CURRENCYRATE_NBK'),
-            'NBB' => GetMessage('ACRIT_EXPORTPRO_CURRENCYRATE_NBB'),
+            "SITE" => GetMessage( "ACRIT_EXPORTPRO_CURRENCYRATE_SITE" ),
+            "CBRF" => GetMessage( "ACRIT_EXPORTPRO_CURRENCYRATE_CBRF" ),
+            "NBU" => GetMessage( "ACRIT_EXPORTPRO_CURRENCYRATE_NBU" ),
+            "NBK" => GetMessage( "ACRIT_EXPORTPRO_CURRENCYRATE_NBK" ),
+            "NBB" => GetMessage( "ACRIT_EXPORTPRO_CURRENCYRATE_NBB" ),
         );
         return $rates;
     }
-    public static function LoadCurrencyRates($bank = array())
-    {
+    
+    public static function LoadCurrencyRates( $bank = array() ){
         $arResult = array();
         $DATA = array(
 			"CBRF" => array(
 				"URL" => "www.cbr.ru",
 				"LINK" => "/scripts/XML_daily.asp",
 				"PORT" => "80",
-				"ITEMS" => array('ValCurs', '#', 'Valute'),
-				"CURRENCY" => array('#', 'CharCode', 0, '#'),
-				"RATE" => array('#', 'Nominal', 0, '#'),
-				"VALUE" => array('#', 'Value', 0, '#')
+				"ITEMS" => array( "ValCurs", "#", "Valute" ),
+				"CURRENCY" => array( "#", "CharCode", 0, "#" ),
+				"RATE" => array( "#", "Nominal", 0, "#" ),
+				"VALUE" => array( "#", "Value", 0, "#" )
 			),
 			"NBU" => array(
 				"URL" => "bank-ua.com",
 				"LINK" => "/export/currrate.xml",
 				"PORT" => "80",
-				"ITEMS" => array("chapter", "#", "item"),
-				"CURRENCY" => array("#", "char3", 0, "#"),
-				"RATE" => array("#", "size", 0, "#"),
-				"VALUE" => array("#", "rate", 0, "#")
+				"ITEMS" => array( "chapter", "#", "item" ),
+				"CURRENCY" => array( "#", "char3", 0, "#" ),
+				"RATE" => array( "#", "size", 0, "#" ),
+				"VALUE" => array( "#", "rate", 0, "#" )
 			),
 			"NBK" => array(
 				"URL" => "www.nationalbank.kz",
 				"LINK" => "/rss/rates_all.xml",
 				"PORT" => "80",
-				"ITEMS" => array("rss", "#", "channel", 0, "#", "item"),
-				"CURRENCY" => array("#", "title", 0, "#"),
-				"RATE" => array("#", "quant", 0, "#"),
-				"VALUE" => array("#", "description", 0, "#")
+				"ITEMS" => array( "rss", "#", "channel", 0, "#", "item" ),
+				"CURRENCY" => array( "#", "title", 0, "#" ),
+				"RATE" => array( "#", "quant", 0, "#" ),
+				"VALUE" => array( "#", "description", 0, "#" )
 			),
 			"NBB" => array(
 				"URL" => "www.nbrb.by",
 				"LINK" => "/Services/XmlExRates.aspx",
 				"PORT" => "80",
-				"ITEMS" => array("DailyExRates", "#", "Currency"),
-				"CURRENCY" => array("#", "CharCode", 0, "#"),
-				"RATE" => array("#", "Scale", 0, "#"),
-				"VALUE" => array("#", "Rate", 0, "#")
+				"ITEMS" => array( "DailyExRates", "#", "Currency" ),
+				"CURRENCY" => array( "#", "CharCode", 0, "#" ),
+				"RATE" => array( "#", "Scale", 0, "#" ),
+				"VALUE" => array( "#", "Rate", 0, "#" )
 			),
 		);
 
-        if (sizeof($bank) <= 0)
-            $bank = array_keys($DATA);
+        if( sizeof( $bank ) <= 0 )
+            $bank = array_keys( $DATA );
 
-		require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/classes/general/xml.php");
+		require_once( $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/classes/general/xml.php" );
 
-        foreach ($bank as $bnk){
-            $strQueryText = QueryGetData($DATA[$bnk]["URL"], $DATA[$bnk]["PORT"], $DATA[$bnk]["LINK"], "", $error_number, $error_text);
+        foreach( $bank as $bnk ){
+            $strQueryText = QueryGetData(
+                $DATA[$bnk]["URL"],
+                $DATA[$bnk]["PORT"],
+                $DATA[$bnk]["LINK"],
+                "",
+                $error_number,
+                $error_text
+            );
 
-            if (strlen($strQueryText) > 0){
+            if( strlen( $strQueryText ) > 0 ){
                 $objXML = new CDataXML();
-                $objXML->LoadString($strQueryText);
+                $objXML->LoadString( $strQueryText );
                 $arData = $objXML->GetArray();
-                for ($i = 0; $i < sizeof($DATA[$bnk]["ITEMS"]); $i++){
+                for( $i = 0; $i < sizeof( $DATA[$bnk]["ITEMS"] ); $i++ ){
                     $arData = $arData[$DATA[$bnk]["ITEMS"][$i]];
                 }
 
-
-                if (is_array($arData) && count($arData) > 0){
-                    for ($j1 = 0; $j1 < count($arData); $j1++){
-                        for ($i = 0; $i < sizeof($DATA[$bnk]["VALUE"]); $i++){
-                            if ($i == 0){
+                if( is_array( $arData ) && count( $arData ) > 0 ){
+                    for( $j1 = 0; $j1 < count( $arData ); $j1++ ){
+                        for( $i = 0; $i < sizeof( $DATA[$bnk]["VALUE"] ); $i++ ){
+                            if( $i == 0 ){
                                 $q1 = $arData[$j1][$DATA[$bnk]["VALUE"][$i]];
                             }
-                            elseif ($i > 0){
+                            elseif( $i > 0 ){
                                 $q1 = $q1[$DATA[$bnk]["VALUE"][$i]];
                             }
                         }
-                        $arCurrValue = str_replace(",", ".", $q1);
-                        for ($i = 0; $i < sizeof($DATA[$bnk]["CURRENCY"]); $i++){
-                            if ($i == 0){
+                        $arCurrValue = str_replace( ",", ".", $q1 );
+                        for( $i = 0; $i < sizeof( $DATA[$bnk]["CURRENCY"] ); $i++ ){
+                            if( $i == 0 ){
                                 $currency1 = $arData[$j1][$DATA[$bnk]["CURRENCY"][$i]];
                             }
-                            elseif ($i > 0){
+                            elseif( $i > 0 ){
                                 $currency1 = $currency1[$DATA[$bnk]["CURRENCY"][$i]];
                             }
                         }
-                        for ($i = 0; $i < sizeof($DATA[$bnk]["RATE"]); $i++){
-                            if ($i == 0){
+                        for( $i = 0; $i < sizeof( $DATA[$bnk]["RATE"] ); $i++ ){
+                            if( $i == 0 ){
                                 $rate = $arData[$j1][$DATA[$bnk]["RATE"][$i]];
                             }
-                            elseif ($i > 0){
+                            elseif( $i > 0 ){
                                 $rate = $rate[$DATA[$bnk]["RATE"][$i]];
                             }
                         }
-                        $curr = DoubleVal($arCurrValue);
-                        if (sizeof($currency) > 0){
-                            if (in_array($currency1, $currency))
+                        $curr = DoubleVal( $arCurrValue );
+                        if( sizeof( $currency ) > 0 ){
+                            if( in_array( $currency1, $currency ) )
                                 $arResult[$bnk][] = array(
-                                    "RATE" => round($curr, 2),
+                                    "RATE" => round( $curr, 2 ),
                                     "RATE_CNT" => $rate,
                                     "CURRENCY" => $currency1,
                                 );
                         }
                         else{
                             $arResult[$bnk][] = array(
-                                "RATE" => round($curr, 2),
+                                "RATE" => round( $curr, 2 ),
                                 "RATE_CNT" => $rate,
                                 "CURRENCY" => $currency1,
                             );
@@ -564,64 +573,66 @@ class CExportproProfile{
             }
 		}
         $arResultNew = array();
-        foreach($arResult as $rate => $value)
-        {
+        foreach( $arResult as $rate => $value ){
             foreach($value as $currency)
             {
-                $arResultNew[$rate][$currency['CURRENCY']] = $currency;
+                $arResultNew[$rate][$currency["CURRENCY"]] = $currency;
             }
         }
         $arResult = $arResultNew;
-        $arResult['CBRF']['RUB'] = array(
-            'CURRENCY' => 'RUB',
-            'RATE' => 1,
-            'RATE_CNT' => 1
+        $arResult["CBRF"]["RUB"] = array(
+            "CURRENCY" => "RUB",
+            "RATE" => 1,
+            "RATE_CNT" => 1
         );
-        unset($arResultNew);
+        unset( $arResultNew );
         return $arResult;
     }
-    public function PrepareIBlock($arIBlock = array(), $UseSKU = fasle)
-	{
+    
+    public function PrepareIBlock( $arIBlock = array(), $UseSKU = fasle ){
 		$excludeIBlock = array();
-        if(!is_array($arIBlock))
+        if( !is_array( $arIBlock ) )
             $arIBlock = array();
+            
 		$catalogSKU = array();
-		if($UseSKU)
-		{
-			foreach($arIBlock as $iblocID)
-			{
-				if($iblock = CCatalog::GetByID($iblocID))
-				{
-					if(intval($iblock['OFFERS_IBLOCK_ID']) > 0)
-						$catalogSKU[] = $iblock['OFFERS_IBLOCK_ID'];
+		if( $UseSKU ){
+			foreach( $arIBlock as $iblocID ){
+				if( $iblock = CCatalog::GetByID( $iblocID ) ){
+					if( intval( $iblock["OFFERS_IBLOCK_ID"] ) > 0 )
+						$catalogSKU[] = $iblock["OFFERS_IBLOCK_ID"];
 				}
 			}
 		}
-		return array_merge($arIBlock, $catalogSKU);
+        
+        $arIblocks = array_merge( $arIBlock, $catalogSKU );
+        $arIblocks = array_unique( $arIblocks );
+        
+		return $arIblocks;
 	}
+    
     public function GetFileExportType(){
         return array( "xml", "csv" );
     }
 
-    public function GetRunType()
-    {
-        return array('comp', /*'agent', */'cron');
+    public function GetRunType(){
+        return array("comp", /*"agent", */"cron");
     }
 
-    function memoryUsage($usage, $base_memory_usage = 0) {
-        printf("Bytes diff: %d\n", $usage - $base_memory_usage);
+    function memoryUsage( $usage, $base_memory_usage = 0 ){
+        printf( "Bytes diff: %d\n", $usage - $base_memory_usage );
     }
 
-    public static  function PathFilterHandler($value)
-    {
-        if($value == '.' || $value == '..')
+    public static  function PathFilterHandler( $value ){
+        if( $value == "." || $value == ".." )
             return false;
+        
         return $value;
     }
-    public static function PathFilter($arPath)
-    {
-        if(!is_array($arPath))
+    
+    public static function PathFilter( $arPath ){
+        if( !is_array( $arPath ) )
             return array();
-        return array_filter($arPath, array(self, 'PathFilterHandler'));
+            
+        return array_filter( $arPath, array( self, "PathFilterHandler" ) );
     }
 }

@@ -71,6 +71,7 @@ $MESS["ACRIT_EXPORTPRO_MARKET_TOUR_FIELD_UTM_TERM"] = "UTM метка: ключ�
 $MESS["ACRIT_EXPORTPRO_MARKET_TOUR_FIELD_UTM_CONTENT"] = "UTM метка: контейнер для дополнительной информации";
 $MESS["ACRIT_EXPORTPRO_MARKET_TOUR_FIELD_UTM_CAMPAIGN"] = "UTM метка: название рекламной кампании";
 
+$MESS["ACRIT_EXPORTPRO_TYPE_MARKET_TOUR_PORTAL_REQUIREMENTS"] = "https://yandex.ru/support/partnermarket/offers.xml#tour";
 $MESS["ACRIT_EXPORTPRO_TYPE_MARKET_TOUR_EXAMPLE"] = "
 <offer id=\"12341\" type=\"tour\" available=\"true\" bid=\"71\">
     <url>http://best.seller.ru/product_page.asp?pid=12344</url>

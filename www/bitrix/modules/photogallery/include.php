@@ -262,10 +262,23 @@ function PhotoFormatDate($strDate, $format="DD.MM.YYYY HH:MI:SS", $new_format="D
 	return $strResult;
 }
 
-function PClearComponentCache($components)
+function PClearComponentCache($components, $arSite = array())
 {
 	if (empty($components))
 		return false;
+
+	if (
+		!is_array($arSite)
+		&& !empty($arSite)
+	)
+	{
+		$arSite = array($arSite);
+	}
+
+	if (empty($arSite))
+	{
+		$arSite = array(SITE_ID);
+	}
 
 	if (is_array($components))
 		$aComponents = $components;
@@ -285,11 +298,17 @@ function PClearComponentCache($components)
 		if (strlen($componentRelativePath) > 0)
 		{
 			BXClearCache(true, "/".$componentRelativePath.$add_path);
-			BXClearCache(true, "/".SITE_ID.$componentRelativePath.$add_path);
+			foreach ($arSite as $siteId)
+			{
+				BXClearCache(true, "/".$siteId.$componentRelativePath.$add_path);
+			}
 		}
 	}
 	BXClearCache(true, "/photogallery");
-	BXClearCache(true, "/".SITE_ID."/photogallery");
+	foreach ($arSite as $siteId)
+	{
+		BXClearCache(true, "/".$siteId."/photogallery");
+	}
 }
 
 function PClearComponentCacheEx($iblockId = false, $arSections = array(), $arGalleries = array(), $arUsers = array(), $clearCommon = true)
@@ -331,6 +350,14 @@ function PClearComponentCacheEx($iblockId = false, $arSections = array(), $arGal
 			$arCache[] = "photogallery/".$iblockId."/user".intVal($userId);
 	}
 
-	PClearComponentCache($arCache);
+	$arSite = array();
+
+	$rsIblockSite = CIBlock::GetSite($iblockId);
+	while($arIblockSite = $rsIblockSite->Fetch())
+	{
+		$arSite[] = $arIblockSite["SITE_ID"];
+	}
+
+	PClearComponentCache($arCache, $arSite);
 }
 ?>

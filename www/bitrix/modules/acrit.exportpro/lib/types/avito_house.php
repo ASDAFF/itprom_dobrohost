@@ -89,6 +89,8 @@ $profileTypes['avito_house'] = array(
         array(
 			"CODE" => "Price",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_AVITO_HOUSE_FIELD_PRICE"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
         array(
 			"CODE" => "ContactPhone",
@@ -111,6 +113,22 @@ $profileTypes['avito_house'] = array(
 	"DATEFORMAT" => "Y-m-d",
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['avito_house']["FIELDS"][17] = array(
+        "CODE" => "Price",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_AVITO_HOUSE_FIELD_PRICE"),
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+}
+
+$profileTypes['avito_house']['PORTAL_REQUIREMENTS'] = GetMessage( 'ACRIT_EXPORTPRO_TYPE_AVITO_HOUSE_PORTAL_REQUIREMENTS' );
 $profileTypes['avito_house']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_AVITO_HOUSE_EXAMPLE');
 
 $profileTypes['avito_house']['CURRENCIES'] = "";

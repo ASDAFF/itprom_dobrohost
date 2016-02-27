@@ -46,6 +46,7 @@ $MESS["ACRIT_EXPORTPRO_WIKIMART_SIMPLE_FIELD_UTM_MEDIUM_VALUE"] = "cpc";
 $MESS["ACRIT_EXPORTPRO_WIKIMART_SIMPLE_FIELD_UTM_TERM"] = "UTM метка: ключевая фраза";
 $MESS["ACRIT_EXPORTPRO_WIKIMART_SIMPLE_FIELD_UTM_CONTENT"] = "UTM метка: контейнер для дополнительной информации";
 $MESS["ACRIT_EXPORTPRO_WIKIMART_SIMPLE_FIELD_UTM_CAMPAIGN"] = "UTM метка: название рекламной кампании";
+$MESS["ACRIT_EXPORTPRO_TYPE_WIKIMART_SIMPLE_PORTAL_REQUIREMENTS"] = "http://img.0cw.ru/docs/Wikimart_common_instruction.pdf?c796e6";
 $MESS["ACRIT_EXPORTPRO_TYPE_WIKIMART_SIMPLE_EXAMPLE"] = "
 <offer id=\"12346\" available=\"true\" bid=\"21\">
     <url>http://best.seller.ru/product_page.asp?pid=12348</url>

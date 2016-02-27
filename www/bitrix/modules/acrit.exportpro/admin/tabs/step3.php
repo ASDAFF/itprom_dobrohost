@@ -2,7 +2,7 @@
 IncludeModuleLangFile(__FILE__);
 
 $types = $profileUtils->GetTypes();
-      
+
 $yandex_market = array(
     "ym_simple",
     "ym_vendormodel",
@@ -26,10 +26,7 @@ $google = array(
 );
 
 $wikimart = array(
-	"wikimart_audiobook",
-	"wikimart_book",
-	"wikimart_multimedia",
-	"wikimart_simple",
+	"wikimart_clothes",
 	"wikimart_vendormodel",
 );
 
@@ -84,6 +81,26 @@ $lengow = array(
 $advantshop = array(
 	"advantshop",
 );
+
+$ua_nadavi_net = array(
+    "ua_nadavi_net",
+);
+
+$ua_hotline_ua = array(
+    "ua_hotline_ua",
+);
+
+$ua_technoportal_ua = array(
+    "ua_technoportal_ua",
+);
+
+$ua_price_ua = array(
+    "ua_price_ua",
+);
+
+$ua_prom_ua = array(
+    "ua_prom_ua",
+);
 ?>
 
 <tr class="heading" align="center">
@@ -93,10 +110,11 @@ $advantshop = array(
 </tr>
 
 <tr>
-	<td><?=GetMessage("ACRIT_EXPORTPRO_EXPORTTYPE_LABEL")?></td>
+	<td>
+        <span id="hint_PROFILE[TYPE]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[TYPE]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_EXPORTTYPE_LABEL_HELP" )?>' );</script>
+        <?=GetMessage("ACRIT_EXPORTPRO_EXPORTTYPE_LABEL")?>
+    </td>
 	<td> 
-        <?//echo "<pre>"; print_r( $types ); echo "</pre>";?>
-    
 		<select name="PROFILE[TYPE]">
             <? $selected = $arProfile["TYPE"] == "optional" ? 'selected="selected"' : ""; ?>
             <option <?=$selected?>><?=$types["optional"]["NAME"]?></option>
@@ -187,8 +205,44 @@ $advantshop = array(
                      <option value="<?=$typeCode?>" <?=$selected?>>&nbsp;&nbsp;&nbsp;<?=$types[$typeCode]["NAME"]?></option>
                  <?endforeach?>
             </optgroup>
+            <optgroup label="<?=GetMessage( "ACRIT_EXPORTPRO_EXPORTTYPE_UA_NADAVI_NET" )?>">
+                 <?foreach( $ua_nadavi_net as $typeCode ):?>
+                     <? $selected = $arProfile["TYPE"] == $typeCode ? 'selected="selected"' : ""; ?>
+                     <option value="<?=$typeCode?>" <?=$selected?>>&nbsp;&nbsp;&nbsp;<?=$types[$typeCode]["NAME"]?></option>
+                 <?endforeach?>
+            </optgroup>
+            <optgroup label="<?=GetMessage( "ACRIT_EXPORTPRO_EXPORTTYPE_UA_HOTLINE_UA" )?>">
+                 <?foreach( $ua_hotline_ua as $typeCode ):?>
+                     <? $selected = $arProfile["TYPE"] == $typeCode ? 'selected="selected"' : ""; ?>
+                     <option value="<?=$typeCode?>" <?=$selected?>>&nbsp;&nbsp;&nbsp;<?=$types[$typeCode]["NAME"]?></option>
+                 <?endforeach?>
+            </optgroup>
+            <optgroup label="<?=GetMessage( "ACRIT_EXPORTPRO_EXPORTTYPE_UA_TECHNOPORTAL_UA" )?>">
+                 <?foreach( $ua_technoportal_ua as $typeCode ):?>
+                     <? $selected = $arProfile["TYPE"] == $typeCode ? 'selected="selected"' : ""; ?>
+                     <option value="<?=$typeCode?>" <?=$selected?>>&nbsp;&nbsp;&nbsp;<?=$types[$typeCode]["NAME"]?></option>
+                 <?endforeach?>
+            </optgroup>
+            <optgroup label="<?=GetMessage( "ACRIT_EXPORTPRO_EXPORTTYPE_UA_PRICE_UA" )?>">
+                 <?foreach( $ua_price_ua as $typeCode ):?>
+                     <? $selected = $arProfile["TYPE"] == $typeCode ? 'selected="selected"' : ""; ?>
+                     <option value="<?=$typeCode?>" <?=$selected?>>&nbsp;&nbsp;&nbsp;<?=$types[$typeCode]["NAME"]?></option>
+                 <?endforeach?>
+            </optgroup>
+            <optgroup label="<?=GetMessage( "ACRIT_EXPORTPRO_EXPORTTYPE_UA_PROM_UA" )?>">
+                 <?foreach( $ua_prom_ua as $typeCode ):?>
+                     <? $selected = $arProfile["TYPE"] == $typeCode ? 'selected="selected"' : ""; ?>
+                     <option value="<?=$typeCode?>" <?=$selected?>>&nbsp;&nbsp;&nbsp;<?=$types[$typeCode]["NAME"]?></option>
+                 <?endforeach?>
+            </optgroup>
 		</select>
 	</td>
+</tr>
+<tr class="heading"><td colspan="2"><?=GetMessage( "ACRIT_EXPORTPRO_EXPORT_REQUIREMENTS" );?></td></tr>
+<tr>
+    <td colspan="2" id="portal_requirements" style="text-align: center;">
+        <a href="<?=$types[$arProfile["TYPE"]]["PORTAL_REQUIREMENTS"];?>" target="_blank"><?=$types[$arProfile["TYPE"]]["PORTAL_REQUIREMENTS"];?></a>
+    </td>
 </tr>
 <tr class="heading"><td colspan="2"><?=GetMessage("ACRIT_EXPORTPRO_EXPORT_EXAMPLE")?></td></tr>
 <tr>

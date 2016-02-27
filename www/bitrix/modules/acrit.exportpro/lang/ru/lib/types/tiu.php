@@ -64,6 +64,7 @@ $MESS['ACRIT_EXPORTPRO_TIU_SIMPLE_FIELD_OPTPRICE1'] = "Указание опто
 <price> все товары будут загружены в статусе «Под заказ»";
 $MESS['ACRIT_EXPORTPRO_TIU_SIMPLE_FIELD_OPTQUANTITY1'] = "Количество товара для опта";
 
+$MESS["ACRIT_EXPORTPRO_TYPE_TIU_SIMPLE_PORTAL_REQUIREMENTS"] = "http://support.tiu.ru/documents/443";
 $MESS["ACRIT_EXPORTPRO_TYPE_TIU_SIMPLE_EXAMPLE"] = "<offer id=\"12341\" available=\"true\" selling_type=\"w\">
     <name>#NAME#</name>
     <available>true</available>

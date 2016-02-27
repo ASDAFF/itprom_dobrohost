@@ -21,17 +21,17 @@ $profileTypes['tiu_simple'] = array(
 			"VALUE" => "",
             'TYPE' => 'const',
             "CONDITION" => array(
-                'CLASS_ID' => 'CondGroup',
-                'DATA' => array(
-                    'All' => 'AND',
-                    'True' => 'True'
+                "CLASS_ID" => "CondGroup",
+                "DATA" => array(
+                    "All" => "AND",
+                    "True" => "True"
                 ),
-                'CHILDREN' => array(
+                "CHILDREN" => array(
                     array(
-                        'CLASS_ID' => 'CondIBActive',
-                        'DATA' => array(
-                                'logic' => 'Equal',
-                                'value' => 'Y'
+                        "CLASS_ID" => "CondCatQuantity",
+                        "DATA" => array(
+                                "logic" => "EqGr",
+                                "value" => "1"
                         )
                     )
                 )
@@ -59,10 +59,14 @@ $profileTypes['tiu_simple'] = array(
 		array(
 			"CODE" => "PRICE",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_TIU_SIMPLE_FIELD_PRICE"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
         array(
 			"CODE" => "OLDPRICE",
-			"NAME" => GetMessage("ACRIT_EXPORTPRO_TIU_SIMPLE_FIELD_PRICE"),
+			"NAME" => GetMessage("ACRIT_EXPORTPRO_TIU_SIMPLE_FIELD_OLDPRICE"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
         array(
 			"CODE" => "DISCOUNT",
@@ -84,6 +88,8 @@ $profileTypes['tiu_simple'] = array(
 			"CODE" => "CURRENCYID",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_TIU_SIMPLE_FIELD_CURRENCY"),
 			"REQUIRED" => 'Y',
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "RUR",
 		),
 		array(
 			"CODE" => "CATEGORYID",
@@ -153,6 +159,29 @@ $profileTypes['tiu_simple'] = array(
     "ENCODING" => 'utf8',
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['tiu_simple']["FIELDS"][5] = array(
+        "CODE" => "PRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_TIU_SIMPLE_FIELD_PRICE"),
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+    
+    $profileTypes['tiu_simple']["FIELDS"][6] = array(
+        "CODE" => "OLDPRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_TIU_SIMPLE_FIELD_OLDPRICE"),
+        "TYPE" => "field",
+        "VALUE" => $basePriceCodeWithDiscount,
+    );
+}
+
+$profileTypes['tiu_simple']['PORTAL_REQUIREMENTS'] = GetMessage( 'ACRIT_EXPORTPRO_TYPE_TIU_SIMPLE_PORTAL_REQUIREMENTS' );
 $profileTypes['tiu_simple']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_TIU_SIMPLE_EXAMPLE');
 
 $profileTypes['tiu_simple']['CURRENCIES'] =

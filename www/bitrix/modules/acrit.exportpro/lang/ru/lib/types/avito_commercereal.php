@@ -45,6 +45,7 @@ $MESS['ACRIT_EXPORTPRO_AVITO_COMMERCEREAL_FIELD_OBJECTTYPE'] = "Вид объе�
 </ul></b>
 <br><b class='required'>Обязательный элемент</b>";
 
+$MESS["ACRIT_EXPORTPRO_TYPE_AVITO_COMMERCEREAL_PORTAL_REQUIREMENTS"] = "http://autoload.avito.ru/format/realty/";
 $MESS["ACRIT_EXPORTPRO_TYPE_AVITO_COMMERCEREAL_EXAMPLE"] = "
 <?xml version=\"1.0\"?>
 <Ads target=\"Avito.ru\" formatVersion=\"2\">

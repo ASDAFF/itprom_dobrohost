@@ -13,7 +13,8 @@ class CAcritExportproCond extends CCatalogCondCtrlIBlockFields{
 
 	public static function GetControls($strControlID = false)
 	{
-		$dbPriceType = CCatalogGroup::GetList(
+		return false;
+        /*$dbPriceType = CCatalogGroup::GetList(
 				array(), array()
 		);
 		while ($arPriceType = $dbPriceType->GetNext()){
@@ -72,7 +73,7 @@ class CAcritExportproCond extends CCatalogCondCtrlIBlockFields{
 		else
 		{
 			return false;
-		}
+		}*/
 	}
 	public static function GetControlShow($arParams)
 	{                                    
@@ -294,196 +295,262 @@ class CAcritExportproProps extends CCatalogCondCtrlIBlockProps{
 
 
 class CAcritExportproCatalogCond extends CGlobalCondTree{
-	public static function GetClassName()
-	{
+	public static function GetClassName(){
 		return __CLASS__;
 	}
-	public function __construct()
-	{
+	
+    public function __construct(){
 		parent::__construct();
 	}
 
-	public function __destruct()
-	{
+	public function __destruct(){
 		parent::__destruct();
 	}
-	/*public function OnConditionControlBuildList()
-	{
-		if (!$this->boolError && !isset($this->arControlList))
-		{
-			$this->arControlList = array();
-			$this->arShowInGroups = array();
-			$this->arShowControlList = array();
-			$this->arInitControlList = array();
-			
-			$basicEvents = GetModuleEvents($this->arEvents['CONTROLS']['MODULE_ID'], $this->arEvents['CONTROLS']['EVENT_ID'], true);
-			$basicEvents = array_merge($basicEvents, array(array(
-				'TO_CLASS' => 'CAcritExportproCond',
-				'TO_METHOD' => 'GetControlDescr'
-				),
-			));
-			
-			foreach ($basicEvents as $arEvent)
-			{
-				if($arEvent['TO_CLASS'] == 'CCatalogCondCtrlIBlockProps')
-				{
-					$arEvent['TO_CLASS'] = 'CAcritExportproProps';
-					$arEvent['TO_MODULE_ID'] = 'acrit.exportpro';
-					$arEvent['TO_NAME'] = 'CAcritExportproProps::GetControlDescr (acrit.exportpro)';
-				}
-				$arRes = ExecuteModuleEventEx($arEvent);
-				if (!is_array($arRes))
-					continue;
-				if (isset($arRes['ID']))
-				{
-					if (isset($arRes['EXIST_HANDLER']) && $arRes['EXIST_HANDLER'] === 'Y')
-					{
-						if (!isset($arRes['MODULE_ID']) && !isset($arRes['EXT_FILE']))
-							continue;
-					}
-					else
-					{
-						$arRes['MODULE_ID'] = '';
-						$arRes['EXT_FILE'] = '';
-					}
-					if (array_key_exists('EXIST_HANDLER', $arRes))
-						unset($arRes['EXIST_HANDLER']);
-					$arRes['GROUP'] = (isset($arRes['GROUP']) && $arRes['GROUP'] == 'Y' ? 'Y' : 'N');
-					if (isset($this->arControlList[$arRes['ID']]))
-					{
-						$this->arMsg[] = array('id' => 'CONTROLS', 'text' => str_replace('#CONTROL#', $arRes['ID'], Loc::getMessage('BT_MOD_COND_ERR_CONTROL_DOUBLE')));
-						$this->boolError = true;
-					}
-					else
-					{
-						if (!$this->CheckControl($arRes))
-							continue;
-						$this->arControlList[$arRes["ID"]] = $arRes;
-						if ($arRes['GROUP'] == 'Y')
-							$this->arShowInGroups[] = $arRes["ID"];
-						if (isset($arRes['GetControlShow']) && !empty($arRes['GetControlShow']))
-						{
-							if (!in_array($arRes['GetControlShow'], $this->arShowControlList))
-								$this->arShowControlList[] = $arRes['GetControlShow'];
-						}
-						if (isset($arRes['InitParams']) && !empty($arRes['InitParams']))
-						{
-							if (!in_array($arRes['InitParams'], $this->arInitControlList))
-								$this->arInitControlList[] = $arRes['InitParams'];
-						}
-					}
-				}
-				elseif (isset($arRes['COMPLEX']) && 'Y' == $arRes['COMPLEX'])
-				{
-					$complexModuleID = '';
-					$complexExtFiles = '';
-					if (isset($arRes['EXIST_HANDLER']) && $arRes['EXIST_HANDLER'] === 'Y')
-					{
-						if (isset($arRes['MODULE_ID']))
-							$complexModuleID = $arRes['MODULE_ID'];
-						if (isset($arRes['EXT_FILE']))
-							$complexExtFiles = $arRes['EXT_FILE'];
-					}
-					if (isset($arRes['CONTROLS']) && !empty($arRes['CONTROLS']) && is_array($arRes['CONTROLS']))
-					{
-						if (array_key_exists('EXIST_HANDLER', $arRes))
-							unset($arRes['EXIST_HANDLER']);
-						$arInfo = $arRes;
-						unset($arInfo['COMPLEX'], $arInfo['CONTROLS']);
-						foreach ($arRes['CONTROLS'] as &$arOneControl)
-						{
-							if (isset($arOneControl['ID']))
-							{
-								if (isset($arOneControl['EXIST_HANDLER']) && $arOneControl['EXIST_HANDLER'] === 'Y')
-								{
-									if (!isset($arOneControl['MODULE_ID']) && !isset($arOneControl['EXT_FILE']))
-										continue;
-								}
-								$arInfo['GROUP'] = 'N';
-								$arInfo['MODULE_ID'] = isset($arOneControl['MODULE_ID']) ? $arOneControl['MODULE_ID'] : $complexModuleID;
-								$arInfo['EXT_FILE'] = isset($arOneControl['EXT_FILE']) ? $arOneControl['EXT_FILE'] : $complexExtFiles;
-								$control = array_merge($arOneControl, $arInfo);
-								if (isset($this->arControlList[$control['ID']]))
-								{
-									$this->arMsg[] = array('id' => 'CONTROLS', 'text' => str_replace('#CONTROL#', $control['ID'], Loc::getMessage('BT_MOD_COND_ERR_CONTROL_DOUBLE')));
-									$this->boolError = true;
-								}
-								else
-								{
-									if (!$this->CheckControl($control))
-										continue;
-									$this->arControlList[$control['ID']] = $control;
-								}
-								unset($control);
-							}
-						}
-						if (isset($arOneControl))
-							unset($arOneControl);
-						if (isset($arRes['GetControlShow']) && !empty($arRes['GetControlShow']))
-						{
-							if (!in_array($arRes['GetControlShow'], $this->arShowControlList))
-								$this->arShowControlList[] = $arRes['GetControlShow'];
-						}
-						if (isset($arRes['InitParams']) && !empty($arRes['InitParams']))
-						{
-							if (!in_array($arRes['InitParams'], $this->arInitControlList))
-								$this->arInitControlList[] = $arRes['InitParams'];
-						}
-					}
-				}
-				else
-				{
-					foreach ($arRes as &$arOneRes)
-					{
-						if (is_array($arOneRes) && isset($arOneRes['ID']))
-						{
-							if (isset($arOneRes['EXIST_HANDLER']) && $arOneRes['EXIST_HANDLER'] === 'Y')
-							{
-								if (!isset($arOneRes['MODULE_ID']) && !isset($arOneRes['EXT_FILE']))
-									continue;
-							}
-							else
-							{
-								$arOneRes['MODULE_ID'] = '';
-								$arOneRes['EXT_FILE'] = '';
-							}
-							if (array_key_exists('EXIST_HANDLER', $arOneRes))
-								unset($arOneRes['EXIST_HANDLER']);
-							$arOneRes['GROUP'] = (isset($arOneRes['GROUP']) && $arOneRes['GROUP'] == 'Y' ? 'Y' : 'N');
-							if (isset($this->arControlList[$arOneRes['ID']]))
-							{
-								$this->arMsg[] = array('id' => 'CONTROLS', 'text' => str_replace('#CONTROL#', $arOneRes['ID'], Loc::getMessage('BT_MOD_COND_ERR_CONTROL_DOUBLE')));
-								$this->boolError = true;
-							}
-							else
-							{
-								if (!$this->CheckControl($arOneRes))
-									continue;
-								$this->arControlList[$arOneRes['ID']] = $arOneRes;
-								if ($arOneRes['GROUP'] == 'Y')
-									$this->arShowInGroups[] = $arOneRes['ID'];
-								if (isset($arOneRes['GetControlShow']) && !empty($arOneRes['GetControlShow']))
-								{
-									if (!in_array($arOneRes['GetControlShow'], $this->arShowControlList))
-										$this->arShowControlList[] = $arOneRes['GetControlShow'];
-								}
-								if (isset($arOneRes['InitParams']) && !empty($arOneRes['InitParams']))
-								{
-									if (!in_array($arOneRes['InitParams'], $this->arInitControlList))
-										$this->arInitControlList[] = $arOneRes['InitParams'];
-								}
-							}
-						}
-					}
-					if (isset($arOneRes))
-						unset($arOneRes);
-				}
-			}
-			if (empty($this->arControlList))
-			{
-				$this->arMsg[] = array('id' => 'CONTROLS', 'text' => Loc::getMessage('BT_MOD_COND_ERR_CONTROLS_EMPTY'));
-				$this->boolError = true;
-			}
-		}
-	}*/
+    
+    public function Show( $arConditions = "" ){
+        if( empty( $arConditions ) && !isset( $_REQUEST["ID"] ) ){
+            $arConditions = array(
+                'CLASS_ID' => 'CondGroup',
+                'DATA' => array(
+                    'All' => 'AND',
+                    'True' => 'True'
+                ),
+                'CHILDREN' => array(
+                    array(
+                        'CLASS_ID' => 'CondIBActive',
+                        'DATA' => array(
+                                'logic' => 'Equal',
+                                'value' => 'Y'
+                        )
+                    )
+                )
+            );
+        }
+                          
+        parent::Show( $arConditions );
+    }
+    
+	public function OnConditionControlBuildList()
+    {
+        if (!$this->boolError && !isset($this->arControlList))
+        {
+            $this->arControlList = array();
+            $this->arShowInGroups = array();
+            $this->forcedShowInGroup = array();
+            $this->arShowControlList = array();
+            $this->arInitControlList = array();
+            
+            $basicEvents = GetModuleEvents($this->arEvents['CONTROLS']['MODULE_ID'], $this->arEvents['CONTROLS']['EVENT_ID'], true);
+            $basicEvents = array_merge($basicEvents, array(array(
+                'TO_CLASS' => 'CAcritExportproCond',
+                'TO_METHOD' => 'GetControlDescr'
+                ),
+            ));
+            
+            foreach ($basicEvents as $arEvent)
+            {
+                if($arEvent['TO_CLASS'] == 'CCatalogCondCtrlIBlockProps')
+                {
+                    $arEvent['TO_CLASS'] = 'CAcritExportproProps';
+                    $arEvent['TO_MODULE_ID'] = 'acrit.exportpro';
+                    $arEvent['TO_NAME'] = 'CAcritExportproProps::GetControlDescr (acrit.exportpro)';
+                }
+                $arRes = ExecuteModuleEventEx($arEvent);
+                if (!is_array($arRes))
+                    continue;
+                if (isset($arRes['ID']))
+                {
+                    if (isset($arRes['EXIST_HANDLER']) && $arRes['EXIST_HANDLER'] === 'Y')
+                    {
+                        if (!isset($arRes['MODULE_ID']) && !isset($arRes['EXT_FILE']))
+                            continue;
+                    }
+                    else
+                    {
+                        $arRes['MODULE_ID'] = '';
+                        $arRes['EXT_FILE'] = '';
+                    }
+                    if (array_key_exists('EXIST_HANDLER', $arRes))
+                        unset($arRes['EXIST_HANDLER']);
+                    $arRes['GROUP'] = (isset($arRes['GROUP']) && $arRes['GROUP'] == 'Y' ? 'Y' : 'N');
+                    if (isset($this->arControlList[$arRes['ID']]))
+                    {
+                        $this->arMsg[] = array('id' => 'CONTROLS', 'text' => str_replace('#CONTROL#', $arRes['ID'], Loc::getMessage('BT_MOD_COND_ERR_CONTROL_DOUBLE')));
+                        $this->boolError = true;
+                    }
+                    else
+                    {
+                        if (!$this->CheckControl($arRes))
+                            continue;
+                        $this->arControlList[$arRes["ID"]] = $arRes;
+                        if ($arRes['GROUP'] == 'Y')
+                        {
+                            if (empty($arRes['FORCED_SHOW_LIST']))
+                            {
+                                $this->arShowInGroups[] = $arRes['ID'];
+                            }
+                            else
+                            {
+                                $forcedList = (!is_array($arRes['FORCED_SHOW_LIST']) ? array($arRes['FORCED_SHOW_LIST']) : $arRes['FORCED_SHOW_LIST']);
+                                foreach ($forcedList as &$forcedId)
+                                {
+                                    if (is_array($forcedId))
+                                        continue;
+                                    $forcedId = trim($forcedId);
+                                    if ($forcedId == '')
+                                        continue;
+                                    if (!isset($this->forcedShowInGroup[$forcedId]))
+                                        $this->forcedShowInGroup[$forcedId] = array();
+                                    $this->forcedShowInGroup[$forcedId][] = $arRes['ID'];
+                                }
+                                unset($forcedId);
+                            }
+                        }
+                        if (isset($arRes['GetControlShow']) && !empty($arRes['GetControlShow']))
+                        {
+                            if (!in_array($arRes['GetControlShow'], $this->arShowControlList))
+                                $this->arShowControlList[] = $arRes['GetControlShow'];
+                        }
+                        if (isset($arRes['InitParams']) && !empty($arRes['InitParams']))
+                        {
+                            if (!in_array($arRes['InitParams'], $this->arInitControlList))
+                                $this->arInitControlList[] = $arRes['InitParams'];
+                        }
+                    }
+                }
+                elseif (isset($arRes['COMPLEX']) && 'Y' == $arRes['COMPLEX'])
+                {
+                    $complexModuleID = '';
+                    $complexExtFiles = '';
+                    if (isset($arRes['EXIST_HANDLER']) && $arRes['EXIST_HANDLER'] === 'Y')
+                    {
+                        if (isset($arRes['MODULE_ID']))
+                            $complexModuleID = $arRes['MODULE_ID'];
+                        if (isset($arRes['EXT_FILE']))
+                            $complexExtFiles = $arRes['EXT_FILE'];
+                    }
+                    if (isset($arRes['CONTROLS']) && !empty($arRes['CONTROLS']) && is_array($arRes['CONTROLS']))
+                    {
+                        if (array_key_exists('EXIST_HANDLER', $arRes))
+                            unset($arRes['EXIST_HANDLER']);
+                        $arInfo = $arRes;
+                        unset($arInfo['COMPLEX'], $arInfo['CONTROLS']);
+                        foreach ($arRes['CONTROLS'] as &$arOneControl)
+                        {
+                            if (isset($arOneControl['ID']))
+                            {
+                                if (isset($arOneControl['EXIST_HANDLER']) && $arOneControl['EXIST_HANDLER'] === 'Y')
+                                {
+                                    if (!isset($arOneControl['MODULE_ID']) && !isset($arOneControl['EXT_FILE']))
+                                        continue;
+                                }
+                                $arInfo['GROUP'] = 'N';
+                                $arInfo['MODULE_ID'] = isset($arOneControl['MODULE_ID']) ? $arOneControl['MODULE_ID'] : $complexModuleID;
+                                $arInfo['EXT_FILE'] = isset($arOneControl['EXT_FILE']) ? $arOneControl['EXT_FILE'] : $complexExtFiles;
+                                $control = array_merge($arOneControl, $arInfo);
+                                if (isset($this->arControlList[$control['ID']]))
+                                {
+                                    $this->arMsg[] = array('id' => 'CONTROLS', 'text' => str_replace('#CONTROL#', $control['ID'], Loc::getMessage('BT_MOD_COND_ERR_CONTROL_DOUBLE')));
+                                    $this->boolError = true;
+                                }
+                                else
+                                {
+                                    if (!$this->CheckControl($control))
+                                        continue;
+                                    $this->arControlList[$control['ID']] = $control;
+                                }
+                                unset($control);
+                            }
+                        }
+                        if (isset($arOneControl))
+                            unset($arOneControl);
+                        if (isset($arRes['GetControlShow']) && !empty($arRes['GetControlShow']))
+                        {
+                            if (!in_array($arRes['GetControlShow'], $this->arShowControlList))
+                                $this->arShowControlList[] = $arRes['GetControlShow'];
+                        }
+                        if (isset($arRes['InitParams']) && !empty($arRes['InitParams']))
+                        {
+                            if (!in_array($arRes['InitParams'], $this->arInitControlList))
+                                $this->arInitControlList[] = $arRes['InitParams'];
+                        }
+                    }
+                }
+                else
+                {
+                    if (empty($arRes))
+                        continue;
+                    foreach ($arRes as &$arOneRes)
+                    {
+                        if (is_array($arOneRes) && isset($arOneRes['ID']))
+                        {
+                            if (isset($arOneRes['EXIST_HANDLER']) && $arOneRes['EXIST_HANDLER'] === 'Y')
+                            {
+                                if (!isset($arOneRes['MODULE_ID']) && !isset($arOneRes['EXT_FILE']))
+                                    continue;
+                            }
+                            else
+                            {
+                                $arOneRes['MODULE_ID'] = '';
+                                $arOneRes['EXT_FILE'] = '';
+                            }
+                            if (array_key_exists('EXIST_HANDLER', $arOneRes))
+                                unset($arOneRes['EXIST_HANDLER']);
+                            $arOneRes['GROUP'] = (isset($arOneRes['GROUP']) && $arOneRes['GROUP'] == 'Y' ? 'Y' : 'N');
+                            if (isset($this->arControlList[$arOneRes['ID']]))
+                            {
+                                $this->arMsg[] = array('id' => 'CONTROLS', 'text' => str_replace('#CONTROL#', $arOneRes['ID'], Loc::getMessage('BT_MOD_COND_ERR_CONTROL_DOUBLE')));
+                                $this->boolError = true;
+                            }
+                            else
+                            {
+                                if (!$this->CheckControl($arOneRes))
+                                    continue;
+                                $this->arControlList[$arOneRes['ID']] = $arOneRes;
+                                if ($arOneRes['GROUP'] == 'Y')
+                                {
+                                    if (empty($arOneRes['FORCED_SHOW_LIST']))
+                                    {
+                                    $this->arShowInGroups[] = $arOneRes['ID'];
+                                    }
+                                    else
+                                    {
+                                        $forcedList = (!is_array($arOneRes['FORCED_SHOW_LIST']) ? array($arOneRes['FORCED_SHOW_LIST']) : $arOneRes['FORCED_SHOW_LIST']);
+                                        foreach ($forcedList as &$forcedId)
+                                        {
+                                            if (is_array($forcedId))
+                                                continue;
+                                            $forcedId = trim($forcedId);
+                                            if ($forcedId == '')
+                                                continue;
+                                            if (!isset($this->forcedShowInGroup[$forcedId]))
+                                                $this->forcedShowInGroup[$forcedId] = array();
+                                            $this->forcedShowInGroup[$forcedId][] = $arOneRes['ID'];
+                                        }
+                                        unset($forcedId);
+                                    }
+                                }
+                                if (isset($arOneRes['GetControlShow']) && !empty($arOneRes['GetControlShow']))
+                                {
+                                    if (!in_array($arOneRes['GetControlShow'], $this->arShowControlList))
+                                        $this->arShowControlList[] = $arOneRes['GetControlShow'];
+                                }
+                                if (isset($arOneRes['InitParams']) && !empty($arOneRes['InitParams']))
+                                {
+                                    if (!in_array($arOneRes['InitParams'], $this->arInitControlList))
+                                        $this->arInitControlList[] = $arOneRes['InitParams'];
+                                }
+                            }
+                        }
+                    }
+                        unset($arOneRes);
+                }
+            }
+            if (empty($this->arControlList))
+            {
+                $this->arMsg[] = array('id' => 'CONTROLS', 'text' => Loc::getMessage('BT_MOD_COND_ERR_CONTROLS_EMPTY'));
+                $this->boolError = true;
+            }
+        }
+    }
 }

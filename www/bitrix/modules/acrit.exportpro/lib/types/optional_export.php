@@ -21,17 +21,17 @@ $profileTypes['optional'] = array(
 			"VALUE" => "",
             'TYPE' => 'const',
             "CONDITION" => array(
-                'CLASS_ID' => 'CondGroup',
-                'DATA' => array(
-                    'All' => 'AND',
-                    'True' => 'True'
+                "CLASS_ID" => "CondGroup",
+                "DATA" => array(
+                    "All" => "AND",
+                    "True" => "True"
                 ),
-                'CHILDREN' => array(
+                "CHILDREN" => array(
                     array(
-                        'CLASS_ID' => 'CondIBActive',
-                        'DATA' => array(
-                                'logic' => 'Equal',
-                                'value' => 'Y'
+                        "CLASS_ID" => "CondCatQuantity",
+                        "DATA" => array(
+                                "logic" => "EqGr",
+                                "value" => "1"
                         )
                     )
                 )

@@ -37,7 +37,10 @@ ksort($currencyRates);
     </td>
 </tr>
 <tr>
-    <td width="50%"><label for="PROFILE[CURRENCY][CONVERT_CURRENCY]"><?=GetMessage('ACRIT_EXPORTPRO_CURRENCY_CONVERT_CURRENCY')?></label></td>
+    <td width="50%">
+        <span id="hint_PROFILE[CURRENCY][CONVERT_CURRENCY]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[CURRENCY][CONVERT_CURRENCY]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_CURRENCY_CONVERT_CURRENCY_HELP" )?>' );</script>
+        <label for="PROFILE[CURRENCY][CONVERT_CURRENCY]"><?=GetMessage('ACRIT_EXPORTPRO_CURRENCY_CONVERT_CURRENCY')?></label>
+    </td>
     <td><input type="checkbox" name="PROFILE[CURRENCY][CONVERT_CURRENCY]" value="Y" <?=$convertCurrency?> onclick="convertCurrency()" ></td>
 </tr>
 <tr>

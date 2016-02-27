@@ -21,17 +21,17 @@ $profileTypes['mailru_clothing'] = array(
 			"VALUE" => "",
             'TYPE' => 'const',
             "CONDITION" => array(
-                'CLASS_ID' => 'CondGroup',
-                'DATA' => array(
-                    'All' => 'AND',
-                    'True' => 'True'
+                "CLASS_ID" => "CondGroup",
+                "DATA" => array(
+                    "All" => "AND",
+                    "True" => "True"
                 ),
-                'CHILDREN' => array(
+                "CHILDREN" => array(
                     array(
-                        'CLASS_ID' => 'CondIBActive',
-                        'DATA' => array(
-                                'logic' => 'Equal',
-                                'value' => 'Y'
+                        "CLASS_ID" => "CondCatQuantity",
+                        "DATA" => array(
+                                "logic" => "EqGr",
+                                "value" => "1"
                         )
                     )
                 )
@@ -54,11 +54,15 @@ $profileTypes['mailru_clothing'] = array(
 			"CODE" => "PRICE",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_MAILRU_CLOTHING_VENDORMODEL_FIELD_PRICE"),
 			"REQUIRED" => 'Y',
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
 		array(
 			"CODE" => "CURRENCYID",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_MAILRU_CLOTHING_VENDORMODEL_FIELD_CURRENCY"),
 			"REQUIRED" => 'Y',
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "RUR",
 		),
 		array(
 			"CODE" => "CATEGORYID",
@@ -191,6 +195,23 @@ $profileTypes['mailru_clothing'] = array(
     "ENCODING" => 'cp1251',
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['mailru_clothing']["FIELDS"][4] = array(
+        "CODE" => "PRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_MAILRU_CLOTHING_VENDORMODEL_FIELD_PRICE"),
+        "REQUIRED" => "Y",
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+}
+
+$profileTypes['mailru_clothing']['PORTAL_REQUIREMENTS'] = GetMessage( 'ACRIT_EXPORTPRO_TYPE_MAILRU_CLOTHING_VENDORMODEL_PORTAL_REQUIREMENTS' );
 $profileTypes['mailru_clothing']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_MAILRU_CLOTHING_VENDORMODEL_EXAMPLE');
 
 $profileTypes['mailru_clothing']['CURRENCIES'] =

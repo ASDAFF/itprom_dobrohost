@@ -115,6 +115,7 @@ $profileTypes['ebay_1'] = array(
 	"DATEFORMAT" => "Y-m-d_h:i",
 );
 
+$profileTypes['ebay_1']['PORTAL_REQUIREMENTS'] = GetMessage( 'ACRIT_EXPORTPRO_TYPE_EBAY_1_PORTAL_REQUIREMENTS' );
 $profileTypes['ebay_1']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_EBAY_1_EXAMPLE');
 
 $profileTypes['ebay_1']['CURRENCIES'] = '';

@@ -8,7 +8,7 @@ IncludeModuleLangFile(__FILE__);
 
 global $ID, $PROFILE, $save, $apply, $copy;
 
-$dbProfile = new CExportproProfileDB;
+$dbProfile = new CExportproProfileDB;      
 $profileUtils = new CExportproProfile;
 
 $siteEncoding = array(
@@ -85,7 +85,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && (!empty($save) || !empty($apply)) && 
 			}
 		}                                    
 		foreach( $PROFILE['XMLDATA'] as $id => $field ){
-			if( !empty( $field['CONDITION'] ) && CModule::IncludeModule( "catalog" ) ){
+			if( !empty( $field['CONDITION'] ) && CModule::IncludeModule( "catalog" ) ){ 
                 $PROFILE['XMLDATA'][$id]['CONDITION'] = $obCond->Parse( $field['CONDITION'] );
             }
 				
@@ -100,10 +100,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && (!empty($save) || !empty($apply)) && 
             if( !isset( $field['HTML_TO_TXT'] ) ){
                 $PROFILE['XMLDATA'][$id]['HTML_TO_TXT'] = 'N';
             }
+            
+            if( !isset( $field['SKIP_UNTERM_ELEMENT'] ) ){
+                $PROFILE['XMLDATA'][$id]['SKIP_UNTERM_ELEMENT'] = 'N';
+            }
 		}
 		if( !empty( $PROFILE['CONDITION'] ) && CModule::IncludeModule( "catalog" ) ){
 			$PROFILE['CONDITION'] = $obCond->Parse($PROFILE['CONDITION']);
 		}
+        
+        if( $PROFILE['TYPE'] == "ua_hotline_ua" ){
+            $firmIdPos = stripos( $PROFILE['FORMAT'], '<firmId>' );
+            if( $firmIdPos !== false ){
+                $firmIdFinalPos = stripos( $PROFILE['FORMAT'], '<rate>' );
+                if( $firmIdFinalPos !== false ){
+                    $PROFILE['FORMAT'] = substr_replace( $PROFILE['FORMAT'], '', $firmIdPos, ( $firmIdFinalPos - $firmIdPos ) );
+                }
+            }
+            $PROFILE['FORMAT'] = str_replace( "</firmName>", "</firmName>".PHP_EOL."<firmId>".$PROFILE["HOTLINE_FIRM_ID"]."</firmId>", $PROFILE['FORMAT'] );
+        }
         
 		$arFields = Array(
 			"ACTIVE"				=> ($PROFILE['ACTIVE'] <> "Y"? "N":"Y"),
@@ -129,18 +144,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && (!empty($save) || !empty($apply)) && 
 			"CURRENCY_TEMPLATE"		=> $PROFILE['CURRENCY_TEMPLATE'],
             "CATEGORY_TEMPLATE"        => $PROFILE['CATEGORY_TEMPLATE'],
 			"CATEGORY_INNER_TEMPLATE"		=> $PROFILE['CATEGORY_INNER_TEMPLATE'],
-			"DATEFORMAT"			=> $PROFILE['DATEFORMAT'],
+            "DATEFORMAT"            => $PROFILE['DATEFORMAT'],
+			"SITE_PROTOCOL"			=> $PROFILE['SITE_PROTOCOL'],
 			"XMLDATA"				=> $PROFILE['XMLDATA'],
 			"CONDITION"				=> $PROFILE['CONDITION'],
 			"CURRENCY"				=> $PROFILE['CURRENCY'],
 			"MARKET_CATEGORY"		=> $PROFILE['MARKET_CATEGORY'],
             'EXPORT_PARENT_CATEGORIES'    => ( $_REQUEST["PROFILE"]["EXPORT_PARENT_CATEGORIES"] == "Y" ? "Y" : "N" ),
+            'USE_COMPRESS'    => ( $_REQUEST["PROFILE"]["USE_COMPRESS"] == "Y" ? "Y" : "N" ),
             'USE_MARKET_CATEGORY'    => ( $_REQUEST["PROFILE"]["USE_MARKET_CATEGORY"] == "Y" ? "Y" : "N" ),
 			//'USE_MARKET_CATEGORY'	=> $PROFILE['USE_MARKET_CATEGORY'],
 			'SETUP'					=> $PROFILE['SETUP'],
 			'USE_VARIANT'			=> $PROFILE['USE_VARIANT'] <> "Y"? "N":"Y",
-			'VARIANT'				=> $PROFILE['VARIANT'],
-			'TIMESTAMP_X'			=> date('d.m.Y H:i:s')
+            'VARIANT'                => $PROFILE['VARIANT'],
+            'OZON_APPID'                => $PROFILE['OZON_APPID'],
+            'OZON_APPKEY'                => $PROFILE['OZON_APPKEY'],
+			'HOTLINE_FIRM_ID'				=> $PROFILE['HOTLINE_FIRM_ID'],
+            'TIMESTAMP_X'            => date('d.m.Y H:i:s'),
+			'SEND_LOG_EMAIL'			=> ( check_email( $_REQUEST["PROFILE"]["SEND_LOG_EMAIL"] ) ? $_REQUEST["PROFILE"]["SEND_LOG_EMAIL"] : "" ),
 		);
         
 		if( !empty( $PROFILE['SETUP']['URL_DATA_FILE'] ) ){
@@ -332,11 +353,14 @@ if (!isset($_REQUEST['ajax']) && !isset($_REQUEST["ib"]) && !isset($_REQUEST["aj
     
     $aTabs = array(
         array( "DIV" => "step3", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB3" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB3" ) ),
-        array( "DIV" => "step1", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB1" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB1" ) ),
-        array( "DIV" => "step2", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB2" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB2" ) ),
-        array( "DIV" => "step4", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB4" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB4" ) ),
-        array( "DIV" => "step5", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB5" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB5" ) ),
-    );              
+    );
+    
+    $aTabs[] = array( "DIV" => "step16", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB16" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB16" ) );
+    $aTabs[] = array( "DIV" => "step17", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB17" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB17" ) );
+    $aTabs[] = array( "DIV" => "step1", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB1" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB1" ) );
+    $aTabs[] = array( "DIV" => "step2", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB2" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB2" ) );
+    $aTabs[] = array( "DIV" => "step4", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB4" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB4" ) );
+    $aTabs[] = array( "DIV" => "step5", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB5" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB5" ) );
     
     if( CModule::IncludeModule( "catalog" ) ){
         $aTabs[] = array( "DIV" => "step6", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB6" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB6" ) );
@@ -349,6 +373,8 @@ if (!isset($_REQUEST['ajax']) && !isset($_REQUEST["ib"]) && !isset($_REQUEST["aj
     $aTabs[] = array( "DIV" => "step10", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB10" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB10" ) );
     $aTabs[] = array( "DIV" => "step9", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB9" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB9" ) );    
     $aTabs[] = array( "DIV" => "step11", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB11" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB11" ) );
+    $aTabs[] = array( "DIV" => "step14", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB14" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB14" ) );
+    $aTabs[] = array( "DIV" => "step15", "TAB" => GetMessage( "ACRIT_EXPORTPRO_TAB15" ), "ICON" => "main_user_edit", "TITLE" => GetMessage( "ACRIT_EXPORTPRO_TAB15" ) );
     
     $tabControl = new CAdminTabControl("tabControl", $aTabs);
 
@@ -456,6 +482,8 @@ if (!isset($_REQUEST['ajax']) && !isset($_REQUEST["ib"]) && !isset($_REQUEST["aj
 					case 'activizm':
 						echo "$('#tab_cont_step12').hide();";
 						echo "$('#tab_cont_step13').hide();";
+                        echo "$('#tab_cont_step16').hide();";
+                        echo "$('#tab_cont_step17').hide();";
                         echo "$('#tab_cont_step6').hide();";
 
                         echo "$('#market_category_data_ozon, #market_category_data_ebay').remove();";
@@ -465,20 +493,33 @@ if (!isset($_REQUEST['ajax']) && !isset($_REQUEST["ib"]) && !isset($_REQUEST["aj
 						echo "$('#tab_cont_step6').hide();";
 						echo "$('#tab_cont_step10').hide();";
 						echo "$('#tab_cont_step13').hide();";
+                        echo "$('#tab_cont_step16').hide();";
+                        echo "$('#tab_cont_step17').hide();";
 
 						echo "$('#market_category_data_ozon').remove();";
 						break;
 					case 'ozon':
+                        echo "$('#tab_cont_step10').hide();";
+                        echo "$('#tab_cont_step12').hide();"; 
+                        echo "$('#tab_cont_step6').hide();";
+                        echo "$('#tab_cont_step17').hide();";
+
+                        echo "$('#market_category_data_ebay').remove();";
+                        break;
+                    case 'ua_hotline_ua':
 						echo "$('#tab_cont_step10').hide();";
 						echo "$('#tab_cont_step12').hide();";
-						echo "$('#tab_cont_step6').hide();";
+                        echo "$('#tab_cont_step13').hide();";
+                        echo "$('#tab_cont_step16').hide();"; 
 
-						echo "$('#market_category_data_ebay').remove();";
+						echo "$('#market_category_data_ozon, #market_category_data_ebay').remove();";
 						break;
 					default:
 						echo "$('#tab_cont_step10').hide();";
 						echo "$('#tab_cont_step12').hide();";
-						echo "$('#tab_cont_step13').hide();";
+                        echo "$('#tab_cont_step13').hide();";
+                        echo "$('#tab_cont_step16').hide();";
+						echo "$('#tab_cont_step17').hide();";
 
 						echo "$('#market_category_data_ozon, #market_category_data_ebay').remove();";
 						break;

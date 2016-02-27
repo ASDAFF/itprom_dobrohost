@@ -28,6 +28,7 @@ $MESS["ACRIT_EXPORTPRO_TYPE_OZON_SCHEME_DESCRIPTION"] = "<br><b style='color:red
 Данные этого блока не являются обязательными для создания товара, однако без описания товар не может быть выставлен в продажу на вебвитрине.<br>
 Структура данных в блоке Description полностью зависит от типа товара, поэтому задается отдельной схемой. Для получения информации<br>
 о структуре данных конкретного типа товара обратитесь в поддержку модуля или сервиса ozon.ru</b>";
+$MESS['ACRIT_EXPORTPRO_TYPE_OZON_PORTAL_REQUIREMENTS'] = 'http://merchant-platform.ozon.ru/структура-ozon-xml';
 $MESS['ACRIT_EXPORTPRO_TYPE_OZON_EXAMPLE'] = '
 <Product MerchantSKU="Код_товара_в_ИС_мерчанта" ProductTypeID="286495572000">
     <SKU>

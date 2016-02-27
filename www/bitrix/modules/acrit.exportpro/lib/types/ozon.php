@@ -22,17 +22,17 @@ $profileTypes['ozon'] = array(
 			"VALUE" => "",
             'TYPE' => 'const',
             "CONDITION" => array(
-                'CLASS_ID' => 'CondGroup',
-                'DATA' => array(
-                    'All' => 'AND',
-                    'True' => 'True'
+                "CLASS_ID" => "CondGroup",
+                "DATA" => array(
+                    "All" => "AND",
+                    "True" => "True"
                 ),
-                'CHILDREN' => array(
+                "CHILDREN" => array(
                     array(
-                        'CLASS_ID' => 'CondIBActive',
-                        'DATA' => array(
-                                'logic' => 'Equal',
-                                'value' => 'Y'
+                        "CLASS_ID" => "CondCatQuantity",
+                        "DATA" => array(
+                                "logic" => "EqGr",
+                                "value" => "1"
                         )
                     )
                 )
@@ -65,6 +65,8 @@ $profileTypes['ozon'] = array(
 		array(
 			"CODE" => "SELLING_PRICE",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_OZON_FIELD_SELLING_PRICE"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
 		array(
 			"CODE" => "DISCOUNT",
@@ -159,6 +161,22 @@ $profileTypes['ozon'] = array(
 </Products>',
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['ozon']["FIELDS"][6] = array(
+        "CODE" => "SELLING_PRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_OZON_FIELD_SELLING_PRICE"),
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+}
+
+$profileTypes['ozon']['PORTAL_REQUIREMENTS'] = GetMessage( 'ACRIT_EXPORTPRO_TYPE_OZON_PORTAL_REQUIREMENTS' );
 $profileTypes['ozon']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_OZON_EXAMPLE');
 $profileTypes['ozon']['SCHEME_OFFER_DESCRIPTION'] = GetMessage('ACRIT_EXPORTPRO_TYPE_OZON_SCHEME_DESCRIPTION');
 

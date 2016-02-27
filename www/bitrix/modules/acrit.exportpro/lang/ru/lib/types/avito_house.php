@@ -56,6 +56,7 @@ $MESS['ACRIT_EXPORTPRO_AVITO_HOUSE_FIELD_WALLSTYPE'] = "Материал сте�
 <br>";
 
 
+$MESS["ACRIT_EXPORTPRO_TYPE_AVITO_HOUSE_PORTAL_REQUIREMENTS"] = "http://autoload.avito.ru/format/realty/";
 $MESS["ACRIT_EXPORTPRO_TYPE_AVITO_HOUSE_EXAMPLE"] = "
 <?xml version=\"1.0\"?>
 <Ads target=\"Avito.ru\" formatVersion=\"1\">

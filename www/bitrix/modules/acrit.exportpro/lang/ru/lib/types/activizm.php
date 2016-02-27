@@ -46,6 +46,7 @@ $MESS["ACRIT_EXPORTPRO_ACTIVIZM_FIELD_UTM_MEDIUM_VALUE"] = "cpc";
 $MESS["ACRIT_EXPORTPRO_ACTIVIZM_FIELD_UTM_TERM"] = "UTM метка: ключевая фраза";
 $MESS["ACRIT_EXPORTPRO_ACTIVIZM_FIELD_UTM_CONTENT"] = "UTM метка: контейнер для дополнительной информации";
 $MESS["ACRIT_EXPORTPRO_ACTIVIZM_FIELD_UTM_CAMPAIGN"] = "UTM метка: название рекламной кампании";
+$MESS["ACRIT_EXPORTPRO_TYPE_ACTIVIZM_PORTAL_REQUIREMENTS"] = "http://www.acrit-studio.ru/technical-support/configuring-the-module-export-on-trade-portals/requirements-of-the-portal-activizm-ru-to-the-export-file/";
 $MESS["ACRIT_EXPORTPRO_TYPE_ACTIVIZM_EXAMPLE"] = "
 <offer id=\"454545\" available=\"true\">
     <url>http://roga-i-kopyta.ru/catalog/prod454545/</url>

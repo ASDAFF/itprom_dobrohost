@@ -21,17 +21,17 @@ $profileTypes['pulscen'] = array(
 			"VALUE" => "",
             'TYPE' => 'const',
             "CONDITION" => array(
-                'CLASS_ID' => 'CondGroup',
-                'DATA' => array(
-                    'All' => 'AND',
-                    'True' => 'True'
+                "CLASS_ID" => "CondGroup",
+                "DATA" => array(
+                    "All" => "AND",
+                    "True" => "True"
                 ),
-                'CHILDREN' => array(
+                "CHILDREN" => array(
                     array(
-                        'CLASS_ID' => 'CondIBActive',
-                        'DATA' => array(
-                                'logic' => 'Equal',
-                                'value' => 'Y'
+                        "CLASS_ID" => "CondCatQuantity",
+                        "DATA" => array(
+                                "logic" => "EqGr",
+                                "value" => "1"
                         )
                     )
                 )
@@ -55,11 +55,15 @@ $profileTypes['pulscen'] = array(
 			"CODE" => "PRICE",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_PULSCEN_FIELD_PRICE"),
 			"REQUIRED" => 'Y',
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
 		array(
 			"CODE" => "CURRENCYID",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_PULSCEN_FIELD_CURRENCY"),
 			"REQUIRED" => 'Y',
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "RUR",
 		),
 		array(
 			"CODE" => "CATEGORYID",
@@ -191,6 +195,23 @@ $profileTypes['pulscen'] = array(
 	"DATEFORMAT" => "Y-m-d_h:i",
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['pulscen']["FIELDS"][6] = array(
+        "CODE" => "PRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_PULSCEN_FIELD_PRICE"),
+        "REQUIRED" => 'Y',
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+}
+
+$profileTypes['pulscen']['PORTAL_REQUIREMENTS'] = GetMessage( 'ACRIT_EXPORTPRO_TYPE_PULSCEN_PORTAL_REQUIREMENTS' );
 $profileTypes['pulscen']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_PULSCEN_EXAMPLE');
 
 $profileTypes['pulscen']['CURRENCIES'] =

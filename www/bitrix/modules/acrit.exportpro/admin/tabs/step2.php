@@ -11,6 +11,7 @@ $use_sku1 = $arProfile['USE_SKU'] == 'Y' ? 'checked="checked"' : '';
 </tr>
 <tr>
     <td width="40%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[VIEW_CATALOG]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[VIEW_CATALOG]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_ONLY_CATALOG_HELP" )?>' );</script>
         <label for="PROFILE[VIEW_CATALOG]"><?=GetMessage("ACRIT_EXPORTPRO_STEP1_ONLY_CATALOG")?></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r">
@@ -20,6 +21,7 @@ $use_sku1 = $arProfile['USE_SKU'] == 'Y' ? 'checked="checked"' : '';
 </tr>
 <tr>
     <td width="40%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[CHECK_INCLUDE]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[CHECK_INCLUDE]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_CHECK_INCLUDE_HELP" )?>' );</script>
         <label for="PROFILE[CHECK_INCLUDE]"><?=GetMessage("ACRIT_EXPORTPRO_STEP1_CHECK_INCLUDE")?></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r">
@@ -29,6 +31,7 @@ $use_sku1 = $arProfile['USE_SKU'] == 'Y' ? 'checked="checked"' : '';
 </tr>
 <tr>
     <td width="40%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[USE_SKU]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[USE_SKU]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_USE_SKU_HELP" )?>' );</script>
         <label for="PROFILE[USE_SKU]"><?=GetMessage("ACRIT_EXPORTPRO_STEP1_USE_SKU")?></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r">

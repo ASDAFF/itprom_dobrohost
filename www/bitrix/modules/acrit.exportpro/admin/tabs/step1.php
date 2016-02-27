@@ -1,8 +1,12 @@
 <?
-IncludeModuleLangFile(__FILE__);
+IncludeModuleLangFile( __FILE__ );
 
-$CODING = array('cp1251'=>'cp1251','utf8'=>'utf8');
-$activeChecekd = $arProfile['ACTIVE'] == 'Y' ? 'checked="checked"' : '';
+$CODING = array(
+    "cp1251" => "cp1251",
+    "utf8" => "utf8"
+);
+
+$activeChecekd = ( $arProfile["ACTIVE"] == "Y" ) ? 'checked="checked"' : "";
 
 $profileDefaults = $profileUtils->GetDefaults( $arProfile["IBLOCK_ID"], true );
 
@@ -40,6 +44,7 @@ else{
 <tr>
     <tr>
         <td width="40%" class="adm-detail-content-cell-l">
+            <span id="hint_PROFILE[ACTIVE]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[ACTIVE]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_ACTIVE_HELP" )?>' );</script>
             <label for="PROFILE[ACTIVE]"><?=GetMessage("ACRIT_EXPORTPRO_STEP1_ACTIVE")?></label>
         </td>
         <td width="60%" class="adm-detail-content-cell-r">
@@ -48,6 +53,7 @@ else{
         </td>
     </tr>
     <td width="40%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[NAME]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[NAME]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_NAME_HELP" )?>' );</script>
         <label for="PROFILE[NAME]"><b><?=GetMessage("ACRIT_EXPORTPRO_STEP1_NAME")?></b></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r" id="profile_name">
@@ -56,6 +62,7 @@ else{
 </tr>
 <tr>
     <td width="40%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[CODE]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[CODE]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_CODE_HELP" )?>' );</script>
         <label for="PROFILE[CODE]"><b><?=GetMessage("ACRIT_EXPORTPRO_STEP1_CODE")?></b> </label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r" id="profile_code">
@@ -64,6 +71,7 @@ else{
 </tr>
 <tr>
     <td width="40%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[DESCRIPTION]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[DESCRIPTION]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_DESCRIPTION_HELP" )?>' );</script>
         <label for="PROFILE[DESCRIPTION]"><?=GetMessage("ACRIT_EXPORTPRO_STEP1_DESCRIPTION")?></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r">
@@ -72,6 +80,7 @@ else{
 </tr>
 <tr>
     <td width="40%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[SHOPNAME]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[SHOPNAME]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_SHOPNAME_HELP" )?>' );</script>
         <label for="PROFILE[SHOPNAME]"><b><?=GetMessage("ACRIT_EXPORTPRO_STEP1_SHOPNAME")?></b></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r">
@@ -80,6 +89,7 @@ else{
 </tr>
 <tr>
     <td width="40%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[COMPANY]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[COMPANY]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_COMPANY_HELP" )?>' );</script>
         <label for="PROFILE[COMPANY]"><b><?=GetMessage("ACRIT_EXPORTPRO_STEP1_COMPANY")?></b></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r">
@@ -88,6 +98,7 @@ else{
 </tr>
 <tr>
     <td width="40%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[DOMAIN_NAME]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[DOMAIN_NAME]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_DOMAIN_NAME_HELP" )?>' );</script>
         <label for="PROFILE[DOMAIN_NAME]"><b><?=GetMessage("ACRIT_EXPORTPRO_STEP1_DOMAIN_NAME")?></b></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r">
@@ -96,12 +107,14 @@ else{
 </tr>
 <tr>
     <td width="40%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[LID]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[LID]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_SITE_HELP" )?>' );</script>
         <label for="PROFILE[LID]"><b><?=GetMessage("ACRIT_EXPORTPRO_STEP1_SITE")?></b></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r"><?=CLang::SelectBox("PROFILE[LID]", $arProfile["LID"],'','')?></td>
 </tr>
 <tr>
     <td width="40%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[ENCODING]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[ENCODING]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_STEP1_ENCODING_HELP" )?>' );</script>
         <label for="PROFILE[ENCODING]"><b><?=GetMessage("ACRIT_EXPORTPRO_STEP1_ENCODING")?></b></label>
     </td>
     <td width="60%" class="adm-detail-content-cell-r">

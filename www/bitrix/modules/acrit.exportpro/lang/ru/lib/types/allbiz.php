@@ -59,7 +59,8 @@ $MESS['ACRIT_EXPORTPRO_ALLBIZ_FIELD_PARAM4'] = "Производимая про�
 $MESS['ACRIT_EXPORTPRO_ALLBIZ_FIELD_PARAM5'] = "Возможен экспорт.<br>Доставка в другие страны.<br>1 - осуществляется, пусто - нет";
 $MESS['ACRIT_EXPORTPRO_ALLBIZ_FIELD_PARAM6'] = "Импортная продукция<br> 1 - импортная, пусто - нет";
 $MESS['ACRIT_EXPORTPRO_ALLBIZ_FIELD_PARAM7'] = "Идентификатор позиции allbiz";
-
+                                              
+$MESS["ACRIT_EXPORTPRO_TYPE_ALLBIZ_PORTAL_REQUIREMENTS"] = "http://help.all.biz/import-tovarov-kak-importirovat-tovary-iz-yml-fajla-ans186";
 $MESS["ACRIT_EXPORTPRO_TYPE_ALLBIZ_EXAMPLE"] = "
 <?xml version=\"1.0\" encoding=\"utf-8\"?>
 <!DOCTYPE yml_catalog SYSTEM \"shops.dtd\">

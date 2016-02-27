@@ -7,24 +7,21 @@ if ($POST_RIGHT >= "R"):
 	IncludeModuleLangFile($_SERVER["DOCUMENT_ROOT"] . BX_ROOT . "/modules/main/options.php");
 	Cmodule::IncludeModule($module_id);
 	IncludeModuleLangFile(__FILE__);
+    
+    AcritLicence::Show();
+    
 	$aTabs = array(
 		array(
 			"DIV" => "edit1",
-			"TAB" => GetMessage("MAIN_TAB_SET"),
-			"ICON" => "main_settings",
-			"TITLE" => GetMessage("MAIN_TAB_TITLE_SET")
+			"TAB" => GetMessage("MAIN_TAB_RIGHTS"),
+            "ICON" => "main_settings",
+            "TITLE" => GetMessage("MAIN_TAB_TITLE_RIGHTS")
 		),
 		array(
 			"DIV" => "edit2",
-			"TAB" => GetMessage("MAIN_TAB_RIGHTS"),
-			"ICON" => "main_settings",
-			"TITLE" => GetMessage("MAIN_TAB_TITLE_RIGHTS")
-		),
-		array(
-			"DIV" => "edit3",
 			"TAB" => GetMessage("MAIN_TAB_SUPPORT"),
-			"ICON" => "main_settings",
-			"TITLE" => GetMessage("MAIN_TAB_TITLE_SUPPORT")
+            "ICON" => "main_settings",
+            "TITLE" => GetMessage("MAIN_TAB_TITLE_SUPPORT")
 		),
 	);
 
@@ -32,8 +29,6 @@ if ($POST_RIGHT >= "R"):
 
 	if ($REQUEST_METHOD == "POST" && strlen($Update . $Apply . $RestoreDefaults) > 0 && $POST_RIGHT == "W" && check_bitrix_sessid()){
 		$Update = $Update . $Apply;
-		COption::SetOptionString($module_id, "ozonAppId", trim($_POST["ozonAppId"]));
-		COption::SetOptionString($module_id, "ozonAppKey", trim($_POST["ozonAppKey"]));
 		ob_start();
 		require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/admin/group_rights.php");
 		ob_end_clean();
@@ -55,25 +50,7 @@ if ($POST_RIGHT >= "R"):
 	<form method="post" action="<? echo $APPLICATION->GetCurPage() ?>?mid=<?= urlencode($module_id) ?>&amp;lang=<?= LANGUAGE_ID ?>">
 		<?
 		$tabControl->Begin();
-		$tabControl->BeginNextTab();
 		?>
-		<tr class="heading">
-			<td colspan="2"><b><?= GetMessage('ACRIT_EXPORTPRO_OP_OZON_TITLE') ?></b></td>
-		</tr>
-		<tr>
-			<td width="50%"><?= GetMessage('ACRIT_EXPORTPRO_OP_OZON_APPID') ?></td>
-			<td width="50%">
-				<? $ozonAppId = COption::GetOptionString($module_id, "ozonAppId"); ?>
-				<input type="text" name="ozonAppId" value="<?= $ozonAppId ?>" size="30"/>
-			</td>
-		</tr>
-		<tr>
-			<td width="50%"><?= GetMessage('ACRIT_EXPORTPRO_OP_OZON_APPKEY') ?></td>
-			<td width="50%">
-				<? $ozonAppKey = COption::GetOptionString($module_id, "ozonAppKey"); ?>
-				<input type="text" name="ozonAppKey" value="<?= $ozonAppKey ?>" size="30"/>
-			</td>
-		</tr>
 	<?
 	
 	$tabControl->BeginNextTab();

@@ -49,4 +49,16 @@ $MESS['ACRIT_EXPORTPRO_VARIANT_LIST_COLOR_DESCRIPTION'] = '
 $MESS['ACRIT_EXPORTPRO_VARIANT_LIST_PRICE_TITLE'] = 'Тип цены';
 $MESS['ACRIT_EXPORTPRO_VARIANT_LIST_PRICE'] = 'Выберите тип цены, указанный в тэге <b>&lt;price&gt;</b>';
 $MESS["ACRIT_EXPORTPRO_VARIANT_LIST_CATEGORY_EXT"] = '<span style="color: #716536">(Выберите размер, если для аналогичного<br> раздела выше указан размер в OZ,<br> в противном случае настройка будет проигнорирована)</span>';
+
+$MESS["ACRIT_EXPORTPRO_VARIANT_LIST_USE_VARIANT_HELP"] = "Использовать VariantList";
+$MESS['ACRIT_EXPORTPRO_VARIANT_LIST_SEX_HELP'] = 'Свойство гендерной принадлежности(товар)';
+$MESS['ACRIT_EXPORTPRO_VARIANT_LIST_SEX_OFFER_HELP'] = 'Свойство гендерной принадлежности(предложение)';
+$MESS['ACRIT_EXPORTPRO_VARIANT_LIST_SEX_CONST_HELP'] = 'Значение гендерной принадлежности<br><b>(будет применено для всех разделов)</b><br>Если значение задано,<br>будет использовано значение, а не свойство';
+$MESS['ACRIT_EXPORTPRO_VARIANT_LIST_COLOR_HELP'] = 'Свойство для вывода цвета(товар)';
+$MESS['ACRIT_EXPORTPRO_VARIANT_LIST_COLOR_OFFER_HELP'] = 'Свойство для вывода цвета(предложение)';
+$MESS['ACRIT_EXPORTPRO_VARIANT_LIST_SIZE_HELP'] = 'Свойство для вывода размера(товар)';
+$MESS['ACRIT_EXPORTPRO_VARIANT_LIST_SIZE_OFFER_HELP'] = 'Свойство для вывода размера(предложение)';
+$MESS['ACRIT_EXPORTPRO_VARIANT_LIST_WEIGHT_HELP'] = 'Свойство для вывода веса(товар)';
+$MESS['ACRIT_EXPORTPRO_VARIANT_LIST_WEIGHT_OFFER_HELP'] = 'Свойство для вывода веса(предложение)';
+$MESS['ACRIT_EXPORTPRO_VARIANT_LIST_PRICE_HELP'] = 'Выберите тип цены, указанный в тэге <b>&lt;price&gt;</b>';
 ?>

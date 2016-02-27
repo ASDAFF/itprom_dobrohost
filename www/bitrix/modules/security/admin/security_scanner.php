@@ -148,8 +148,8 @@ else:
 	<?$tabControl->End();?>
 	</form>
 
-	<script id="scanner_messages" type="application/json"><?=CSecurityJsonHelper::encode(IncludeModuleLangFile(__FILE__, false, true))?></script>
-	<script id="scanner_results" type="application/json"><?=CSecurityJsonHelper::encode($lastResults)?></script>
+	<script id="scanner_messages" type="application/json"><?=\Bitrix\Main\Web\Json::encode(IncludeModuleLangFile(__FILE__, false, true))?></script>
+	<script id="scanner_results" type="application/json"><?=\Bitrix\Main\Web\Json::encode($lastResults)?></script>
 <?endif;?>
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/epilog_admin.php");

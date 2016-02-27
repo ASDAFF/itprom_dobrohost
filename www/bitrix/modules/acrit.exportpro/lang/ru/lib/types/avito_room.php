@@ -33,6 +33,7 @@ $MESS['ACRIT_EXPORTPRO_AVITO_ROOM_FIELD_LEASETYPE'] = "Тип аренды,то�
 ";
 $MESS['ACRIT_EXPORTPRO_AVITO_ROOM_FIELD_IMAGE'] = "Изображения";
 
+$MESS["ACRIT_EXPORTPRO_TYPE_AVITO_ROOM_PORTAL_REQUIREMENTS"] = "http://autoload.avito.ru/format/realty/";
 $MESS["ACRIT_EXPORTPRO_TYPE_AVITO_ROOM_EXAMPLE"] = "
 <?xml version=\"1.0\"?>
 <Ads target=\"Avito.ru\" formatVersion=\"1\">

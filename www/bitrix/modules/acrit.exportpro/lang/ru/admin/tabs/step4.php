@@ -18,6 +18,7 @@ $MESS["ACRIT_EXPORTPRO_SCHEME_HEADER"] = "Шапка";
 $MESS["ACRIT_EXPORTPRO_SCHEME_ISLNFO"] = "Служебная информация";
 $MESS["ACRIT_EXPORTPRO_SCHEME_BEGINDATE"] = "Начало (дата)";
 $MESS["ACRIT_EXPORTPRO_SCHEME_DATEFORMAT"] = "Формат вывода даты:";
+$MESS["ACRIT_EXPORTPRO_SCHEME_SITE_PROTOCOL"] = "Протокол для включения в файл экспорта:";
 $MESS["ACRIT_EXPORTPRO_SCHEME_EXPORT_PARENT_CATEGORIES"] = "Экспортировать родительские категории:";
 $MESS["ACRIT_EXPORTPRO_SCHEME_CENTRAL"] = "Центральная часть";
 $MESS["ACRIT_EXPORTPRO_SCHEME_OFFER"] = "Предложение";
@@ -72,4 +73,8 @@ $MESS['ACRIT_EXPORTPRO_SCHEME_CURRENCY_DESCRIPTION'] = "
     <b>#RATE#</b> - курс<br>
     <b>#PLUS#</b> - коррекция<br>
 ";
+
+$MESS["ACRIT_EXPORTPRO_SCHEME_DATEFORMAT_HELP"] = "Формат вывода даты";
+$MESS["ACRIT_EXPORTPRO_SCHEME_SITE_PROTOCOL_HELP"] = "Протокол работы сайта, для включения в ссылки файла экспорта";
+$MESS["ACRIT_EXPORTPRO_SCHEME_EXPORT_PARENT_CATEGORIES_HELP"] = "Экспортировать родительские категории";
 ?>

@@ -9,6 +9,12 @@ $MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_CURRENCY"] = "Базовая валют�
 $MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_PRICE"] = "Цена товара";
 $MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_PURCHASE_PRICE"] = "Закупочная цена";
 $MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_AMOUNT"] = "Количество товара";
+$MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_VENDOR_CODE"] = "Товарное предложение: Артикул";
+$MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_SIZE"] = "Товарное предложение: Размер. Например, M, S - это размеры товара";
+$MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_COLOR"] = "Товарное предложение: Цвет товара";
+$MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_PURCHASEPRICE"] = "Товарное предложение: Цена товара";
+$MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_PRICE"] = "Товарное предложение: Закупочная цена";
+$MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SKU_AMOUNT"] = "Товарное предложение: Количество";
 $MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_UNIT"] = "Единица измерения товара";
 $MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_DISCOUNT"] = "Скидка на товар";
 $MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_SHIPPINGPRICE"] = "Цена доставки единицы товара";
@@ -38,4 +44,5 @@ $MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_MANUFACTURER_WARRANTY"] = "Официа�
 $MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_TAGS"] = "Тэги метки";
 $MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_GIFTS"] = "Артикулы товаров, которые идут в подарок";
 $MESS["ACRIT_EXPORTPRO_ADVANTSHOP_FIELD_PRODUCTSETS"] = "Артикулы товаров, идущие в комплекте с этим товаром";
+$MESS["ACRIT_EXPORTPRO_TYPE_ADVANTSHOP_PORTAL_REQUIREMENTS"] = "http://www.advantshop.net/help/pages/export-csv-columns?name=csv";
 ?>

@@ -88,6 +88,8 @@ $profileTypes['avito_garage'] = array(
         array(
 			"CODE" => "Price",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_AVITO_GARAGE_FIELD_PRICE"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
 		),
         array(
 			"CODE" => "ContactPhone",
@@ -110,6 +112,22 @@ $profileTypes['avito_garage'] = array(
 	"DATEFORMAT" => "Y-m-d",
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['avito_garage']["FIELDS"][16] = array(
+        "CODE" => "Price",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_AVITO_GARAGE_FIELD_PRICE"),
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+}
+
+$profileTypes['avito_garage']['PORTAL_REQUIREMENTS'] = GetMessage('ACRIT_EXPORTPRO_TYPE_AVITO_GARAGE_PORTAL_REQUIREMENTS');
 $profileTypes['avito_garage']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_AVITO_GARAGE_EXAMPLE');
 
 $profileTypes['avito_garage']['CURRENCIES'] = "";

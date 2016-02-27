@@ -21,17 +21,17 @@ $profileTypes['ym_vendormodel'] = array(
 			"VALUE" => "",
             'TYPE' => 'const',
             "CONDITION" => array(
-                'CLASS_ID' => 'CondGroup',
-                'DATA' => array(
-                    'All' => 'AND',
-                    'True' => 'True'
+                "CLASS_ID" => "CondGroup",
+                "DATA" => array(
+                    "All" => "AND",
+                    "True" => "True"
                 ),
-                'CHILDREN' => array(
+                "CHILDREN" => array(
                     array(
-                        'CLASS_ID' => 'CondIBActive',
-                        'DATA' => array(
-                                'logic' => 'Equal',
-                                'value' => 'Y'
+                        "CLASS_ID" => "CondCatQuantity",
+                        "DATA" => array(
+                                "logic" => "EqGr",
+                                "value" => "1"
                         )
                     )
                 )
@@ -54,15 +54,22 @@ $profileTypes['ym_vendormodel'] = array(
 			"CODE" => "PRICE",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_PRICE"),
 			"REQUIRED" => 'Y',
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
+            
 		),
         array(
             "CODE" => "OLDPRICE",
             "NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_OLDPRICE"),
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "0",
         ),
 		array(
 			"CODE" => "CURRENCYID",
 			"NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_CURRENCY"),
 			"REQUIRED" => 'Y',
+            "TYPE" => "const",
+            "CONTVALUE_TRUE" => "RUR",
 		),
 		array(
 			"CODE" => "CATEGORYID",
@@ -219,6 +226,30 @@ $profileTypes['ym_vendormodel'] = array(
 	"DATEFORMAT" => "Y-m-d_H:i",
 );
 
+$bCatalog = false;
+if( CModule::IncludeModule( "catalog" ) ){
+    $arBasePrice = CCatalogGroup::GetBaseGroup();
+    $basePriceCode = "CATALOG-PRICE_".$arBasePrice["ID"];
+    $basePriceCodeWithDiscount = "CATALOG-PRICE_".$arBasePrice["ID"]."_WD";
+    $bCatalog = true;
+    
+    $profileTypes['ym_vendormodel']["FIELDS"][4] = array(
+        "CODE" => "PRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_PRICE"),
+        "REQUIRED" => 'Y',
+        "TYPE" => "field",
+        "VALUE" => $basePriceCode,
+    );
+    
+    $profileTypes['ym_vendormodel']["FIELDS"][5] = array(
+        "CODE" => "OLDPRICE",
+        "NAME" => GetMessage("ACRIT_EXPORTPRO_MARKET_VENDORMODEL_FIELD_OLDPRICE"),
+        "TYPE" => "field",
+        "VALUE" => $basePriceCodeWithDiscount,
+    );
+}
+
+$profileTypes['ym_vendormodel']['PORTAL_REQUIREMENTS'] = GetMessage( 'ACRIT_EXPORTPRO_TYPE_MARKET_VENDORMODEL_PORTAL_REQUIREMENTS' );
 $profileTypes['ym_vendormodel']['EXAMPLE'] = GetMessage('ACRIT_EXPORTPRO_TYPE_MARKET_VENDORMODEL_EXAMPLE');
 
 $profileTypes['ym_vendormodel']['CURRENCIES'] =

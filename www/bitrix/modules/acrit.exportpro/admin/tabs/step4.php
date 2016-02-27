@@ -40,6 +40,15 @@ $time["Y-m-dTh:i".GetMessage("ACRIT_EXPORTPRO_2")] = date("Y-m-dTh:i".GetMessage
 $time["YmdThi"] = date("YmdThi", time());
 $time["Y-m-dTh:i"] = date("Y-m-dTh:i", time());
 
+$arExportFileProtocol = array(
+    "http",
+    "https"
+);
+
+$exportFileProtocol = ( ( $arProfile["SITE_PROTOCOL"] == "http" ) || ( $arProfile["SITE_PROTOCOL"] == "https" ) ) ? 
+                        $arProfile["SITE_PROTOCOL"] : 
+                        ( ( CMain::IsHTTPS() ) ? "https" : "http" );
+                        
 $bExportParentCategories = $arProfile["EXPORT_PARENT_CATEGORIES"] == "Y" ? 'checked="checked"' : "";
 ?>
 
@@ -55,6 +64,7 @@ $bExportParentCategories = $arProfile["EXPORT_PARENT_CATEGORIES"] == "Y" ? 'chec
 </tr>
 <tr>
     <td width="50%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[DATEFORMAT]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[DATEFORMAT]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_SCHEME_DATEFORMAT_HELP" )?>' );</script>
         <label for="PROFILE[DATEFORMAT]"><b><?=GetMessage('ACRIT_EXPORTPRO_SCHEME_DATEFORMAT')?></b></label>
     </td>
     <td width="" class="adm-detail-content-cell-r">
@@ -67,7 +77,24 @@ $bExportParentCategories = $arProfile["EXPORT_PARENT_CATEGORIES"] == "Y" ? 'chec
     </td>
 </tr>
 <tr>
-    <td width="50%"><label for="PROFILE[EXPORT_PARENT_CATEGORIES]"><?=GetMessage( "ACRIT_EXPORTPRO_SCHEME_EXPORT_PARENT_CATEGORIES" );?></label></td>
+    <td width="50%" class="adm-detail-content-cell-l">
+        <span id="hint_PROFILE[SITE_PROTOCOL]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[SITE_PROTOCOL]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_SCHEME_SITE_PROTOCOL_HELP" )?>' );</script>
+        <label for="PROFILE[SITE_PROTOCOL]"><b><?=GetMessage('ACRIT_EXPORTPRO_SCHEME_SITE_PROTOCOL')?></b></label>
+    </td>
+    <td width="" class="adm-detail-content-cell-r">
+        <select name="PROFILE[SITE_PROTOCOL]">
+            <?foreach( $arExportFileProtocol as $protocol ):?>
+                <?$selected = ( $protocol == $exportFileProtocol ) ? 'selected="selected"' : "";?>
+                <option value="<?=$protocol?>" <?=$selected?>><?=$protocol?></option>
+            <?endforeach?>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td width="50%">
+        <span id="hint_PROFILE[EXPORT_PARENT_CATEGORIES]"></span><script type="text/javascript">BX.hint_replace( BX( 'hint_PROFILE[EXPORT_PARENT_CATEGORIES]' ), '<?=GetMessage( "ACRIT_EXPORTPRO_SCHEME_EXPORT_PARENT_CATEGORIES_HELP" )?>' );</script>
+        <label for="PROFILE[EXPORT_PARENT_CATEGORIES]"><?=GetMessage( "ACRIT_EXPORTPRO_SCHEME_EXPORT_PARENT_CATEGORIES" );?></label>
+    </td>
     <td><input type="checkbox" name="PROFILE[EXPORT_PARENT_CATEGORIES]" value="Y" <?=$bExportParentCategories?> ></td>
 </tr>
 <tr class="heading">
