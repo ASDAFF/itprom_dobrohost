@@ -1,45 +1,47 @@
-<?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
-if (!empty($arResult['ERROR'])){
-	echo $arResult['ERROR'];
-	return false;
+if (!empty($arResult['ERROR'])) {
+    echo $arResult['ERROR'];
+    return false;
 }
 
 //$APPLICATION->SetPageProperty("title", $arResult["ELEMENT"]["PROPERTIES"]["TITLE"]["VALUE"]);
 
 
 $GLOBALS['APPLICATION']->SetAdditionalCSS('/bitrix/js/highloadblock/css/highloadblock.css');
-$listUrl = str_replace('#BLOCK_ID#', intval($arParams['BLOCK_ID']),	$arParams['LIST_URL']);
+$listUrl = str_replace('#BLOCK_ID#', intval($arParams['BLOCK_ID']), $arParams['LIST_URL']);
 ?>
-<div class="myContent" style="padding-bottom: 0;">
+    <div class="myContent" style="padding-bottom: 0;">
+        <?
+        $myRow = $arResult['row'];
+        $GLOBALS['APPLICATION']->SetTitle(GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD", array("#BRAND_NAME#" => $myRow["UF_NAME"])));
+        ?>
+        <a href="<?= htmlspecialcharsbx($listUrl) ?>"><?= GetMessage('HLBLOCK_ROW_VIEW_BACK_TO_LIST') ?></a>
+        <div class="brand_photo_holder"><img src="<?= $myRow["UF_FILE"] ?>"/></div>
 
-      <div class="brand_photo_holder"><img src="<?= $myRow["UF_FILE"]?>"/></div>
-    <a href="<?=htmlspecialcharsbx($listUrl)?>"><?=GetMessage('HLBLOCK_ROW_VIEW_BACK_TO_LIST')?></a>
-    <?
-    $myRow = $arResult['row'];
-    $GLOBALS['APPLICATION']->SetTitle(GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD",array("#BRAND_NAME#" => $myRow["UF_NAME"])));
-    ?>
-    <h1>fsdf<?= GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD",array("#BRAND_NAME#" => $myRow["UF_NAME"]))?></h1>
-      <div class="brand_info"><p class="brand_announce"><?= $myRow["UF_DESCRIPTION"] ?></p>
-      <p>nknknklnklnklnlknk<?= test_dump($arResult);$myRow["UF_FULL_DESCRIPTION"] ?></p>
-		</div>
-	<div class="clearfix">&nbsp;</div>
-	<h3 style="margin-bottom: 0;"><?=GetMessage("HLBLOCK_ROW_VIEW_PRODUCTION")?>:</h3>
-</div>
-  <?if(isset($_REQUEST["view"]) and $_REQUEST["view"] == "list") $sectionTemplate = "list";
-  else $sectionTemplate = "tiles";
-  if(!empty($_GET["sort"])){
-    if($_GET["sort"] == "price") $sort = "catalog_PRICE_1";
+
+        <h1>fsdf<?= GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD", array("#BRAND_NAME#" => $myRow["UF_NAME"])) ?></h1>
+        <div class="brand_info"><p class="brand_announce"><?= $myRow["UF_DESCRIPTION"] ?></p>
+            <p>nknknklnklnklnlknk<?= test_dump($arResult);
+                $myRow["UF_FULL_DESCRIPTION"] ?></p>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <h3 style="margin-bottom: 0;"><?= GetMessage("HLBLOCK_ROW_VIEW_PRODUCTION") ?>:</h3>
+    </div>
+<? if (isset($_REQUEST["view"]) and $_REQUEST["view"] == "list") $sectionTemplate = "list";
+else $sectionTemplate = "tiles";
+if (!empty($_GET["sort"])) {
+    if ($_GET["sort"] == "price") $sort = "catalog_PRICE_1";
     else $sort = $_GET["sort"];
     $sortOrder = $_GET["sort_ord"];
-  }else{
+} else {
     $sort = $arParams["ELEMENT_SORT_FIELD"];
     $sortOrder = $arParams["ELEMENT_SORT_ORDER"];
-  }
-  $sort2 = $arParams["ELEMENT_SORT_FIELD"];
-  $sortOrder2 = $arParams["ELEMENT_SORT_ORDER"];
-  ?>
-  <?/*$APPLICATION->IncludeComponent(
+}
+$sort2 = $arParams["ELEMENT_SORT_FIELD"];
+$sortOrder2 = $arParams["ELEMENT_SORT_ORDER"];
+?>
+<? /*$APPLICATION->IncludeComponent(
   "bitrix:catalog.section", 
   $sectionTemplate, 
   array(
@@ -150,4 +152,4 @@ $listUrl = str_replace('#BLOCK_ID#', intval($arParams['BLOCK_ID']),	$arParams['L
     "BRAND_REF_VALUE" => $arResult['row']["UF_LINK"]
   ),
   false
-);*/?>
+);*/ ?>
