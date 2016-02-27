@@ -49,7 +49,7 @@ function wfJTitleSearch(arParams){
   this.ShowResult = function (result){
     var pos = BX.pos(that.INPUT);
     pos.width = pos.right - pos.left;
-    that.RESULT.style.position = 'absolute';
+    that.RESULT.style.position = 'fixed';
     that.RESULT.style.top = (pos.bottom) + 'px';
     if (result != null) {
       result = $.trim(result);
@@ -360,7 +360,7 @@ function wfJTitleSearch(arParams){
       if (!BX.browser.IsIE())
         this.WAIT.style.backgroundRepeat = 'none';
       this.WAIT.style.display = 'none';
-      this.WAIT.style.position = 'absolute';
+      this.WAIT.style.position = 'fixed';
       this.WAIT.style.zIndex = '1100';
     }
 
