@@ -978,11 +978,11 @@ body > .drop-nav{
     /*
 	background: #c3e8f6 url(../img/shadow01.png) no-repeat 50% 0;
     */
-	border-style: ridge;
 	width: 100%;
 	float: left;
 	background-color: #FFFFFF;
 	padding: 2px 0px 3px 0px;
+	box-shadow:#0e7da2 1px 1px 1px ;
 }
 
 label { cursor: pointer; }
