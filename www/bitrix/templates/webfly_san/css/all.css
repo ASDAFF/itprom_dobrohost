@@ -975,16 +975,16 @@ body > .drop-nav{
 	border-top:1px solid #96d3ef;
 }
 .search-form{
-	background: #c3e8f6 url(../img/shadow01.png) no-repeat 50% 0;
     /*
-	margin-left: 16%;
+	background: #c3e8f6 url(../img/shadow01.png) no-repeat 50% 0;
     */
+	margin-left: 16%;
 	width: 78%;
 	float: left;
-	background-color: #f5f5f5;
+	background-color: #FFFFFF;
 	padding: 2px 0px 3px 0px;
 }
-}
+
 label { cursor: pointer; }
 .search-form label{
 	font: 15px/22px 'ubuntubold', Arial, Helvetica, sans-serif;
