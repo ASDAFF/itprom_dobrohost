@@ -59,7 +59,7 @@ if (!empty($arResult['ITEMS'])) {
   $strElementEdit = CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_EDIT");
   $strElementDelete = CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_DELETE");
   $arElementDeleteParams = array("CONFIRM" => GetMessage('CT_BCS_TPL_ELEMENT_DELETE_CONFIRM'));
-  $propsList = array("BRAND_REF", "MANUFACTURER", "MATERIAL_VANNY", "COLOR", "SHAPE_BATH");
+  $propsList = array("BRAND_REF", "MANUFACTURER", "COLOR");
   $list = $APPLICATION->GetCurUri();
   $tiles = $APPLICATION->GetCurPageParam("",array("view"));
   $tiles = $APPLICATION->GetCurPageParam("",array("view"=>"tiles"));
@@ -137,7 +137,7 @@ if (!empty($arResult['ITEMS'])) {
             </div>
             <div class="block">
               <div class="description">
-                <a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="product-title"><?=$arItem["NAME"]?></a>
+                <a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="product-title"><?=$arItem["PROPERTIES"]["BRAND_REF"]["VALUE"]." ".$arItem["NAME"]?></a>
                 <p>
                   <?
                   $iterator = 1;
@@ -154,13 +154,7 @@ if (!empty($arResult['ITEMS'])) {
                   <?
                     $p = $arItem["PROPERTIES"];
                   //test_dump($p);
-                  ?>
-
-                  <? if ($p["BRAND_REF"]["NAME"] != null) { ?>
-                  <span class="text-medium">Производитель: </span>
-                  <span class="text-regular"><?=$p["BRAND_REF"]["NAME"]?></span>
-                  <br />
-                  <? } ?>
+                   ?>
 
                   <span class="text-medium">Размеры (ГxШxВ):</span>
                   <span class="text-regular"><?=$p["DEPTH"]["VALUE"]?>x<?=$p["WIDTH"]["VALUE"]?>x<?=$p["HEIGHT"]["VALUE"]?> мм</span>
