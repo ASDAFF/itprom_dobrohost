@@ -26,6 +26,9 @@ p.main-h2-title-type01{
     color: #fe6869 ;
 }
 
+#header {
+    position: fixed;
+}
 #header-z {
     height: 121px;
     position: relative;
