@@ -1,7 +1,7 @@
 <?
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
   die();
-//test_dump($arResult);
+test_dump($arResult);
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
