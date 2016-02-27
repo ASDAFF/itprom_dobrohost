@@ -75,7 +75,6 @@ if (!empty($arResult['ITEMS'])) {
     <a href="<?=$sort?>" class="link-sort link-price ls-asc" data-sort="asc"><?=GetMessage("WF_PRODUCT_SORT_PRICE")?></a>
     <!--a href="#" class="link-sort link-brand ls-asc" data-sort="asc"><?=GetMessage("WF_PRODUCT_SORT_BRAND")?></a-->
     <a href="<?=$list?>" class="link-list"><?=GetMessage("WF_PRODUCT_VIEW_LIST")?></a>
-    <?test_dump($tiles);?>
     <a href="<?=$tiles?>" class="link-table"><?=GetMessage("WF_PRODUCT_VIEW_TABLE")?></a>
   </div>
   <div class="product-catalog product-catalog02" id="wf-product-catalog">
