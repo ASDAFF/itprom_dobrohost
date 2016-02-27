@@ -976,7 +976,9 @@ body > .drop-nav{
 }
 .search-form{
 	background: #c3e8f6 url(../img/shadow01.png) no-repeat 50% 0;
+    /*
 	margin-left: 16%;
+    */
 	width: 78%;
 	float: left;
 	background-color: #f5f5f5;
