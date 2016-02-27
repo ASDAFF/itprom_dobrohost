@@ -20,7 +20,7 @@ else
 
 $preSearchPath = "{$pathToTemplateFolder}/result_modifier.php";
 if($arParams["SHOW_INPUT"] !== "N"):?>
-	<div id="<?=$CONTAINER_ID?>">
+	<div id="<?=$CONTAINER_ID?>" class="col20">
 		<form action="<?=$preSearchPath?>" id="search_form" class="search-form">
 			<input type="hidden" name="site_id" value="<?=SITE_ID;?>"/>
       <fieldset>
