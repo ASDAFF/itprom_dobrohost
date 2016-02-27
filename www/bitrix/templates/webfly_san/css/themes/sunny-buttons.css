@@ -12,7 +12,7 @@
 
 .myBtn:active { background: #ffe989; margin-top: 1px;}
 .btn-search {
-  background: #FFE564 url(../../img/btn-search-black.png) 23% 1px no-repeat;
+  background: #419DD0  url(../../img/btn-search-black.png) 23% 1px no-repeat;
   color: #000;
 }
 .btn-search:hover {
