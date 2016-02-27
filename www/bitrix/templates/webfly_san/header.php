@@ -271,10 +271,6 @@ require_once 'settings.php';
                     )
                 ); ?>
             </div>
-            <div class="col20">
-            <span class="header-phone">
-              <? $APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR . "include/header/tel.php")); ?>
-            </span>
             </div>
             <div class="col20 small-text">
                 <span class="icon40px icon-time"></span>
