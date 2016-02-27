@@ -1,6 +1,7 @@
 <?
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
   die();
+test_dump($arResult);
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
@@ -61,6 +62,7 @@ if (!empty($arResult['ITEMS'])) {
   $propsList = array("BRAND_REF", "MANUFACTURER", "MATERIAL_VANNY", "COLOR", "SHAPE_BATH");
   $list = $APPLICATION->GetCurUri();
   $tiles = $APPLICATION->GetCurPageParam("",array("view"));
+  $tiles = $APPLICATION->GetCurPageParam("",array("view"=>"tiles"));
   if(!empty($_GET["sort_ord"])){
     if($_GET["sort_ord"] == "asc") $srt = "desc";
     else $srt = "asc";

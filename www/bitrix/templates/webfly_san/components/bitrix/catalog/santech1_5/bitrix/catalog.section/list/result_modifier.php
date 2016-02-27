@@ -404,4 +404,6 @@ if (!empty($arResult['ITEMS'])){
                                                                               BX_RESIZE_IMAGE_PROPORTIONAL, true);
   }
 }
+
+
 ?>
