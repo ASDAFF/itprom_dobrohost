@@ -1027,7 +1027,6 @@ label { cursor: pointer; }
 	border: 0;
 	padding: 0;
 	margin: 3px 16px 0 0;
-	float:right;
 	background:url(../img/btn-search.png) no-repeat;
 	width:23px;
 	height:22px;
