@@ -63,8 +63,8 @@ if (!empty($arResult['ITEMS'])) {
   $strElementDelete = CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_DELETE");
   $arElementDeleteParams = array("CONFIRM" => GetMessage('CT_BCS_TPL_ELEMENT_DELETE_CONFIRM'));
   $propsList = array("BRAND_REF", "MANUFACTURER", "MATERIAL_VANNY", "COLOR", "SHAPE_BATH");
-  $list = $APPLICATION->GetCurPageParam("view=list");
-  $tiles = $APPLICATION->GetCurPageParam("",array("view"));
+    $list = $APPLICATION->GetCurUri();
+    $tiles = $APPLICATION->GetCurPageParam("view=tiles",array("view"));
   if(!empty($_GET["sort_ord"])){
     if($_GET["sort_ord"] == "asc") $srt = "desc";
     else $srt = "asc";
