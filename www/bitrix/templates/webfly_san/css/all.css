@@ -993,7 +993,7 @@ label { cursor: pointer; }
 }
 .input-search-hold{
 	position:relative;
-	padding: 0 6% 0 152px;
+	padding: 0 6% 0 5px;
 }
 .input-search{
 	float: left;
