@@ -24,8 +24,8 @@ if($arParams["SHOW_INPUT"] !== "N"):?>
 		<form action="<?=$preSearchPath?>" id="search_form" class="search-form">
 			<input type="hidden" name="site_id" value="<?=SITE_ID;?>"/>
       <fieldset>
-        <label><?=GetMessage("WF_SEARCH_WARES");?></label>
-        <input type="button" class="btn-search s_submit" value="<?=GetMessage("WF_SEARCH");?>" onclick="$('#search_form').submit();"/>
+       <!-- <label><?/*=GetMessage("WF_SEARCH_WARES");*/?></label>-->
+        <input type="button" class="btn-search s_submit" value="<?/*=GetMessage("WF_SEARCH");*/?>" onclick="$('#search_form').submit();"/>
         <div class="input-search-hold">
           <div class="input-search">
             <input type="text" class="txt" name="q" id="<?= $inpId?>" autocomplete="off"  value="<?= htmlspecialcharsbx($_REQUEST["q"])?>" placeholder="<?=GetMessage("WF_SEARCH_EXAMPLE");?>" />
