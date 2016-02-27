@@ -72,7 +72,7 @@
   cursor: pointer;
 }
 .wft-search-result li .li_line.buy-block .in_basket {
-  background: #fe6869;
+  background: #419DD0;
   color: #ffffff;
 }
 .wft-search-result li .li_line.price {
@@ -91,6 +91,6 @@
 #title-search {
   border-style: ridge;
   border-color:  #419DD0;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 4%;
+  margin-right: 4%;
 }
