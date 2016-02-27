@@ -227,7 +227,7 @@ require_once 'settings.php';
     </div>
     <div class="header-info">
         <div class="header-center" itemscope itemtype="http://schema.org/Organization">
-            <div class="col20">
+            <div class="col10">
                 <div class="logo"><a href="/"><?= GetMessage("WF_HEADER_MAG"); ?></a></div>
 				<span style="font-size:0px;width:0px;height:0px;overflow:hidden;color:transparent;">
 					<span itemprop="name">ITProm</span>

@@ -106,6 +106,15 @@ a:hover .icon40px { opacity: 1;
 	width: 20%;
 	float: left;
 }
+.col10 {
+	width: 10%;
+	float: left;
+}
+.col30 {
+	width: 30%;
+	float: left;
+}
+
 .tripple-point { 
 	display: block;
 	width: 27px; 
