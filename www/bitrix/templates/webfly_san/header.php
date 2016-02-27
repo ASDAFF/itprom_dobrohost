@@ -238,8 +238,7 @@ require_once 'settings.php';
 					</span>
 				</span>
             </div>
-            <div class="col20">
-            <? $APPLICATION->IncludeComponent("bitrix:search.title", "visual", Array(
+            <? $APPLICATION->IncludeComponent("bitrix:search.title", "stitle", Array(
                     "SHOW_INPUT" => "Y",
                     "INPUT_ID" => "title-search-input",
                     "CONTAINER_ID" => "title-search",
@@ -270,7 +269,6 @@ require_once 'settings.php';
                     "CATEGORY_OTHERS_TITLE" => ""
                 )
             ); ?>
-            </div>
             <div class="col20">
             <span class="header-phone">
               <? $APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR . "include/header/tel.php")); ?>
