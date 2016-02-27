@@ -213,8 +213,11 @@ require_once 'settings.php';
 			<div class="col20">
             <span class="header-phone">
               <?$APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR."include/header/8800.php"));?>
-				<span class="small-text"><noindex><a href="#" rel="nofollow"><?=GetMessage("WF_HEADER_CALL_ME");?></a></noindex></span>
+
             </span>
+				<span class="callback">
+					<span class="small-text"><noindex><a href="#" rel="nofollow"><?=GetMessage("WF_HEADER_CALL_ME");?></a></noindex></span>
+				</span>
 			</div>
 			<div class="col20 small-text">
 				<span class="icon40px icon-time"></span>
