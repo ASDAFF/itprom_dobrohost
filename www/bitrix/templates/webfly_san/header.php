@@ -261,6 +261,7 @@ require_once 'settings.php';
         </div>
     </div>
 </div>
+<div id="header-z"></div>
 <!--    Navigation -->
 <div class="wrapper nav-wrapper">
     <div class="line-top-colors"></div>

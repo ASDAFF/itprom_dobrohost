@@ -25,3 +25,10 @@ p.main-h2-title-type01{
 .callback a {
     color: #fe6869 ;
 }
+
+#header-z {
+    height: 121px;
+    position: relative;
+    z-index: -1;
+
+}
