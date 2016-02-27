@@ -687,6 +687,7 @@ form,fieldset{
 	float:left;
 	text-align:center;
 	width:25%;/*todo: ���� 11.3%*/
+	text-shadow: #B9BFCF 1px 1px 2px;
 }
 #nav > li:first-child{
 	background:none;
