@@ -266,7 +266,7 @@ require_once 'settings.php';
 <?endif?>
 <!--    Navigation -->
 <div class="wrapper nav-wrapper">
-    <div class="line-top-colors"></div>
+    <div class="line-top-colors col20"></div>
     <? $APPLICATION->IncludeComponent("bitrix:search.title", "stitle", Array(
             "SHOW_INPUT" => "Y",
             "INPUT_ID" => "title-search-input",
