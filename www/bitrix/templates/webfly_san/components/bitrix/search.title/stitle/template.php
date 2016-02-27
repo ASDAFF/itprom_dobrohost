@@ -29,9 +29,11 @@ if($arParams["SHOW_INPUT"] !== "N"):?>
           <div class="input-search">
             <input type="text" class="txt" name="q" id="<?= $inpId?>" autocomplete="off"  value="<?= htmlspecialcharsbx($_REQUEST["q"])?>" placeholder="<?=GetMessage("WF_SEARCH_EXAMPLE");?>" />
           </div>
+            <input type="button" class="btn-search s_submit" value="<?/*=GetMessage("WF_SEARCH");*/?>" onclick="$('#search_form').submit();"/>
+
         </div>
-          <input type="button" class="btn-search s_submit" value="<?/*=GetMessage("WF_SEARCH");*/?>" onclick="$('#search_form').submit();"/>
-          <?/*<input type="hidden" name="search_page" value="<?=$arResult["FORM_ACTION"];?>">*/?>
+
+			<?/*<input type="hidden" name="search_page" value="<?=$arResult["FORM_ACTION"];?>">*/?>
         <select id="search_select" name="search_category" style="display: none;">
           <?if( $arParams["NUM_CATEGORIES"] > 1):?>
             <option value='all'><?=GetMessage('CATEGORY_ALL');?></option>
