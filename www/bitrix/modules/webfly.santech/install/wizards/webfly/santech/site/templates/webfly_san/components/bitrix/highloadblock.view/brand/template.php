@@ -13,9 +13,9 @@ $listUrl = str_replace('#BLOCK_ID#', intval($arParams['BLOCK_ID']),	$arParams['L
     $myRow = $arResult['row'];
     $GLOBALS['APPLICATION']->SetTitle(GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD",array("#BRAND_NAME#" => $myRow["UF_NAME"])));
     ?>
-	  <h1><?= GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD",array("#BRAND_NAME#" => $myRow["UF_NAME"]))?></h1>
       <div class="brand_photo_holder"><img src="<?= $myRow["UF_FILE"]?>"/></div>
-      <div class="brand_info"><p class="brand_announce"><?= $myRow["UF_DESCRIPTION"] ?></p>
+  <h1><?= GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD",array("#BRAND_NAME#" => $myRow["UF_NAME"]))?></h1>
+  <div class="brand_info"><p class="brand_announce"><?= $myRow["UF_DESCRIPTION"] ?></p>
       <p><?= $myRow["UF_FULL_DESCRIPTION"] ?></p>
 		</div>
 	<div class="clearfix">&nbsp;</div>
@@ -49,11 +49,11 @@ $listUrl = str_replace('#BLOCK_ID#', intval($arParams['BLOCK_ID']),	$arParams['L
     "PRODUCT_SUBSCRIPTION" => "N",
     "SHOW_DISCOUNT_PERCENT" => "N",
     "SHOW_OLD_PRICE" => "Y",
-    "MESS_BTN_BUY" => "Купить",
-    "MESS_BTN_ADD_TO_BASKET" => "В корзину",
-    "MESS_BTN_SUBSCRIBE" => "Подписаться",
-    "MESS_BTN_DETAIL" => "Подробнее",
-    "MESS_NOT_AVAILABLE" => "Нет в наличии",
+    "MESS_BTN_BUY" => "пїЅпїЅпїЅпїЅпїЅпїЅ",
+    "MESS_BTN_ADD_TO_BASKET" => "пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+    "MESS_BTN_SUBSCRIBE" => "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+    "MESS_BTN_DETAIL" => "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+    "MESS_NOT_AVAILABLE" => "пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
     "AJAX_MODE" => "N",
     "IBLOCK_TYPE" => "catalog",
     "IBLOCK_ID" => "#WF_IB_CATALOG#",
@@ -127,7 +127,7 @@ $listUrl = str_replace('#BLOCK_ID#', intval($arParams['BLOCK_ID']),	$arParams['L
     "CACHE_GROUPS" => "Y",
     "DISPLAY_TOP_PAGER" => "N",
     "DISPLAY_BOTTOM_PAGER" => "N",
-    "PAGER_TITLE" => "Товары",
+    "PAGER_TITLE" => "пїЅпїЅпїЅпїЅпїЅпїЅ",
     "PAGER_SHOW_ALWAYS" => "N",
     "PAGER_TEMPLATE" => "",
     "PAGER_DESC_NUMBERING" => "N",
