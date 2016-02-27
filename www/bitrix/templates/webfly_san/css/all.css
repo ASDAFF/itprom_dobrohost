@@ -2660,7 +2660,7 @@ h5{
 	padding: 0 10px 0 0;
 }
 .product-catalog02 .product-title{
-	font-size: 15px;
+	font-size: 20px;
 	line-height:17px;
 	display:inline-block;
 	vertical-align:top;
@@ -2681,12 +2681,12 @@ h5{
 }
 .product-catalog02 .text-medium{
 	font-family: 'ubuntumedium', Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 14px;
 	padding: 0 2px 0 0;
 }
 .product-catalog02 .text-regular{
 	font-family: 'ubunturegular', Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 14px;
 	padding: 0 11px 0 0;
 }
 .product-catalog02 .expected{
