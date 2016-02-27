@@ -60,20 +60,20 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
         ); ?>
     </div>
     <!--  Special block -->
-    <div class="wrapper">
+  <!--  <div class="wrapper">
         <div class="promo">
             <div class="row">
-                <? $APPLICATION->IncludeComponent(
+                <?/* $APPLICATION->IncludeComponent(
                     "bitrix:main.include",
                     "",
                     Array(
                         "AREA_FILE_SHOW" => "file",
                         "PATH" => SITE_DIR . "include/top_categories.php"
                     )
-                ); ?>
+                ); */?>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="wrapper">
         <div class="main-holder">
             <div class="container">
