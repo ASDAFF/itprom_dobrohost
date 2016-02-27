@@ -227,7 +227,7 @@ require_once 'settings.php';
     </div>
     <div class="header-info">
         <div class="header-center" itemscope itemtype="http://schema.org/Organization">
-            <div class="col40">
+            <div class="col20">
                 <div class="logo"><a href="/"><?= GetMessage("WF_HEADER_MAG"); ?></a></div>
 				<span style="font-size:0px;width:0px;height:0px;overflow:hidden;color:transparent;">
 					<span itemprop="name">ITProm</span>
@@ -238,6 +238,37 @@ require_once 'settings.php';
 					</span>
 				</span>
             </div>
+            <? $APPLICATION->IncludeComponent("bitrix:search.title", "stitle", Array(
+                    "SHOW_INPUT" => "Y",
+                    "INPUT_ID" => "title-search-input",
+                    "CONTAINER_ID" => "title-search",
+                    "PRICE_CODE" => array("BASE", "RETAIL"),
+                    "PRICE_VAT_INCLUDE" => "Y",
+                    "PREVIEW_TRUNCATE_LEN" => "150",
+                    "SHOW_PREVIEW" => "Y",
+                    "PREVIEW_WIDTH" => "75",
+                    "PREVIEW_HEIGHT" => "75",
+                    "CONVERT_CURRENCY" => "Y",
+                    "CURRENCY_ID" => "RUB",
+                    "PAGE" => "#SITE_DIR#search/index.php",
+                    "NUM_CATEGORIES" => "3",
+                    "TOP_COUNT" => "10",
+                    "ORDER" => "date",
+                    "USE_LANGUAGE_GUESS" => "Y",
+                    "CHECK_DATES" => "Y",
+                    "SHOW_OTHERS" => "Y",
+                    "CATEGORY_0_TITLE" => "Новости",
+                    "CATEGORY_0" => array("iblock_news"),
+                    "CATEGORY_0_iblock_news" => array("all"),
+                    "CATEGORY_1_TITLE" => "Форумы",
+                    "CATEGORY_1" => array("forum"),
+                    "CATEGORY_1_forum" => array("all"),
+                    "CATEGORY_2_TITLE" => "Книги",
+                    "CATEGORY_2" => array("iblock_books"),
+                    "CATEGORY_2_iblock_books" => "all",
+                    "CATEGORY_OTHERS_TITLE" => ""
+                )
+            ); ?>
             <div class="col20">
             <span class="header-phone">
               <? $APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR . "include/header/tel.php")); ?>
@@ -267,37 +298,7 @@ require_once 'settings.php';
 <!--    Navigation -->
 <div class="wrapper nav-wrapper">
     <div class="line-top-colors"></div>
-    <? $APPLICATION->IncludeComponent("bitrix:search.title", "stitle", Array(
-            "SHOW_INPUT" => "Y",
-            "INPUT_ID" => "title-search-input",
-            "CONTAINER_ID" => "title-search",
-            "PRICE_CODE" => array("BASE", "RETAIL"),
-            "PRICE_VAT_INCLUDE" => "Y",
-            "PREVIEW_TRUNCATE_LEN" => "150",
-            "SHOW_PREVIEW" => "Y",
-            "PREVIEW_WIDTH" => "75",
-            "PREVIEW_HEIGHT" => "75",
-            "CONVERT_CURRENCY" => "Y",
-            "CURRENCY_ID" => "RUB",
-            "PAGE" => "#SITE_DIR#search/index.php",
-            "NUM_CATEGORIES" => "3",
-            "TOP_COUNT" => "10",
-            "ORDER" => "date",
-            "USE_LANGUAGE_GUESS" => "Y",
-            "CHECK_DATES" => "Y",
-            "SHOW_OTHERS" => "Y",
-            "CATEGORY_0_TITLE" => "Новости",
-            "CATEGORY_0" => array("iblock_news"),
-            "CATEGORY_0_iblock_news" => array("all"),
-            "CATEGORY_1_TITLE" => "Форумы",
-            "CATEGORY_1" => array("forum"),
-            "CATEGORY_1_forum" => array("all"),
-            "CATEGORY_2_TITLE" => "Книги",
-            "CATEGORY_2" => array("iblock_books"),
-            "CATEGORY_2_iblock_books" => "all",
-            "CATEGORY_OTHERS_TITLE" => ""
-        )
-    ); ?>
+
     <? $APPLICATION->IncludeComponent(
         "bitrix:menu",
         "rubrikator",
