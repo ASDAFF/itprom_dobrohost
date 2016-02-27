@@ -982,7 +982,9 @@ body > .drop-nav{
 	float: left;
 	background-color: #FFFFFF;
 	padding: 2px 0px 3px 0px;
+    /*
 	box-shadow:#0e7da2 1px 1px 1px ;
+    */
 }
 
 label { cursor: pointer; }

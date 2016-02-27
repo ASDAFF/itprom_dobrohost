@@ -570,7 +570,7 @@ ul.top_categories li:last-child .cat-img { right: 0; }
 	background: url(../img/search-corner.png) no-repeat; content: ''; z-index: 10 }
 .btn-search {
 	width: 10%;
-	background: #fe6869 url(../img/btn-search-white.png) 23% 1px no-repeat;
+	background: #419DD0  url(../img/btn-search-white.png) 23% 1px no-repeat;
 	outline: none !important;
 	height: 29px;
 	margin-top: 0;

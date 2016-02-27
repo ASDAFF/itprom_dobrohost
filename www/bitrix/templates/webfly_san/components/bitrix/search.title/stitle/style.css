@@ -89,6 +89,8 @@
 }
 
 #title-search {
+  border-style: ridge;
+  border-color:  #419DD0;
   margin-left: 5%;
   margin-right: 5%;
 }
