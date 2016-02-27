@@ -233,7 +233,7 @@ require_once 'settings.php';
 					<span itemprop="name">ITProm</span>
 					<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 						<span itemprop="addressLocality">г. Мытищи</span>
-						<span itemprop="streetAddress">ул. Веры Волошиной, д.14. офис 409</span>
+						<span itemprop="streetAddress">д. 31, . 2 этаж, офис 201</span>
 						<span itemprop="email">info@itprom.ru</span>
 					</span>
 				</span>

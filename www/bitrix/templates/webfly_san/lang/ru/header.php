@@ -24,7 +24,7 @@ $MESS["WF_BUTTON_APPLY"] = "Применить";
 $MESS["WF_AUTH_ENTER"] = "Войти";
 $MESS["WF_HELP"] = "Помощь";
 
-$MESS["WF_HEADER_MAG"] = "Магазин сантехники";
+$MESS["WF_HEADER_MAG"] = "Термошкафы ITProm";
 $MESS["WF_HEADER_CALL_ME"] = "Заказать звонок";
 
 
