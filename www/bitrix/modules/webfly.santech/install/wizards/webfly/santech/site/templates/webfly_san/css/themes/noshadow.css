@@ -10,3 +10,10 @@
 #header, .footer-row {
 	box-shadow: none;
 }
+
+.search-form {
+	margin-left: 16%;
+	width: 78%;
+	float: left;
+	background-color: #f5f5f5;
+}
