@@ -227,7 +227,7 @@ require_once 'settings.php';
     </div>
     <div class="header-info">
         <div class="header-center" itemscope itemtype="http://schema.org/Organization">
-            <div class="col10">
+            <div class="col20">
                 <div class="logo"><a href="/"><?= GetMessage("WF_HEADER_MAG"); ?></a></div>
 				<span style="font-size:0px;width:0px;height:0px;overflow:hidden;color:transparent;">
 					<span itemprop="name">ITProm</span>
@@ -238,7 +238,7 @@ require_once 'settings.php';
 					</span>
 				</span>
             </div>
-            <div class="col30">
+            <div class="col20">
                 <? $APPLICATION->IncludeComponent("bitrix:search.title", "visual", Array(
                         "SHOW_INPUT" => "Y",
                         "INPUT_ID" => "title-search-input",
