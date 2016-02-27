@@ -345,7 +345,7 @@ if (!empty($arResult['ITEMS'])) {
       color:#787878;
     }
     .box-hide {
-      max-height: 135px;
+      max-height: 300px;
     }
     .text-description-more {
       text-align: right;
