@@ -550,7 +550,7 @@ ul.top_categories li:last-child .cat-img { right: 0; }
 .sale .price { margin-top: 10px; font-size: 22px; overflow: auto; font-weight: bold; color: #fe6869}
 .sale .price > .oldPrice { position: static; color: #3f4c56}
 .payments { margin-right: 10px; display: inline-block; vertical-align: middle;}
-.input-search-hold { padding: 0 10% 0 152px; }
+.input-search-hold { padding: 0 10% 0 5px; }
 .input-search { background: #fff; position: relative; }
 .input-search input { color: #323232 }
 .input-search:after { position: absolute; top: 0; right: -7px; height: 29px; width: 30px;
