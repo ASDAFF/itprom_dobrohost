@@ -11,12 +11,13 @@ $GLOBALS['APPLICATION']->SetAdditionalCSS('/bitrix/js/highloadblock/css/highload
 $listUrl = str_replace('#BLOCK_ID#', intval($arParams['BLOCK_ID']), $arParams['LIST_URL']);
 ?>
     <div class="myContent" style="padding-bottom: 0;">
-        <div class="brand_photo_holder"><img src="<?= $myRow["UF_FILE"] ?>"/></div>
         <a href="<?= htmlspecialcharsbx($listUrl) ?>"><?= GetMessage('HLBLOCK_ROW_VIEW_BACK_TO_LIST') ?></a>
         <?
         $myRow = $arResult['row'];
         $GLOBALS['APPLICATION']->SetTitle(GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD", array("#BRAND_NAME#" => $myRow["UF_NAME"])));
         ?>
+        <div class="brand_photo_holder"><img src="<?= $myRow["UF_FILE"] ?>"/></div>
+
         <h1><?= GetMessage("HLBLOCK_ROW_VIEW_BRAND_HEAD", array("#BRAND_NAME#" => $myRow["UF_NAME"])) ?></h1>
 
         <div class="brand_info"><p class="brand_announce"><?= $myRow["UF_DESCRIPTION"] ?></p>
