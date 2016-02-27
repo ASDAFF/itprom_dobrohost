@@ -147,6 +147,7 @@ if (!empty($arResult['ITEMS'])) {
                     <?if(!empty($arItem["PROPERTIES"][$value]["VALUE"])):
                       if($iterator%4 == 0) echo "<br/>";?>
                       <span class="text-medium"><?=$arItem["PROPERTIES"][$value]["NAME"]?>:</span>
+                      <?test_dump($value)?>
                       <span class="text-regular"><?=$arItem["PROPERTIES"][$value]["VALUE"]?></span>
                       <?$iterator++;?>
                     <?endif;?>
