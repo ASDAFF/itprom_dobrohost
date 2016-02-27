@@ -144,7 +144,7 @@ require_once 'settings.php';
     </div>
 <? endif ?>
 <!--    Fixed-header -->
-<div id="header">
+<div <?if(!$USER->IsAuthorized()) echo "class='fixed'"?> id="header">
     <div class="header-top">
         <div class="header-center">
             <div id="auth-container" class="input-block">
@@ -261,7 +261,9 @@ require_once 'settings.php';
         </div>
     </div>
 </div>
+<?if(!$USER->IsAuthorized()):?>
 <div id="header-z"></div>
+<?endif?>
 <!--    Navigation -->
 <div class="wrapper nav-wrapper">
     <div class="line-top-colors"></div>
