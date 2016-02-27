@@ -28,9 +28,8 @@ if($arParams["SHOW_INPUT"] !== "N"):?>
         <div class="input-search-hold">
           <div class="input-search">
             <input type="text" class="txt" name="q" id="<?= $inpId?>" autocomplete="off"  value="<?= htmlspecialcharsbx($_REQUEST["q"])?>" placeholder="<?=GetMessage("WF_SEARCH_EXAMPLE");?>" />
-              <input type="button" class="btn-search s_submit" value="<?/*=GetMessage("WF_SEARCH");*/?>" onclick="$('#search_form').submit();"/>
-
           </div>
+            <input type="button" class="btn-search s_submit" value="<?/*=GetMessage("WF_SEARCH");*/?>" onclick="$('#search_form').submit();"/>
 
         </div>
 
