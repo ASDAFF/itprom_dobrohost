@@ -91,8 +91,7 @@
 .small-text { font-size: 14px; font-weight: normal; }
 .icon-vk, .icon-fb, .icon-twitter { width: 25px; margin-right: 0; }
 .header-phone { margin-right: 30px; margin-top: -10px; font-size: 22px;}
-.header-phone a { text-decoration: underline !important; display: block;}
-.header-phone a:hover { text-decoration: none !important; }
+.header-phone a {display: block;}
 
 a .icon40px { opacity: 0.8;
 	-moz-opacity: 0.8;
