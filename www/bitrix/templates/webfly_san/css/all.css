@@ -996,6 +996,7 @@ label { cursor: pointer; }
 	padding: 0 6% 0 152px;
 }
 .input-search{
+	float: left;
 	border-bottom:1px solid #cbecf9;
 	display:block;
 	height: 29px;
@@ -1018,6 +1019,7 @@ label { cursor: pointer; }
 	background:none;
 }
 .btn-search{
+	float: left;
 	-webkit-appearance:none;
 	-webkit-border-radius:0;
 	position:relative;
