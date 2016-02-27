@@ -750,3 +750,7 @@ h3 {
 	top: auto;
 	bottom: 0;
 }
+
+.wft-search-result {
+	position: fixed;
+}
