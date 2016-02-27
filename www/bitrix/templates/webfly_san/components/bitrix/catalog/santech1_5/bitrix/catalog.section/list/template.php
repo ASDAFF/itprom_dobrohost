@@ -137,7 +137,7 @@ if (!empty($arResult['ITEMS'])) {
             </div>
             <div class="block">
               <div class="description">
-                <a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="product-title"><?=$arItem["PROPERTIES"]["BRAND_REF"]["VALUE"]." ".$arItem["NAME"]?></a>
+                <a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="product-title"><?=$arItem["NAME"]?></a>
                 <p>
                   <?
                   $iterator = 1;
@@ -154,7 +154,13 @@ if (!empty($arResult['ITEMS'])) {
                   <?
                     $p = $arItem["PROPERTIES"];
                   //test_dump($p);
-                   ?>
+                  ?>
+
+                  <? if ($p["BRAND_REF"]["NAME"] != null) { ?>
+                  <span class="text-medium">Производитель: </span>
+                  <span class="text-regular"><?=$p["BRAND_REF"]["VALUE"]?></span>
+                  <br />
+                  <? } ?>
 
                   <span class="text-medium">Размеры (ГxШxВ):</span>
                   <span class="text-regular"><?=$p["DEPTH"]["VALUE"]?>x<?=$p["WIDTH"]["VALUE"]?>x<?=$p["HEIGHT"]["VALUE"]?> мм</span>
