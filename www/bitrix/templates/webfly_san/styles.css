@@ -35,3 +35,7 @@ p.main-h2-title-type01{
     z-index: -1;
 
 }
+
+.product-catalog02 .product-title a {
+    text-decoration: none;
+}
