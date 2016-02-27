@@ -266,29 +266,6 @@ require_once 'settings.php';
 <?endif?>
 <!--    Navigation -->
 <div class="wrapper nav-wrapper">
-    <div class="line-top-colors"></div>
-    <? $APPLICATION->IncludeComponent(
-        "bitrix:menu",
-        "rubrikator",
-        array(
-            "ROOT_MENU_TYPE" => "catalog",
-            "MENU_CACHE_TYPE" => "A",
-            "MENU_CACHE_TIME" => "604800",
-            "MENU_CACHE_USE_GROUPS" => "N",
-            "MENU_CACHE_GET_VARS" => array(),
-            "MAX_LEVEL" => "3",
-            "CHILD_MENU_TYPE" => "",
-            "USE_EXT" => "Y",
-            "DELAY" => "N",
-            "ALLOW_MULTI_SELECT" => "N",
-            "INCLUDE_JQUERY" => "Y",
-            "VIEW_HIT" => "Y",
-            "PRICE_CODE" => "BASE",
-            "CURRENCY" => "RUB",
-            "COMPONENT_TEMPLATE" => "rubrikator"
-        ),
-        false
-    ); ?>
     <? $APPLICATION->IncludeComponent("bitrix:search.title", "stitle", Array(
             "SHOW_INPUT" => "Y",
             "INPUT_ID" => "title-search-input",
@@ -320,4 +297,28 @@ require_once 'settings.php';
             "CATEGORY_OTHERS_TITLE" => ""
         )
     ); ?>
+    <div class="line-top-colors"></div>
+    <? $APPLICATION->IncludeComponent(
+        "bitrix:menu",
+        "rubrikator",
+        array(
+            "ROOT_MENU_TYPE" => "catalog",
+            "MENU_CACHE_TYPE" => "A",
+            "MENU_CACHE_TIME" => "604800",
+            "MENU_CACHE_USE_GROUPS" => "N",
+            "MENU_CACHE_GET_VARS" => array(),
+            "MAX_LEVEL" => "3",
+            "CHILD_MENU_TYPE" => "",
+            "USE_EXT" => "Y",
+            "DELAY" => "N",
+            "ALLOW_MULTI_SELECT" => "N",
+            "INCLUDE_JQUERY" => "Y",
+            "VIEW_HIT" => "Y",
+            "PRICE_CODE" => "BASE",
+            "CURRENCY" => "RUB",
+            "COMPONENT_TEMPLATE" => "rubrikator"
+        ),
+        false
+    ); ?>
+
 </div>
