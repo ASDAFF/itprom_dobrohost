@@ -243,25 +243,20 @@ require_once 'settings.php';
               <? $APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR . "include/header/tel.php")); ?>
             </span>
             </div>
+            <div class="col20 small-text">
+                <span class="icon40px icon-time"></span>
+                <? $APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR . "include/header/tel_calls.php")); ?>
+            </div>
             <div class="col20">
             <span class="header-phone">
               <? $APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR . "include/header/8800.php")); ?>
             </div>
             <div class="col20 small-text">
-				<span class="callback">
-					<span class="small-text">
+                <span class="icon40px icon-dostavka"></span>
+                <span class="small-text">
 						<noindex><a href="#" rel="nofollow"><?= GetMessage("WF_HEADER_CALL_ME"); ?></a></noindex>
 					</span>
-                </span>
-            </div>
-            <div class="col20 small-text">
-
-                <span class="icon40px icon-time"></span>
-                <? $APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR . "include/header/tel_calls.php")); ?>
-            </div>
-            <div class="col20 small-text">
-                <span class="icon40px icon-dostavka"></span>
-                <? $APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR . "include/header/delivery.php")); ?>
+<!--                --><?/* $APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR . "include/header/delivery.php")); */?>
             </div>
         </div>
     </div>
