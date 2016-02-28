@@ -757,5 +757,5 @@ h3 {
 
 .tab-holder .description p {
 	font-size: 18px;
-	line-height: inherit;
+	line-height: initial;
 }
