@@ -752,5 +752,9 @@ h3 {
 }
 
 .wft-search-result {
-	position: fixed;
+	.position: fixed;
+}
+
+.tab-holder .description {
+	font-size: 18px;
 }

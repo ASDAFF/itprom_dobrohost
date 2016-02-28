@@ -338,7 +338,7 @@ isset($arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_ALT"]) && '' !=
             </ul>
             <div class="tab-holder">
                 <div class="tab active">
-                    <div itemprop="description">
+                    <div class="description" itemprop="description">
                         <?= $arResult["DETAIL_TEXT"] ?>
                     </div>
                 </div>
