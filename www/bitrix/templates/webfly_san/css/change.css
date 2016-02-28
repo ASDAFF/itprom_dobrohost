@@ -204,6 +204,7 @@ ul.top_categories li:last-child .cat-img { right: 0; }
 .cat-content .myBtn { font-size: 13px; }
 .tab-list{
 	font: 19px/22px 'ubuntulight', Arial, Helvetica, sans-serif;
+	font-weight: bold;
 	overflow:hidden;
 	height:1%;
 	margin:0;
