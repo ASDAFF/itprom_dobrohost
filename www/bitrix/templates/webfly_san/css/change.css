@@ -755,6 +755,6 @@ h3 {
 	.position: fixed;
 }
 
-.tab-holder .description {
+.tab-holder .description p {
 	font-size: 18px;
 }
