@@ -204,7 +204,6 @@ ul.top_categories li:last-child .cat-img { right: 0; }
 .cat-content .myBtn { font-size: 13px; }
 .tab-list{
 	font: 19px/22px 'ubuntulight', Arial, Helvetica, sans-serif;
-	font-weight: bold;
 	overflow:hidden;
 	height:1%;
 	margin:0;
@@ -213,7 +212,8 @@ ul.top_categories li:last-child .cat-img { right: 0; }
 	background: #ecfaff;
 }
 .tab-list li{
-	float:left;
+	float:left;	font-weight: bold;
+
 	margin: 0 2.6% 0 0;
 }
 .tab-list li a{
@@ -224,7 +224,7 @@ ul.top_categories li:last-child .cat-img { right: 0; }
 }
 .tab-list strong {
 	border-bottom:1px dashed #1277a5;
-	font-weight: normal;
+	font-weight: bold;
 }
 .tab-list .active strong { border-bottom: none; }
 .tab-list li a.active,
