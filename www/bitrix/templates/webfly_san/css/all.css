@@ -683,7 +683,9 @@ form,fieldset{
 #nav > li{
 	position:relative;
 	height:62px;
+    /*
 	background:url(../img/separator-nav.png) no-repeat 0 4px;
+    */
 	float:left;
 	text-align:center;
 	width:25%;/*todo: ���� 11.3%*/
