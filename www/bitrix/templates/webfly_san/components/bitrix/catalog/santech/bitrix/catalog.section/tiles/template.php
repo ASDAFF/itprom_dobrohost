@@ -1,6 +1,10 @@
 <?
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
   die();
+
+test_dump($_GET["item_count"]);
+test_dump($arParams["PAGE_ELEMENT_COUNT"]);
+
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
@@ -13,6 +17,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
+
 if (!empty($arResult['ITEMS'])) {
   $countAll = 0;
   if(!empty($_GET["item_count"])) $countAll = $_GET["item_count"];
