@@ -2945,7 +2945,7 @@ h5{
 	vertical-align:top;
 }
 .section .hold{
-  min-height:62px;
+  min-height:85px;
   /*padding-bottom:0px;*/
   box-sizing: border-box;
 }
@@ -2986,8 +2986,8 @@ h5{
 	margin-bottom: 30px;
 }
 .myProdCat .hold {
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-top: 10px;
+	/*padding-bottom: 5px;*/
 	margin-bottom: -1px;
 overflow: auto;
  }
