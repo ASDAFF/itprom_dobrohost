@@ -838,6 +838,10 @@ body > .drop-nav{
 	color:#212121;
 	text-decoration:none;
 }
+.drop-nav ul li.selected a{
+	color:#3080ad;
+	text-decoration:none;
+}
 .drop-nav ul li a:hover{
 	text-decoration:underline;
 }
