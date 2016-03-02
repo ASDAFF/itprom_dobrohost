@@ -92,27 +92,27 @@ if (0 < $arResult["SECTIONS_COUNT"]) {
                                 )
                             );
                         ?>
-                    <li <?= $isSelected ? 'class="selected" ' : '' ?>id="<?= $this->GetEditAreaId($arSection['ID']); ?>">
+                    <li <?= $isSelected ? 'class="active" ' : '' ?>id="<?= $this->GetEditAreaId($arSection['ID']); ?>">
                         <div class="hold">
                             <div class="visual">
-                                <? if ($isSelected): ?>
+                                <? if (!$isSelected): ?>
                                 <a href="<?= $arSection['SECTION_PAGE_URL']; ?>"
                                    title="<?= $arSection['PICTURE']['TITLE']; ?>">
                                     <?endif ?>
                                     <img width="50" height="40" alt="<?= $arSection['PICTURE']['ALT'] ?>"
                                          src="<?= $arSection['PICTURE']['SRC'] ?>">
-                                    <? if ($isSelected): ?>
+                                    <? if (!$isSelected): ?>
                                 </a>
                             <?endif ?>
                             </div>
                             <div class="block">
                                 <div class="description">
-                                    <? if ($isSelected): ?>
+                                    <? if (!$isSelected): ?>
                                     <a href="<?= $arSection['SECTION_PAGE_URL']; ?>"
                                        title="<?= $arSection['PICTURE']['TITLE']; ?>" class="section-head">
                                         <?endif ?>
                                         <p class="pheader2"><?= $arSection["NAME"] ?></p>
-                                        <? if ($isSelected): ?>
+                                        <? if (!$isSelected): ?>
                                     </a>
                                 <?endif ?>
                                 </div>
