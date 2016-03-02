@@ -36,7 +36,7 @@ $this->setFrameMode(true);?>
     $arCurSection = array();
     if (\Bitrix\Main\Loader::includeModule("iblock"))
     {
-      $dbRes = CIBlockSection::GetList(array(), $arFilter, false, array("ID"));
+      $dbRes = CIBlockSection::GetList(array(), $arFilter, false, array("ID","IBLOCK_SECTION_ID"));
 
       if(defined("BX_COMP_MANAGED_CACHE"))
       {
@@ -54,6 +54,8 @@ $this->setFrameMode(true);?>
         if(!$arCurSection = $dbRes->Fetch())
           $arCurSection = array();
       }
+      if(!empty($arCurSection))
+        $arCurSection['COUNT']=CIBlockSection::GetCount(array("SECTION_ID"=>$arCurSection['ID']));
     }
     $obCache->EndDataCache($arCurSection);
   }
@@ -74,7 +76,7 @@ $this->setFrameMode(true);?>
     Array(
       "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
       "IBLOCK_ID" => $arParams["IBLOCK_ID"],
-      "SECTION_ID" => $arCurSection['ID'],
+      "SECTION_ID" => $arCurSection['COUNT']>0?$arCurSection['ID']:$arCurSection['IBLOCK_SECTION_ID'],
       "FILTER_NAME" => $arParams["FILTER_NAME"],
       "PRICE_CODE" => $arParams["PRICE_CODE"],
       "CACHE_TYPE" => $arParams["CACHE_TYPE"],
@@ -116,9 +118,8 @@ $this->setFrameMode(true);?>
       );
       ?>
       <?
-      if(!empty($arCurSection))
-        $count=CIBlockSection::GetCount(array("SECTION_ID"=>$arCurSection['ID']));
-      test_dump($count  );
+
+
 
       ?>
       <?$APPLICATION->IncludeComponent(
