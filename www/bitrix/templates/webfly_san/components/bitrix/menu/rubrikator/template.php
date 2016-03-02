@@ -1,6 +1,6 @@
 <? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(true);
-test_dump($arResult);
+//test_dump($arResult);
 ?>
 
 <?
@@ -18,6 +18,7 @@ $iter = 0;//<span class="tripple-point">&nbsp;</span>
     $iter++;
     if($iter >($counts/2 + 1)) $class = "left-drop";
     else $class = "";
+    if($arItem['SELECTED']) $class.=' selected';
 //    if($iter == $counts){
 //      $class .= " last-child";
 //      $text = '<span class="tripple-point">&nbsp;</span>';
