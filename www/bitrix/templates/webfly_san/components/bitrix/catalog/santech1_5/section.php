@@ -125,7 +125,7 @@ $this->setFrameMode(true);?>
         array(
           "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
           "IBLOCK_ID" => $arParams["IBLOCK_ID"],
-          "SECTION_ID" => ($arCurSection['COUNT']>0 || $arCurSection['DEPTH_LEVEL']=1)?$arResult["VARIABLES"]["SECTION_ID"]:$arCurSection['IBLOCK_SECTION_ID'],
+          "SECTION_ID" => ($arCurSection['COUNT']>0 || $arCurSection['DEPTH_LEVEL']==1)?$arResult["VARIABLES"]["SECTION_ID"]:$arCurSection['IBLOCK_SECTION_ID'],
           "SECTION_CODE" =>$arCurSection['COUNT']>0 ? $arResult["VARIABLES"]["SECTION_CODE"]:'',
           "CACHE_TYPE" => $arParams["CACHE_TYPE"],
           "CACHE_TIME" => $arParams["CACHE_TIME"],
