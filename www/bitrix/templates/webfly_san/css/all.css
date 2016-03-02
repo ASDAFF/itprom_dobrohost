@@ -838,7 +838,7 @@ body > .drop-nav{
 	color:#212121;
 	text-decoration:none;
 }
-.drop-nav ul li.selected a{
+.drop-nav ul li.selected {
 	color:#3080ad;
 	text-decoration:none;
 }
