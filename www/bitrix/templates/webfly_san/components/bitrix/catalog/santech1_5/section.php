@@ -115,6 +115,12 @@ $this->setFrameMode(true);?>
         false
       );
       ?>
+      <?
+      test_dump($arCurSection);
+      if(!empty($arCurSection))
+        $count=CIBlockSection::GetCount(array($arCurSection['ID']));
+
+      ?>
       <?$APPLICATION->IncludeComponent(
         "bitrix:catalog.section.list",
         "section",
