@@ -59,7 +59,7 @@ function recursiveOutput($arResult, $arSections, $id){
                       <ul>';
   foreach($arResult as $subItem){
     if(in_array($subItem["PARAMS"]["ITEM_IBLOCK_ID"],$arSections)){
-      $cols[$iter] .='<li '.$subItem['SELECTED']?'class="selected"':''.'><a href="'.$subItem["LINK"].'">'.$subItem["TEXT"].'</a></li>';
+      $cols[$iter] .='<li '.($subItem['SELECTED']?'class="selected"':'').'><a href="'.$subItem["LINK"].'">'.$subItem["TEXT"].'</a></li>';
       if(!empty($subItem["PARAMS"]["CHILD_SECTION_ID"])) $cols[$iter] .= getSubsections($arResult, $subItem["PARAMS"]["CHILD_SECTION_ID"]);
       $counter++;
       if($counter>10){
