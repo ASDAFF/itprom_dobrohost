@@ -73,7 +73,8 @@ if (0 < $arResult["SECTIONS_COUNT"]) {
                 case 'TILE':
                 default:
                     foreach ($arResult['SECTIONS'] as &$arSection) {
-                        $isSelected = str_replace($arSection['CODE'], '', $curDir) != $curDir;
+
+                        $isSelected = in_array($arSection['CODE'], explode('/',$curDir));
                         $this->AddEditAction($arSection['ID'], $arSection['EDIT_LINK'], $strSectionEdit);
                         $this->AddDeleteAction($arSection['ID'], $arSection['DELETE_LINK'], $strSectionDelete, $arSectionDeleteParams);
 
