@@ -64,8 +64,8 @@ if (!empty($arResult['ITEMS'])) {
   $arElementDeleteParams = array("CONFIRM" => GetMessage('CT_BCS_TPL_ELEMENT_DELETE_CONFIRM'));
   $propsList = array("BRAND_REF", "MANUFACTURER", "MATERIAL_VANNY", "COLOR", "SHAPE_BATH");
 
-    $tiles = $APPLICATION->GetCurPageParam("",array('clear_cache'));
-    $list = $APPLICATION->GetCurPageParam("",array("view",'clear_cache'));
+    $tiles = $APPLICATION->GetCurPageParam("",array('clear_cache','clear_cache_session','bitrix_include_areas'));
+    $list = $APPLICATION->GetCurPageParam("",array("view",'clear_cache','clear_cache_session','bitrix_include_areas'));
   if(!empty($_GET["sort_ord"])){
     if($_GET["sort_ord"] == "asc") $srt = "desc";
     else $srt = "asc";
