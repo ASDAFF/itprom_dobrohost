@@ -32,8 +32,8 @@ $arResult["FAVS"] = array_flip($favIds);
 
 ?>
 <ul class="tab-list">
-  <li><a href="javascript:void(0);" data-selector="wf-hit"><span class="icon40px icon-hits"></span><strong><?=GetMessage("WF_HIT_WARES")?></strong></a></li>
-  <li><a href="javascript:void(0);" class="active" data-selector="wf-new"><span class="icon40px icon-new"></span><strong><?=GetMessage("WF_NEW_WARES")?></strong></a></li>
+  <li><a href="javascript:void(0);"  class="active" data-selector="wf-hit"><span class="icon40px icon-hits"></span><strong><?=GetMessage("WF_HIT_WARES")?></strong></a></li>
+  <li><a href="javascript:void(0);"  data-selector="wf-new"><span class="icon40px icon-new"></span><strong><?=GetMessage("WF_NEW_WARES")?></strong></a></li>
   <li><a href="javascript:void(0);" data-selector="wf-sale"><span class="icon40px icon-sale"></span><strong><?=GetMessage("WF_SALE_WARES")?></strong></a></li>
 </ul>
 <div class="tab-holder">
