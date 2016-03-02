@@ -67,7 +67,6 @@ $this->setFrameMode(true);?>
 
   $staticHTMLCache = \Bitrix\Main\Data\StaticHTMLCache::getInstance();
   $staticHTMLCache->disableVoting();
-  test_dump($arCurSection['COUNT']);
   ?>
 
 
