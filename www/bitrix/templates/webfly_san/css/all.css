@@ -713,8 +713,10 @@ form,fieldset{
 	color: #1277a5;
 }
 #nav > li.selected > a {
-	color: #fff;
 	background: #66666e url(/bitrix/templates/webfly_san/css/../img/bg-nav-h.png) no-repeat 50% 0;
+}
+#nav > li.selected > a >span {
+	color: #fff;
 }
 #nav > li > a > span{
 	display:inline-block;
