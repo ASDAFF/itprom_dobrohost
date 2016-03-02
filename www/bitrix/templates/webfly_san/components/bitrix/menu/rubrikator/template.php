@@ -1,6 +1,6 @@
 <? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(true);
-test_dump($arResult);
+//test_dump($arResult);
 ?>
 
 <?
@@ -28,7 +28,9 @@ $iter = 0;//<span class="tripple-point">&nbsp;</span>
     $text = $arItem["TEXT"]
     ?>
     <li class="<?=$class?>">
+      <?if(!($arItem['SELECTED']&&!$arItem['IS_PARENT']))?>
       <a href="<?=$arItem["LINK"]?>"><span><em><?=$text?></em></span></a>
+      <??>
       <?if(!empty($arItem["PARAMS"]["CHILD_SECTION_ID"])){?>
         <div class="drop-nav drop-nav-phone">
           <div class="drop-nav-hold">
@@ -57,7 +59,7 @@ function recursiveOutput($arResult, $arSections, $id){
                       <ul>';
   foreach($arResult as $subItem){
     if(in_array($subItem["PARAMS"]["ITEM_IBLOCK_ID"],$arSections)){
-      $cols[$iter] .='<li><a href="'.$subItem["LINK"].'">'.$subItem["TEXT"].'</a></li>';
+      $cols[$iter] .='<li '.$subItem['SELECTED']?'class="selected"':''.'><a href="'.$subItem["LINK"].'">'.$subItem["TEXT"].'</a></li>';
       if(!empty($subItem["PARAMS"]["CHILD_SECTION_ID"])) $cols[$iter] .= getSubsections($arResult, $subItem["PARAMS"]["CHILD_SECTION_ID"]);
       $counter++;
       if($counter>10){
