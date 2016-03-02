@@ -144,7 +144,7 @@ require_once 'settings.php';
     </div>
 <? endif ?>
 <!--    Fixed-header -->
-<div <?if(!$USER->IsAuthorized()) echo "class='fixed'"?> id="header">
+<div <? if (!$USER->IsAuthorized()) echo "class='fixed'" ?> id="header">
     <div class="header-top">
         <div class="header-center">
             <div id="auth-container" class="input-block">
@@ -228,7 +228,11 @@ require_once 'settings.php';
     <div class="header-info">
         <div class="header-center" itemscope itemtype="http://schema.org/Organization">
             <div class="col10">
-                <div class="logo"><a href="/"><?= GetMessage("WF_HEADER_MAG"); ?></a></div>
+                <div class="logo">
+                    <? if ($url != '/'): ?>
+                        <a href="/"><?= GetMessage("WF_HEADER_MAG"); ?></a>
+                    <? endif ?>
+                </div>
 				<span style="font-size:0px;width:0px;height:0px;overflow:hidden;color:transparent;">
 					<span itemprop="name">ITProm</span>
 					<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
@@ -287,14 +291,14 @@ require_once 'settings.php';
                 <span class="callback">
 						<noindex><a href="#" rel="nofollow"><?= GetMessage("WF_HEADER_CALL_ME"); ?></a></noindex>
 					</span>
-<!--                --><?/* $APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR . "include/header/delivery.php")); */?>
+                <!--                --><? /* $APPLICATION->IncludeComponent("bitrix:main.include", "", Array("AREA_FILE_SHOW" => "file", "PATH" => SITE_DIR . "include/header/delivery.php")); */ ?>
             </div>
         </div>
     </div>
 </div>
-<?if(!$USER->IsAuthorized()):?>
-<div id="header-z"></div>
-<?endif?>
+<? if (!$USER->IsAuthorized()): ?>
+    <div id="header-z"></div>
+<? endif ?>
 <!--    Navigation -->
 <div class="wrapper nav-wrapper">
     <div class="line-top-colors"></div>

@@ -10,7 +10,7 @@
 /** @var string $templateFolder */
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
-
+test_dump($arResult);
 $arResult["VARIABLES"]["SECTION_CODE_PATH"] = $_REQUEST["SECTION_CODE_PATH"];
 $arResult["VARIABLES"]["SECTION_CODE"] = $_REQUEST["SECTION_CODE"];
 
