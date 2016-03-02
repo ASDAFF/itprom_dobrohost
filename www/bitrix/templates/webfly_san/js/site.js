@@ -202,7 +202,6 @@ $(function () {
 
   $(window).on('load', function () {
     if ($('.hold .visual').length) {
-      debugger;
 		verticalAlign('.hold:not(".brand-block") .visual:not(".noAlign")', 'img:not(".noAlign")');
 		  /*Выравниваем картинки брендов в блоке */
 		verticalAlign('.brand-block', 'img');
