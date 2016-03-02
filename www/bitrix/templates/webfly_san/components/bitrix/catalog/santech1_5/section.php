@@ -117,8 +117,8 @@ $this->setFrameMode(true);?>
       ?>
       <?
       if(!empty($arCurSection))
-        $count=CIBlockSection::GetCount(array($arCurSection['ID']));
-      test_dump($count);
+        $count=CIBlockSection::GetCount(array("SECTION_ID"=>$arCurSection['ID']));
+      test_dump($count  );
 
       ?>
       <?$APPLICATION->IncludeComponent(
