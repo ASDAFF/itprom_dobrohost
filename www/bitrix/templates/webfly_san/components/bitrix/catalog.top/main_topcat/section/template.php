@@ -88,11 +88,9 @@ $arResult["FAVS"] = array_flip($favIds);
             if($isNew) $classes .= "wf-new ";
             if($isHit){
               $classes .= " wf-hit ";
-              if(!$isNew) $classes .= " myHide ";
-            }
+            } else $classes .= " myHide ";
             if($isSale){
               $classes .= " wf-sale ";
-              if(!$isNew) $classes .= " myHide ";
             }
 
           ?>
