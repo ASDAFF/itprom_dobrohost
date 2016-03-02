@@ -77,7 +77,7 @@ $this->setFrameMode(true);?>
     Array(
       "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
       "IBLOCK_ID" => $arParams["IBLOCK_ID"],
-      "SECTION_ID" => $arCurSection['COUNT']>0?$arCurSection['ID']:$arCurSection['IBLOCK_SECTION_ID'],
+      "SECTION_ID" => $arCurSection['ID'],
       "FILTER_NAME" => $arParams["FILTER_NAME"],
       "PRICE_CODE" => $arParams["PRICE_CODE"],
       "CACHE_TYPE" => $arParams["CACHE_TYPE"],
@@ -120,7 +120,7 @@ $this->setFrameMode(true);?>
       ?>
       <?
 
-
+test_dump( $arCurSection['COUNT']);
 
       ?>
       <?$APPLICATION->IncludeComponent(
@@ -129,8 +129,8 @@ $this->setFrameMode(true);?>
         array(
           "IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
           "IBLOCK_ID" => $arParams["IBLOCK_ID"],
-          "SECTION_ID" => $arResult["VARIABLES"]["SECTION_ID"],
-          "SECTION_CODE" => $arResult["VARIABLES"]["SECTION_CODE"],
+          "SECTION_ID" => $arCurSection['COUNT']>0?$arResult["VARIABLES"]["SECTION_ID"]:$arCurSection['IBLOCK_SECTION_ID'],
+          "SECTION_CODE" =>$arCurSection['COUNT']>0 ? $arResult["VARIABLES"]["SECTION_CODE"]:'',
           "CACHE_TYPE" => $arParams["CACHE_TYPE"],
           "CACHE_TIME" => $arParams["CACHE_TIME"],
           "CACHE_GROUPS" => $arParams["CACHE_GROUPS"],
