@@ -1,4 +1,4 @@
-<p class="footing-p-header">Контакт</p>
+<p class="footing-p-header">Контакты</p>
 <p>
   <span class="small-text">для заказов в Вашем регионе</span>
   <br />
