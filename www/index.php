@@ -4,10 +4,10 @@ $APPLICATION->SetPageProperty("keywords", "термошкаф, термошка�
 $APPLICATION->SetPageProperty("title", "Термошкафы ITProm");
 $APPLICATION->SetPageProperty("description", "Купить термошкафы ITProm по лучшей цене с доставкой по Москве и в регионы. Огромный каталог термошкафов ITProm от производителя.");
 $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
-<? $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/js/gallery_brands.js"); ?>
-<? $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . "/js/gallery-cert.js"); ?>
-<? $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/gallery-cert.css"); ?>
-<? $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/gallery_brands.css"); ?>
+<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/gallery_brands.js");?>
+<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/gallery-cert.js");?>
+<?$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/gallery-cert.css");?>
+<?$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/gallery_brands.css");?>
     <div class="wrapper">
         <? $APPLICATION->IncludeComponent(
             "bitrix:news.list",
@@ -60,17 +60,17 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
         ); ?>
     </div>
     <!--  Special block -->
-    <!--  <div class="wrapper">
+  <!--  <div class="wrapper">
         <div class="promo">
             <div class="row">
-                <? /* $APPLICATION->IncludeComponent(
+                <?/* $APPLICATION->IncludeComponent(
                     "bitrix:main.include",
                     "",
                     Array(
                         "AREA_FILE_SHOW" => "file",
                         "PATH" => SITE_DIR . "include/top_categories.php"
                     )
-                ); */ ?>
+                ); */?>
             </div>
         </div>
     </div>-->
@@ -169,67 +169,66 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
                                 )
                             ); ?>
                         </div>
+                        <? $APPLICATION->IncludeComponent(
+                            "bitrix:news.list",
+                            "main_blog",
+                            Array(
+                                "ACTIVE_DATE_FORMAT" => "d.m.Y",
+                                "ADD_SECTIONS_CHAIN" => "Y",
+                                "AJAX_MODE" => "N",
+                                "AJAX_OPTION_ADDITIONAL" => "",
+                                "AJAX_OPTION_HISTORY" => "N",
+                                "AJAX_OPTION_JUMP" => "N",
+                                "AJAX_OPTION_STYLE" => "Y",
+                                "CACHE_FILTER" => "N",
+                                "CACHE_GROUPS" => "Y",
+                                "CACHE_TIME" => "36000000",
+                                "CACHE_TYPE" => "A",
+                                "CHECK_DATES" => "Y",
+                                "COMPONENT_TEMPLATE" => "main_blog",
+                                "DETAIL_URL" => "",
+                                "DISPLAY_BOTTOM_PAGER" => "N",
+                                "DISPLAY_DATE" => "Y",
+                                "DISPLAY_NAME" => "Y",
+                                "DISPLAY_PICTURE" => "Y",
+                                "DISPLAY_PREVIEW_TEXT" => "Y",
+                                "DISPLAY_TOP_PAGER" => "N",
+                                "FIELD_CODE" => array(0 => "", 1 => "",),
+                                "FILTER_NAME" => "",
+                                "HIDE_LINK_WHEN_NO_DETAIL" => "N",
+                                "IBLOCK_ID" => "7",
+                                "IBLOCK_TYPE" => "content",
+                                "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
+                                "INCLUDE_SUBSECTIONS" => "Y",
+                                "MESSAGE_404" => "",
+                                "NEWS_COUNT" => "2",
+                                "PAGER_BASE_LINK_ENABLE" => "N",
+                                "PAGER_DESC_NUMBERING" => "N",
+                                "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+                                "PAGER_SHOW_ALL" => "N",
+                                "PAGER_SHOW_ALWAYS" => "N",
+                                "PAGER_TEMPLATE" => ".default",
+                                "PAGER_TITLE" => "",
+                                "PARENT_SECTION" => "",
+                                "PARENT_SECTION_CODE" => "",
+                                "PREVIEW_TRUNCATE_LEN" => "",
+                                "PROPERTY_CODE" => array(0 => "", 1 => "",),
+                                "SET_BROWSER_TITLE" => "Y",
+                                "SET_LAST_MODIFIED" => "N",
+                                "SET_META_DESCRIPTION" => "Y",
+                                "SET_META_KEYWORDS" => "Y",
+                                "SET_STATUS_404" => "N",
+                                "SET_TITLE" => "N",
+                                "SHOW_404" => "N",
+                                "SORT_BY1" => "ACTIVE_FROM",
+                                "SORT_BY2" => "SORT",
+                                "SORT_ORDER1" => "DESC",
+                                "SORT_ORDER2" => "ASC"
+                            )
+                        ); ?>
+
+
                     </div>
-
-                    <? $APPLICATION->IncludeComponent(
-                        "bitrix:news.list",
-                        "main_blog",
-                        Array(
-                            "ACTIVE_DATE_FORMAT" => "d.m.Y",
-                            "ADD_SECTIONS_CHAIN" => "Y",
-                            "AJAX_MODE" => "N",
-                            "AJAX_OPTION_ADDITIONAL" => "",
-                            "AJAX_OPTION_HISTORY" => "N",
-                            "AJAX_OPTION_JUMP" => "N",
-                            "AJAX_OPTION_STYLE" => "Y",
-                            "CACHE_FILTER" => "N",
-                            "CACHE_GROUPS" => "Y",
-                            "CACHE_TIME" => "36000000",
-                            "CACHE_TYPE" => "A",
-                            "CHECK_DATES" => "Y",
-                            "COMPONENT_TEMPLATE" => "main_blog",
-                            "DETAIL_URL" => "",
-                            "DISPLAY_BOTTOM_PAGER" => "N",
-                            "DISPLAY_DATE" => "Y",
-                            "DISPLAY_NAME" => "Y",
-                            "DISPLAY_PICTURE" => "Y",
-                            "DISPLAY_PREVIEW_TEXT" => "Y",
-                            "DISPLAY_TOP_PAGER" => "N",
-                            "FIELD_CODE" => array(0 => "", 1 => "",),
-                            "FILTER_NAME" => "",
-                            "HIDE_LINK_WHEN_NO_DETAIL" => "N",
-                            "IBLOCK_ID" => "7",
-                            "IBLOCK_TYPE" => "content",
-                            "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
-                            "INCLUDE_SUBSECTIONS" => "Y",
-                            "MESSAGE_404" => "",
-                            "NEWS_COUNT" => "2",
-                            "PAGER_BASE_LINK_ENABLE" => "N",
-                            "PAGER_DESC_NUMBERING" => "N",
-                            "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-                            "PAGER_SHOW_ALL" => "N",
-                            "PAGER_SHOW_ALWAYS" => "N",
-                            "PAGER_TEMPLATE" => ".default",
-                            "PAGER_TITLE" => "",
-                            "PARENT_SECTION" => "",
-                            "PARENT_SECTION_CODE" => "",
-                            "PREVIEW_TRUNCATE_LEN" => "",
-                            "PROPERTY_CODE" => array(0 => "", 1 => "",),
-                            "SET_BROWSER_TITLE" => "Y",
-                            "SET_LAST_MODIFIED" => "N",
-                            "SET_META_DESCRIPTION" => "Y",
-                            "SET_META_KEYWORDS" => "Y",
-                            "SET_STATUS_404" => "N",
-                            "SET_TITLE" => "N",
-                            "SHOW_404" => "N",
-                            "SORT_BY1" => "ACTIVE_FROM",
-                            "SORT_BY2" => "SORT",
-                            "SORT_ORDER1" => "DESC",
-                            "SORT_ORDER2" => "ASC"
-                        )
-                    ); ?>
-
-
                     <!--   MainContent (tabs) starts here -->
                     <div class="tabset">
                         <? $APPLICATION->IncludeComponent(
@@ -367,9 +366,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
                                     </li>
                                     <li>От физического воздействия или хищения помогают термошкафы с антивандальными
                                         корпусами, <a title="шкаф всепогодный антивандальный"
-                                                      href="https://itprom.ru/catalog/termoshkafi_antivandalniye/">шкаф
-                                            всепогодный антивандальный</a> обладает повышенной прочностью, значительным
-                                        весом, усиленными
+                                                      href="https://itprom.ru/catalog/termoshkafi_antivandalniye/">шкаф всепогодный антивандальный</a> обладает повышенной прочностью, значительным весом, усиленными
                                         скрытыми дверными петлями и специальными сейфовыми замками.
                                     </li>
                                     <li> Надежные металлические корпуса служат эффективной защитой от ультрафиолетового
@@ -493,8 +490,8 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
 
 <?
 CModule::IncludeModule('highloadblock');
-$rsData = \Bitrix\Highloadblock\HighloadBlockTable::getList(array('filter' => array('ID' => '5')));
-if (!($arData = $rsData->fetch())) {
+$rsData = \Bitrix\Highloadblock\HighloadBlockTable::getList(array('filter'=>array('ID'=>'5')));
+if ( !($arData = $rsData->fetch()) ){
     echo 'Инфоблок не найден';
 }
 $Entity = \Bitrix\Highloadblock\HighloadBlockTable::compileEntity($arData);
@@ -512,27 +509,28 @@ $result = new CDBResult($result);
 $arLang = array();
 ?>
 
-    <div class="container_brands">
-        <div class="slideshow_brands">
-            <ul class="slides_brands">
-                <? while ($row = $result->Fetch()) {
-                    $resized_src = GetResizedImage($row["UF_FILE"], 250, 100)["src"];
-                    ?>
-                    <li class="slide_brands">
-                        <a href="/brands/<?= $row["UF_LINK"] ?>/">
-                            <div class="brand-image-wrapper">
-                                <img src="<?= $resized_src ?>">
-                            </div>
-                        </a>
-                    </li>
-                    <?
-                }
+<div class="container_brands">
+    <div class="slideshow_brands">
+        <ul class="slides_brands">
+            <? while ($row = $result->Fetch()){
+                $resized_src = GetResizedImage($row["UF_FILE"], 250, 100)["src"];
                 ?>
-            </ul>
-            <a href="#" class="prev_brands">&lt;</a>
-            <a href="#" class="next_brands">&gt;</a>
-        </div>
-
-
+                <li class="slide_brands">
+                    <a href="/brands/<?=$row["UF_LINK"]?>/">
+                        <div class="brand-image-wrapper">
+                            <img src="<?= $resized_src ?>">
+                        </div>
+                    </a>
+                </li>
+                <?
+            }
+            ?>
+        </ul>
+        <a href="#" class="prev_brands">&lt;</a>
+        <a href="#" class="next_brands">&gt;</a>
     </div>
+
+
+
+</div>
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
