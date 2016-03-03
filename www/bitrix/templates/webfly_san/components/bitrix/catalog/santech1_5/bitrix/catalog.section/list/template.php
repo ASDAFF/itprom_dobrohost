@@ -23,9 +23,19 @@ $Fav = new wfHighLoadBlock(3);
   }
   $arResult["FAVS"] = array_flip($favIds);
 if (!empty($arResult['ITEMS'])) {
-  $countAll = 0;
-  if(!empty($_GET["item_count"])) $countAll = $_GET["item_count"];
-  else $countAll = $_SESSION["mywf"]["el_cnt"];
+  //$countAll = 0;
+  $countAll = CIBlockSection::GetSectionElementsCount($arResult["ID"]);
+//  test_dump($countAll);
+//  if(!empty($_GET["item_count"])) $countAll = $_GET["item_count"];
+//  else $countAll = $_SESSION["mywf"]["el_cnt"];
+//  foreach ($arResult["ITEMS"] as $item) {
+//    test_dump($item["NAME"]);
+//  }
+
+//  test_dump(count($arResult["ITEMS"]));
+//
+//  test_dump($arResult);
+
   ?>
   <script type="text/javascript">
     var page = 1;

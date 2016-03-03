@@ -24,9 +24,9 @@ $Fav = new wfHighLoadBlock(3);
   }
   $arResult["FAVS"] = array_flip($favIds);
 if (!empty($arResult['ITEMS'])) {
-  $countAll = 0;
-  if(!empty($_GET["item_count"])) $countAll = $_GET["item_count"];
-  else $countAll = $_SESSION["mywf"]["el_cnt"];
+    $countAll = CIBlockSection::GetSectionElementsCount($arResult["ID"]);
+//  if(!empty($_GET["item_count"])) $countAll = $_GET["item_count"];
+//  else $countAll = $_SESSION["mywf"]["el_cnt"];
 
 //  if (!$countAll) $countAll = 1;
 ?>
