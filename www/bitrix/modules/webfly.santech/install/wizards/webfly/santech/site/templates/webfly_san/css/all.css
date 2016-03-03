@@ -2957,13 +2957,12 @@ h5{
 	margin-bottom: 30px;
 }
 .myProdCat .hold { 
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-top: 23px;
 	margin-bottom: -1px;
 overflow: auto;
  }
 .myProdCat li:hover .hold, .myProdCat li.active .hold {
-padding-top: 5px;
+padding-top: 10px;
 }
 .myProdCat h2 {
 	text-align: left; 
