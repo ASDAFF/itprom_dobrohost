@@ -2543,7 +2543,7 @@ h5{
 .product-catalog li:hover .hold,
 .product-catalog li.active .hold{
 	border:13px solid #d6d6d6;
-	padding:4px 0 11px;
+	padding:4px 0 7px;
 }
 .product-catalog .visual{
 	position:relative;
@@ -2993,6 +2993,7 @@ overflow: auto;
  }
 .myProdCat li:hover .hold, .myProdCat li.active .hold {
 padding-top: 7px;
+padding-bottom: 7px;
 }
 .myProdCat h2 {
 	text-align: left;
