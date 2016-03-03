@@ -2992,7 +2992,7 @@ h5{
 overflow: auto;
  }
 .myProdCat li:hover .hold, .myProdCat li.active .hold {
-padding-top: 2px;
+padding-top: 3px;
 padding-bottom: 2px;
 }
 .myProdCat h2 {
