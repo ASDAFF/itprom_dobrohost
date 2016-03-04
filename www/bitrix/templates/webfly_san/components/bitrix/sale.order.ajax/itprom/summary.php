@@ -86,7 +86,14 @@ $bShowNameWithPicture = ($bDefaultColumns) ? true : false; // flat to show name 
 						<td class="itemphoto">
 							<div class="bx_ordercart_photo_container">
 								<?
-								$url = $arData["data"]["PICTURE_SRC"];
+								if (strlen($arData["data"]["PREVIEW_PICTURE_SRC"]) > 0):
+									$url = $arData["data"]["PREVIEW_PICTURE_SRC"];
+								elseif (strlen($arData["data"]["DETAIL_PICTURE_SRC"]) > 0):
+									$url = $arData["data"]["DETAIL_PICTURE_SRC"];
+								else:
+									$url = $templateFolder."/images/no_photo.png";
+								endif;
+
 								if (strlen($arData["data"]["DETAIL_PAGE_URL"]) > 0):?><a href="<?=$arData["data"]["DETAIL_PAGE_URL"] ?>"><?endif;?>
 									<div class="bx_ordercart_photo" style="background-image:url('<?=$url?>')"></div>
 								<?if (strlen($arData["data"]["DETAIL_PAGE_URL"]) > 0):?></a><?endif;?>

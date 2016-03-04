@@ -138,9 +138,9 @@
 .bx_ordercart .bx_ordercart_order_table_container tbody td.control a:hover{text-decoration:none;}*/
 .bx_ordercart .bx_ordercart_photo_container{
 	position:relative;
-	padding-top:100%;
+	padding-top:50%;
 	min-width:50px;
-	max-width:100%;
+	max-width:50%;
 	height:0;
 	border:1px solid #c0cfda;
 	border-radius:2px;
