@@ -171,8 +171,8 @@ if (!empty($arResult['ITEMS'])) {
                   <br />
                   --><?/* } */?>
 
-                  <span class="text-medium">Размеры (ГxШxВ):</span>
-                  <span class="text-regular"><?=$p["DEPTH"]["VALUE"]?>x<?=$p["WIDTH"]["VALUE"]?>x<?=$p["HEIGHT"]["VALUE"]?> мм</span>
+                  <span class="text-medium">Размеры (ШxВxГ):</span>
+                  <span class="text-regular"><?=$p["WIDTH"]["VALUE"]?>x<?=$p["HEIGHT"]["VALUE"]?>x<?=$p["DEPTH"]["VALUE"]?> мм</span>
                   <br />
 
                   <? if ($p["HEAT_POWER"]["VALUE"] != null) { ?>
