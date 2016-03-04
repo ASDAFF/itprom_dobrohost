@@ -203,7 +203,7 @@ if (!empty($arResult['ITEMS'])) {
                     <?if ($arItem['CAN_BUY']):?>
                       <span class="available"></span>
                       </div>
-                      <a href="javascript:void(0);" id="<?= $arItemIDs['BUY_LINK']?>" class="link-basket<?if($isOffers):?> no-animation<?endif?>" rel="nofollow"><?=$arParams["MESS_BTN_BUY"]?></a>
+                      <a href="javascript:void(0);" id="<?= $arItemIDs['BUY_LINK']?>" price-val="<?=$minPrice?>" class="link-basket<?if($isOffers):?> no-animation<?endif?>" rel="nofollow"><?=$arParams["MESS_BTN_BUY"]?></a>
                     <?else:?>
                       <span class="expected"><?=$arParams["MESS_NOT_AVAILABLE"]?></span>
                       </div>
