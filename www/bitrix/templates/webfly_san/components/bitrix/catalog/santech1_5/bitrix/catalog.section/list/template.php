@@ -203,7 +203,7 @@ if (!empty($arResult['ITEMS'])) {
                     <?if ($arItem['CAN_BUY']):?>
                       <span class="available"></span>
                       </div>
-                      <a href="javascript:void(0);" id="<?= $arItemIDs['BUY_LINK']?>" class="link-basket<?if($isOffers):?> no-animation<?endif?>" rel="nofollow"><?=$arParams["MESS_BTN_BUY"]?></a>
+                      <a href="javascript:void(0);" id="<?= $arItemIDs['BUY_LINK']?>" price-val="<?=$minPrice?>" class="link-basket<?if($isOffers):?> no-animation<?endif?>" rel="nofollow"><?=$arParams["MESS_BTN_BUY"]?></a>
                     <?else:?>
                       <span class="expected"><?=$arParams["MESS_NOT_AVAILABLE"]?></span>
                       </div>
@@ -301,15 +301,6 @@ if (!empty($arResult['ITEMS'])) {
                   'LAST_ELEMENT' => $arItem['LAST_ELEMENT']
               );
               ?>
-              <script type="text/javascript">
-                <?if($isOffers):?>
-                  $("#<?=$arItemIDs['BUY_LINK']?>").on("click",function(){
-                    location.href = "<?=$arItem["DETAIL_PAGE_URL"]?>";
-                  });
-                <?else:?>
-                  var <?= $strObName; ?> = new JCCatalogSection(<?= CUtil::PhpToJSObject($arJSParams, false, true); ?>);
-                <?endif?>
-              </script>
             </div>
           </div>
         </li>
@@ -337,21 +328,6 @@ if (!empty($arResult['ITEMS'])) {
     </div>
   <?endif;?>
   <script type="text/javascript">
-    BX.message({
-      MESS_BTN_BUY: '<?= ('' != $arParams['MESS_BTN_BUY'] ? CUtil::JSEscape($arParams['MESS_BTN_BUY']) : GetMessageJS('CT_BCS_TPL_MESS_BTN_BUY')); ?>',
-      MESS_BTN_ADD_TO_BASKET: '<?= ('' != $arParams['MESS_BTN_ADD_TO_BASKET'] ? CUtil::JSEscape($arParams['MESS_BTN_ADD_TO_BASKET']) : GetMessageJS('CT_BCS_TPL_MESS_BTN_ADD_TO_BASKET')); ?>',
-      MESS_NOT_AVAILABLE: '<?= ('' != $arParams['MESS_NOT_AVAILABLE'] ? CUtil::JSEscape($arParams['MESS_NOT_AVAILABLE']) : GetMessageJS('CT_BCS_TPL_MESS_PRODUCT_NOT_AVAILABLE')); ?>',
-      BTN_MESSAGE_BASKET_REDIRECT: '<?= GetMessageJS('CT_BCS_CATALOG_BTN_MESSAGE_BASKET_REDIRECT'); ?>',
-      BASKET_URL: '<?= $arParams["BASKET_URL"]; ?>',
-      ADD_TO_BASKET_OK: '<?= GetMessageJS('ADD_TO_BASKET_OK'); ?>',
-      TITLE_ERROR: '<?= GetMessageJS('CT_BCS_CATALOG_TITLE_ERROR') ?>',
-      TITLE_BASKET_PROPS: '<?= GetMessageJS('CT_BCS_CATALOG_TITLE_BASKET_PROPS') ?>',
-      TITLE_SUCCESSFUL: '<?= GetMessageJS('ADD_TO_BASKET_OK'); ?>',
-      BASKET_UNKNOWN_ERROR: '<?= GetMessageJS('CT_BCS_CATALOG_BASKET_UNKNOWN_ERROR') ?>',
-      BTN_MESSAGE_SEND_PROPS: '<?= GetMessageJS('CT_BCS_CATALOG_BTN_MESSAGE_SEND_PROPS'); ?>',
-      BTN_MESSAGE_CLOSE: '<?= GetMessageJS('CT_BCS_CATALOG_BTN_MESSAGE_CLOSE') ?>'
-    });
-
     function init2() {
       tickOffCompareCheckboxes();
       if ( $('input:checkbox').not(".superIgnore").length > 0)

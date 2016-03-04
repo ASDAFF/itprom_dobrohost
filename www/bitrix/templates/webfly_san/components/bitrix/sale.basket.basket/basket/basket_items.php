@@ -307,7 +307,7 @@ if ($normalCount > 0):
 														min="0"
 														<?=$max?>
 														step="<?=$ratio?>"
-														style="max-width: 50px"
+														style="max-width: 25px"
 														value="<?=$arItem["QUANTITY"]?>"
 														onchange="updateQuantity('QUANTITY_INPUT_<?=$arItem["ID"]?>', '<?=$arItem["ID"]?>', <?=$ratio?>, <?=$useFloatQuantityJS?>)"
 													>
