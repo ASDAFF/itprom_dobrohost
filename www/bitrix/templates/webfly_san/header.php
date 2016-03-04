@@ -8,7 +8,7 @@ require_once 'settings.php';
 <head>
     <? $url = $APPLICATION->GetCurDir();
     $APPLICATION->ShowHead(); ?>
-    <meta name="viewport" content="width=1200, initial-scale=1.0">
+    <meta name="viewport" content="width=1200, initial-scale=0.5">
     <title><? $APPLICATION->ShowTitle() ?></title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <? $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . "/css/all.css"); ?>
