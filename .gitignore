@@ -2,7 +2,7 @@
 Thumbs.db
 *.sql
 www/.idea/
-.idea/
+
 *.log
 log.txt
 
