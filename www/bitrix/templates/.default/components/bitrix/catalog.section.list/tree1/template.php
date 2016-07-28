@@ -10,31 +10,56 @@
 /** @var string $templateFolder */
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
-$this->setFrameMode(true);
+?>
 
-$strTitle = "";
-?>
-<script src='js/common.js'></script>
-<link rel="stylesheet" href="css/style.css">
 <?
-//["UF_BROWSER_TITLE"]
+    $APPLICATION->SetAdditionalCSS($this->GetFolder().'/css/style.css');
+    $APPLICATION->SetAdditionalCSS($this->GetFolder().'/css/bootstrap.css');
+    $APPLICATION->AddHeadScript($this->GetFolder().'/js/common.js');
 ?>
-    <ul class="catalog-termo">
-        <?
-        foreach ($arResult["SECTIONS"] as $arSection)
-        {
-            ?>
-                <li>
-                    <div class="shkaf-div">
-                        <a href="#" title="<?=$arSection["UF_BROWSER_TITLE"]?>"></a>
-                        <a href="#" class="quest-about">Подробное описание</a>
-                        <div style="display: none;" class="discription">
-                            <?=$arSection["UF_DESCR_TEMPLATE"]?>
-                        </div>
-                    </div>
-                </li>
-            <?
-        }
+
+
+<ul class="catalog-termo">
+    <?
+//    var_dump($arResult['SECTIONS']);
+    foreach ($arResult["SECTIONS"] as $arSection)
+    {
         ?>
-    </ul>
-<?= ($strTitle ? '<br/><h2>' . $strTitle . '</h2>' : '') ?>
+        <li>
+            <div class="shkaf-div">
+                <a href="<?=$arSection["SECTION_PAGE_URL"]?>" title="<?= $arSection["UF_BROWSER_TITLE"] ?>">
+                    <p>
+                        <span>
+                            <?
+                                if(empty($arSection["UF_SECT_SERIES_NAME"]))
+                                    echo $arSection["NAME"];
+                                else echo$arSection["UF_SECT_SERIES_NAME"];
+                            ?>
+                        </span>
+                    </p>
+                    <img src="<?=$arSection['PICTURE']['SRC']?>" alt="">
+                    <p>
+                        <?
+                            $text = $arSection["UF_SECT_CHARACTER"];
+                            $lines = explode('|', $text);
+                            echo $lines[0].'<br/>';
+                            echo $lines[1];
+                        ?>
+                    </p>
+                </a>
+                <a href="#" class="quest-about">Подробное описание</a>
+                <div style="display: none;" class="discription">
+                    <p><?= $arSection["UF_SECT_DESCRIPTION"] ?></p>
+                </div>
+            </div>
+        </li>
+        <?
+    }
+    ?>
+</ul>
+<style>
+    .shkaf-div a
+    {
+        text-decoration: none;
+    }
+</style>
