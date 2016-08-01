@@ -57,11 +57,6 @@ table {
     border-spacing: 0;
 }
 
-body {
-    font: 20px/18px 'Ubuntu', sans-serif !important;
-    color: #404040;
-}
-
 #wrapper {
     margin: 80px auto;
     max-width: 1260px;
