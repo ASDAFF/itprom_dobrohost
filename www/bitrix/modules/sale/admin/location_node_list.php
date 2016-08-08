@@ -104,14 +104,18 @@ try
 	{
 		// all by filter or certain ids
 		if($_REQUEST['action_target'] == 'selected') // get all ids if they were not specified (user choice was "for all")
+		{
 			$ids = Helper::getIdsByFilter($listParams['filter']);
+		}
 
 		@set_time_limit(0);
 
 		foreach($ids as $id)
 		{
 			if(!($id = intval($id)))
+			{
 				continue;
+			}
 
 			if($_REQUEST['action'] == 'delete')
 			{
@@ -121,7 +125,9 @@ try
 				{
 					$res = Helper::delete($id, true);
 					if(!$res['success'])
+					{
 						throw new Main\SystemException(Loc::getMessage('SALE_LOCATION_L_ITEM').' '.$id.' : '.implode('<br />', $res['errors']));
+					}
 					$DB->Commit();
 				}
 				catch(Main\SystemException $e)

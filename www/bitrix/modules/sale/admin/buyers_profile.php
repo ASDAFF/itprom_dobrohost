@@ -50,17 +50,20 @@ if(isset($_REQUEST["reorder"]) && IntVal($_REQUEST["reorder"]) > 0)
 	$arID = array();
 	$urlProduct = "";
 
-	$dbBasketList = CSaleBasket::GetList(
-		array("PRODUCT_ID" => "ASC"),
-		array("LID" => $lid, "ORDER_ID" => $ORDER_ID),
-		false,
-		false,
-		array('PRODUCT_ID', 'ID', 'QUANTITY')
-	);
-	while ($arBasket = $dbBasketList->Fetch())
+	$dbBasketList = \Bitrix\Sale\Internals\BasketTable::getList(array(
+		'order' => array("PRODUCT_ID" => "ASC"),
+		'filter' => array(
+			"LID" => $lid,
+			"ORDER_ID" => $ORDER_ID,
+			"SET_PARENT_ID" => false
+		),
+		'select' => array('PRODUCT_ID', 'ID', 'QUANTITY')
+	));
+
+	while ($arBasket = $dbBasketList->fetch())
 		$urlProduct .= "&product[".$arBasket["PRODUCT_ID"]."]=".$arBasket["QUANTITY"];
 
-	LocalRedirect("/bitrix/admin/sale_order_new.php?user_id=".CUtil::JSEscape($ID)."&lang=".LANG."&LID=".CUtil::JSEscape($lid).CUtil::JSEscape($urlProduct));
+	LocalRedirect("/bitrix/admin/sale_order_create.php?USER_ID=".CUtil::JSEscape($ID)."&lang=".LANG."&SITE_ID=".CUtil::JSEscape($lid).CUtil::JSEscape($urlProduct));
 }
 
 //USER INFO
@@ -68,18 +71,18 @@ $userFIO = "";
 $dbUser = CUser::GetByID($ID);
 if($arUser = $dbUser->ExtractFields("u_"))
 {
-	$userFIO = $u_NAME;
-	if (strlen($u_LAST_NAME) > 0)
+	if (strval(trim($u_LAST_NAME)) != '')
 	{
-		if (strlen($userFIO) > 0)
-			$userFIO .= " ";
-		$userFIO .= $u_LAST_NAME;
+		$userFIO .= (strval($userFIO) != '' ? " " : "") . $u_LAST_NAME;
 	}
-	if (strlen($u_SECOND_NAME) > 0)
+	if (strval(trim($u_NAME)) != '')
 	{
-		if (strlen($userFIO) > 0)
-			$userFIO .= " ";
-		$userFIO .= $u_SECOND_NAME;
+		$userFIO .= (strval($userFIO) != '' ? " " : "") . $u_NAME;
+	}
+
+	if (strval(trim($u_SECOND_NAME)) != '')
+	{
+		$userFIO .= (strval($userFIO) != '' ? " " : "") . $u_SECOND_NAME;
 	}
 }
 
@@ -294,13 +297,10 @@ if (isset($_REQUEST['apply']) && isset($_REQUEST['action']) && $saleModulePermis
 			if (strlen($filter_basket_lid)>0)
 				$arBasketActionFilter["LID"] = trim($filter_basket_lid);
 
-			$dbBasketEl = CSaleBasket::GetList(
-							array(),
-							$arBasketActionFilter,
-							false,
-							false,
-							array('ID', 'PRODUCT_ID', 'LID')
-					);
+			$dbBasketEl = \Bitrix\Sale\Internals\BasketTable::getList(array(
+				                                                            'filter' => $arBasketActionFilter,
+				                                                            'select' => array('ID', 'PRODUCT_ID', 'LID')
+			                                                            ));
 			while($arBasketEl = $dbBasketEl->Fetch())
 				$arID[$arBasketEl["LID"]][] = $arBasketEl["PRODUCT_ID"];
 		}
@@ -334,14 +334,16 @@ if (isset($_REQUEST['apply']) && isset($_REQUEST['action']) && $saleModulePermis
 							$arIDProd[] = $PRODUCT_ID;
 						}
 
-						$dbBasketEl = CSaleBasket::GetList(
-										array(),
-										array("LID" => $LID, "FUSER_ID" => $arFields["FUSER_ID"], "PRODUCT_ID" => $arIDProd, "ORDER_ID" => "NULL"),
-										false,
-										false,
-										array('CAN_BUY', "SUBSCRIBE", "DELAY", "PRODUCT_ID", "QUANTITY")
-								);
-						while($arBasketEl = $dbBasketEl->Fetch())
+						$dbBasketEl = \Bitrix\Sale\Internals\BasketTable::getList(array(
+							                                                          'filter' => array(
+								                                                          "LID" => $LID,
+								                                                          "FUSER_ID" => $arFields["FUSER_ID"],
+								                                                          "PRODUCT_ID" => $arIDProd,
+								                                                          "ORDER_ID" => "NULL"
+							                                                          ),
+							                                                          'select' => array('CAN_BUY', "SUBSCRIBE", "DELAY", "PRODUCT_ID", "QUANTITY")
+						                                                          ));
+						while($arBasketEl = $dbBasketEl->fetch())
 						{
 							$urlProduct .= "&product[".$arBasketEl["PRODUCT_ID"]."]=".$arBasketEl["QUANTITY"];
 							if ($arBasketEl["CAN_BUY"] != "Y" || $arBasketEl["DELAY"] == "Y" || $arBasketEl["SUBSCRIBE"] == "Y")
@@ -354,7 +356,7 @@ if (isset($_REQUEST['apply']) && isset($_REQUEST['action']) && $saleModulePermis
 						if (strlen($basketError) <= 0)
 						{
 							echo "<script language=\"JavaScript\">";
-							echo "window.parent.location.href = '/bitrix/admin/sale_order_new.php?user_id=".CUtil::JSEscape($ID)."&lang=".LANG."&LID=".CUtil::JSEscape($LID).CUtil::JSEscape($urlProduct)."';";
+							echo "window.parent.location.href = '/bitrix/admin/sale_order_create.php?USER_ID=".CUtil::JSEscape($ID)."&lang=".LANG."&SITE_ID=".CUtil::JSEscape($LID).CUtil::JSEscape($urlProduct)."';";
 							echo "</script>";
 							exit;
 						}
@@ -373,14 +375,16 @@ if (isset($_REQUEST['apply']) && isset($_REQUEST['action']) && $saleModulePermis
 					{
 						foreach ($arID[$LID] as $PRODUCT_ID)
 						{
-							$dbBasketEl = CSaleBasket::GetList(
-									array(),
-									array("LID" => $LID, "FUSER_ID" => $arFields["FUSER_ID"], "PRODUCT_ID" => $PRODUCT_ID, "ORDER_ID" => "NULL"),
-									false,
-									false,
-									array('ID')
-							);
-							$arBasketEl = $dbBasketEl->Fetch();
+							$dbBasketEl = \Bitrix\Sale\Internals\BasketTable::getList(array(
+								                                                          'filter' => array(
+									                                                          "LID" => $LID,
+									                                                          "FUSER_ID" => $arFields["FUSER_ID"],
+									                                                          "PRODUCT_ID" => $PRODUCT_ID,
+									                                                          "ORDER_ID" => "NULL"
+								                                                          ),
+								                                                          'select' => array('ID')
+							                                                          ));
+							$arBasketEl = $dbBasketEl->fetch();
 
 							if (!CSaleBasket::Update($arBasketEl["ID"], $arFields))
 								$basketError = GetMessage('BUYER_BASKET_ADD_ERROR');
@@ -394,14 +398,16 @@ if (isset($_REQUEST['apply']) && isset($_REQUEST['action']) && $saleModulePermis
 					{
 						foreach ($arID[$LID] as $PRODUCT_ID)
 						{
-							$dbBasketEl = CSaleBasket::GetList(
-									array(),
-									array("LID" => $LID, "FUSER_ID" => $arFields["FUSER_ID"], "PRODUCT_ID" => $PRODUCT_ID, "ORDER_ID" => "NULL"),
-									false,
-									false,
-									array('ID')
-							);
-							$arBasketEl = $dbBasketEl->Fetch();
+							$dbBasketEl = \Bitrix\Sale\Internals\BasketTable::getList(array(
+								                                                          'filter' => array(
+									                                                          "LID" => $LID,
+									                                                          "FUSER_ID" => $arFields["FUSER_ID"],
+									                                                          "PRODUCT_ID" => $PRODUCT_ID,
+									                                                          "ORDER_ID" => "NULL"
+								                                                          ),
+								                                                          'select' => array('ID')
+							                                                          ));
+							$arBasketEl = $dbBasketEl->fetch();
 
 							CSaleBasket::Delete($arBasketEl["ID"]);
 						}
@@ -461,12 +467,16 @@ if(!empty($arUser))
 	while ($arOrderMain = $dbOrderList->Fetch())
 	{
 		$row =& $lAdmin_tab1->AddRow($arOrderMain["ID"], $arOrderMain, '', '');
-		$orderLink = "<a href=\"sale_order_detail.php?ID=".$arOrderMain["ID"]."&lang=".LANG."\">".$arOrderMain["ID"]."</a>";
+		$orderLink = "<a href=\"sale_order_view.php?ID=".$arOrderMain["ID"]."&lang=".LANG."\">".$arOrderMain["ID"]."</a>";
 		$row->AddField("ID", $orderLink);
 
 		$basketCount = 0;
-		$dbBasketCount = CSaleBasket::GetList(array(), array("ORDER_ID" => $arOrderMain["ID"]));
-		while ($arBasket = $dbBasketCount->GetNext())
+		$dbBasketCount = \Bitrix\Sale\Internals\BasketTable::getList(array(
+			                                                          'filter' => array(
+				                                                          "ORDER_ID" => $arOrderMain["ID"]
+			                                                          ),
+		                                                          ));
+		while ($arBasket = $dbBasketCount->fetch())
 		{
 			if (!CSaleBasketHelper::isSetItem($arBasket))
 				$basketCount++;
@@ -662,19 +672,94 @@ if(!empty($arUser))
 	}
 	if (strlen($filter_order_prod_name) > 0)
 	{
-		$arOrderFilter["%BASKET_NAME"] = $filter_order_prod_name;
+		$arOrderFilter["%BASKET.NAME"] = $filter_order_prod_name;
 	}
 
-	$dbOrderList = CSaleOrder::GetList(
-		$arOrderSort,
-		$arOrderFilter,
-		false,
-		false,
-		array("ID", "LID", "STATUS_ID", "DATE_STATUS", "PAYED", "DATE_PAYED", "PRICE", "DATE_UPDATE", "DATE_INSERT", "CURRENCY", "ALLOW_DELIVERY", "DATE_ALLOW_DELIVERY")
+	$getListParams = array(
+		'filter' => $arOrderFilter,
+		'order' => $arOrderSort,
+		'select' => array(
+			"ID",
+			"LID",
+			"STATUS_ID",
+			"DATE_STATUS",
+			"PAYED",
+			"DATE_PAYED",
+			"PRICE",
+			"DATE_UPDATE",
+			"DATE_INSERT",
+			"CURRENCY",
+//			                                           "ALLOW_DELIVERY",
+//			                                           "DATE_ALLOW_DELIVERY"
+		)
 	);
 
-	$dbOrderList = new CAdminResult($dbOrderList, $sTableID_tab3);
-	$dbOrderList->NavStart();
+	$usePageNavigation = true;
+
+	$navyParams = CDBResult::GetNavParams(CAdminResult::GetNavSize($sTableID));
+	if ($navyParams['SHOW_ALL'])
+	{
+		$usePageNavigation = false;
+	}
+	else
+	{
+		$navyParams['PAGEN'] = (int)$navyParams['PAGEN'];
+		$navyParams['SIZEN'] = (int)$navyParams['SIZEN'];
+	}
+
+
+	if ($usePageNavigation)
+	{
+		$getListParams['limit'] = $navyParams['SIZEN'];
+		$getListParams['offset'] = $navyParams['SIZEN']*($navyParams['PAGEN']-1);
+	}
+
+	$totalPages = 0;
+
+	if ($usePageNavigation)
+	{
+		$countQuery = new \Bitrix\Main\Entity\Query(\Bitrix\Sale\Internals\OrderTable::getEntity());
+		$countQuery->addSelect(new \Bitrix\Main\Entity\ExpressionField('CNT', 'COUNT(1)'));
+		$countQuery->setFilter($getListParams['filter']);
+		$totalCount = $countQuery->setLimit(null)->setOffset(null)->exec()->fetch();
+		unset($countQuery);
+		$totalCount = (int)$totalCount['CNT'];
+
+		if ($totalCount > 0)
+		{
+			$totalPages = ceil($totalCount/$navyParams['SIZEN']);
+
+			if ($navyParams['PAGEN'] > $totalPages)
+				$navyParams['PAGEN'] = $totalPages;
+
+			$getListParams['limit'] = $navyParams['SIZEN'];
+			$getListParams['offset'] = $navyParams['SIZEN']*($navyParams['PAGEN']-1);
+		}
+		else
+		{
+			$navyParams['PAGEN'] = 1;
+			$getListParams['limit'] = $navyParams['SIZEN'];
+			$getListParams['offset'] = 0;
+		}
+	}
+
+
+	$dbOrderList = new CAdminResult(\Bitrix\Sale\Internals\OrderTable::getList($getListParams), $sTableID_tab3);
+
+	if ($usePageNavigation)
+	{
+		$dbOrderList->NavStart($getListParams['limit'], $navyParams['SHOW_ALL'], $navyParams['PAGEN']);
+		$dbOrderList->NavRecordCount = $totalCount;
+		$dbOrderList->NavPageCount = $totalPages;
+		$dbOrderList->NavPageNomer = $navyParams['PAGEN'];
+	}
+	else
+	{
+		$dbOrderList->NavStart();
+	}
+
+
+//	$dbOrderList->NavStart();
 	$lAdmin_tab3->NavText($dbOrderList->GetNavPrint(GetMessage('BUYER_ORDER_LIST')));
 
 	$orderHeader = array(
@@ -694,33 +779,95 @@ if(!empty($arUser))
 
 	while ($arOrder = $dbOrderList->Fetch())
 	{
-		$row =& $lAdmin_tab3->AddRow($arOrder["ID"], $arOrder, "sale_order_detail.php?ID=".$arOrder["ID"]."&lang=".LANG, GetMessage("BUYERS_ORDER_EDIT"));
+		$row =& $lAdmin_tab3->AddRow($arOrder["ID"], $arOrder, "sale_order_view.php?ID=".$arOrder["ID"]."&lang=".LANG, GetMessage("BUYERS_ORDER_EDIT"));
 
-		$orderLink = "<a href=\"sale_order_detail.php?ID=".$arOrder["ID"]."&lang=".LANG."\">".$arOrder["ID"]."</a>";
+		$orderLink = "<a href=\"sale_order_view.php?ID=".$arOrder["ID"]."&lang=".LANG."\">".$arOrder["ID"]."</a>";
 		$row->AddField("ID", $orderLink);
 
-		$status_id = "<a title=\"".GetMessage('BUYERS_ORDER_DETAIL_PAGE')."\" href=\"/bitrix/admin/sale_order_detail.php?ID=".$arOrder["ID"]."&lang=".LANG."\">".GetMessage('BUYERS_PREF').$arOrder["ID"]."</a>";
+		$status_id = "<a title=\"".GetMessage('BUYERS_ORDER_DETAIL_PAGE')."\" href=\"/bitrix/admin/sale_order_view.php?ID=".$arOrder["ID"]."&lang=".LANG."\">".GetMessage('BUYERS_PREF').$arOrder["ID"]."</a>";
 		$status_id .= "<input type=\"hidden\" name=\"table_id\" value=\"".$sTableID_tab3."\">";
 		$row->AddField("STATUS_ID", $status_id);
 
-		$payed = (($arOrder["PAYED"] == "Y") ? GetMessage("BUYERS_PAY_YES") : GetMessage("BUYERS_PAY_NO"));
-		if (strlen($arOrder["DATE_PAYED"]) > 0)
-			$payed .= "<br>".$arOrder["DATE_PAYED"];
+		$payed = "";
+		$res = \Bitrix\Sale\Internals\PaymentTable::getList(array(
+			                                                    'order' => array('ID' => 'ASC'),
+			                                                    'filter' => array(
+				                                                    'ORDER_ID' => $arOrder['ID']
+			                                                    )
+		                                                    ));
+		while($payment = $res->fetch())
+		{
+			if (strval($payed) != "")
+				$payed .= "<hr>";
+
+			$payed .= "[<a href='/bitrix/admin/sale_order_payment_edit.php?order_id=".$arOrder['ID']."&payment_id=".$payment["ID"]."&lang=".LANGUAGE_ID."'>".$payment["ID"]."</a>], ".
+				htmlspecialcharsbx($payment["PAY_SYSTEM_NAME"]).", ".
+				($payment["PAID"] == "Y" ? \Bitrix\Main\Localization\Loc::getMessage("SOB_PAYMENTS_PAID") :  \Bitrix\Main\Localization\Loc::getMessage("SOB_PAYMENTS_UNPAID")).", ".
+				(strlen($payment["PS_STATUS"]) > 0 ? \Bitrix\Main\Localization\Loc::getMessage("SOB_PAYMENTS_STATUS").": ".htmlspecialcharsbx($payment["PS_STATUS"]).", " : "").
+				'<span style="white-space:nowrap;">'.htmlspecialcharsex(SaleFormatCurrency($payment["SUM"], $payment["CURRENCY"])).'<span>';
+
+		}
+
 		$row->AddField("PAYED", $payed);
 
-		$allowDelivery = (($arOrder["ALLOW_DELIVERY"] == "Y") ? GetMessage("BUYERS_PAY_YES") : GetMessage("BUYERS_PAY_NO"));
-		if (strlen($arOrder["DATE_ALLOW_DELIVERY"]) > 0)
-			$allowDelivery .= "<br>".$arOrder["DATE_ALLOW_DELIVERY"];
+
+
+		$shipmentStatuses = array();
+
+		$dbRes = \Bitrix\Sale\Internals\StatusTable::getList(array(
+			                              'select' => array('ID', 'NAME' => 'Bitrix\Sale\Internals\StatusLangTable:STATUS.NAME'),
+			                              'filter' => array(
+				                              '=Bitrix\Sale\Internals\StatusLangTable:STATUS.LID' => LANGUAGE_ID,
+				                              '=TYPE' => 'D'
+			                              ),
+		                              ));
+
+		while ($shipmentStatus = $dbRes->fetch())
+			$shipmentStatuses[$shipmentStatus["ID"]] = $shipmentStatus["NAME"] . " [" . $shipmentStatus["ID"] . "]";
+
+
+		$allowDelivery = "";
+		$res = \Bitrix\Sale\Internals\ShipmentTable::getList(array(
+			                                                     'order' => array('ID' => 'ASC'),
+			                                                     'filter' => array('ORDER_ID' => $arOrder['ID'], '!=SYSTEM' => 'Y')
+		                                                     ));
+
+		while($shipment = $res->fetch())
+		{
+			$shipment["ID_LINKED"] = '[<a href="/bitrix/admin/sale_order_shipment_edit.php?order_id='.$arOrder['ID'].'&shipment_id='.$shipment["ID"].'&lang='.LANGUAGE_ID.'">'.$shipment["ID"].'</a>]';
+
+
+			if (strval($allowDelivery) != "")
+				$allowDelivery .= "<hr>";
+
+			$allowDelivery .= "[<a href='/bitrix/admin/sale_order_shipment_edit.php?order_id=".$arOrder['ID']."&shipment_id=".$shipment["ID"]."&lang=".LANGUAGE_ID."'>".$shipment["ID"]."</a>], ".
+				htmlspecialcharsbx($shipment["DELIVERY_NAME"]).", ".
+				'<span>'.htmlspecialcharsEx(SaleFormatCurrency($shipment["PRICE_DELIVERY"], $shipment["CURRENCY"]))."</span>, ".
+				($shipment["ALLOW_DELIVERY"] == "Y" ? \Bitrix\Main\Localization\Loc::getMessage("SOB_SHIPMENTS_ALLOW_DELIVERY") : \Bitrix\Main\Localization\Loc::getMessage("SOB_SHIPMENTS_NOT_ALLOW_DELIVERY")).", ".
+				($shipment["CANCELED"] == "Y" ? \Bitrix\Main\Localization\Loc::getMessage("SOB_SHIPMENTS_CANCELED").", " : "").
+				($shipment["DEDUCTED"] == "Y" ? \Bitrix\Main\Localization\Loc::getMessage("SOB_SHIPMENTS_DEDUCTED").", " : "").
+				($shipment["MARKED"] == "Y" ? \Bitrix\Main\Localization\Loc::getMessage("SOB_SHIPMENTS_MARKED").", " : "").
+				(strlen($shipment["TRACKING_NUMBER"]) > 0 ? htmlspecialcharsbx($shipment["TRACKING_NUMBER"]).", " : "");
+
+			if(strlen($shipment["STATUS_ID"]) > 0)
+				$allowDelivery .= $shipmentStatuses[$shipment["STATUS_ID"]] ? htmlspecialcharsbx($shipmentStatuses[$shipment["STATUS_ID"]]) : \Bitrix\Main\Localization\Loc::getMessage("SOB_SHIPMENTS_STATUS").": ".$shipment["STATUS_ID"];
+
+		}
+
 		$row->AddField("ALLOW_DELIVERY", $allowDelivery);
 
 		$status = "[".$arOrder["STATUS_ID"]."] ".htmlspecialcharsbx($arStatusOrder[$arOrder["STATUS_ID"]]["NAME"])."<br />".$arOrder["DATE_STATUS"];
 		$row->AddField("STATUS_ID", $status);
 
-		$dbBasketList = CSaleBasket::GetList(array("SET_PARENT_ID" => "DESC", "TYPE" => "DESC"), array("ORDER_ID" => $arOrder["ID"]));
 		$orderProduct = "";
 		$arBasketItems = array();
-		while ($arBasketOrder = $dbBasketList->Fetch())
-			$arBasketItems[] = $arBasketOrder;
+		$dbItemsList = \Bitrix\Sale\Internals\BasketTable::getList(array(
+			                                                           'order' => array("ID" => "ASC", "SET_PARENT_ID" => "DESC", "TYPE" => "DESC"),
+			                                                           'filter' => array("ORDER_ID" => $arOrder["ID"])
+		                                                           ));
+
+		while ($arItem = $dbItemsList->fetch())
+			$arBasketItems[] = $arItem;
 
 		$arBasketItems = getMeasures($arBasketItems);
 
@@ -745,7 +892,9 @@ if(!empty($arUser))
 			}
 
 			if (CSaleBasketHelper::isSetParent($arBasketOrder))
-				$orderProduct .= "<a href=\"javascript:void(0);\" class=\"dashed-link show-set-link\" id=\"set_toggle_link_".$arBasketOrder["SET_PARENT_ID"]."\" onclick=\"fToggleSetItems(".$arBasketOrder["ID"].", 'set_toggle_link_');\">".GetMessage("BUYER_F_SHOW_SET")."</a>";
+			{
+				$orderProduct .= "<a href=\"javascript:void(0);\" class=\"dashed-link show-set-link\" id=\"set_toggle_link_".$arBasketOrder["ID"]."\" onclick=\"fToggleSetItems(".$arBasketOrder["ID"].", 'set_toggle_link_');\">".GetMessage("BUYER_F_SHOW_SET")."</a>";
+			}
 
 			$orderProduct .= "</div>";
 		}
@@ -757,7 +906,7 @@ if(!empty($arUser))
 			$row->AddField("LID", "[".$arOrder["LID"]."] ".htmlspecialcharsbx($arSites[$arOrder["LID"]]["NAME"])."");
 
 		$arActions = array();
-		$arActions[] = array("ICON"=>"view", "TEXT"=>GetMessage("BUYERS_ORDER_EDIT"),"ACTION"=>$lAdmin_tab3->ActionRedirect("sale_order_detail.php?ID=".$arOrder["ID"]."&lang=".LANG), "DEFAULT"=>true);
+		$arActions[] = array("ICON"=>"view", "TEXT"=>GetMessage("BUYERS_ORDER_EDIT"),"ACTION"=>$lAdmin_tab3->ActionRedirect("sale_order_view.php?ID=".$arOrder["ID"]."&lang=".LANG), "DEFAULT"=>true);
 		$arActions[] = array("ICON"=>"edit", "TEXT"=>GetMessage("BUYER_PD_REORDER"),"ACTION"=>$lAdmin_tab3->ActionRedirect("/bitrix/admin/sale_buyers_profile.php?USER_ID=".$ID."&lang=".LANG."&reorder=".$arOrder["ID"]."&lid=".$arOrder["LID"]));
 
 		$row->AddActions($arActions);
@@ -770,7 +919,7 @@ if(!empty($arUser))
 
 	//BUYERS BASKET
 	$sTableID_tab4 = "t_stat_list_tab4";
-	$oSort_tab4 = new CAdminSorting($sTableID_tab4);
+	$oSort_tab4 = new CAdminSorting($sTableID_tab4, false, false, "basket_by", "basket_sort");
 	$lAdmin_tab4 = new CAdminList($sTableID_tab4, $oSort_tab4);
 
 	//FILTER BASKET
@@ -781,12 +930,16 @@ if(!empty($arUser))
 	);
 	$lAdmin_tab4->InitFilter($arFilterFields);
 
-	if (!isset($_REQUEST["by"]))
+
+	$basketBy = (!empty($_REQUEST["basket_by"]) ? trim($_REQUEST["basket_by"]) : "DATE_INSERT");
+	$basketSort = (!empty($_REQUEST["basket_sort"]) ? trim($_REQUEST["basket_sort"]) : "DESC");
+
+	if (!isset($_REQUEST["basket_by"]))
 		$arBasketSort = array("DATE_INSERT" => "DESC", "LID" => "ASC");
 	else
-		$arBasketSort[$by] = $order;
+		$arBasketSort[$basketBy] = $basketSort;
 
-	$arBasketFilter = array("USER_ID" => $ID, "ORDER_ID" => "NULL");
+	$arBasketFilter = array("FUSER.USER_ID" => $ID, "ORDER_ID" => "NULL");
 
 	if (strlen($filter_basket_lid)>0)
 		$arBasketFilter["LID"] = trim($filter_basket_lid);
@@ -824,14 +977,13 @@ if(!empty($arUser))
 	$arCacheFuser = array();
 	$arUpdateFilter = $arBasketFilter;
 	$arUpdateFilter["!CALLBACK_FUNC"] = '';
-	$dbBasketList = CSaleBasket::GetList(
-			$arBasketSort,
-			$arUpdateFilter,
-			false,
-			false,
-			array('FUSER_ID', 'LID')
-	);
-	while ($arBasket = $dbBasketList->Fetch())
+
+	$dbBasketList = \Bitrix\Sale\Internals\BasketTable::getList(array(
+		                                                            'order' => $arBasketSort,
+		                                                            'filter' => $arUpdateFilter,
+		                                                            'select' => array('FUSER_ID', 'LID')
+	                                                            ));
+	while ($arBasket = $dbBasketList->fetch())
 	{
 		if (!in_array($arBasket["FUSER_ID"], $arCacheFuser))
 		{
@@ -840,13 +992,14 @@ if(!empty($arUser))
 		}
 	}
 
-	$dbBasketList = CSaleBasket::GetList(
-			array_merge(array("SET_PARENT_ID" => "DESC", "TYPE" => "DESC"), $arBasketSort),
-			$arBasketFilter,
-			false,
-			false,
-			array('*')
-	);
+	$dbBasketList = \Bitrix\Sale\Internals\BasketTable::getList(array(
+		                                                            'order' => array_merge(
+			                                                            array(
+				                                                            "SET_PARENT_ID" => "DESC",
+				                                                            "TYPE" => "DESC"),
+			                                                            $arBasketSort),
+		                                                            'filter' => $arBasketFilter,
+	                                                            ));
 
 	$dbBasketList = new CAdminResult($dbBasketList, $sTableID_tab4);
 	$dbBasketList->NavStart();
@@ -904,7 +1057,7 @@ if(!empty($arUser))
 
 		if (CSaleBasketHelper::isSetParent($arBasket))
 		{
-			$name .= "<br/><a href=\"javascript:void(0);\" class=\"dashed-link show-set-link\" id=\"set_toggle_link_b2".$arBasket["SET_PARENT_ID"]."\" onclick=\"fToggleSetItems('b2".$arBasket["ID"]."', 'set_toggle_link_');\">".GetMessage("BUYER_F_SHOW_SET")."</a><br/>";
+			$name .= "<br/><a href=\"javascript:void(0);\" class=\"dashed-link show-set-link\" id=\"set_toggle_link_b2".$arBasket["ID"]."\" onclick=\"fToggleSetItems('b2".$arBasket["ID"]."', 'set_toggle_link_');\">".GetMessage("BUYER_F_SHOW_SET")."</a><br/>";
 
 			if (!empty($arSetData) && array_key_exists($arBasket["ID"], $arSetData))
 			{
@@ -1118,7 +1271,7 @@ if(!empty($arUser))
 
 				if (!empty($arSets))
 				{
-					$name .= "<br/><a href=\"javascript:void(0);\" class=\"dashed-link show-set-link\" id=\"set_toggle_link_b3".$arBasket["SET_PARENT_ID"]."\" onclick=\"fToggleSetItems('b3".$arBasket["ID"]."', 'set_toggle_link_');\">".GetMessage("BUYER_F_SHOW_SET")."</a><br/>";
+					$name .= "<br/><a href=\"javascript:void(0);\" class=\"dashed-link show-set-link\" id=\"set_toggle_link_b3".$arBasket["ID"]."\" onclick=\"fToggleSetItems('b3".$arBasket["ID"]."', 'set_toggle_link_');\">".GetMessage("BUYER_F_SHOW_SET")."</a><br/>";
 
 					$name .= "<div class=\"set_item_b3".$arBasket["ID"]."\" style=\"display:none\">";
 					foreach ($arSets as $arSetData)
@@ -1163,7 +1316,7 @@ if(!empty($arUser))
 			$linkOrder = "showOfferPopup(".CUtil::PhpToJsObject($arResult['SKU_ELEMENTS']).", ".CUtil::PhpToJsObject($arResult['SKU_PROPERTIES']).", 'order', ".CUtil::PhpToJsObject($arResult["POPUP_MESSAGE"]).");";
 			$linkBasket = "showOfferPopup(".CUtil::PhpToJsObject($arResult['SKU_ELEMENTS']).", ".CUtil::PhpToJsObject($arResult['SKU_PROPERTIES']).", 'basket', ".CUtil::PhpToJsObject($arResult["POPUP_MESSAGE"]).");";
 		else:
-			$linkOrder = 'BX.adminPanel.Redirect([], \'/bitrix/admin/sale_order_new.php?user_id='.$ID.'&lang='.LANG.'&LID='.$arViews["SITE_ID"].'&product['.$arViews["PRODUCT_ID"].']=1\', event);';
+			$linkOrder = 'BX.adminPanel.Redirect([], \'/bitrix/admin/sale_order_create.php?USER_ID='.$ID.'&lang='.LANG.'&SITE_ID='.$arViews["SITE_ID"].'&product['.$arViews["PRODUCT_ID"].']=1\', event);';
 			$linkBasket = 'fAddToBasketViewed('.$arViews["PRODUCT_ID"].', \''.$arViews["SITE_ID"].'\')';
 		endif;
 
@@ -1205,14 +1358,14 @@ if(!empty($arUser))
 	}
 
 	if ($rsCount === 1)
-		$siteLID = "&LID=".$arSitesShop[0]["ID"]."&user_id=".$ID;
+		$siteLID = "&SITE_ID=".$arSitesShop[0]["ID"]."&USER_ID=".$ID;
 	else
 	{
 		foreach ($arSitesShop as $key => $val)
 		{
 			$arSiteMenu[] = array(
 				"TEXT" => $val["NAME"]." (".$val["ID"].")",
-				"ACTION" => "window.location = 'sale_order_new.php?lang=".LANGUAGE_ID."&user_id=".$ID."LID=".$val["ID"]."';"
+				"ACTION" => "window.location = 'sale_order_create.php?lang=".LANGUAGE_ID."&USER_ID=".$ID."&SITE_ID=".$val["ID"]."';"
 			);
 		}
 	}
@@ -1225,7 +1378,7 @@ if(!empty($arUser))
 		),
 		array(
 			"TEXT"=>GetMessage("BUYER_NEW_ORDER"),
-			"LINK" => "/bitrix/admin/sale_order_new.php?lang=".LANGUAGE_ID.$siteLID,
+			"LINK" => "/bitrix/admin/sale_order_create.php?lang=".LANGUAGE_ID.$siteLID,
 			"TITLE"=>GetMessage("BUYER_NEW_ORDER"),
 			"ICON" => "btn_new",
 			"MENU" => $arSiteMenu
@@ -1888,7 +2041,7 @@ if(!empty($arUser))
 										else
 										{
 											BX('sku_to_basket_apply').value = "N";
-											BX('viewed_url_action').value = '/bitrix/admin/sale_order_new.php?user_id='+arSKU[i]["USER_ID"]+'&lang=<?=LANG?>&LID='+arSKU[i]["LID"]+'&product['+arSKU[i]["ID"]+']=1';
+											BX('viewed_url_action').value = '/bitrix/admin/sale_order_create.php?USER_ID='+arSKU[i]["USER_ID"]+'&lang=<?=LANG?>&SITE_ID='+arSKU[i]["LID"]+'&product['+arSKU[i]["ID"]+']=1';
 											btnText = BX.message('PRODUCT_ADD_TO_ORDER');
 										}
 

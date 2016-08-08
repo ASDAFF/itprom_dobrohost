@@ -62,14 +62,23 @@ class DiscountCouponsManager
 	protected static $orderId = null;
 	protected static $allowedSave = false;
 	protected static $checkActivity = true;
+	protected static $useOrderCoupons = true;
 
-	protected static $clearFields = array('STATUS', 'CHECK_CODE', 'DISCOUNT_NAME', 'SAVED');
+	protected static $clearFields = array(
+		'STATUS', 'CHECK_CODE',
+		'DISCOUNT_NAME', 'DISCOUNT_ACTIVE',
+		'SAVED',
+		'BASKET', 'DELIVERY'
+	);
+	protected static $timeFields = array(
+		'DISCOUNT_ACTIVE_FROM', 'DISCOUNT_ACTIVE_TO', 'ACTIVE_FROM', 'ACTIVE_TO'
+	);
 
 	/**
 	 * Init use mode and user id.
 	 *
 	 * @param int $mode			Discount manager mode.
-	 * @param array $params		Initial params (userId, orderId).
+	 * @param array $params		Initial params (userId, orderId, oldUserId)
 	 * 		keys are case sensitive:
 	 * 			<ul>
 	 * 			<li>int userId		Order owner (for MODE_MANAGER or MODE_ORDER only)
@@ -88,16 +97,10 @@ class DiscountCouponsManager
 		self::$userId = null;
 		self::$orderId = null;
 		self::$allowedSave = false;
+		self::$useOrderCoupons = true;
 
 		if ($adminSection)
 		{
-			if ($mode != self::MODE_MANAGER && $mode != self::MODE_ORDER && $mode != self::MODE_SYSTEM)
-			{
-				self::$errors[] = Loc::getMessage('BX_SALE_DCM_ERR_BAD_MODE');
-				self::$useMode = self::MODE_SYSTEM;
-				return;
-			}
-
 			self::$useMode = self::MODE_SYSTEM;
 			switch ($mode)
 			{
@@ -133,16 +136,13 @@ class DiscountCouponsManager
 					break;
 				case self::MODE_SYSTEM:
 					break;
+				default:
+					self::$errors[] = Loc::getMessage('BX_SALE_DCM_ERR_BAD_MODE');
+					break;
 			}
 		}
 		else
 		{
-			if ($mode != self::MODE_CLIENT && $mode != self::MODE_EXTERNAL)
-			{
-				self::$errors[] = Loc::getMessage('BX_SALE_DCM_ERR_BAD_MODE');
-				self::$useMode = self::MODE_SYSTEM;
-				return;
-			}
 			switch ($mode)
 			{
 				case self::MODE_CLIENT:
@@ -158,6 +158,10 @@ class DiscountCouponsManager
 						? (int)$params['userId']
 						: \CsaleUser::getAnonymousUserID()
 					);
+					break;
+				default:
+					self::$errors[] = Loc::getMessage('BX_SALE_DCM_ERR_BAD_MODE');
+					self::$useMode = self::MODE_SYSTEM;
 					break;
 			}
 		}
@@ -331,10 +335,39 @@ class DiscountCouponsManager
 	}
 
 	/**
+	 * Set use ordered coupons for apply.
+	 *
+	 * @param bool $state		Use state.
+	 * @return void
+	 */
+	public static function useSavedCouponsForApply($state)
+	{
+		if ($state !== true && $state !== false)
+			return;
+		self::$useOrderCoupons = $state;
+	}
+
+	/**
+	 * Return use ordered coupons for apply.
+	 *
+	 * @return bool
+	 */
+	public static function isUsedOrderCouponsForApply()
+	{
+		return self::$useOrderCoupons;
+	}
+
+	/**
 	 * Initialization coupon manager.
 	 *
 	 * @param int $mode				Discount manager mode.
-	 * @param array $params			Initial params (userId, orderId).
+	 * @param array $params			Initial params (userId, orderId, oldUserId)
+	 * 		keys are case sensitive:
+	 * 			<ul>
+	 * 			<li>int userId		Order owner (for MODE_MANAGER or MODE_ORDER only)
+	 * 			<li>int orderId		Edit order id (for MODE_ORDER only(!))
+	 * 			<li>int oldUserId	Old order owner for MODE_MANAGER or MODE_ORDER only)
+	 * 			</ul>.
 	 * @param bool $clearStorage	Clear coupon session storage.
 	 * @return void
 	 */
@@ -343,10 +376,10 @@ class DiscountCouponsManager
 		if (self::$init)
 			return;
 		self::$couponTypes = Internals\DiscountCouponTable::getCouponTypes(true);
+		self::$couponIndex = 0;
 		self::clearErrors();
 		self::initUseDiscount();
 		self::initUseMode($mode, $params);
-		unset($params, $mode);
 		if (!self::isSuccess())
 			return;
 		if (self::$useMode != self::MODE_SYSTEM)
@@ -361,31 +394,20 @@ class DiscountCouponsManager
 						$couponsList = $_SESSION[self::STORAGE_CLIENT_COUPONS];
 					break;
 				case self::MODE_MANAGER:
+					if (!empty($_SESSION[self::STORAGE_MANAGER_COUPONS]) && !empty($_SESSION[self::STORAGE_MANAGER_COUPONS][self::$userId]) && is_array($_SESSION[self::STORAGE_MANAGER_COUPONS][self::$userId]))
+						$couponsList = $_SESSION[self::STORAGE_MANAGER_COUPONS][self::$userId];
+					break;
 				case self::MODE_ORDER:
+					self::load();
 					if (!empty($_SESSION[self::STORAGE_MANAGER_COUPONS]) && !empty($_SESSION[self::STORAGE_MANAGER_COUPONS][self::$userId]) && is_array($_SESSION[self::STORAGE_MANAGER_COUPONS][self::$userId]))
 						$couponsList = $_SESSION[self::STORAGE_MANAGER_COUPONS][self::$userId];
 					break;
 			}
 			if (!empty($couponsList))
-			{
-				foreach ($couponsList as &$oneCoupon)
-				{
-					$couponData = self::getData($oneCoupon);
-					if ($couponData === false)
-						continue;
-					if (!isset(self::$coupons[$couponData['COUPON']]))
-					{
-						$couponData['SORT'] = self::$couponIndex;
-						self::createApplyFields($couponData);
-						self::$coupons[$couponData['COUPON']] = $couponData;
-						self::$couponIndex++;
-					}
-				}
-				unset($couponData, $oneCoupon);
-			}
+				self::setCoupons($couponsList);
 			unset($couponsList);
 			if (self::$useMode == self::MODE_ORDER)
-				self::load();
+				self::saveToStorage();
 		}
 		self::$init = true;
 	}
@@ -394,7 +416,13 @@ class DiscountCouponsManager
 	 * Unconditional reinitialization coupon manager.
 	 *
 	 * @param int $mode				Discount manager mode.
-	 * @param array $params			Initial params (userId, orderId).
+	 * @param array $params			Initial params (userId, orderId, oldUserId)
+	 * 		keys are case sensitive:
+	 * 			<ul>
+	 * 			<li>int userId		Order owner (for MODE_MANAGER or MODE_ORDER only)
+	 * 			<li>int orderId		Edit order id (for MODE_ORDER only(!))
+	 * 			<li>int oldUserId	Old order owner for MODE_MANAGER or MODE_ORDER only)
+	 * 			</ul>.
 	 * @param bool $clearStorage	Clear coupon session storage.
 	 * @return void
 	 */
@@ -524,6 +552,38 @@ class DiscountCouponsManager
 	}
 
 	/**
+	 * Clear coupon storage for order.
+	 *
+	 * @param int $order			Order id.
+	 * @return bool
+	 */
+	public static function clearByOrder($order)
+	{
+		if (!self::isSuccess())
+			return false;
+		$order = (int)$order;
+		if ($order <= 0)
+			return false;
+		$userId = 0;
+		$orderIterator = Internals\OrderTable::getList(array(
+			'select' => array('ID', 'USER_ID'),
+			'filter' => array('=ID' => $order)
+		));
+		if ($orderData = $orderIterator->fetch())
+			$userId = (int)$orderData['USER_ID'];
+		unset($orderData, $orderIterator);
+		if ($userId <= 0)
+			return false;
+		self::initUseMode(self::MODE_ORDER, array('userId' => $userId, 'orderId' => $order));
+		if (!self::isSuccess())
+			return false;
+		self::$coupons = array();
+		self::saveToStorage();
+
+		return true;
+	}
+
+	/**
 	 * Change coupons owner in manager or order mode.
 	 *
 	 * @param int $oldUser				Old user id.
@@ -557,11 +617,69 @@ class DiscountCouponsManager
 	{
 		if (self::$useMode != self::MODE_ORDER)
 			return;
-		self::$checkActivity = false;
 
+		self::$checkActivity = false;
+		$couponsList = array();
+		$couponIterator = Internals\OrderCouponsTable::getList(array(
+			'select' => array(
+				'*',
+				'MODULE_ID' => 'ORDER_DISCOUNT.MODULE_ID',
+				'DISCOUNT_ID' => 'ORDER_DISCOUNT.DISCOUNT_ID',
+				'DISCOUNT_NAME' => 'ORDER_DISCOUNT.NAME'
+			),
+			'filter' => array('=ORDER_ID' => self::$orderId),
+			'order' => array('ID' => 'ASC')
+		));
+		while ($coupon = $couponIterator->fetch())
+		{
+			$couponData = $coupon['DATA'];
+			$couponData['COUPON'] = $coupon['COUPON'];
+			$couponData['STATUS'] = self::STATUS_ENTERED;
+			$couponData['CHECK_CODE'] = self::COUPON_CHECK_OK;
+			$couponData['MODULE'] = $coupon['MODULE_ID'];
+			$couponData['MODULE_ID'] = $coupon['MODULE_ID'];
+			$couponData['ID'] = $coupon['COUPON_ID'];
+			$couponData['DISCOUNT_ID'] = $coupon['DISCOUNT_ID'];
+			$couponData['DISCOUNT_NAME'] = (string)$coupon['DISCOUNT_NAME'];
+			$couponData['DISCOUNT_ACTIVE'] = 'Y';
+			$couponData['TYPE'] = $coupon['TYPE'];
+			$couponData['ACTIVE'] = 'Y';
+			$couponData['SAVED'] = 'Y';
+			foreach (self::$timeFields as $fieldName)
+			{
+				if (isset($couponData[$fieldName]))
+					$couponData[$fieldName] = Main\Type\DateTime::createFromTimestamp($couponData[$fieldName]);
+			}
+			unset($fieldName);
+			if (empty($couponData['USER_INFO']) && $couponData['MODE'] == self::COUPON_MODE_FULL)
+			{
+				$couponData['USER_INFO'] = array(
+					'USER_ID' => 0,
+					'MAX_USE' => 0,
+					'USE_COUNT' => 0,
+					'ACTIVE_FROM' => null,
+					'ACTIVE_TO' => null
+				);
+			}
+			if (!empty($couponData['USER_INFO']))
+			{
+				foreach (self::$timeFields as $fieldName)
+				{
+					if (isset($couponData['USER_INFO'][$fieldName]))
+						$couponData['USER_INFO'][$fieldName] = Main\Type\DateTime::createFromTimestamp($couponData['USER_INFO'][$fieldName]);
+				}
+				unset($fieldName);
+				foreach ($couponData['USER_INFO'] as $fieldName => $fieldValue)
+					$couponData[$fieldName] = $fieldValue;
+			}
+			$couponsList[$couponData['COUPON']] = $couponData;
+		}
+		unset($coupon, $couponIterator);
+
+		if (!empty($couponsList))
+			self::setCoupons($couponsList, false);
 
 		self::$checkActivity = true;
-		self::saveToStorage();
 	}
 
 	/**
@@ -580,6 +698,7 @@ class DiscountCouponsManager
 		$extMode = ($extMode === true);
 		if (!is_array($filter))
 			$filter = array();
+		static::convertOldFilterFields($filter);
 		$show = ($show === true);
 		if (!self::$init)
 			self::init();
@@ -601,6 +720,8 @@ class DiscountCouponsManager
 			return array();
 		if (!empty($filter))
 			self::filterArrayCoupons($validCoupons, $filter);
+		if (!empty($validCoupons))
+			self::clearSystemData($validCoupons);
 		if ($show && !empty($validCoupons))
 			self::fillCouponHints($validCoupons);
 		return ($extMode ? $validCoupons : array_keys($validCoupons));
@@ -618,7 +739,11 @@ class DiscountCouponsManager
 	{
 		if (self::$useMode == self::MODE_SYSTEM)
 			return array();
-		$filter['SAVED'] = 'N';
+		if (self::$useMode == self::MODE_ORDER && static::isUsedOrderCouponsForApply())
+			$filter['SAVED'] = array('Y', 'N');
+		else
+			$filter['SAVED'] = 'N';
+
 		$couponsList = self::get(true, $filter, false);
 		if ($couponsList === false)
 			return array();
@@ -651,6 +776,40 @@ class DiscountCouponsManager
 	}
 
 	/**
+	 * Return coupons for current order.
+	 *
+	 * @param bool $extMode					Get full information or coupons only.
+	 * @param array $filter					Coupons filter.
+	 * @return array
+	 */
+	public static function getOrderedCoupons($extMode = true, $filter = array())
+	{
+		$extMode = ($extMode === true);
+		$result = array();
+		if (self::$useMode != self::MODE_ORDER)
+			return $result;
+		if (!self::isSuccess())
+			return $result;
+
+		if (!self::isEntered())
+			return $result;
+
+		$result = array_filter(self::$coupons, '\Bitrix\Sale\DiscountCouponsManager::filterFreezeCoupons');
+		if (empty($result))
+			return $result;
+		$result = array_filter($result, '\Bitrix\Sale\DiscountCouponsManager::filterFreezeOrderedCoupons');
+		if (empty($result))
+			return $result;
+
+		$filter['SAVED'] = 'Y';
+		static::filterArrayCoupons($result, $filter);
+		if (!empty($result))
+			static::clearSystemData($result);
+
+		return ($extMode ? $result : array_keys($result));
+	}
+
+	/**
 	 * Save applied coupons.
 	 *
 	 * @return void
@@ -671,7 +830,7 @@ class DiscountCouponsManager
 		$userId = self::getUserId();
 
 		$appliedCoupons = self::filterCoupons(
-			array('STATUS' => self::STATUS_APPLYED, 'MODULE' => 'sale', 'SAVED' => 'N'),
+			array('STATUS' => self::STATUS_APPLYED, 'MODULE_ID' => 'sale', 'SAVED' => 'N'),
 			true
 		);
 
@@ -699,7 +858,7 @@ class DiscountCouponsManager
 			foreach (self::$couponProviders as &$provider)
 			{
 				$appliedCoupons = self::filterCoupons(
-					array('STATUS' => self::STATUS_APPLYED, 'MODULE' => $provider['module'], 'SAVED' => 'N'),
+					array('STATUS' => self::STATUS_APPLYED, 'MODULE_ID' => $provider['module'], 'SAVED' => 'N'),
 					true
 				);
 				if (empty($appliedCoupons))
@@ -907,6 +1066,57 @@ class DiscountCouponsManager
 	}
 
 	/**
+	 * Clear applied data for coupon.
+	 *
+	 * @param string $coupon			Coupon.
+	 * @return bool
+	 */
+	public static function clearApplyCoupon($coupon)
+	{
+		if (self::$useMode == self::MODE_SYSTEM || !self::isSuccess())
+			return false;
+		if (empty(self::$coupons))
+			return true;
+		$coupon = trim((string)$coupon);
+		if ($coupon == '')
+			return false;
+		if (!isset(self::$coupons[$coupon]))
+			return false;
+		if (self::$coupons[$coupon]['STATUS'] == self::STATUS_NOT_FOUND || self::$coupons[$coupon]['STATUS'] == self::STATUS_FREEZE)
+			return false;
+		self::$coupons[$coupon]['STATUS'] = self::STATUS_ENTERED;
+		self::createApplyFields(self::$coupons[$coupon]);
+
+		return true;
+	}
+
+	/**
+	 * Clear applied data for coupons.
+	 *
+	 * @param bool $all					Clear for coupons or not saved.
+	 * @return bool
+	 */
+	public static function clearApply($all = true)
+	{
+		if (self::$useMode == self::MODE_SYSTEM || !self::isSuccess())
+			return false;
+		if (empty(self::$coupons))
+			return true;
+		$all = ($all !== false);
+		foreach (self::$coupons as &$coupon)
+		{
+			if ($coupon['STATUS'] == self::STATUS_NOT_FOUND || $coupon['STATUS'] == self::STATUS_FREEZE)
+				continue;
+			if (!$all && $coupon['SAVED'] == 'Y')
+				continue;
+			$coupon['STATUS'] = self::STATUS_ENTERED;
+			self::createApplyFields($coupon);
+		}
+		unset($coupon);
+		return true;
+	}
+
+	/**
 	 * Return information coupon.
 	 *
 	 * @param string $coupon			Coupon for search.
@@ -923,20 +1133,9 @@ class DiscountCouponsManager
 		if ($coupon === '')
 			return false;
 		$checkCoupon = ($checkCoupon === true);
-		$result = array(
-			'COUPON' => $coupon,
-			'MODE' => self::COUPON_MODE_SIMPLE,
-			'STATUS' => self::STATUS_NOT_FOUND,
-			'CHECK_CODE' => self::COUPON_CHECK_NOT_FOUND,
-			'MODULE' => '',
-			'ID' => 0,
-			'DISCOUNT_ID' => 0,
-			'DISCOUNT_NAME' => '',
-			'TYPE' => Internals\DiscountCouponTable::TYPE_UNKNOWN,
-			'ACTIVE' => '',
-			'USER_INFO' => array(),
-			'SAVED' => 'N'
-		);
+
+		$result = static::getEmptyCouponFields($coupon);
+
 		$resultKeyList = array(
 			'ID', 'COUPON', 'DISCOUNT_ID', 'TYPE', 'ACTIVE', 'DISCOUNT_NAME',
 			'DISCOUNT_ACTIVE', 'DISCOUNT_ACTIVE_FROM', 'DISCOUNT_ACTIVE_TO'
@@ -955,6 +1154,7 @@ class DiscountCouponsManager
 		{
 			$result['MODE'] = self::COUPON_MODE_FULL;
 			$result['MODULE'] = 'sale';
+			$result['MODULE_ID'] = 'sale';
 			$checkCode = self::checkBaseData($existCoupon, self::COUPON_CHECK_OK);
 			foreach ($resultKeyList as &$resultKey)
 				$result[$resultKey] = $existCoupon[$resultKey];
@@ -983,6 +1183,7 @@ class DiscountCouponsManager
 				{
 					$result['MODE'] = $provider['mode'];
 					$result['MODULE'] = $provider['module'];
+					$result['MODULE_ID'] = $provider['module'];
 					$checkCode = self::checkBaseData($existCoupon, self::COUPON_CHECK_OK);
 					foreach ($resultKeyList as &$resultKey)
 						$result[$resultKey] = $existCoupon[$resultKey];
@@ -1027,7 +1228,8 @@ class DiscountCouponsManager
 			return array(
 				'ID' => $existCoupon['ID'],
 				'COUPON' => $existCoupon['COUPON'],
-				'MODULE' => 'sale'
+				'MODULE' => 'sale',
+				'MODULE_ID' => 'sale',
 			);
 		}
 		else
@@ -1049,7 +1251,8 @@ class DiscountCouponsManager
 						return array(
 							'ID' => $existCoupon['ID'],
 							'COUPON' => $existCoupon['COUPON'],
-							'MODULE' => $provider['module']
+							'MODULE' => $provider['module'],
+							'MODULE_ID' => $provider['module']
 						);
 					}
 				}
@@ -1088,12 +1291,35 @@ class DiscountCouponsManager
 		{
 			$result = self::$coupons[$coupon];
 		}
-
-		if (!empty($result) && $clearData)
+		if (!empty($result))
 		{
-			foreach (self::$clearFields as $fieldName)
-				unset($result[$fieldName]);
-			unset($fieldName);
+			if ($result['MODE'] == self::COUPON_MODE_FULL)
+			{
+				$result['USER_INFO'] = $result['SYSTEM_DATA'];
+				unset($result['SYSTEM_DATA']);
+			}
+			if ($clearData)
+			{
+				foreach (self::$clearFields as $fieldName)
+					unset($result[$fieldName]);
+				unset($fieldName);
+				foreach (self::$timeFields as $fieldName)
+				{
+					if (isset($result[$fieldName]) && $result[$fieldName] instanceof Main\Type\DateTime)
+						$result[$fieldName] = $result[$fieldName]->getTimestamp();
+				}
+				unset($fieldName);
+
+				if (!empty($result['USER_INFO']))
+				{
+					foreach (self::$timeFields as $fieldName)
+					{
+						if (isset($result['USER_INFO'][$fieldName]) && $result['USER_INFO'][$fieldName] instanceof Main\Type\DateTime)
+							$result['USER_INFO'][$fieldName] = $result['USER_INFO'][$fieldName]->getTimestamp();
+					}
+					unset($fieldName);
+				}
+			}
 		}
 		return $result;
 	}
@@ -1111,6 +1337,17 @@ class DiscountCouponsManager
 			return;
 		if (self::isSuccess())
 			self::clear(true);
+	}
+
+	/**
+	 * Return is coupon used in order.
+	 *
+	 * @param array $coupon			Coupon data.
+	 * @return bool
+	 */
+	public static function filterOrderCoupons($coupon)
+	{
+		return (isset($coupon['SAVED']) && $coupon['SAVED'] == 'Y');
 	}
 
 	/**
@@ -1133,7 +1370,7 @@ class DiscountCouponsManager
 		else
 		{
 			$data['ID'] = (int)$data['ID'];
-			if ($data['ID'] <= 0)
+			if ($data['ID'] <= 0 && self::$checkActivity)
 				$checkCode |= self::COUPON_CHECK_CORRUPT_DATA;
 		}
 		if (!isset($data['DISCOUNT_ID']))
@@ -1144,7 +1381,7 @@ class DiscountCouponsManager
 		else
 		{
 			$data['DISCOUNT_ID'] = (int)$data['DISCOUNT_ID'];
-			if ($data['DISCOUNT_ID'] <= 0)
+			if ($data['DISCOUNT_ID'] <= 0 && self::$checkActivity)
 				$checkCode |= self::COUPON_CHECK_CORRUPT_DATA;
 		}
 		if (!isset($data['TYPE']))
@@ -1155,7 +1392,7 @@ class DiscountCouponsManager
 		else
 		{
 			$data['TYPE'] = (int)$data['TYPE'];
-			if (!isset(self::$couponTypes[$data['TYPE']]))
+			if (!isset(self::$couponTypes[$data['TYPE']]) && $data['TYPE'] != Internals\DiscountCouponTable::TYPE_ARCHIVED)
 			{
 				$data['TYPE'] = Internals\DiscountCouponTable::TYPE_UNKNOWN;
 				$checkCode |= self::COUPON_CHECK_CORRUPT_DATA;
@@ -1292,16 +1529,15 @@ class DiscountCouponsManager
 	{
 		if ($checkCode == self::COUPON_CHECK_OK && $result['MODE'] == self::COUPON_MODE_FULL)
 		{
+			$result['SYSTEM_DATA'] = array(
+				'USER_ID' => $existCoupon['USER_ID'],
+				'MAX_USE' => $existCoupon['MAX_USE'],
+				'USE_COUNT' => $existCoupon['USE_COUNT'],
+				'ACTIVE_FROM' => $existCoupon['ACTIVE_FROM'],
+				'ACTIVE_TO' => $existCoupon['ACTIVE_TO']
+			);
 			if (self::usedByManager() || ($existCoupon['USER_ID'] > 0 && $existCoupon['USER_ID'] == self::$userId))
-			{
-				$result['USER_INFO'] = array(
-					'USER_ID' => $existCoupon['USER_ID'],
-					'MAX_USE' => $existCoupon['MAX_USE'],
-					'USE_COUNT' => $existCoupon['USE_COUNT'],
-					'ACTIVE_FROM' => $existCoupon['ACTIVE_FROM'],
-					'ACTIVE_TO' => $existCoupon['ACTIVE_TO']
-				);
-			}
+				$result['USER_INFO'] = $result['SYSTEM_DATA'];
 		}
 	}
 
@@ -1324,21 +1560,17 @@ class DiscountCouponsManager
 				{
 					$conn = Application::getConnection();
 					$helper = $conn->getSqlHelper();
-					$iterator = $conn->query('select '.$helper->quote('USER_ID').' from '.$helper->quote('b_sale_fuser').' where '.$helper->quote('ID').'='.$fuser);
+					$iterator = $conn->query(
+						'select '.$helper->quote('USER_ID').' from '.$helper->quote('b_sale_fuser').' where '.$helper->quote('ID').'='.$fuser
+					);
 					if ($fuser = $iterator->fetch())
-					{
 						$currentUserId = $fuser['USER_ID'];
-					}
 					unset($fuser, $iterator);
 				}
 				if ($currentUserId === false)
-				{
 					self::$errors[] = Loc::getMessage('BX_SALE_DCM_ERR_BAD_FUSER_ID');
-				}
 				else
-				{
 					$currentUserId = (int)$currentUserId;
-				}
 			}
 			if (self::isSuccess())
 				self::$userId = $currentUserId;
@@ -1356,12 +1588,16 @@ class DiscountCouponsManager
 		{
 			$couponsList = array();
 			if (!empty(self::$coupons))
-				$couponsList = array_keys(self::$coupons);
+			{
+				$couponsList = array_filter(self::$coupons, '\Bitrix\Sale\DiscountCouponsManager::clearSavedCoupons');
+				if (!empty($couponsList))
+					$couponsList = array_keys($couponsList);
+			}
 			if (self::usedByManager())
 			{
 				if (!isset($_SESSION[self::STORAGE_MANAGER_COUPONS]) || !is_array($_SESSION[self::STORAGE_MANAGER_COUPONS]))
 					$_SESSION[self::STORAGE_MANAGER_COUPONS] = array();
-					$_SESSION[self::STORAGE_MANAGER_COUPONS][self::$userId] = $couponsList;
+				$_SESSION[self::STORAGE_MANAGER_COUPONS][self::$userId] = $couponsList;
 			}
 			else
 			{
@@ -1480,6 +1716,35 @@ class DiscountCouponsManager
 	}
 
 	/**
+	 * Clear freeze ordered coupons.
+	 *
+	 * @param array $coupon		Coupon data.
+	 * @return bool
+	 */
+	protected static function filterFreezeOrderedCoupons($coupon)
+	{
+		static $currentTimeStamp = null;
+		if ($currentTimeStamp === null)
+			$currentTimeStamp = time();
+		if (!isset($coupon['SAVED']) || $coupon['SAVED'] != 'Y')
+			return true;
+		if (isset($coupon['MODE']) && $coupon['MODE'] == self::COUPON_MODE_FULL)
+		{
+			if (
+				isset($coupon['ACTIVE_FROM']) && $coupon['ACTIVE_FROM'] instanceof Main\Type\DateTime
+				&& $coupon['ACTIVE_FROM']->getTimestamp() > $currentTimeStamp
+			)
+				return false;
+			if (
+				isset($coupon['ACTIVE_TO']) && $coupon['ACTIVE_TO'] instanceof Main\Type\DateTime
+				&& $coupon['ACTIVE_TO']->getTimestamp() < $currentTimeStamp
+			)
+				return false;
+		}
+		return true;
+	}
+
+	/**
 	 * Clear one row coupons.
 	 *
 	 * @param array $coupon		Coupon data.
@@ -1509,7 +1774,7 @@ class DiscountCouponsManager
 		$hash = '';
 		foreach ($coupons as $key => $oneCoupon)
 		{
-			$hash = $oneCoupon['MODULE'].':'.$oneCoupon['DISCOUNT_ID'];
+			$hash = $oneCoupon['MODULE_ID'].':'.$oneCoupon['DISCOUNT_ID'];
 			if (
 				isset($existDiscount[$hash])
 				&&
@@ -1575,7 +1840,7 @@ class DiscountCouponsManager
 						}
 					}
 					$compare = (
-						$logic
+						$logic == 'and'
 						? !in_array(false, $subresult, true)
 						: in_array(true, $subresult, true)
 					);
@@ -1657,7 +1922,7 @@ class DiscountCouponsManager
 						}
 					}
 					$compare = (
-					$logic
+						$logic == 'and'
 						? !in_array(false, $subresult, true)
 						: in_array(true, $subresult, true)
 					);
@@ -1706,7 +1971,11 @@ class DiscountCouponsManager
 		$hash = '';
 		if (!empty($product) && is_array($product))
 		{
-			$module = (isset($product['MODULE']) ? trim((string)$product['MODULE']) : '');
+			$module = '';
+			if (isset($product['MODULE_ID']))
+				$module = trim((string)$product['MODULE_ID']);
+			elseif (isset($product['MODULE']))
+				$module = trim((string)$product['MODULE']);
 			$productId = (isset($product['PRODUCT_ID']) ? (int)$product['PRODUCT_ID'] : 0);
 			$basketId = (isset($product['BASKET_ID']) ? trim((string)$product['BASKET_ID']) : '0');
 			if ($productId > 0 && $basketId !== '')
@@ -1729,7 +1998,9 @@ class DiscountCouponsManager
 		$basketId = '';
 		if (!empty($product) && is_array($product))
 		{
-			if (isset($product['MODULE']))
+			if (isset($product['MODULE_ID']))
+				$module = trim((string)$product['MODULE_ID']);
+			elseif (isset($product['MODULE']))
 				$module = trim((string)$product['MODULE']);
 			if (isset($product['PRODUCT_ID']))
 				$productId = (int)$product['PRODUCT_ID'];
@@ -1780,5 +2051,144 @@ class DiscountCouponsManager
 			}
 		}
 		unset($oneCoupon);
+	}
+
+	/**
+	 * Set coupons list.
+	 *
+	 * @param array $couponsList			Coupons list.
+	 * @param bool $checkCoupons			Find coupons.
+	 * @return void
+	 */
+	protected static function setCoupons($couponsList, $checkCoupons = true)
+	{
+		if (empty($couponsList) || !is_array($couponsList))
+			return;
+
+		$checkCoupons = ($checkCoupons !== false);
+		if ($checkCoupons)
+		{
+			foreach ($couponsList as &$coupon)
+			{
+				$coupon = trim((string)$coupon);
+				if ($coupon == '')
+					continue;
+				$couponData = self::getData($coupon);
+				if (!isset(self::$coupons[$couponData['COUPON']]))
+				{
+					$couponData['SORT'] = self::$couponIndex;
+					self::createApplyFields($couponData);
+					self::$coupons[$couponData['COUPON']] = $couponData;
+					self::$couponIndex++;
+				}
+			}
+			unset($couponData, $coupon);
+		}
+		else
+		{
+			$currentTime = new Main\Type\DateTime();
+			$currentTimestamp = $currentTime->getTimestamp();
+			unset($currentTime);
+			foreach ($couponsList as $coupon)
+			{
+				if (empty($coupon) || !is_array($coupon))
+					continue;
+				$checkCode = self::checkBaseData($coupon, self::COUPON_CHECK_OK);
+				$checkCode = self::checkFullData($coupon, $coupon['MODE'], $checkCode, $currentTimestamp);
+				$coupon['STATUS'] = ($checkCode == self::COUPON_CHECK_OK ? self::STATUS_ENTERED : self::STATUS_FREEZE);
+				$coupon['CHECK_CODE'] = $checkCode;
+				unset($checkCode);
+				if (!isset(self::$coupons[$coupon['COUPON']]))
+				{
+					$coupon['SORT'] = self::$couponIndex;
+					self::createApplyFields($coupon);
+					self::$coupons[$coupon['COUPON']] = $coupon;
+					self::$couponIndex++;
+				}
+			}
+			unset($coupon, $currentTimestamp);
+		}
+	}
+
+	/**
+	 * Clear order saved coupons.
+	 *
+	 * @internal
+	 * @param array $coupon		Coupon data.
+	 * @return bool
+	 */
+	protected static function clearSavedCoupons($coupon)
+	{
+		return (!isset($coupon['SAVED']) || $coupon['SAVED'] != 'Y');
+	}
+
+	/**
+	 * Clear system data.
+	 *
+	 * @internal
+	 * @param array &$coupons			Coupons.
+	 * @return void
+	 */
+	protected static function clearSystemData(&$coupons)
+	{
+		$result = array();
+		foreach ($coupons as $couponIndex => $couponData)
+		{
+			if (array_key_exists('SYSTEM_DATA', $couponData))
+				unset($couponData['SYSTEM_DATA']);
+			$result[$couponIndex] = $couponData;
+		}
+		unset($couponIndex, $couponData);
+		$coupons = $result;
+	}
+
+	/**
+	 * Convert old filter fields.
+	 *
+	 * @internal
+	 * @param array &$filter		Coupons filter.
+	 * @return void
+	 */
+	protected static function convertOldFilterFields(array &$filter)
+	{
+		if (array_key_exists('MODULE', $filter))
+		{
+			if (!isset($filter['MODULE_ID']))
+				$filter['MODULE_ID'] = $filter['MODULE'];
+			unset($filter['MODULE']);
+		}
+		if (array_key_exists('!MODULE', $filter))
+		{
+			if (!isset($filter['!MODULE_ID']))
+				$filter['!MODULE_ID'] = $filter['!MODULE'];
+			unset($filter['!MODULE']);
+		}
+	}
+
+	/**
+	 * Return empty coupon (default field values).
+	 *
+	 * @internal
+	 * @param string $coupon		Coupon code.
+	 * @return array
+	 */
+	protected static function getEmptyCouponFields($coupon)
+	{
+		/* field MODULE - unused, for compatibility only */
+		return array(
+			'COUPON' => $coupon,
+			'MODE' => self::COUPON_MODE_SIMPLE,
+			'STATUS' => self::STATUS_NOT_FOUND,
+			'CHECK_CODE' => self::COUPON_CHECK_NOT_FOUND,
+			'MODULE' => '',
+			'MODULE_ID' => '',
+			'ID' => 0,
+			'DISCOUNT_ID' => 0,
+			'DISCOUNT_NAME' => '',
+			'TYPE' => Internals\DiscountCouponTable::TYPE_UNKNOWN,
+			'ACTIVE' => '',
+			'USER_INFO' => array(),
+			'SAVED' => 'N'
+		);
 	}
 }

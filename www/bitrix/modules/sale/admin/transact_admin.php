@@ -17,13 +17,16 @@ IncludeModuleLangFile(__FILE__);
 
 $arTransactTypes = array(
 	"ORDER_PAY" => GetMessage("STA_TPAY"),
+	"ORDER_PAY_PART" => GetMessage("STA_TPAY_PART"),
 	"CC_CHARGE_OFF" => GetMessage("STA_TFROM_CARD"),
 	"OUT_CHARGE_OFF" => GetMessage("STA_TMONEY"),
 	"ORDER_UNPAY" => GetMessage("STA_TCANCEL_ORDER"),
 	"ORDER_CANCEL_PART" => GetMessage("STA_TCANCEL_SEMIORDER"),
 	"MANUAL" => GetMessage("STA_THAND"),
 	"DEL_ACCOUNT" => GetMessage("STA_TDEL"),
-	"AFFILIATE" => GetMessage("STA_AF_VIP")
+	"AFFILIATE" => GetMessage("STA_AF_VIP"),
+	"EXCESS_SUM_PAID" => GetMessage("STA_TTRANSF_EXCESS_SUM_PAID"),
+	"ORDER_PART_RETURN" => GetMessage("STA_TRETURN")
 );
 
 $sTableID = "tbl_sale_transact";
@@ -143,7 +146,7 @@ while ($arTransact = $dbTransactList->NavNext(true, "f_"))
 	$row->AddField("AMOUNT", (($arTransact["DEBIT"] == "Y") ? "+" : "-").SaleFormatCurrency($arTransact["AMOUNT"], $arTransact["CURRENCY"])."<br><small>".(($arTransact["DEBIT"] == "Y") ? GetMessage("STA_TO_ACCOUNT") : GetMessage("STA_FROM_ACCOUNT"))."</small>");
 
 	if (IntVal($arTransact["ORDER_ID"]) > 0)
-		$fieldValue = "<a href=\"/bitrix/admin/sale_order_detail.php?ID=".$arTransact["ORDER_ID"]."&lang=".LANG."\" title=\"".GetMessage("STA_ORDER_VIEW")."\">".$arTransact["ORDER_ID"]."</a>";
+		$fieldValue = "<a href=\"/bitrix/admin/sale_order_view.php?ID=".$arTransact["ORDER_ID"]."&lang=".LANG."\" title=\"".GetMessage("STA_ORDER_VIEW")."\">".$arTransact["ORDER_ID"]."</a>";
 	else
 		$fieldValue = "&nbsp;";
 	$row->AddField("ORDER_ID", $fieldValue);

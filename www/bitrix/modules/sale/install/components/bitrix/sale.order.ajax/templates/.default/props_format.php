@@ -57,179 +57,91 @@ if (!function_exists("PrintPropsForm"))
 		if (!empty($arSource))
 		{
 			?>
-				<div>
-					<?
-					foreach ($arSource as $arProperties)
-					{
-						?>
-						<div data-property-id-row="<?=intval(intval($arProperties["ID"]))?>">
+			<div>
+				<?
+
+				foreach ($arSource as $arProperties)
+				{
+					?>
+					<div data-property-id-row="<?=intval(intval($arProperties["ID"]))?>">
+
+						<div class="bx_block r1x3 pt8">
+							<?=$arProperties["NAME"]?>
+							<?if ($arProperties["REQUIED_FORMATED"]=="Y"):?>
+								<span class="bx_sof_req">*</span>
+							<?endif?>
+						</div>
 
 						<?
 						if ($arProperties["TYPE"] == "CHECKBOX")
 						{
 							?>
-							<input type="hidden" name="<?=$arProperties["FIELD_NAME"]?>" value="">
-
 							<div class="bx_block r1x3 pt8">
-								<?=$arProperties["NAME"]?>
-								<?if ($arProperties["REQUIED_FORMATED"]=="Y"):?>
-									<span class="bx_sof_req">*</span>
-								<?endif;?>
-							</div>
-
-							<div class="bx_block r1x3 pt8">
+								<input type="hidden" name="<?=$arProperties["FIELD_NAME"]?>" value="">
 								<input type="checkbox" name="<?=$arProperties["FIELD_NAME"]?>" id="<?=$arProperties["FIELD_NAME"]?>" value="Y"<?if ($arProperties["CHECKED"]=="Y") echo " checked";?>>
-
-								<?
-								if (strlen(trim($arProperties["DESCRIPTION"])) > 0):
-								?>
-								<div class="bx_description">
-									<?=$arProperties["DESCRIPTION"]?>
-								</div>
-								<?
-								endif;
-								?>
+								<?if (strlen(trim($arProperties["DESCRIPTION"])) > 0):?>
+									<div class="bx_description"><?=$arProperties["DESCRIPTION"]?></div>
+								<?endif?>
 							</div>
-
-							<div style="clear: both;"></div>
 							<?
 						}
 						elseif ($arProperties["TYPE"] == "TEXT")
 						{
 							?>
-							<div class="bx_block r1x3 pt8">
-								<?=$arProperties["NAME"]?>
-								<?if ($arProperties["REQUIED_FORMATED"]=="Y"):?>
-									<span class="bx_sof_req">*</span>
-								<?endif;?>
-							</div>
-
 							<div class="bx_block r3x1">
 								<input type="text" maxlength="250" size="<?=$arProperties["SIZE1"]?>" value="<?=$arProperties["VALUE"]?>" name="<?=$arProperties["FIELD_NAME"]?>" id="<?=$arProperties["FIELD_NAME"]?>" />
-
-								<?
-								if (strlen(trim($arProperties["DESCRIPTION"])) > 0):
-								?>
-								<div class="bx_description">
-									<?=$arProperties["DESCRIPTION"]?>
-								</div>
-								<?
-								endif;
-								?>
+								<?if (strlen(trim($arProperties["DESCRIPTION"])) > 0):?>
+									<div class="bx_description"><?=$arProperties["DESCRIPTION"]?></div>
+								<?endif?>
 							</div>
-							<div style="clear: both;"></div><br/>
 							<?
 						}
 						elseif ($arProperties["TYPE"] == "SELECT")
 						{
 							?>
-							<br/>
-							<div class="bx_block r1x3 pt8">
-								<?=$arProperties["NAME"]?>
-								<?if ($arProperties["REQUIED_FORMATED"]=="Y"):?>
-									<span class="bx_sof_req">*</span>
-								<?endif;?>
-							</div>
-
 							<div class="bx_block r3x1">
 								<select name="<?=$arProperties["FIELD_NAME"]?>" id="<?=$arProperties["FIELD_NAME"]?>" size="<?=$arProperties["SIZE1"]?>">
-									<?
-									foreach($arProperties["VARIANTS"] as $arVariants):
-									?>
-										<option value="<?=$arVariants["VALUE"]?>"<?if ($arVariants["SELECTED"] == "Y") echo " selected";?>><?=$arVariants["NAME"]?></option>
-									<?
-									endforeach;
-									?>
+									<?foreach($arProperties["VARIANTS"] as $arVariants):?>
+										<option value="<?=$arVariants["VALUE"]?>"<?=$arVariants["SELECTED"] == "Y" ? " selected" : ''?>><?=$arVariants["NAME"]?></option>
+									<?endforeach?>
 								</select>
-
-								<?
-								if (strlen(trim($arProperties["DESCRIPTION"])) > 0):
-								?>
-								<div class="bx_description">
-									<?=$arProperties["DESCRIPTION"]?>
-								</div>
-								<?
-								endif;
-								?>
+								<?if (strlen(trim($arProperties["DESCRIPTION"])) > 0):?>
+									<div class="bx_description"><?=$arProperties["DESCRIPTION"]?></div>
+								<?endif?>
 							</div>
-							<div style="clear: both;"></div>
 							<?
 						}
 						elseif ($arProperties["TYPE"] == "MULTISELECT")
 						{
 							?>
-							<br/>
-							<div class="bx_block r1x3 pt8">
-								<?=$arProperties["NAME"]?>
-								<?if ($arProperties["REQUIED_FORMATED"]=="Y"):?>
-									<span class="bx_sof_req">*</span>
-								<?endif;?>
-							</div>
-
 							<div class="bx_block r3x1">
 								<select multiple name="<?=$arProperties["FIELD_NAME"]?>" id="<?=$arProperties["FIELD_NAME"]?>" size="<?=$arProperties["SIZE1"]?>">
-									<?
-									foreach($arProperties["VARIANTS"] as $arVariants):
-									?>
-										<option value="<?=$arVariants["VALUE"]?>"<?if ($arVariants["SELECTED"] == "Y") echo " selected";?>><?=$arVariants["NAME"]?></option>
-									<?
-									endforeach;
-									?>
+									<?foreach($arProperties["VARIANTS"] as $arVariants):?>
+										<option value="<?=$arVariants["VALUE"]?>"<?=$arVariants["SELECTED"] == "Y" ? " selected" : ''?>><?=$arVariants["NAME"]?></option>
+									<?endforeach?>
 								</select>
-
-								<?
-								if (strlen(trim($arProperties["DESCRIPTION"])) > 0):
-								?>
-								<div class="bx_description">
-									<?=$arProperties["DESCRIPTION"]?>
-								</div>
-								<?
-								endif;
-								?>
+								<?if (strlen(trim($arProperties["DESCRIPTION"])) > 0):?>
+									<div class="bx_description"><?=$arProperties["DESCRIPTION"]?></div>
+								<?endif?>
 							</div>
-							<div style="clear: both;"></div>
 							<?
 						}
 						elseif ($arProperties["TYPE"] == "TEXTAREA")
 						{
 							$rows = ($arProperties["SIZE2"] > 10) ? 4 : $arProperties["SIZE2"];
 							?>
-							<br/>
-							<div class="bx_block r1x3 pt8">
-								<?=$arProperties["NAME"]?>
-								<?if ($arProperties["REQUIED_FORMATED"]=="Y"):?>
-									<span class="bx_sof_req">*</span>
-								<?endif;?>
-							</div>
-
 							<div class="bx_block r3x1">
 								<textarea rows="<?=$rows?>" cols="<?=$arProperties["SIZE1"]?>" name="<?=$arProperties["FIELD_NAME"]?>" id="<?=$arProperties["FIELD_NAME"]?>"><?=$arProperties["VALUE"]?></textarea>
-
-								<?
-								if (strlen(trim($arProperties["DESCRIPTION"])) > 0):
-								?>
-								<div class="bx_description">
-									<?=$arProperties["DESCRIPTION"]?>
-								</div>
-								<?
-								endif;
-								?>
+								<?if (strlen(trim($arProperties["DESCRIPTION"])) > 0):?>
+									<div class="bx_description"><?=$arProperties["DESCRIPTION"]?></div>
+								<?endif?>
 							</div>
-							<div style="clear: both;"></div>
 							<?
 						}
 						elseif ($arProperties["TYPE"] == "LOCATION")
 						{
 							?>
-							<div class="bx_block r1x3 pt8">
-								<?=$arProperties["NAME"]?>
-								<?if ($arProperties["REQUIED_FORMATED"]=="Y"):?>
-									<span class="bx_sof_req">*</span>
-								<?endif;?>
-							</div>
-
 							<div class="bx_block r3x1">
-
 								<?
 								$value = 0;
 								if (is_array($arProperties["VARIANTS"]) && count($arProperties["VARIANTS"]) > 0)
@@ -268,57 +180,42 @@ if (!function_exists("PrintPropsForm"))
 									"ONCITYCHANGE" => ($arProperties["IS_LOCATION"] == "Y" || $arProperties["IS_LOCATION4TAX"] == "Y") ? "submitForm()" : "",
 									"SIZE1" => $arProperties["SIZE1"],
 								),
-								array(
-									"ID" => $value,
-									"CODE" => "",
-									"SHOW_DEFAULT_LOCATIONS" => "Y",
+									array(
+										"ID" => $value,
+										"CODE" => "",
+										"SHOW_DEFAULT_LOCATIONS" => "Y",
 
-									// function called on each location change caused by user or by program
-									// it may be replaced with global component dispatch mechanism coming soon
-									"JS_CALLBACK" => "submitFormProxy",
+										// function called on each location change caused by user or by program
+										// it may be replaced with global component dispatch mechanism coming soon
+										"JS_CALLBACK" => "submitFormProxy",
 
-									// function window.BX.locationsDeferred['X'] will be created and lately called on each form re-draw.
-									// it may be removed when sale.order.ajax will use real ajax form posting with BX.ProcessHTML() and other stuff instead of just simple iframe transfer
-									"JS_CONTROL_DEFERRED_INIT" => intval($arProperties["ID"]),
+										// function window.BX.locationsDeferred['X'] will be created and lately called on each form re-draw.
+										// it may be removed when sale.order.ajax will use real ajax form posting with BX.ProcessHTML() and other stuff instead of just simple iframe transfer
+										"JS_CONTROL_DEFERRED_INIT" => intval($arProperties["ID"]),
 
-									// an instance of this control will be placed to window.BX.locationSelectors['X'] and lately will be available from everywhere
-									// it may be replaced with global component dispatch mechanism coming soon
-									"JS_CONTROL_GLOBAL_ID" => intval($arProperties["ID"]),
+										// an instance of this control will be placed to window.BX.locationSelectors['X'] and lately will be available from everywhere
+										// it may be replaced with global component dispatch mechanism coming soon
+										"JS_CONTROL_GLOBAL_ID" => intval($arProperties["ID"]),
 
-									"DISABLE_KEYBOARD_INPUT" => "Y",
-									"PRECACHE_LAST_LEVEL" => "Y",
-									"PRESELECT_TREE_TRUNK" => "Y",
-									"SUPPRESS_ERRORS" => "Y"
-								),
-								$locationTemplateP,
-								true,
-								'location-block-wrapper'
+										"DISABLE_KEYBOARD_INPUT" => "Y",
+										"PRECACHE_LAST_LEVEL" => "Y",
+										"PRESELECT_TREE_TRUNK" => "Y",
+										"SUPPRESS_ERRORS" => "Y"
+									),
+									$locationTemplateP,
+									true,
+									'location-block-wrapper'
 								)?>
 
-								<?
-								if (strlen(trim($arProperties["DESCRIPTION"])) > 0):
-								?>
-								<div class="bx_description">
-									<?=$arProperties["DESCRIPTION"]?>
-								</div>
-								<?
-								endif;
-								?>
-
+								<?if (strlen(trim($arProperties["DESCRIPTION"])) > 0):?>
+									<div class="bx_description"><?=$arProperties["DESCRIPTION"]?></div>
+								<?endif?>
 							</div>
-							<div style="clear: both;"></div>
 							<?
 						}
 						elseif ($arProperties["TYPE"] == "RADIO")
 						{
 							?>
-							<div class="bx_block r1x3 pt8">
-								<?=$arProperties["NAME"]?>
-								<?if ($arProperties["REQUIED_FORMATED"]=="Y"):?>
-									<span class="bx_sof_req">*</span>
-								<?endif;?>
-							</div>
-
 							<div class="bx_block r3x1">
 								<?
 								if (is_array($arProperties["VARIANTS"]))
@@ -336,84 +233,81 @@ if (!function_exists("PrintPropsForm"))
 									endforeach;
 								}
 								?>
-
-								<?
-								if (strlen(trim($arProperties["DESCRIPTION"])) > 0):
-								?>
-								<div class="bx_description">
-									<?=$arProperties["DESCRIPTION"]?>
-								</div>
-								<?
-								endif;
-								?>
+								<?if (strlen(trim($arProperties["DESCRIPTION"])) > 0):?>
+									<div class="bx_description"><?=$arProperties["DESCRIPTION"]?></div>
+								<?endif?>
 							</div>
-							<div style="clear: both;"></div>
 							<?
 						}
 						elseif ($arProperties["TYPE"] == "FILE")
 						{
 							?>
-							<br/>
-							<div class="bx_block r1x3 pt8">
-								<?=$arProperties["NAME"]?>
-								<?if ($arProperties["REQUIED_FORMATED"]=="Y"):?>
-									<span class="bx_sof_req">*</span>
-								<?endif;?>
-							</div>
-
 							<div class="bx_block r3x1">
 								<?=showFilePropertyField("ORDER_PROP_".$arProperties["ID"], $arProperties, $arProperties["VALUE"], $arProperties["SIZE1"])?>
-
-								<?
-								if (strlen(trim($arProperties["DESCRIPTION"])) > 0):
-								?>
-								<div class="bx_description">
-									<?=$arProperties["DESCRIPTION"]?>
-								</div>
-								<?
-								endif;
-								?>
+								<?if (strlen(trim($arProperties["DESCRIPTION"])) > 0):?>
+									<div class="bx_description"><?=$arProperties["DESCRIPTION"]?></div>
+								<?endif?>
 							</div>
+							<?
+						}
+						elseif ($arProperties["TYPE"] == "DATE")
+						{
+							?>
+							<div>
+								<?
+								global $APPLICATION;
 
-							<div style="clear: both;"></div><br/>
+								$APPLICATION->IncludeComponent('bitrix:main.calendar', '', array(
+									'SHOW_INPUT' => 'Y',
+									'INPUT_NAME' => "ORDER_PROP_".$arProperties["ID"],
+									'INPUT_VALUE' => $arProperties["VALUE"],
+									'SHOW_TIME' => 'N'
+								), null, array('HIDE_ICONS' => 'N'));
+								?>
+								<?if (strlen(trim($arProperties["DESCRIPTION"])) > 0):?>
+									<div class="bx_description"><?=$arProperties["DESCRIPTION"]?></div>
+								<?endif?>
+							</div>
 							<?
 						}
 						?>
-						</div>
+					</div>
 
-						<?if(CSaleLocation::isLocationProEnabled()):?>
+					<?if(CSaleLocation::isLocationProEnabled()):?>
 
-							<?
-							$propertyAttributes = array(
-								'type' => $arProperties["TYPE"],
-								'valueSource' => $arProperties['SOURCE'] == 'DEFAULT' ? 'default' : 'form' // value taken from property DEFAULT_VALUE or it`s a user-typed value?
-							);
+					<?
+					$propertyAttributes = array(
+						'type' => $arProperties["TYPE"],
+						'valueSource' => $arProperties['SOURCE'] == 'DEFAULT' ? 'default' : 'form' // value taken from property DEFAULT_VALUE or it`s a user-typed value?
+					);
 
-							if(intval($arProperties['IS_ALTERNATE_LOCATION_FOR']))
-								$propertyAttributes['isAltLocationFor'] = intval($arProperties['IS_ALTERNATE_LOCATION_FOR']);
+					if(intval($arProperties['IS_ALTERNATE_LOCATION_FOR']))
+						$propertyAttributes['isAltLocationFor'] = intval($arProperties['IS_ALTERNATE_LOCATION_FOR']);
 
-							if(intval($arProperties['CAN_HAVE_ALTERNATE_LOCATION']))
-								$propertyAttributes['altLocationPropId'] = intval($arProperties['CAN_HAVE_ALTERNATE_LOCATION']);
+					if(intval($arProperties['CAN_HAVE_ALTERNATE_LOCATION']))
+						$propertyAttributes['altLocationPropId'] = intval($arProperties['CAN_HAVE_ALTERNATE_LOCATION']);
 
-							if($arProperties['IS_ZIP'] == 'Y')
-								$propertyAttributes['isZip'] = true;
-							?>
+					if($arProperties['IS_ZIP'] == 'Y')
+						$propertyAttributes['isZip'] = true;
+					?>
 
-							<script>
+						<script>
 
-								<?// add property info to have client-side control on it?>
-								(window.top.BX || BX).saleOrderAjax.addPropertyDesc(<?=CUtil::PhpToJSObject(array(
+							<?// add property info to have client-side control on it?>
+							(window.top.BX || BX).saleOrderAjax.addPropertyDesc(<?=CUtil::PhpToJSObject(array(
 									'id' => intval($arProperties["ID"]),
 									'attributes' => $propertyAttributes
 								))?>);
 
-							</script>
-						<?endif?>
+						</script>
+					<?endif?>
 
-						<?
-					}
-					?>
-				</div>
+					<div style="clear:both"></div>
+					<br>
+					<?
+				}
+				?>
+			</div>
 			<?
 		}
 	}

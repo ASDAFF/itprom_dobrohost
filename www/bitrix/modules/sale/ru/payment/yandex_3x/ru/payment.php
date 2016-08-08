@@ -28,6 +28,9 @@ $MESS["SALE_YmPOS"] = "Мобильный терминал (mPOS)";
 $MESS["SALE_YAlphaClick"] = "Альфа-Клик";
 $MESS["SALE_YMasterPass"] = "MasterPass";
 $MESS["SALE_YPromsvyazbank"] = "Промсвязьбанк";
+$MESS["SALE_YQiwi"] = "QIWI Wallet";
+$MESS["SALE_YTinkoffBank"] = "КупиВкредит";
+$MESS["SALE_YKuppiRu"] = "Доверительный платеж";
 
 $MESS["SPCP_DDESCR"] = "Работа через Центр Приема Платежей <a href=\"https://kassa.yandex.ru\" target=\"_blank\">https://kassa.yandex.ru</a>
 <br/>Используется протокол commonHTTP-3.0

@@ -1,9 +1,10 @@
 <?
 /**
- * The content of this file was marked as deprecated.
+ * The entire class was marked as deprecated.
  * It will be removed from future releases. Do not rely on this code.
  *
  * @access private
+ * @deprecated
  */
 
 use Bitrix\Main;
@@ -264,6 +265,11 @@ class CAllSaleLocation
 		}
 
 		return $id;
+	}
+
+	public static function checkIsCode($id)
+	{
+		return ((string) $id !== (string) intval($id));
 	}
 
 	public static function tryTranslateIDToCode($id)
@@ -535,7 +541,7 @@ class CAllSaleLocation
 					$arSqlSearch[] = "L.".$field." ".($bInvert?"<>":"=")." '".$val."' ";
 					break;
 				case "NAME":
-					$arSqlSearch[] = "LN.NAME ".($bInvert?"<>":"=")." '".$val."' ";
+					$arSqlSearch[] = "LLN.NAME ".($bInvert?"<>":"=")." '".$val."' ";
 					break;
 				case "COUNTRY_ID":
 
@@ -586,7 +592,7 @@ class CAllSaleLocation
 		*/
 
 		$strSql =
-			"SELECT L.ID as ID, L.CODE as CODE, LN.NAME as NAME_ORIG, LN.SHORT_NAME as SHORT_NAME, LLN.NAME as NAME, ".
+			"SELECT L.ID as ID, L.CODE as CODE, LN.NAME as NAME_ORIG, LLN.SHORT_NAME as SHORT_NAME, LLN.NAME as NAME, L.SORT as SORT, ".
 			"	CASE WHEN LLN.LOCATION_ID IS NULL THEN LN.NAME ELSE LLN.NAME END as NAME_LANG ".
 			"FROM b_sale_location L ".
 			"	LEFT JOIN b_sale_loc_name LN ON (L.ID = LN.LOCATION_ID AND LN.LANGUAGE_ID = 'en') ".
@@ -793,7 +799,7 @@ class CAllSaleLocation
 	/////////////////////////////////////////////
 	// old api works in the old manner only when sale::isLocationProMigrated() returns false
 
-	function GetLocationString($locationId, $siteId = SITE_ID, $langId = LANGUAGE_ID)
+	public static function GetLocationString($locationId, $siteId = SITE_ID, $langId = LANGUAGE_ID)
 	{
 		$locationString = '';
 
@@ -966,7 +972,7 @@ class CAllSaleLocation
 
 	/////////////////////////////////////////////
 
-	function CountryCheckFields($ACTION, &$arFields)
+	public static function CountryCheckFields($ACTION, &$arFields)
 	{
 		global $DB;
 
@@ -1008,9 +1014,9 @@ class CAllSaleLocation
 				if(!$locId)
 					return false;
 
-				$res = Location\LocationTable::update(
+				$res = Location\LocationTable::updateExtended(
 					$locId,
-					self::refineFieldsForSaveCRC($item['ID'], $arFields),
+					self::refineFieldsForSaveCRC($locId, $arFields),
 					array('REBALANCE' => false)
 				);
 
@@ -1057,7 +1063,7 @@ class CAllSaleLocation
 		return $ID;
 	}
 
-	function DeleteCountry($ID)
+	public static function DeleteCountry($ID)
 	{
 		global $DB;
 		$ID = IntVal($ID);
@@ -1101,7 +1107,7 @@ class CAllSaleLocation
 		return $bDelete;
 	}
 
-	function GetCountryByID($ID)
+	public static function GetCountryByID($ID)
 	{
 		if(self::isLocationProMigrated())
 		{
@@ -1111,7 +1117,7 @@ class CAllSaleLocation
 					'filter' => array(
 						'=TYPE.CODE' => 'COUNTRY',
 						'=ID' => intval($ID),
-						'NAME.LANGUAGE_ID' => self::ORIGIN_NAME_LANGUAGE_ID
+						'=NAME.LANGUAGE_ID' => self::ORIGIN_NAME_LANGUAGE_ID
 					),
 					'select' => array(
 						'ID',
@@ -1153,7 +1159,7 @@ class CAllSaleLocation
 		}
 	}
 
-	function GetCountryLangByID($ID, $strLang = LANGUAGE_ID)
+	public static function GetCountryLangByID($ID, $strLang = LANGUAGE_ID)
 	{
 		if(self::isLocationProMigrated())
 		{
@@ -1163,7 +1169,7 @@ class CAllSaleLocation
 					'filter' => array(
 						'=TYPE.CODE' => 'COUNTRY',
 						'=ID' => intval($ID),
-						'NAME.LANGUAGE_ID' => trim($strLang)
+						'=NAME.LANGUAGE_ID' => trim($strLang)
 					),
 					'select' => array(
 						'ID',
@@ -1220,14 +1226,14 @@ class CAllSaleLocation
 
 	/////////////////////////////////////////////
 	
-	function RegionCheckFields($ACTION, &$arFields)
+	public static function RegionCheckFields($ACTION, &$arFields)
 	{
 		if ((is_set($arFields, "NAME") || $ACTION=="ADD") && strlen($arFields["NAME"])<=0) return false;
 
 		return True;
 	}
 
-	function UpdateRegion($ID, $arFields)
+	public static function UpdateRegion($ID, $arFields)
 	{
 		global $DB;
 
@@ -1249,9 +1255,9 @@ class CAllSaleLocation
 				if(!$locId)
 					return false;
 
-				$res = Location\LocationTable::update(
+				$res = Location\LocationTable::updateExtended(
 					$locId,
-					self::refineFieldsForSaveCRC($item['ID'], $arFields), 
+					self::refineFieldsForSaveCRC($locId, $arFields),
 					array('REBALANCE' => false)
 				);
 
@@ -1297,7 +1303,7 @@ class CAllSaleLocation
 		return $ID;
 	}
 
-	function DeleteRegion($ID)
+	public static function DeleteRegion($ID)
 	{
 		// there is no such entity in terms of location 2.0, so... just delete old entity
 
@@ -1343,7 +1349,7 @@ class CAllSaleLocation
 		return $bDelete;
 	}
 
-	function GetRegionByID($ID)
+	public static function GetRegionByID($ID)
 	{
 		if(self::isLocationProMigrated())
 		{
@@ -1394,7 +1400,7 @@ class CAllSaleLocation
 		}
 	}
 
-	function GetRegionLangByID($ID, $strLang = LANGUAGE_ID)
+	public static function GetRegionLangByID($ID, $strLang = LANGUAGE_ID)
 	{
 		if(self::isLocationProMigrated())
 		{
@@ -1460,7 +1466,7 @@ class CAllSaleLocation
 
 	/////////////////////////////////////////////
 
-	function CityCheckFields($ACTION, &$arFields)
+	public static function CityCheckFields($ACTION, &$arFields)
 	{
 		global $DB;
 
@@ -1477,7 +1483,7 @@ class CAllSaleLocation
 		return True;
 	}
 
-	function UpdateCity($ID, $arFields)
+	public static function UpdateCity($ID, $arFields)
 	{
 		global $DB;
 
@@ -1499,9 +1505,9 @@ class CAllSaleLocation
 				if(!$locId)
 					return false;
 
-				$res = Location\LocationTable::update(
+				$res = Location\LocationTable::updateExtended(
 					$locId,
-					self::refineFieldsForSaveCRC($item['ID'], $arFields), 
+					self::refineFieldsForSaveCRC($locId, $arFields),
 					array('REBALANCE' => false)
 				);
 
@@ -1546,7 +1552,7 @@ class CAllSaleLocation
 		return $ID;
 	}
 
-	function DeleteCity($ID)
+	public static function DeleteCity($ID)
 	{
 		// there is no such entity in terms of location 2.0, so... just delete old entity
 
@@ -1593,30 +1599,63 @@ class CAllSaleLocation
 		return $bDelete;
 	}
 
-	function GetCityByID($ID)
+	public static function GetCityByID($ID)
 	{
 		if(self::isLocationProMigrated())
 		{
+			static $regionId;
+
 			try
 			{
-				$res = Location\LocationTable::getList(array(
-					'filter' => array(
-						'=TYPE.CODE' => 'CITY',
-						'=ID' => intval($ID),
-						'NAME.LANGUAGE_ID' => self::ORIGIN_NAME_LANGUAGE_ID
-					),
-					'select' => array(
-						'ID',
-						'LNAME' => 'NAME.NAME',
-						'SHORT_NAME' => 'NAME.SHORT_NAME'
-					)
+				if(!$regionId)
+				{
+					$params = array('select' => array());
+					$res = \Bitrix\Sale\Location\TypeTable::getList(array('filter' => array('=CODE' => 'REGION'), 'select' => array('ID')))->fetch();
+
+					if($res['ID'])
+					{
+						$regionId = $res['ID'];
+					}
+				}
+
+				if($regionId)
+				{
+					$params['runtime'] = array(
+						'P' => array(
+							'data_type' => '\Bitrix\Sale\Location\Location',
+							'reference' => array(
+								'<=ref.LEFT_MARGIN' => 'this.LEFT_MARGIN',
+								'>=ref.RIGHT_MARGIN' => 'this.RIGHT_MARGIN',
+								'=ref.TYPE_ID' => array('?', $regionId)
+							),
+							'join_type' => "left"
+						)
+					);
+
+					$params['select']['PREGION_ID'] = 'P.ID';
+				}
+
+				$params['filter'] = array(
+					'=TYPE.CODE' => 'CITY',
+					'=ID' => intval($ID),
+					'=NAME.LANGUAGE_ID' => 'en',
+				);
+
+				$params['select'] = array_merge($params['select'], array(
+					'ID',
+					'LNAME' => 'NAME.NAME',
+					'SHORT_NAME' => 'NAME.SHORT_NAME',
 				));
-				$res->addReplacedAliases(array('LNAME' => 'NAME'));
+
+				$res = \Bitrix\Sale\Location\LocationTable::getList($params);
+				$res->addReplacedAliases(array('LNAME' => 'NAME', 'PREGION_ID' => 'REGION_ID'));
 
 				$item = $res->fetch();
 
 				if($item)
+				{
 					return $item;
+				}
 
 				return false;
 			}
@@ -1644,7 +1683,7 @@ class CAllSaleLocation
 		}
 	}
 
-	function GetCityLangByID($ID, $strLang = LANGUAGE_ID)
+	public static function GetCityLangByID($ID, $strLang = LANGUAGE_ID)
 	{
 		if(self::isLocationProMigrated())
 		{
@@ -1887,7 +1926,7 @@ class CAllSaleLocation
 
 	/////////////////////////////////////////////
 
-	function getFilterForGetList($arFilter)
+	public static function getFilterForGetList($arFilter)
 	{
 		if(self::isLocationProMigrated())
 		{
@@ -1908,7 +1947,7 @@ class CAllSaleLocation
 		return $arFilter;
 	}
 
-	function getFieldMapForGetList($arFilter)
+	public static function getFieldMapForGetList($arFilter)
 	{
 		global $DB;
 
@@ -2027,6 +2066,7 @@ class CAllSaleLocation
 
 		return array_merge(array(
 			"ID" => array("FIELD" => "L.ID", "TYPE" => "int"),
+			"CODE" => array("FIELD" => "L.CODE", "TYPE" => "string"),
 			"COUNTRY_ID" => array("FIELD" => "L.COUNTRY_ID", "TYPE" => "int"),
 			"CITY_ID" => array("FIELD" => "L.CITY_ID", "TYPE" => "int"),
 			"REGION_ID" => array("FIELD" => "L.REGION_ID", "TYPE" => "int"),
@@ -2116,6 +2156,10 @@ class CAllSaleLocation
 			{
 				$regLoc = CSaleLocation::GetByID(self::$city2RegionMap[(string) $primary], $strLang);
 			}
+			elseif(!empty($loc['CODE']) &&  !empty(self::$city2RegionMap[(string) $loc['CODE']]))
+			{
+				$regLoc = CSaleLocation::GetByID(self::$city2RegionMap[(string) $loc['CODE']], $strLang);
+			}
 			elseif((string) $loc['CITY_NAME_LANG'] != '') // search by name
 			{
 				$name = ToUpper(trim($loc['CITY_NAME_LANG']));
@@ -2155,7 +2199,7 @@ class CAllSaleLocation
 		return $loc;
 	}
 
-	function GetByID($primary, $strLang = LANGUAGE_ID)
+	public static function GetByID($primary, $strLang = LANGUAGE_ID)
 	{
 		if(!strlen($primary))
 			return false;
@@ -2199,7 +2243,7 @@ class CAllSaleLocation
 		return $item;
 	}
 
-	function LocationCheckFields($ACTION, &$arFields)
+	public static function LocationCheckFields($ACTION, &$arFields)
 	{
 		global $DB;
 
@@ -2210,7 +2254,7 @@ class CAllSaleLocation
 		return True;
 	}
 
-	function UpdateLocation($ID, $arFields)
+	public static function UpdateLocation($ID, $arFields)
 	{
 		// it seems that method is okay... we probably want to move region and city as it set in $arFields, but then we`ll have to adjsut the rest of locations
 
@@ -2235,7 +2279,7 @@ class CAllSaleLocation
 		return $ID;
 	}
 
-	function CheckFields($ACTION, &$arFields)
+	public static function CheckFields($ACTION, &$arFields)
 	{
 		global $DB;
 
@@ -2337,7 +2381,7 @@ class CAllSaleLocation
 		return $parent;
 	}
 
-	function Add($arFields)
+	public static function Add($arFields)
 	{
 		global $DB;
 
@@ -2444,7 +2488,7 @@ class CAllSaleLocation
 		}
 	}
 
-	function Update($ID, $arFields)
+	public static function Update($ID, $arFields)
 	{
 		global $DB;
 
@@ -2547,7 +2591,7 @@ class CAllSaleLocation
 	}
 
 	// ???
-	function Delete($ID)
+	public static function Delete($ID)
 	{
 		global $DB;
 		$ID = IntVal($ID);
@@ -2616,7 +2660,7 @@ class CAllSaleLocation
 		return $bDelete;
 	}
 
-	function OnLangDelete($strLang)
+	public static function OnLangDelete($strLang)
 	{
 		global $DB;
 
@@ -2633,7 +2677,7 @@ class CAllSaleLocation
 		return true;
 	}
 
-	function DeleteAll()
+	public static function DeleteAll()
 	{
 		global $DB;
 
@@ -2687,7 +2731,7 @@ class CAllSaleLocation
 
 	}
 
-	function GetLocationZIP($location)
+	public static function GetLocationZIP($location)
 	{
 		if(self::isLocationProMigrated())
 		{
@@ -2720,7 +2764,7 @@ class CAllSaleLocation
 		}
 	}
 
-	function GetByZIP($zip)
+	public static function GetByZIP($zip)
 	{
 		if(self::isLocationProMigrated())
 		{
@@ -2762,7 +2806,7 @@ class CAllSaleLocation
 		}
 	}
 
-	function ClearLocationZIP($location)
+	public static function ClearLocationZIP($location)
 	{
 		global $DB;
 
@@ -2779,7 +2823,7 @@ class CAllSaleLocation
 		}
 	}
 
-	function ClearAllLocationZIP()
+	public static function ClearAllLocationZIP()
 	{
 		global $DB;
 
@@ -2793,7 +2837,7 @@ class CAllSaleLocation
 		}
 	}
 
-	function AddLocationZIP($location, $ZIP, $bSync = false)
+	public static function AddLocationZIP($location, $ZIP, $bSync = false)
 	{
 		if(self::isLocationProMigrated())
 		{
@@ -2875,7 +2919,7 @@ class CAllSaleLocation
 		}
 	}
 
-	function SetLocationZIP($location, $arZipList)
+	public static function SetLocationZIP($location, $arZipList)
 	{
 		global $DB;
 
@@ -2898,7 +2942,7 @@ class CAllSaleLocation
 		return;
 	}
 
-	function GetRegionsIdsByNames($arRegNames, $countryId = false)
+	public static function GetRegionsIdsByNames($arRegNames, $countryId = false)
 	{
 		if(self::isLocationProMigrated())
 		{
@@ -3029,7 +3073,7 @@ class CAllSaleLocation
 		}
 	}
 
-	function GetRegionsNamesByIds($arIds, $lang = LANGUAGE_ID)
+	public static function GetRegionsNamesByIds($arIds, $lang = LANGUAGE_ID)
 	{
 		if(self::isLocationProMigrated())
 		{
@@ -3108,7 +3152,7 @@ class CAllSaleLocation
 
 	// location import is overwritten, and it is enabled when self::isLocationProMigrated() == true, so no proxy provided for the obsolete methods below
 
-	function _GetZIPImportStats()
+	public static function _GetZIPImportStats()
 	{
 		global $DB;
 
@@ -3119,7 +3163,7 @@ class CAllSaleLocation
 		return $arStat;
 	}
 
-	function _GetCityImport($arCityName, $country_id = false)
+	public static function _GetCityImport($arCityName, $country_id = false)
 	{
 		global $DB;
 
@@ -3156,6 +3200,123 @@ WHERE ".$strWhere;
 			return $arCity;
 		else
 			return false;
+	}
+
+	protected static function AddLocationUnattached($typeCode, $names = array())
+	{
+		static $types;
+
+		if($types == null)
+		{
+			$types = self::getTypes();
+		}
+
+		if(!intval($types[$typeCode])) // no such type
+		{
+			return false;
+		}
+
+		foreach (GetModuleEvents('sale', 'OnBefore'.ucfirst(ToLower($typeCode)).'Add', true) as $arEvent)
+		{
+			if (ExecuteModuleEventEx($arEvent, array($names))===false)
+			{
+				return false;
+			}
+		}
+
+		if(!is_array($names))
+		{
+			$names = array();
+		}
+
+		$name = $names['NAME'];
+		$shortName = $names['SHORT_NAME'];
+
+		unset($names['NAME']);
+		unset($names['SHORT_NAME']);
+
+		$fields = array();
+		foreach($names as $lang => $n)
+		{
+			$fields['NAME'][$n['LID']] = array(
+				'NAME' => $n['NAME'],
+				'SHORT_NAME' => $n['SHORT_NAME']
+			);
+		}
+
+		if(!isset($fields['NAME']['en']))
+		{
+			$fields['NAME']['en'] = array(
+				'NAME' => $name,
+				'SHORT_NAME' => $shortName
+			);
+		}
+
+		$fields['CODE'] = 'randstr'.rand(999, 99999).rand(999, 99999).rand(999, 99999);
+		$fields['TYPE_ID'] = $types[$typeCode];
+		$fields['PARENT_ID'] = 0;
+
+		$id = false;
+		$res = \Bitrix\Sale\Location\LocationTable::add($fields);
+		if($res->isSuccess())
+		{
+			$id = $res->getId();
+			$uRes = \Bitrix\Sale\Location\LocationTable::update($id, array('CODE' => $id));
+
+			foreach (GetModuleEvents('sale', 'On'.ucfirst(ToLower($typeCode)).'Add', true) as $arEvent)
+			{
+				ExecuteModuleEventEx($arEvent, array($id, $names));
+			}
+		}
+
+		return $id;
+	}
+
+	protected static function RebindLocationTriplet($fields = array())
+	{
+		$country = intval($fields['COUNTRY_ID']);
+		$region = intval($fields['REGION_ID']);
+		$city = intval($fields['CITY_ID']);
+
+		foreach (GetModuleEvents('sale', 'OnBeforeLocationAdd', true) as $arEvent)
+		{
+			if (ExecuteModuleEventEx($arEvent, array($fields))===false)
+			{
+				return false;
+			}
+		}
+
+		if($region && $country) // set country as PARENT_ID for region
+		{
+			$uRes = \Bitrix\Sale\Location\LocationTable::update($region, array('PARENT_ID' => $country));
+		}
+		if($city)
+		{
+			if($region) // set region as PARENT_ID for city
+			{
+				$uRes = \Bitrix\Sale\Location\LocationTable::update($city, array('PARENT_ID' => $region));
+			}
+			elseif($country) // set country as PARENT_ID for city
+			{
+				$uRes = \Bitrix\Sale\Location\LocationTable::update($city, array('PARENT_ID' => $country));
+			}
+		}
+
+		if(intval($fields['SORT']))
+		{
+			$loc2Update = $city ? $city : ($region ? $region : ($country ? $country : false));
+			if($loc2Update)
+			{
+				$uRes = \Bitrix\Sale\Location\LocationTable::update($loc2Update, array('SORT' => $fields['SORT']));
+			}
+		}
+
+		foreach (GetModuleEvents('sale', 'OnLocationAdd', true) as $arEvent)
+		{
+			ExecuteModuleEventEx($arEvent, array($loc2Update, $fields));
+		}
+
+		return $loc2Update;
 	}
 }
 ?>

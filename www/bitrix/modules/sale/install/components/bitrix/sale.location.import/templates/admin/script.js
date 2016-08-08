@@ -80,8 +80,6 @@ if(typeof BX.Sale.component.location.import == 'undefined' && typeof BX.ui != 'u
 			});
 
 			sv.iterator.bindEvent('set-status', function(stat){
-				//console.dir('Status change');
-				//console.dir(arguments);
 
 				if(this.vars.fields.ONLY_DELETE_ALL == 1)
 				{
@@ -389,8 +387,9 @@ if(typeof BX.Sale.component.location.import == 'undefined' && typeof BX.ui != 'u
 			return result;
 		},
 
-		setTab: function(tab){
-			BX[(tab == 'tab_cleanup' ? 'hide' : 'show')](this.ctrls.buttons.startStop);
+		setTab: function(tab)
+		{
+			BX.style(this.ctrls.buttons.startStop, 'visibility', tab == 'tab_cleanup' ? 'hidden' : 'visible');
 		},
 
 		updateStatistics: function(stat){

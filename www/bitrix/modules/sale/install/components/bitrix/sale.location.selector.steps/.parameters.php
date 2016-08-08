@@ -43,14 +43,47 @@ $arComponentParameters = Array(
 			"DEFAULT" => "id"
 		),
 
+		"PRESELECT_TREE_TRUNK" => Array(
+			"NAME" => Loc::getMessage("SALE_SLS_PRESELECT_TREE_TRUNK_PARAMETER"),
+			"PARENT" => "DATA_SOURCE",
+			"TYPE" => "CHECKBOX",
+			"DEFAULT" => "N",
+			"REFRESH" => "N"
+		),
+
+		"PRECACHE_LAST_LEVEL" => Array(
+			"NAME" => Loc::getMessage("SALE_SLS_PRECACHE_LAST_LEVEL_PARAMETER"),
+			"PARENT" => "DATA_SOURCE",
+			"TYPE" => "CHECKBOX",
+			"DEFAULT" => "N",
+			"REFRESH" => "N"
+		),
+
+		/*
 		"SEARCH_BY_PRIMARY" => Array(
 			"NAME" => Loc::getMessage("SALE_SLS_SEARCH_BY_PRIMARY_PARAMETER"),
 			"PARENT" => "DATA_SOURCE",
 			"TYPE" => "CHECKBOX",
 			"DEFAULT" => "N"
 		),
+		*/
 
-		"JSCONTROL_GLOBAL_ID" => Array(
+		"FILTER_BY_SITE" => Array(
+			"NAME" => Loc::getMessage("SALE_SLS_FILTER_BY_SITE_PARAMETER"),
+			"PARENT" => "DATA_SOURCE",
+			"TYPE" => "CHECKBOX",
+			"DEFAULT" => "N",
+			"REFRESH" => "Y"
+		),
+		"SHOW_DEFAULT_LOCATIONS" => Array(
+			"NAME" => Loc::getMessage("SALE_SLS_SHOW_DEFAULT_LOCATIONS_PARAMETER"),
+			"PARENT" => "DATA_SOURCE",
+			"TYPE" => "CHECKBOX",
+			"DEFAULT" => "N",
+			"REFRESH" => "Y"
+		),
+
+		"JS_CONTROL_GLOBAL_ID" => Array(
 			"NAME" => Loc::getMessage("SALE_SLS_JSCONTROL_GLOBAL_ID_PARAMETER"),
 			"PARENT" => "ADDITIONAL",
 			"TYPE" => "STRING",
@@ -65,21 +98,6 @@ $arComponentParameters = Array(
 
 		"CACHE_TIME"  =>  array("DEFAULT" => 36000000)
 	)
-);
-
-$arComponentParameters["PARAMETERS"]["FILTER_BY_SITE"] = Array(
-	"NAME" => Loc::getMessage("SALE_SLS_FILTER_BY_SITE_PARAMETER"),
-	"PARENT" => "DATA_SOURCE",
-	"TYPE" => "CHECKBOX",
-	"DEFAULT" => "Y",
-	"REFRESH" => "Y"
-);
-$arComponentParameters["PARAMETERS"]["SHOW_DEFAULT_LOCATIONS"] = Array(
-	"NAME" => Loc::getMessage("SALE_SLS_SHOW_DEFAULT_LOCATIONS_PARAMETER"),
-	"PARENT" => "DATA_SOURCE",
-	"TYPE" => "CHECKBOX",
-	"DEFAULT" => "Y",
-	"REFRESH" => "Y"
 );
 
 if($arCurrentValues['FILTER_BY_SITE'] == 'Y' || $arCurrentValues['SHOW_DEFAULT_LOCATIONS'] == 'Y')

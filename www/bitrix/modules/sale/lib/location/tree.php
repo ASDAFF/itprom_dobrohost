@@ -34,17 +34,18 @@ abstract class Tree extends Entity\DataManager
 	const SPACE_ADD = 				1;
 	const SPACE_REMOVE = 			2;
 
+	public static function add(array $data)
+	{
+		return self::addExtended($data);
+	}
+
 	/**
-	 * Available keys in $behaviour
+	 * Available keys in $additional
 	 * REBALANCE - if set to true, method will rebalance tree after insertion
 	*/
-	public static function add($data = array(), $behaviour = array('REBALANCE' => true))
+	public static function addExtended(array $data, array $additional = array())
 	{
-		$needResort = false;
-		if(!is_array($behaviour))
-			$behaviour = array();
-		if(!isset($behaviour['REBALANCE']))
-			$behaviour['REBALANCE'] = true;
+		$rebalance = isset($additional['REBALANCE']) && $additional['REBALANCE'] == false;
 
 		// determine LEFT_MARGIN, RIGHT_MARGIN and DEPTH_LEVEL
 		if($data['PARENT_ID'] = intval($data['PARENT_ID']))
@@ -52,8 +53,7 @@ abstract class Tree extends Entity\DataManager
 			// if we have PARENT_ID set, just use it`s info
 			$node = self::getNodeInfo($data['PARENT_ID']);
 
-			if($behaviour['REBALANCE'])
-				$needResort = true;
+			$needResort = true;
 
 			$data['LEFT_MARGIN'] = $node['RIGHT_MARGIN'];
 			$data['RIGHT_MARGIN'] = $node['RIGHT_MARGIN'] + 1;
@@ -66,6 +66,7 @@ abstract class Tree extends Entity\DataManager
 			// it allows us to have actually a forest, not a tree
 
 			$rm = self::getMaxMargin();
+			$needResort = false;
 
 			$data['LEFT_MARGIN'] = $rm > 1 ? $rm + 1 : 1;
 			$data['RIGHT_MARGIN'] = $rm > 1 ? $rm + 2 : 2;
@@ -79,14 +80,19 @@ abstract class Tree extends Entity\DataManager
 
 		$addResult = parent::add($data);
 
-		if($addResult->isSuccess() && $needResort)
-			self::manageFreeSpace($node['RIGHT_MARGIN'], 2, self::SPACE_ADD, $addResult->getId());
+		if($addResult->isSuccess() && $needResort && $rebalance)
+			self::rebalance($node, $addResult->getId());
 
 		return $addResult;
 	}
 
+	protected static function rebalance($node, $id)
+	{
+		self::manageFreeSpace($node['RIGHT_MARGIN'], 2, self::SPACE_ADD, $id);
+	}
+
 	// we must guarantee tree integrity in any situation, so make low-level checking to prevent walking around
-	public static function checkFields($result, $primary, array $data)
+	public static function checkFields(Entity\Result $result, $primary, array $data)
 	{
 		parent::checkFields($result, $primary, $data);
 
@@ -135,17 +141,18 @@ abstract class Tree extends Entity\DataManager
 		}
 	}
 
+	public static function update($primary, array $data)
+	{
+		return self::update($primary, $data);
+	}
+
 	/**
-	 * Available keys in $behaviour
+	 * Available keys in $additional
 	 * REBALANCE - if set to true, method will rebalance tree after insertion
 	*/
-	public static function update($primary, $data = array(), $behaviour = array('REBALANCE' => true))
+	public static function updateExtended($primary, array $data, array $additional = array())
 	{
-		if(!is_array($behaviour))
-			$behaviour = array();
-		if(!isset($behaviour['REBALANCE']))
-			$behaviour['REBALANCE'] = true;
-
+		$rebalance = isset($additional['REBALANCE']) && $additional['REBALANCE'] == false;
 		$node = self::getNodeInfo($primary);
 
 		if(isset($data['PARENT_ID']) && !strlen($data['PARENT_ID']))
@@ -154,27 +161,35 @@ abstract class Tree extends Entity\DataManager
 		$updResult = parent::update($primary, $data);
 
 		// if we have 'PARENT_ID' key in $data, and it was changed, we should relocate subtree
-		if($updResult->isSuccess() && isset($data['PARENT_ID']) && (intval($node['PARENT_ID']) != intval($data['PARENT_ID'])) && $behaviour['REBALANCE'])
+		if($updResult->isSuccess() && isset($data['PARENT_ID']) && (intval($node['PARENT_ID']) != intval($data['PARENT_ID'])) && $rebalance)
 			self::moveSubtree($primary, $data['PARENT_ID']);
 
 		return $updResult;
 	}
 
+	public static function delete($primary)
+	{
+		static::deleteExtended($primary);
+	}
+
 	/**
-	 * Available keys in $behaviour
+	 * Available keys in $additional
 	 * REBALANCE - if set to true, method will rebalance tree after insertion
 	 * DELETE_SUBTREE - if set to true, only node will be deleted, and it`s subtree left unattached
+	 * @param $primary
+	 * @param array $additional
+	 * @return Entity\DeleteResult
+	 * @throws Main\SystemException
+	 * @throws Tree\NodeIncorrectException
+	 * @throws Tree\NodeNotFoundException
+	 * @throws \Exception
 	 */
-	public static function delete($primary, $behaviour = array('REBALANCE' => true, 'DELETE_SUBTREE' => true)) // here also could be an implementation of CHILDREN_REATTACH
+	public static function deleteExtended($primary, array $additional = array()) // here also could be an implementation of CHILDREN_REATTACH
 	{
-		if(!is_array($behaviour))
-			$behaviour = array();
-		if(!isset($behaviour['REBALANCE']))
-			$behaviour['REBALANCE'] = true;
-		if(!isset($behaviour['DELETE_SUBTREE']))
-			$behaviour['DELETE_SUBTREE'] = true;
+		$rebalance = isset($additional['REBALANCE']) && $additional['REBALANCE'] == false;
+		$deleteSubtree = isset($additional['DELETE_SUBTREE']) && $additional['DELETE_SUBTREE'] == false;
 
-		if($behaviour['DELETE_SUBTREE'])
+		if($deleteSubtree)
 		{
 			// it means we want to delete not only the following node, but the whole subtree that belongs to it
 			// note that with this option set to Y tree structure integrity will be compromised
@@ -182,33 +197,12 @@ abstract class Tree extends Entity\DataManager
 			$node = self::getNodeInfo($primary);
 			if(intval($node['ID']))
 			{
-				$node['LEFT_MARGIN'] = intval($node['LEFT_MARGIN']);
-				$node['RIGHT_MARGIN'] = intval($node['RIGHT_MARGIN']);
-
+				static::checkNodeThrowException($node);
 				// low-level
 				Main\HttpApplication::getConnection()->query('delete from '.static::getTableName().' where LEFT_MARGIN > '.$node['LEFT_MARGIN'].' and RIGHT_MARGIN < '.$node['RIGHT_MARGIN']);
 
-				/*
-				// high-level, but extremely slow
-
-				// select whole subtree
-				$res = self::getList(array(
-					'filter' =>  array(
-						'>LEFT_MARGIN' => $node['LEFT_MARGIN'],
-						'<RIGHT_MARGIN' => $node['RIGHT_MARGIN']
-					),
-					'order' => array(
-						'LEFT_MARGIN' => 'asc'
-					)
-				));
-
-				// delete it
-				while($item = $res->fetch())
-					static::delete($item['ID'], array('REBALANCE' => false, 'DELETE_SUBTREE' => false));
-				*/
-
 				// and also remove free spece, if needed
-				if($behaviour['REBALANCE'])
+				if($rebalance)
 				{
 					self::manageFreeSpace(
 						$node['RIGHT_MARGIN'], 
@@ -218,7 +212,9 @@ abstract class Tree extends Entity\DataManager
 				}
 			}
 			else
-				throw new Main\SystemException('Node not found');
+			{
+				throw new Tree\NodeNotFoundException(false, array('INFO' => array('ID' => $primary)));
+			}
 		}
 
 		return parent::delete($primary);
@@ -237,22 +233,21 @@ abstract class Tree extends Entity\DataManager
 		{
 			$node = self::getNodeInfo($primary);
 			if(!intval($node['ID']))
-				throw new Main\SystemException('Node being checked not found');
+			{
+				throw new Tree\NodeNotFoundException(false, array('INFO' => array('ID' => $primary)));
+			}
 		}
 
-		if(isset($node['LEFT_MARGIN']) && isset($node['RIGHT_MARGIN']))
-		{
-			$query = new Main\Entity\Query(static::getEntity());
-			$query->setSelect(array('ID'));
-			$query->setFilter(array(
-				'>LEFT_MARGIN' => $node['LEFT_MARGIN'],
-				'<RIGHT_MARGIN' => $node['RIGHT_MARGIN']
-			));
+		static::checkNodeThrowException($node);
 
-			return $query->getQuery();
-		}
-		else
-			throw new Main\SystemException('Node not found or incorrect node info passed');
+		$query = new Main\Entity\Query(static::getEntity());
+		$query->setSelect(array('ID'));
+		$query->setFilter(array(
+			'>LEFT_MARGIN' => $node['LEFT_MARGIN'],
+			'<RIGHT_MARGIN' => $node['RIGHT_MARGIN']
+		));
+
+		return $query->getQuery();
 	}
 
 	public static function checkNodeIsParentOfNodeById($primary, $childPrimary, $behaviour = array('CHECK_DIRECT' => false))
@@ -986,7 +981,9 @@ abstract class Tree extends Entity\DataManager
 
 		$node = self::getById($primary)->fetch();
 		if(!isset($node['ID']))
+		{
 			throw new Main\SystemException(Loc::getMessage('SALE_LOCATION_TREE_ENTITY_NODE_NOT_FOUND_EXCEPTION'));
+		}
 
 		return $node;
 	}
@@ -1080,6 +1077,15 @@ abstract class Tree extends Entity\DataManager
 		$res = static::getList($params)->fetch();
 
 		return intval($res['CNT']);
+	}
+
+	protected static function checkNodeThrowException($node)
+	{
+		// left margin MAY be equal to zero, right margin MAY NOT
+		if(!is_numeric($node['LEFT_MARGIN']) || (int) $node['LEFT_MARGIN'] < 0 || !intval($node['RIGHT_MARGIN']) || !intval($node['ID']))
+		{
+			throw new Tree\NodeIncorrectException(false, array('INFO' => array('ID' => $node['ID'])));
+		}
 	}
 
 	// deprecated

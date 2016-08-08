@@ -1,5 +1,7 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?
+$bPriceType  = false;
+$bPropsColumn  = false;
 $bDeleteColumn = true;
 ?>
 <div id="basket_items_subscribed" class="bx_ordercart_order_table_container" style="display:none">
@@ -15,6 +17,7 @@ $bDeleteColumn = true;
 
 					if (in_array($arHeader["id"], array("TYPE"))) // some header columns are shown differently
 					{
+						$bPriceType = true;
 						continue;
 					}
 					elseif ($arHeader["id"] == "PROPS")
@@ -168,14 +171,12 @@ $bDeleteColumn = true;
 																	if ($arItemProp["CODE"] == $arItem["SKU_DATA"][$propId]["CODE"])
 																	{
 																		if ($arItemProp["VALUE"] == $arSkuValue["NAME"] || $arItemProp["VALUE"] == $arSkuValue["XML_ID"])
-																			$selected = "class=\"bx_active\"";
+																			$selected = ' class="bx_active"';
 																	}
 																endforeach;
 															?>
-															<li style="width:10%;" <?=$selected?>>
-																<a href="javascript:void(0);">
-																	<span style="background-image:url(<?=$arSkuValue["PICT"]["SRC"]?>)"></span>
-																</a>
+															<li style="width:10%;"<?=$selected?>>
+																<a href="javascript:void(0)" class="cnt"><span class="cnt_item" style="background-image:url(<?=$arSkuValue["PICT"]["SRC"];?>)"></span></a>
 															</li>
 															<?
 															endforeach;
@@ -207,12 +208,12 @@ $bDeleteColumn = true;
 																		if ($arItemProp["CODE"] == $arItem["SKU_DATA"][$propId]["CODE"])
 																		{
 																			if ($arItemProp["VALUE"] == $arSkuValue["NAME"])
-																				$selected = "class=\"bx_active\"";
+																				$selected = ' class="bx_active"';
 																		}
 																	endforeach;
 																?>
-																	<li style="width:10%;" <?=$selected?>>
-																		<a href="javascript:void(0);"><?=$arSkuValue["NAME"]?></a>
+																	<li style="width:10%;"<?=$selected?>>
+																		<a href="javascript:void(0);" class="cnt"><?=$arSkuValue["NAME"]?></a>
 																	</li>
 																<?
 																endforeach;
@@ -254,7 +255,7 @@ $bDeleteColumn = true;
 									<div class="current_price"><?=$arItem["PRICE_FORMATED"];?></div>
 								<?endif?>
 
-								<?if (strlen($arItem["NOTES"]) > 0):?>
+								<?if ($bPriceType && strlen($arItem["NOTES"]) > 0):?>c
 									<div class="type_price"><?=GetMessage("SALE_TYPE")?></div>
 									<div class="type_price_value"><?=$arItem["NOTES"]?></div>
 								<?endif;?>

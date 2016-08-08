@@ -24,4 +24,10 @@ $MESS["SKGO_CALC_PARAM_ERROR"] = "Error calling DoCalculateOrder: the website ID
 $MESS["SKGO_SHOPPING_CART_EMPTY"] = "Shopping cart is empty";
 $MESS["SKGO_EMPTY_ACCOUNT_NUMBER"] = "Order Number cannot be blank";
 $MESS["SKGO_EXISTING_ACCOUNT_NUMBER"] = "The order number entered is already in use for a different order";
+$MESS["SKGO_CANCEL_ERROR"] = "Error canceling the order. #MESSAGE#";
+$MESS["SKGO_DELETE_ERROR"] = "Error deleting the order. #MESSAGE#";
+$MESS["SALE_ORDER_GENERATE_ACCOUNT_NUMBER_ORDER_NUMBER_WRONG_ID"] = "Invalid order ID";
+$MESS["SALE_ORDER_GENERATE_ACCOUNT_NUMBER_ORDER_NUMBER_IS_NOT_SET"] = "Cannot set order ID";
+$MESS["SALE_ORDER_GENERATE_ACCOUNT_NUMBER_ORDER_NUMBER_IS_NOT_SET_AS_ID"] = "Cannot set ID as order number";
+$MESS["SKGO_DUB_STATUS"] = "Order ##ID# already has required status";
 ?>

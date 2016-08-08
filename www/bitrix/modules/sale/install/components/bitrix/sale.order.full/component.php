@@ -780,7 +780,6 @@ else
 						"CURRENCY" => $arResult["BASE_LANG_CURRENCY"],
 						"USER_ID" => IntVal($USER->GetID()),
 						"PAY_SYSTEM_ID" => $arResult["PAY_SYSTEM_ID"],
-						"PRICE_DELIVERY" => $arResult["DELIVERY_PRICE"],
 						"DELIVERY_ID" => is_array($arResult["DELIVERY_ID"]) ? implode(":", $arResult["DELIVERY_ID"]) : ($arResult["DELIVERY_ID"] > 0 ? $arResult["DELIVERY_ID"] : false),
 						"DISCOUNT_VALUE" => $arResult["DISCOUNT_PRICE"],
 						"TAX_VALUE" => $arResult["bUsingVat"] == "Y" ? $arResult["vatSum"] : $arResult["TAX_PRICE"],
@@ -801,6 +800,39 @@ else
 				}
 				else
 					$arFields["AFFILIATE_ID"] = false;
+
+				$isPayFromUserBudget = false;
+				$isPayFullFromUserBudget = false;
+
+				if ($arResult["PAY_CURRENT_ACCOUNT"] == "Y" && $arParams["ALLOW_PAY_FROM_ACCOUNT"] == "Y")
+				{
+					$userAccountRes = CSaleUserAccount::GetList(
+						array(),
+						array(
+							"USER_ID" => $USER->GetID(),
+							"CURRENCY" => $arResult["BASE_LANG_CURRENCY"],
+						),
+						false,
+						false,
+						array("CURRENT_BUDGET")
+					);
+					if ($userAccount = $userAccountRes->GetNext())
+					{
+						if ($userAccount["CURRENT_BUDGET"] > 0)
+						{
+							$isPayFromUserBudget = (($arParams["ONLY_FULL_PAY_FROM_ACCOUNT"] == "Y" && DoubleVal($userAccount["CURRENT_BUDGET"]) >= DoubleVal($totalOrderPrice)) || $arParams["ONLY_FULL_PAY_FROM_ACCOUNT"] != "Y");
+
+							if ($isPayFromUserBudget)
+								$isPayFullFromUserBudget = (($arParams["ONLY_FULL_PAY_FROM_ACCOUNT"] == "Y" && DoubleVal($arResult["USER_ACCOUNT"]["CURRENT_BUDGET"]) >= DoubleVal($orderTotalSum)));
+
+
+							if ($isPayFromUserBudget)
+								$arFields['ONLY_FULL_PAY_FROM_ACCOUNT'] = $isPayFullFromUserBudget;
+						}
+					}
+				}
+
+				\Bitrix\Sale\Notify::setNotifyDisable(true);
 
 				$arResult["ORDER_ID"] = CSaleOrder::Add($arFields);
 				$arResult["ORDER_ID"] = IntVal($arResult["ORDER_ID"]);
@@ -949,48 +981,6 @@ else
 				}
 			}
 
-			$withdrawSum = 0.0;
-			if (strlen($arResult["ERROR_MESSAGE"]) <= 0)
-			{
-				if ($arResult["PAY_CURRENT_ACCOUNT"] == "Y" && $arParams["ALLOW_PAY_FROM_ACCOUNT"] == "Y")
-				{
-					$dbUserAccount = CSaleUserAccount::GetList(
-							array(),
-							array(
-									"USER_ID" => $USER->GetID(),
-									"CURRENCY" => $arResult["BASE_LANG_CURRENCY"],
-								)
-						);
-					if ($arUserAccount = $dbUserAccount->GetNext())
-					{
-						if ($arUserAccount["CURRENT_BUDGET"] > 0)
-						{
-							if(($arParams["ONLY_FULL_PAY_FROM_ACCOUNT"] == "Y" && DoubleVal($arUserAccount["CURRENT_BUDGET"]) >= DoubleVal($totalOrderPrice)) || $arParams["ONLY_FULL_PAY_FROM_ACCOUNT"] != "Y")
-							{
-								$withdrawSum = CSaleUserAccount::Withdraw(
-										$USER->GetID(),
-										$totalOrderPrice,
-										$arResult["BASE_LANG_CURRENCY"],
-										$arResult["ORDER_ID"]
-									);
-
-								if ($withdrawSum > 0)
-								{
-									$arFields = array(
-											"SUM_PAID" => $withdrawSum,
-											"USER_ID" => $USER->GetID()
-										);
-
-									CSaleOrder::Update($arResult["ORDER_ID"], $arFields);
-
-									if ($withdrawSum == $totalOrderPrice)
-										CSaleOrder::PayOrder($arResult["ORDER_ID"], "Y", False, False);
-								}
-							}
-						}
-					}
-				}
-			}
 			// mail message
 			if (strlen($arResult["ERROR_MESSAGE"]) <= 0)
 			{
@@ -1034,6 +1024,8 @@ else
 
 				CSaleMobileOrderPush::send("ORDER_CREATED", array("ORDER_ID" => $arFields["ORDER_ID"]));
 			}
+
+			\Bitrix\Sale\Notify::setNotifyDisable(false);
 			if (strlen($arResult["ERROR_MESSAGE"]) <= 0)
 			{
 				LocalRedirect($arParams["PATH_TO_ORDER"]."?CurrentStep=7&ORDER_ID=".urlencode(urlencode($arOrder["ACCOUNT_NUMBER"])));
@@ -1136,7 +1128,7 @@ if ($USER->IsAuthorized())
 	{
 		if (IntVal($arResult["DELIVERY_LOCATION"]) > 0)
 		{
-			// if your custom handler needs something else, ex. cart content, you may put it here or get it from your handler using API
+			// if your custom services needs something else, ex. cart content, you may put it here or get it from your services using API
 			$arFilter = array(
 				"COMPABILITY" => array(
 					"WEIGHT" => $arResult["ORDER_WEIGHT"],
@@ -1161,11 +1153,14 @@ if ($USER->IsAuthorized())
 			$numDelivery = 0;
 			foreach ($arDeliveryServicesList as $key => $arDelivery)
 			{
-				foreach ($arDelivery['PROFILES'] as $pkey => $arProfile)
+				if (!empty($arDelivery['PROFILES']) && is_array($arDelivery['PROFILES']))
 				{
-					if ($arProfile['ACTIVE'] != 'Y')
+					foreach ($arDelivery['PROFILES'] as $pkey => $arProfile)
 					{
-						unset($arDeliveryServicesList[$key]['PROFILES'][$pkey]);
+						if ($arProfile['ACTIVE'] != 'Y')
+						{
+							unset($arDeliveryServicesList[$key]['PROFILES'][$pkey]);
+						}
 					}
 				}
 

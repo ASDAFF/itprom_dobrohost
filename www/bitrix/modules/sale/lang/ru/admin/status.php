@@ -27,4 +27,10 @@ $MESS ['SALE_NOTES1'] = "<b>N</b> - начальный статус, в кото
 $MESS ['SALE_NOTES2'] = "<b>F</b> - финальный статус, в котором заказ считается выполненным. Этот статус нельзя удалить.";
 $MESS ['SSAN_ADD_NEW'] = "Новый статус";
 $MESS ['SSAN_ADD_NEW_ALT'] = "Нажмите для добавления нового статуса";
-?>
+
+$MESS ['SSAN_NOTIFY'] = 'Уведомления';
+$MESS ['SSAN_NOTIFY_Y'] = 'Да';
+$MESS ['SSAN_NOTIFY_N'] = 'Нет';
+$MESS ['SSAN_TYPE'] = 'Тип статуса';
+$MESS ['SSEN_TYPE_O'] = 'Заказ';
+$MESS ['SSEN_TYPE_D'] = 'Доставка';

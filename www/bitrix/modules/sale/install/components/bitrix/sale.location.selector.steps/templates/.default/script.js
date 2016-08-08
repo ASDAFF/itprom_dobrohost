@@ -128,12 +128,16 @@ if(typeof BX.Sale.component.location.selector.steps == 'undefined' && typeof BX.
 		},
 
 		getValue: function(){
-			
+
 			if(this.opts.provideLinkBy == 'id')
 				return this.vars.value === false ? '' : this.vars.value;
 			else{
 				return this.vars.value ? this.vars.cache.nodes[this.vars.value].CODE : '';
 			}
+		},
+
+		getNodeByLocationId: function(value){
+			return this.vars.cache.nodes[value];
 		},
 
 		getSelectedPath: function(){
@@ -391,8 +395,8 @@ if(typeof BX.Sale.component.location.selector.steps == 'undefined' && typeof BX.
 			if(parameters.type != 'server-logic')
 				parameters.errors = [this.opts.messages.error]; // generic error on js error
 
-			this.setCSSState('error', this.ctrls.scope);
 			this.ctrls.errorMessage.innerHTML = '<p><font class="errortext">'+BX.util.htmlspecialchars(parameters.errors.join(', '))+'</font></p>';
+			BX.show(this.ctrls.errorMessage);
 
 			BX.debug(parameters);
 		}

@@ -577,10 +577,15 @@ class CAllSaleViewedProduct
 			unset($arFields["ID"]);
 
 		$strUpdateSql = "";
-		if (isset($arFields["DATE_VISIT"]))
+		if (!empty($arFields["~DATE_VISIT"]))
+		{
+			$strUpdateSql .= ", DATE_VISIT = ".$DB->ForSql($arFields["~DATE_VISIT"])." ";
+			unset($arFields["DATE_VISIT"]);
+			unset($arFields["~DATE_VISIT"]);
+		}
+		else
 		{
 			$strUpdateSql .= ", DATE_VISIT = ".$DB->GetNowFunction()." ";
-			unset($arFields["DATE_VISIT"]);
 		}
 
 		$ID = IntVal($ID);

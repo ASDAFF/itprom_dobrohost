@@ -1,8 +1,179 @@
 <?
-IncludeModuleLangFile(__FILE__);
 
-class CAllSaleOrderPropsValue
+use	Bitrix\Sale\Compatible,
+	Bitrix\Sale\Internals,
+	Bitrix\Main\Entity,
+	Bitrix\Main\Localization\Loc;
+
+Loc::loadMessages(__FILE__);
+
+/** @deprecated */
+class CSaleOrderPropsValue
 {
+	function GetList($arOrder = array(), $arFilter = array(), $arGroupBy = false, $arNavStartParams = false, $arSelectFields = array())
+	{
+		global $DB;
+
+		if (!is_array($arOrder) && !is_array($arFilter))
+		{
+			$arOrder = strval($arOrder);
+			$arFilter = strval($arFilter);
+			if (strlen($arOrder) > 0 && strlen($arFilter) > 0)
+				$arOrder = array($arOrder => $arFilter);
+			else
+				$arOrder = array();
+			if (is_array($arGroupBy))
+				$arFilter = $arGroupBy;
+			else
+				$arFilter = array();
+			$arGroupBy = false;
+
+			$arSelectFields = array("ID", "ORDER_ID", "ORDER_PROPS_ID", "NAME", "VALUE", "VALUE_ORIG", "CODE");
+		}
+
+		if (count($arSelectFields) <= 0)
+			$arSelectFields = array("ID", "ORDER_ID", "ORDER_PROPS_ID", "NAME", "VALUE", "VALUE_ORIG", "CODE");
+
+		// add aliases
+
+		$query = new Compatible\OrderQueryLocation(Internals\OrderPropsValueTable::getEntity());
+		$query->addLocationRuntimeField('VALUE', 'PROPERTY');
+		$query->addAliases(array(
+			// for GetList
+			'PROP_ID'              => 'PROPERTY.ID',
+			'PROP_PERSON_TYPE_ID'  => 'PROPERTY.PERSON_TYPE_ID',
+			'PROP_NAME'            => 'PROPERTY.NAME',
+			'PROP_TYPE'            => 'PROPERTY.TYPE',
+			'PROP_REQUIED'         => 'PROPERTY.REQUIRED',
+			'PROP_DEFAULT_VALUE'   => 'PROPERTY.DEFAULT_VALUE',
+			'PROP_SORT'            => 'PROPERTY.SORT',
+			'PROP_USER_PROPS'      => 'PROPERTY.USER_PROPS',
+			'PROP_IS_LOCATION'     => 'PROPERTY.IS_LOCATION',
+			'PROP_PROPS_GROUP_ID'  => 'PROPERTY.PROPS_GROUP_ID',
+			'PROP_DESCRIPTION'     => 'PROPERTY.DESCRIPTION',
+			'PROP_IS_EMAIL'        => 'PROPERTY.IS_EMAIL',
+			'PROP_IS_PROFILE_NAME' => 'PROPERTY.IS_PROFILE_NAME',
+			'PROP_IS_PAYER'        => 'PROPERTY.IS_PAYER',
+			'PROP_IS_LOCATION4TAX' => 'PROPERTY.IS_LOCATION4TAX',
+			'PROP_IS_ZIP'          => 'PROPERTY.IS_ZIP',
+			'PROP_CODE'            => 'PROPERTY.CODE',
+			'PROP_ACTIVE'          => 'PROPERTY.ACTIVE',
+			'PROP_UTIL'            => 'PROPERTY.UTIL',
+			// for converter
+			'TYPE'     => 'PROPERTY.TYPE',
+			'SETTINGS' => 'PROPERTY.SETTINGS',
+			'MULTIPLE' => 'PROPERTY.MULTIPLE',
+			// for GetOrderProps
+			'PROPERTY_NAME'        => 'PROPERTY.NAME',
+			'PROPS_GROUP_ID'       => 'PROPERTY.PROPS_GROUP_ID',
+			'INPUT_FIELD_LOCATION' => 'PROPERTY.INPUT_FIELD_LOCATION',
+			'IS_LOCATION'          => 'PROPERTY.IS_LOCATION',
+			'IS_EMAIL'             => 'PROPERTY.IS_EMAIL',
+			'IS_PROFILE_NAME'      => 'PROPERTY.IS_PROFILE_NAME',
+			'IS_PAYER'             => 'PROPERTY.IS_PAYER',
+			'IS_ZIP'               => 'PROPERTY.IS_ZIP',
+			'ACTIVE'               => 'PROPERTY.ACTIVE',
+			'UTIL'                 => 'PROPERTY.UTIL',
+			'GROUP_SORT'           => 'PROPERTY.GROUP.SORT',
+			'GROUP_NAME'           => 'PROPERTY.GROUP.NAME',
+		));
+
+		// relations for GetOrderRelatedProps
+
+		$relationFilter = array();
+
+		if ($arFilter['PAYSYSTEM_ID'])
+		{
+			$relationFilter []= array(
+				'=PROPERTY.Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.ENTITY_TYPE' => 'P',
+				'=PROPERTY.Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.ENTITY_ID' => $arFilter['PAYSYSTEM_ID'],
+			);
+		}
+
+		if ($arFilter['DELIVERY_ID'])
+		{
+			$relationFilter['LOGIC'] = 'OR';
+			$relationFilter []= array(
+				'=PROPERTY.Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.ENTITY_TYPE' => 'D',
+				'=PROPERTY.Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.ENTITY_ID' => $arFilter['DELIVERY_ID'],
+			);
+		}
+
+		if ($relationFilter)
+			$query->addFilter(null, $relationFilter);
+
+		// execute
+
+		$query->prepare($arOrder, $arFilter, $arGroupBy, $arSelectFields);
+
+		if ($query->counted())
+		{
+			return $query->exec()->getSelectedRowsCount();
+		}
+		else
+		{
+			$result = new Compatible\CDBResult;
+			$adapter = new CSaleOrderPropsValueAdapter($query->getSelectNamesAssoc() + array_flip($arSelectFields));
+			$adapter->addFieldProxy('VALUE');
+			$result->addFetchAdapter($adapter);
+
+			if (! $query->aggregated())
+			{
+				$query->addAliasSelect('TYPE');
+				$query->addAliasSelect('SETTINGS');
+				$query->addAliasSelect('MULTIPLE');
+
+				if ($relationFilter)
+				{
+					$query->registerRuntimeField('PROPERTY_ID', new Entity\ExpressionField('PROPERTY_ID', 'DISTINCT(%s)', 'ID'));
+					$sel = $query->getSelect();
+					array_unshift($sel, 'PROPERTY_ID');
+					$query->setSelect($sel);
+				}
+			}
+
+			return $query->compatibleExec($result, $arNavStartParams);
+		}
+	}
+
+	function GetByID($ID)
+	{
+		return $ID
+			? self::GetList(array(), array('ID' => $ID))->Fetch()
+			: false;
+	}
+
+	function GetOrderProps($ORDER_ID)
+	{
+		return self::GetList(
+			array('GROUP_SORT', 'GROUP_NAME', 'PROP_SORT', 'PROPERTY_NAME', 'PROP_ID'),
+			array('ORDER_ID' => $ORDER_ID),
+			false, false,
+			array(
+				'ID', 'ORDER_ID', 'ORDER_PROPS_ID', 'NAME', 'VALUE', 'CODE',
+				'PROPERTY_NAME', 'TYPE', 'PROPS_GROUP_ID', 'INPUT_FIELD_LOCATION', 'IS_LOCATION', 'IS_EMAIL', 'IS_PROFILE_NAME', 'IS_PAYER', 'IS_ZIP', 'ACTIVE', 'UTIL',
+				'GROUP_NAME', 'GROUP_SORT',
+			)
+		);
+	}
+
+	function GetOrderRelatedProps($ORDER_ID, $arFilter = array())
+	{
+		if (! is_array($arFilter))
+			$arFilter = array();
+
+		return self::GetList(
+			array('GROUP_SORT', 'GROUP_NAME', 'PROP_SORT', 'PROPERTY_NAME', 'PROP_ID'),
+			array('ORDER_ID' => $ORDER_ID, 'PAYSYSTEM_ID' => $arFilter['PAYSYSTEM_ID'], 'DELIVERY_ID' => $arFilter['DELIVERY_ID']),
+			false, false,
+			array(
+				'ID', 'ORDER_ID', 'ORDER_PROPS_ID', 'NAME', 'VALUE', 'CODE',
+				'PROPERTY_NAME', 'TYPE', 'PROPS_GROUP_ID', 'INPUT_FIELD_LOCATION', 'IS_LOCATION', 'IS_EMAIL', 'IS_PROFILE_NAME', 'IS_PAYER', 'ACTIVE', 'UTIL',
+				'GROUP_NAME', 'GROUP_SORT',
+			)
+		);
+	}
+
 	function CheckFields($ACTION, &$arFields, $ID = 0)
 	{
 		if ((is_set($arFields, "ORDER_ID") || $ACTION=="ADD") && IntVal($arFields["ORDER_ID"]) <= 0)
@@ -33,7 +204,7 @@ class CAllSaleOrderPropsValue
 				$GLOBALS["APPLICATION"]->ThrowException(str_replace("#ID#", $arFields["ORDER_PROPS_ID"], GetMessage("SKGOPV_NO_PROP_ID")), "ERROR_NO_PROPERY");
 				return false;
 			}
-			
+
 			if (is_set($arFields, "ORDER_ID"))
 			{
 				$arFilter = Array(
@@ -51,69 +222,71 @@ class CAllSaleOrderPropsValue
 			}
 		}
 
-		return True;
+		return true;
 	}
 
-	function GetByID($ID)
+	function Add($arFields)
 	{
-		global $DB;
+		if (! self::CheckFields('ADD', $arFields, 0))
+			return false;
 
-		$lMig = CSaleLocation::isLocationProMigrated();
+//		if ($arFields['VALUE'] && ($oldProperty = CSaleOrderProps::GetById($arFields['ORDER_PROPS_ID'])))
+//		{
+//			$oldProperty['VALUE'] = $arFields['VALUE'];
+//			$arFields['VALUE'] = CSaleOrderPropsAdapter::convertOldToNew($oldProperty, 'VALUE', true);
+//		}
 
-		$ID = IntVal($ID);
+		// location ID to CODE, VALUE is always present
+		if((string) $arFields['VALUE'] != '')
+			$arFields['VALUE'] = self::translateLocationIDToCode($arFields['VALUE'], $arFields['ORDER_PROPS_ID']);
 
-		if(CSaleLocation::isLocationProMigrated())
-		{
-			$strSql =
-				"SELECT V.ID, V.ORDER_ID, V.ORDER_PROPS_ID, V.NAME, ".self::getPropertyValueFieldSelectSql('V').", P.TYPE ".
-				"FROM b_sale_order_props_value V ".
-				"INNER JOIN b_sale_order_props P ON (V.ORDER_PROPS_ID = P.ID) ".
-				self::getLocationTableJoinSql('V').
-				"WHERE V.ID = ".$ID."";
-		}
-		else
-		{
-			$strSql =
-				"SELECT * ".
-				"FROM b_sale_order_props_value ".
-				"WHERE V.ID = ".$ID."";
-		}
-		$db_res = $DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
-
-		if ($res = $db_res->Fetch())
-		{
-			return $res;
-		}
-		return False;
+		return Internals\OrderPropsValueTable::add(array_intersect_key($arFields, CSaleOrderPropsValueAdapter::$allFields))->getId();
 	}
 
 	function Update($ID, $arFields)
 	{
-		global $DB;
-		$ID = IntVal($ID);
-
-		if (!CSaleOrderPropsValue::CheckFields("UPDATE", $arFields, $ID))
+		if (! self::CheckFields('UPDATE', $arFields, $ID))
 			return false;
 
-		// need to check here if we got CODE or ID came
-		if(isset($arFields['VALUE']) && ((string) $arFields['VALUE'] != '') && CSaleLocation::isLocationProMigrated())
-		{
-			$propValue = self::GetByID($ID);
+//		if ($arFields['VALUE'])
+//		{
+//			if (!  ($propertyId = $arFields['ORDER_PROPS_ID'])
+//				&& ($propertyValue = Internals\OrderPropsValueTable::getById($ID)->fetch()))
+//			{
+//				$propertyId = $propertyValue['ORDER_PROPS_ID'];
+//			}
+//
+//			if ($propertyId && ($oldProperty = CSaleOrderProps::GetById($propertyId)))
+//			{
+//				$oldProperty['VALUE'] = $arFields['VALUE'];
+//				$arFields['VALUE'] = CSaleOrderPropsAdapter::convertOldToNew($oldProperty, 'VALUE', true);
+//			}
+//		}
 
-			if($propValue['TYPE'] == 'LOCATION')
+		// location ID to CODE
+		if((string) $arFields['VALUE'] != '')
+		{
+			if((string) $arFields['ORDER_PROPS_ID'] != '')
+				$propId = intval($arFields['ORDER_PROPS_ID']);
+			else
 			{
-				$arFields['VALUE'] = CSaleLocation::tryTranslateIDToCode($arFields['VALUE']);
+				$propValue = self::GetByID($ID);
+				$propId = $propValue['ORDER_PROPS_ID'];
 			}
+
+			$arFields['VALUE'] = self::translateLocationIDToCode($arFields['VALUE'], $propId);
 		}
 
-		$strUpdate = $DB->PrepareUpdate("b_sale_order_props_value", $arFields);
-		$strSql = 
-			"UPDATE b_sale_order_props_value SET ".
-			"	".$strUpdate." ".
-			"WHERE ID = ".$ID." ";
-		$DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
+		return Internals\OrderPropsValueTable::update($ID, array_intersect_key($arFields, CSaleOrderPropsValueAdapter::$allFields))->getId();
+	}
 
-		return $ID;
+	public static function translateLocationIDToCode($id, $orderPropId)
+	{
+		$prop = CSaleOrderProps::GetByID($orderPropId);
+		if(isset($prop['TYPE']) && $prop['TYPE'] == 'LOCATION')
+			return CSaleLocation::tryTranslateIDToCode($id);
+
+		return $id;
 	}
 
 	function Delete($ID)
@@ -133,83 +306,54 @@ class CAllSaleOrderPropsValue
 		$strSql = "DELETE FROM b_sale_order_props_value WHERE ORDER_ID = ".$orderID." ";
 		return $DB->Query($strSql, True);
 	}
+}
 
-	public static function getPropertyValueFieldSelectSql($tableAlias = 'PV', $propTableAlias = 'P')
+/** @deprecated */
+final class CSaleOrderPropsValueAdapter implements Compatible\FetchAdapter
+{
+	private $fieldProxy = array();
+
+	function __construct(array $select)
 	{
-		$tableAlias = \Bitrix\Main\HttpApplication::getConnection()->getSqlHelper()->forSql($tableAlias);
-		$propTableAlias = \Bitrix\Main\HttpApplication::getConnection()->getSqlHelper()->forSql($propTableAlias);
-
-		if(CSaleLocation::isLocationProMigrated())
-			return "
-				CASE
-
-					WHEN 
-						".$propTableAlias.".TYPE = 'LOCATION'
-					THEN 
-						CAST(L.ID as ".\Bitrix\Sale\Location\DB\Helper::getSqlForDataType('char', 255).")
-
-					ELSE 
-						".$tableAlias.".VALUE 
-				END as VALUE, ".$tableAlias.".VALUE as VALUE_ORIG";
-		else
-			return $tableAlias.".VALUE";
+		$this->select = $select;
 	}
 
-	public static function getLocationTableJoinSql($tableAlias = 'PV', $propTableAlias = 'P')
+	public function addFieldProxy($field)
 	{
-		$tableAlias = \Bitrix\Main\HttpApplication::getConnection()->getSqlHelper()->forSql($tableAlias);
-		$propTableAlias = \Bitrix\Main\HttpApplication::getConnection()->getSqlHelper()->forSql($propTableAlias);
+		if((string) $field == '')
+			return false;
 
-		if(CSaleLocation::isLocationProMigrated())
-			return "LEFT JOIN b_sale_location L ON (".$propTableAlias.".TYPE = 'LOCATION' AND ".$tableAlias.".VALUE IS NOT NULL AND (".$tableAlias.".VALUE = L.CODE))";
-		else
-			return " ";
+		$this->fieldProxy['PROXY_'.$field] = $field;
+
+		return true;
 	}
 
-	public static function translateLocationIDToCode($id, $orderPropId)
+	public function adapt(array $newProperty)
 	{
-		if(!CSaleLocation::isLocationProMigrated())
-			return $id;
+		if (! isset($newProperty['TYPE']))
+			return $newProperty;
 
-		$prop = CSaleOrderProps::GetByID($orderPropId);
-		if(isset($prop['TYPE']) && $prop['TYPE'] == 'LOCATION')
+		if(is_array($newProperty))
 		{
-			if((string) $id === (string) intval($id)) // real ID, need to translate
+			foreach($newProperty as $k => $v)
 			{
-				return CSaleLocation::tryTranslateIDToCode($id);
+				if(isset($this->fieldProxy[$k]))
+				{
+					unset($newProperty[$k]);
+					$newProperty[$this->fieldProxy[$k]] = $v;
+				}
 			}
 		}
 
-		return $id;
+		$oldProperty = CSaleOrderPropsAdapter::convertNewToOld($newProperty);
+
+		$oldProperty['VALUE'     ] = CSaleOrderPropsAdapter::getOldValue($newProperty['VALUE'], $newProperty['TYPE']);
+		$oldProperty['PROP_TYPE' ] = $oldProperty['TYPE' ];
+		$oldProperty['PROP_SIZE1'] = $oldProperty['SIZE1'];
+		$oldProperty['PROP_SIZE2'] = $oldProperty['SIZE2'];
+
+		return array_intersect_key($oldProperty, $this->select);
 	}
 
-	public static function addPropertyValueField($tableAlias = 'V', &$arFields, &$arSelectFields)
-	{
-		$tableAlias = \Bitrix\Main\HttpApplication::getConnection()->getSqlHelper()->forSql($tableAlias);
-
-		// locations kept in CODEs, but must be shown as IDs
-		if(CSaleLocation::isLocationProMigrated())
-		{
-			$arSelectFields = array_merge(array('PROP_TYPE'), $arSelectFields); // P.TYPE should be there and go above our join
-
-			$arFields['VALUE'] = array("FIELD" => "
-				CASE 
-
-					WHEN 
-						P.TYPE = 'LOCATION'
-					THEN 
-						CAST(L.ID as ".\Bitrix\Sale\Location\DB\Helper::getSqlForDataType('char', 255).")
-
-					ELSE 
-						".$tableAlias.".VALUE 
-				END
-			", "TYPE" => "string", "FROM" => "LEFT JOIN b_sale_location L ON (P.TYPE = 'LOCATION' AND ".$tableAlias.".VALUE IS NOT NULL AND ".$tableAlias.".VALUE = L.CODE)");
-			$arFields['VALUE_ORIG'] = array("FIELD" => $tableAlias.".VALUE", "TYPE" => "string");
-		}
-		else
-		{
-			$arFields['VALUE'] = array("FIELD" => $tableAlias.".VALUE", "TYPE" => "string");
-		}
-	}
+	public static $allFields = array('ORDER_ID'=>1, 'ORDER_PROPS_ID'=>1, 'NAME'=>1, 'VALUE'=>1, 'CODE'=>1);
 }
-?>

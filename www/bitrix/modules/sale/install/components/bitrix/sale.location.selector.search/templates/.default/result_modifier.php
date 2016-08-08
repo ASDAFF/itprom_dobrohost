@@ -1,6 +1,11 @@
 <?
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
+$arParams['JS_CONTROL_GLOBAL_ID'] = 		$this->__component->tryParseStringStrict($arParams['JS_CONTROL_GLOBAL_ID']);
+$arParams['JS_CONTROL_DEFERRED_INIT'] = 	$this->__component->tryParseStringStrict($arParams['JS_CONTROL_DEFERRED_INIT']);
+$arParams['JS_CALLBACK'] = 					$this->__component->tryParseStringStrict($arParams['JS_CALLBACK']);
+$arParams['INITIALIZE_BY_GLOBAL_EVENT'] = 	$this->__component->tryParseStringStrict($arParams['INITIALIZE_BY_GLOBAL_EVENT']);
+
 $arResult['PATH_NAMES'] = array(); // deprecated
 $arResult['KNOWN_ITEMS'] = array();
 

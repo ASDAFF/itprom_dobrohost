@@ -28,12 +28,17 @@ class TypeTable extends Entity\DataManager
 		return 'b_sale_loc_type';
 	}
 
-	public static function add($data = array())
+	public static function add(array $data)
 	{
 		if(isset($data['NAME']))
 		{
 			$name = $data['NAME'];
 			unset($data['NAME']);
+		}
+
+		if((string) $data['DISPLAY_SORT'] == '' && (string) $data['SORT'] != '')
+		{
+			$data['DISPLAY_SORT'] = $data['SORT'];
 		}
 
 		$addResult = parent::add($data);
@@ -51,7 +56,7 @@ class TypeTable extends Entity\DataManager
 		return $addResult;
 	}
 	
-	public static function update($primary, $data = array())
+	public static function update($primary, array $data)
 	{
 		$primary = Assert::expectIntegerPositive($primary, '$primary');
 
@@ -105,7 +110,12 @@ class TypeTable extends Entity\DataManager
 			),
 			'SORT' => array(
 				'data_type' => 'integer',
-				'title' => Loc::getMessage('SALE_LOCATION_TYPE_ENTITY_SORT_FIELD')
+				'title' => Loc::getMessage('SALE_LOCATION_TYPE_ENTITY_DEPTH_LEVEL_FIELD')
+			),
+
+			'DISPLAY_SORT' => array(
+				'data_type' => 'integer',
+				'title' => Loc::getMessage('SALE_LOCATION_TYPE_ENTITY_DISPLAY_SORT_FIELD')
 			),
 
 			// virtual

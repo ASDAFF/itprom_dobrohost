@@ -1,6 +1,38 @@
 <?
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED!==true) die();
 
+$themes = array();
+if (\Bitrix\Main\ModuleManager::isModuleInstalled('bitrix.eshop'))
+	$themes['site'] = GetMessage('CP_SBB_TPL_THEME_SITE');
+
+$themesList = array(
+	'blue' => GetMessage('CP_SBB_TPL_THEME_BLUE'),
+	'green' => GetMessage('CP_SBB_TPL_THEME_GREEN'),
+	'red' => GetMessage('CP_SBB_TPL_THEME_RED'),
+	'wood' => GetMessage('CP_SBB_TPL_THEME_WOOD'),
+	'yellow' => GetMessage('CP_SBB_TPL_THEME_YELLOW'),
+	'black' => GetMessage('CP_SBB_TPL_THEME_BLACK')
+);
+$dir = trim(preg_replace("'[\\\\/]+'", "/", dirname(__FILE__)."/themes/"));
+if (is_dir($dir))
+{
+	foreach ($themesList as $themeID => $themeName)
+	{
+		if (!is_file($dir.$themeID.'/style.css'))
+			continue;
+		$themes[$themeID] = $themeName;
+	}
+}
+
+$arTemplateParameters['TEMPLATE_THEME'] = array(
+	'PARENT' => 'VISUAL',
+	'NAME' => GetMessage('CP_SBB_TPL_TEMPLATE_THEME'),
+	'TYPE' => 'LIST',
+	'VALUES' => $themes,
+	'DEFAULT' => 'blue',
+	'ADDITIONAL_VALUES' => 'Y'
+);
+
 if (CModule::IncludeModule("catalog"))
 {
 	$arSKU = false;
@@ -71,5 +103,3 @@ if (CModule::IncludeModule("catalog"))
 		}
 	}
 }
-
-?>

@@ -64,7 +64,7 @@ class TriggerBasketForgotten extends \Bitrix\Sender\TriggerConnectorClosed
 			'=LID' => $this->getSiteId(),
 		);
 
-		$userListDb = \Bitrix\Sale\BasketTable::getList(array(
+		$userListDb = \Bitrix\Sale\Internals\BasketTable::getList(array(
 			'select' => array('USER_ID' => 'FUSER.USER_ID', 'EMAIL' => 'FUSER.USER.EMAIL', 'FUSER_USER_NAME' => 'FUSER.USER.NAME'),
 			'filter' => $filter,
 			'runtime' => array(

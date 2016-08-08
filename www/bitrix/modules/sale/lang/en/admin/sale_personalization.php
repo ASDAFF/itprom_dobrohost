@@ -14,4 +14,5 @@ $MESS["BIGDATA_GO"] = "Go";
 $MESS["BIGDATA_DESC_1"] = "<strong>Bitrix BigData</strong> personalization service processes user data collected from all the web stores powered by Bitrix CMS.";
 $MESS["BIGDATA_DESC_2"] = "The service analyzes user preferences (interests, ordered items, compares users to find similar traits) while keeping users safe and anonymous.";
 $MESS["BIGDATA_DESC_3"] = "The personalization component can be added almost anywhere: to the main page, to the product list or product view page, to the shopping cart or ordering page.";
+$MESS["BIGDATA_ANALYZE"] = "Analyze";
 ?>

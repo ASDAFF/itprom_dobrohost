@@ -23,6 +23,11 @@ if ($saleModulePermissions == "D")
 
 IncludeModuleLangFile(__FILE__);
 
+\Bitrix\Main\Loader::registerAutoLoadClasses('sale',
+							array(
+								'\Bitrix\Sale\Helpers\Admin\Blocks\OrderShipmentStatus' => 'lib/helpers/admin/blocks/ordershipmentstatus.php',
+							));
+
 $ID = (isset($_REQUEST['ID']) ? (int)$_REQUEST['ID'] : 0);
 $errorMessage = "";
 
@@ -1240,13 +1245,13 @@ if ($bUserCanEditOrder)
 	{
 		$aMenu[] = array(
 			"TEXT" => GetMessage("SOD_TO_EDIT"),
-			"LINK" => "/bitrix/admin/sale_order_new.php?ID=".$ID."&lang=".LANGUAGE_ID.GetFilterParams("filter_"),
+			"LINK" => "/bitrix/admin/sale_order_edit.php?ID=".$ID."&lang=".LANGUAGE_ID.GetFilterParams("filter_"),
 			"ICON"=>"btn_edit",
 		);
 	}
 	$aMenu[] = array(
 		"TEXT" => GetMessage("SOD_TO_NEW_ORDER"),
-		"LINK" => "/bitrix/admin/sale_order_new.php?lang=".LANGUAGE_ID."&LID=".$arOrder["LID"],
+		"LINK" => "/bitrix/admin/sale_order_edit.php?lang=".LANGUAGE_ID."&SITE_ID=".$arOrder["LID"],
 		"ICON"=>"btn_edit",
 	);
 }
@@ -1305,6 +1310,42 @@ if (strlen($save_order_result) > 0)
 	CAdminMessage::ShowNote($okMessage);
 }
 
+$res = \Bitrix\Sale\Internals\PaymentTable::getList(array(
+	'select' => array('CNT'),
+	'filter' => array(
+		'ORDER_ID' => $ID
+	),
+	'runtime' => array(
+		'CNT' => array(
+			'data_type' => 'integer',
+			'expression' => array('COUNT(ID)')
+		)
+	)
+));
+$payment = $res->fetch();
+
+$res = \Bitrix\Sale\Internals\ShipmentTable::getList(array(
+	'select' => array('CNT'),
+	'filter' => array(
+		'ORDER_ID' => $ID
+	),
+	'runtime' => array(
+		'CNT' => array(
+			'data_type' => 'integer',
+			'expression' => array('COUNT(ID)')
+		)
+	)
+));
+$shipment = $res->fetch();
+
+if ($payment['CNT'] > 1 || ($shipment['CNT'] - 1) > 1)
+{
+	$note = BeginNote();
+	$note .= GetMessage('SOD_ERROR_SEVERAL_P_D');
+	$note .= EndNote();
+	echo $note;
+}
+
 if (!$bUserCanViewOrder)
 {
 	CAdminMessage::ShowMessage(str_replace("#ID#", $ID, GetMessage("SOD_NO_PERMS2VIEW")).". ");
@@ -1328,6 +1369,7 @@ else
 		$arBasketPropsValues = array();
 		$arElementId = array();
 		$arSku2Parent = array();
+		$orderBasketPrice = 0;
 		$orderTotalPrice = 0;
 		$orderTotalWeight = 0;
 
@@ -1367,7 +1409,10 @@ else
 			$arBasketPropsValues[$arBasketTmp["PRODUCT_ID"]] = array();
 
 			if (!CSaleBasketHelper::isSetItem($arBasketTmp))
+			{
 				$orderTotalPrice += ($arBasketTmp["PRICE"] + $arBasketTmp["DISCOUNT_PRICE"]) * $arBasketTmp["QUANTITY"];
+				$orderBasketPrice += $arBasketTmp["PRICE"] * $arBasketTmp["QUANTITY"];
+			}
 
 				if (!CSaleBasketHelper::isSetParent($arBasketTmp))
 				{
@@ -1938,7 +1983,7 @@ else
 
 								if(CSaleLocation::isLocationProEnabled())
 								{
-									$locationString = Location\Admin\LocationHelper::getLocationStringById($arOrderProps['VALUE']);
+									$locationString = \Bitrix\Sale\Location\Admin\LocationHelper::getLocationStringById($arOrderProps['VALUE']);
 									if(!strlen($locationString))
 										$locationString = $arOrderProps['VALUE'];
 
@@ -2039,7 +2084,7 @@ else
 					</tr>
 					<?
 					$arDeliveryExtraParams = CSaleDeliveryHandler::GetHandlerExtraParams($arDeliveryData["SID"], $arDeliveryName[1], $arOrder);
-					$depList = \Bitrix\Sale\Delivery\OrderDeliveryTable::getList(array(
+					$depList = \Bitrix\Sale\Internals\OrderDeliveryReqTable::getList(array(
 						'filter'=>array('=ORDER_ID'=>$ID),
 					));
 					if($dep = $depList->fetch())
@@ -2171,7 +2216,7 @@ else
 									?>
 									<?if(!empty($arActions)):?>
 										<?
-											$depList = \Bitrix\Sale\Delivery\OrderDeliveryTable::getList(array(
+											$depList = \Bitrix\Sale\Internals\OrderDeliveryReqTable::getList(array(
 												'filter'=>array('=ORDER_ID' => $ID),
 											));
 
@@ -2553,7 +2598,7 @@ else
 					);
 
 
-					$depList = \Bitrix\Sale\Delivery\OrderDeliveryTable::getList(array(
+					$depList = \Bitrix\Sale\Internals\OrderDeliveryReqTable::getList(array(
 						'filter'=>array('=ORDER_ID' => $ID),
 					));
 
@@ -4022,7 +4067,7 @@ else
 										</tr>
 										<tr class="price">
 											<td class="title"><?echo GetMessage("SOD_TOTAL_PRICE_WITH_DISCOUNT_MARGIN")?></td>
-											<td nowrap style="white-space:nowrap;"><?=SaleFormatCurrency($arOrder["DISCOUNT_VALUE"] + $arOrder["PRICE"]-$arOrder["PRICE_DELIVERY"], $arOrder["CURRENCY"]);?></td>
+											<td nowrap style="white-space:nowrap;"><?=SaleFormatCurrency($orderBasketPrice, $arOrder["CURRENCY"]);?></td>
 										</tr>
 										<tr>
 											<td class="title"><?echo GetMessage("SOD_TOTAL_PRICE_DELIVERY")?></td>
@@ -4053,7 +4098,7 @@ else
 											<td class="ileft"><div style="white-space:nowrap;"><?echo GetMessage("SOD_TOTAL_PRICE_TOTAL")?></div></td>
 											<td class="iright" nowrap><div style="white-space:nowrap;"><?=SaleFormatCurrency($arOrder["PRICE"], $arOrder["CURRENCY"]);?></div></td>
 										</tr>
-										<?if (floatval($arOrder["SUM_PAID"]) > 0):?>
+										<?if (floatval($arOrder["SUM_PAID"]) > 0 && $arOrder["PAYED"] != "Y"):?>
 											<tr class="price">
 												<td class="title"><?echo GetMessage("SOD_TOTAL_PRICE_PAYED")?></td>
 												<td nowrap style="white-space:nowrap;"><?=SaleFormatCurrency($arOrder["SUM_PAID"], $arOrder["CURRENCY"]);?></td>

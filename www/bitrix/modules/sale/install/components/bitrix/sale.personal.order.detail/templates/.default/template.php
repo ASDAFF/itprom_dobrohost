@@ -1,17 +1,32 @@
-<?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
+<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 
-<div class="bx_my_order_switch">
-	<a class="bx_mo_link" href="<?=$arResult["URL_TO_LIST"]?>"><?=GetMessage('SPOD_CUR_ORDERS')?></a>
-</div>
+<?if(!empty($arResult['ERRORS']['FATAL'])):?>
 
-<div class="bx_order_list">
+	<?foreach($arResult['ERRORS']['FATAL'] as $error):?>
+		<?=ShowError($error)?>
+	<?endforeach?>
 
-	<?if(strlen($arResult["ERROR_MESSAGE"])):?>
+	<?$component = $this->__component;?>
+	<?if($arParams['AUTH_FORM_IN_TEMPLATE'] && isset($arResult['ERRORS']['FATAL'][$component::E_NOT_AUTHORIZED])):?>
+		<?$APPLICATION->AuthForm('', false, false, 'N', false);?>
+	<?endif?>
 
-		<?=ShowError($arResult["ERROR_MESSAGE"]);?>
+<?else:?>
 
-	<?else:?>
-	
+	<?if(!empty($arResult['ERRORS']['NONFATAL'])):?>
+
+		<?foreach($arResult['ERRORS']['NONFATAL'] as $error):?>
+			<?=ShowError($error)?>
+		<?endforeach?>
+
+	<?endif?>
+
+	<div class="bx_my_order_switch">
+		<a class="bx_mo_link" href="<?=$arResult["URL_TO_LIST"]?>"><?=GetMessage('SPOD_CUR_ORDERS')?></a>
+	</div>
+
+	<div class="bx_order_list">
+
 		<table class="bx_order_list_table">
 			<thead>
 				<tr>
@@ -103,31 +118,33 @@
 				</tr>
 				*/?>
 
-				<?foreach($arResult["ORDER_PROPS"] as $prop):?>
+				<?if (isset($arResult["ORDER_PROPS"])):?>
+					<?foreach($arResult["ORDER_PROPS"] as $prop):?>
 
-					<?if($prop["SHOW_GROUP_NAME"] == "Y"):?>
+						<?if($prop["SHOW_GROUP_NAME"] == "Y"):?>
 
-						<tr><td><br></td><td></td></tr>
+							<tr><td><br></td><td></td></tr>
+							<tr>
+								<td colspan="2"><?=$prop["GROUP_NAME"]?></td>
+							</tr>
+
+						<?endif?>
+
 						<tr>
-							<td colspan="2"><?=$prop["GROUP_NAME"]?></td>
+							<td><?=$prop['NAME']?>:</td>
+							<td>
+
+								<?if($prop["TYPE"] == "CHECKBOX"):?>
+									<?=GetMessage('SPOD_'.($prop["VALUE"] == "Y" ? 'YES' : 'NO'))?>
+								<?else:?>
+									<?=$prop["VALUE"]?>
+								<?endif?>
+
+							</td>
 						</tr>
 
-					<?endif?>
-
-					<tr>
-						<td><?=$prop['NAME']?>:</td>
-						<td>
-
-							<?if($prop["TYPE"] == "CHECKBOX"):?>
-								<?=GetMessage('SPOD_'.($prop["VALUE"] == "Y" ? 'YES' : 'NO'))?>
-							<?else:?>
-								<?=$prop["VALUE"]?>
-							<?endif?>
-
-						</td>
-					</tr>
-
-				<?endforeach?>
+					<?endforeach?>
+				<?endif;?>
 
 				<?if(!empty($arResult["USER_DESCRIPTION"])):?>
 
@@ -139,196 +156,211 @@
 				<?endif?>
 
 				<tr><td><br></td><td></td></tr>
-
 				<tr>
 					<td colspan="2"><?=GetMessage("SPOD_ORDER_PAYMENT")?></td>
 				</tr>
-				<tr>
-					<td><?=GetMessage('SPOD_PAY_SYSTEM')?>:</td>
-					<td>
-						<?if(intval($arResult["PAY_SYSTEM_ID"])):?>
-							<?=$arResult["PAY_SYSTEM"]["NAME"]?>
-						<?else:?>
-							<?=GetMessage("SPOD_NONE")?>
-						<?endif?>
-					</td>
-				</tr>
-				<tr>
-					<td><?=GetMessage('SPOD_ORDER_PAYED')?>:</td>
-					<td>
-						<?if($arResult["PAYED"] == "Y"):?>
-							<?=GetMessage('SPOD_YES')?>
-							<?if(strlen($arResult["DATE_PAYED_FORMATED"])):?>
-								(<?=GetMessage('SPOD_FROM')?> <?=$arResult["DATE_PAYED_FORMATED"]?>)
+				<?foreach ($arResult['PAYMENT'] as $payment):?>
+					<tr>
+						<td><?=GetMessage('SPOD_PAY_SYSTEM')?>:</td>
+						<td>
+							<?if(intval($payment["PAY_SYSTEM_ID"])):?>
+								<?if ($payment['PAY_SYSTEM']):?>
+									<?=$payment["PAY_SYSTEM"]["NAME"].' ('.$payment['PRICE_FORMATED'].')'?>
+								<?else:?>
+									<?=$payment["PAY_SYSTEM_NAME"].' ('.$payment['PRICE_FORMATED'].')';?>
+								<?endif;?>
+							<?else:?>
+								<?=GetMessage("SPOD_NONE")?>
 							<?endif?>
-						<?else:?>
-							<?=GetMessage('SPOD_NO')?>
-							<?if($arResult["CAN_REPAY"]=="Y" && $arResult["PAY_SYSTEM"]["PSA_NEW_WINDOW"] == "Y"):?>
-								&nbsp;&nbsp;&nbsp;[<a href="<?=$arResult["PAY_SYSTEM"]["PSA_ACTION_FILE"]?>" target="_blank"><?=GetMessage("SPOD_REPEAT_PAY")?></a>]
-							<?endif?>
-						<?endif?>
-					</td>
-				</tr>
+						</td>
+					</tr>
+					<tr>
+						<td><?=GetMessage('SPOD_ORDER_PAYED')?>:</td>
+						<td>
+							<?if($payment["PAID"] == "Y"):?>
+								<?=GetMessage('SPOD_YES')?>
+								<?if(strlen($payment["DATE_PAID_FORMATED"])):?>
+									(<?=GetMessage('SPOD_FROM')?> <?=$payment["DATE_PAID_FORMATED"]?>)
+								<?endif;?>
+							<?else:?>
+								<?=GetMessage('SPOD_NO')?>
+								<?if($payment["CAN_REPAY"]=="Y" && $payment["PAY_SYSTEM"]["PSA_NEW_WINDOW"] == "Y"):?>
+									&nbsp;&nbsp;&nbsp;[<a href="<?=$payment["PAY_SYSTEM"]["PSA_ACTION_FILE"]?>" target="_blank"><?=GetMessage("SPOD_REPEAT_PAY")?></a>]
+								<?endif;?>
+							<?endif;?>
+						</td>
+					</tr>
+					<?if($payment["CAN_REPAY"]=="Y" && $payment["PAY_SYSTEM"]["PSA_NEW_WINDOW"] != "Y"):?>
+						<tr>
+							<td colspan="2">
+								<?
+									if (array_key_exists('ERROR', $payment) && strlen($payment['ERROR']) > 0)
+										ShowError($payment['ERROR']);
+									elseif (array_key_exists('BUFFERED_OUTPUT', $payment))
+										echo $payment['BUFFERED_OUTPUT'];
+								?>
+							</td>
+						</tr>
+					<?endif?>
 
-				<tr>
-					<td><?=GetMessage("SPOD_ORDER_DELIVERY")?>:</td>
-					<td>
-						<?if(strpos($arResult["DELIVERY_ID"], ":") !== false || intval($arResult["DELIVERY_ID"])):?>
-							<?=$arResult["DELIVERY"]["NAME"]?>
+					<tr><td><br></td><td></td></tr>
+				<?endforeach;?>
+				<?foreach ($arResult['SHIPMENT'] as $shipment):?>
+					<tr>
+						<td><?=GetMessage("SPOD_ORDER_DELIVERY")?>:</td>
+						<td>
+							<?if (intval($shipment["DELIVERY_ID"])):?>
+								<?=$shipment["DELIVERY"]["NAME"]?>
 
-							<?if(intval($arResult['STORE_ID']) && !empty($arResult["DELIVERY"]["STORE_LIST"][$arResult['STORE_ID']])):?>
+								<?if(intval($shipment['STORE_ID']) && !empty($arResult["DELIVERY"]["STORE_LIST"][$shipment['STORE_ID']])):?>
 
-								<?$store = $arResult["DELIVERY"]["STORE_LIST"][$arResult['STORE_ID']];?>
-								<div class="bx_ol_store">
-									<div class="bx_old_s_row_title">
-										<?=GetMessage('SPOD_TAKE_FROM_STORE')?>: <b><?=$store['TITLE']?></b>
+									<?$store = $arResult["DELIVERY"]["STORE_LIST"][$shipment['STORE_ID']];?>
+									<div class="bx_ol_store">
+										<div class="bx_old_s_row_title">
+											<?=GetMessage('SPOD_TAKE_FROM_STORE')?>: <b><?=$store['TITLE']?></b>
 
-										<?if(!empty($store['DESCRIPTION'])):?>
-											<div class="bx_ild_s_desc">
-												<?=$store['DESCRIPTION']?>
+											<?if(!empty($store['DESCRIPTION'])):?>
+												<div class="bx_ild_s_desc">
+													<?=$store['DESCRIPTION']?>
+												</div>
+											<?endif?>
+
+										</div>
+
+										<?if(!empty($store['ADDRESS'])):?>
+											<div class="bx_old_s_row">
+												<b><?=GetMessage('SPOD_STORE_ADDRESS')?></b>: <?=$store['ADDRESS']?>
 											</div>
 										<?endif?>
 
+										<?if(!empty($store['SCHEDULE'])):?>
+											<div class="bx_old_s_row">
+												<b><?=GetMessage('SPOD_STORE_WORKTIME')?></b>: <?=$store['SCHEDULE']?>
+											</div>
+										<?endif?>
+
+										<?if(!empty($store['PHONE'])):?>
+											<div class="bx_old_s_row">
+												<b><?=GetMessage('SPOD_STORE_PHONE')?></b>: <?=$store['PHONE']?>
+											</div>
+										<?endif?>
+
+										<?if(!empty($store['EMAIL'])):?>
+											<div class="bx_old_s_row">
+												<b><?=GetMessage('SPOD_STORE_EMAIL')?></b>: <a href="mailto:<?=$store['EMAIL']?>"><?=$store['EMAIL']?></a>
+											</div>
+										<?endif?>
+
+										<?if(($store['GPS_N'] = floatval($store['GPS_N'])) && ($store['GPS_S'] = floatval($store['GPS_S']))):?>
+
+											<div id="bx_old_s_map">
+
+												<div class="bx_map_buttons">
+													<a href="javascript:void(0)" class="bx_big bx_bt_button_type_2 bx_cart" id="map-show">
+														<?=GetMessage('SPOD_SHOW_MAP')?>
+													</a>
+
+													<a href="javascript:void(0)" class="bx_big bx_bt_button_type_2 bx_cart" id="map-hide">
+														<?=GetMessage('SPOD_HIDE_MAP')?>
+													</a>
+												</div>
+
+												<?ob_start();?>
+													<div><?$mg = $arResult["DELIVERY"]["STORE_LIST"][$arResult['STORE_ID']]['IMAGE'];?>
+														<?if(!empty($mg['SRC'])):?><img src="<?=$mg['SRC']?>" width="<?=$mg['WIDTH']?>" height="<?=$mg['HEIGHT']?>"><br /><br /><?endif?>
+														<?=$store['TITLE']?></div>
+												<?$ballon = ob_get_contents();?>
+												<?ob_end_clean();?>
+
+												<?
+													$mapId = '__store_map';
+
+													$mapParams = array(
+													'yandex_lat' => $store['GPS_N'],
+													'yandex_lon' => $store['GPS_S'],
+													'yandex_scale' => 16,
+													'PLACEMARKS' => array(
+														array(
+															'LON' => $store['GPS_S'],
+															'LAT' => $store['GPS_N'],
+															'TEXT' => $ballon
+														)
+													));
+												?>
+
+												<div id="map-container">
+													<?$APPLICATION->IncludeComponent("bitrix:map.yandex.view", ".default", array(
+														"INIT_MAP_TYPE" => "MAP",
+														"MAP_DATA" => serialize($mapParams),
+														"MAP_WIDTH" => "100%",
+														"MAP_HEIGHT" => "200",
+														"CONTROLS" => array(
+															0 => "SMALLZOOM",
+														),
+														"OPTIONS" => array(
+															0 => "ENABLE_SCROLL_ZOOM",
+															1 => "ENABLE_DBLCLICK_ZOOM",
+															2 => "ENABLE_DRAGGING",
+														),
+														"MAP_ID" => $mapId
+														),
+														false
+													);?>
+
+												</div>
+
+												<?CJSCore::Init();?>
+												<script>
+													new CStoreMap({mapId:"<?=$mapId?>", area: '.bx_old_s_map'});
+												</script>
+
+											</div>
+
+										<?endif?>
+
 									</div>
-									
-									<?if(!empty($store['ADDRESS'])):?>
-										<div class="bx_old_s_row">
-											<b><?=GetMessage('SPOD_STORE_ADDRESS')?></b>: <?=$store['ADDRESS']?>
-										</div>
-									<?endif?>
 
-									<?if(!empty($store['SCHEDULE'])):?>
-										<div class="bx_old_s_row">
-											<b><?=GetMessage('SPOD_STORE_WORKTIME')?></b>: <?=$store['SCHEDULE']?>
-										</div>
-									<?endif?>
+								<?endif?>
 
-									<?if(!empty($store['PHONE'])):?>
-										<div class="bx_old_s_row">
-											<b><?=GetMessage('SPOD_STORE_PHONE')?></b>: <?=$store['PHONE']?>
-										</div>
-									<?endif?>
-
-									<?if(!empty($store['EMAIL'])):?>
-										<div class="bx_old_s_row">
-											<b><?=GetMessage('SPOD_STORE_EMAIL')?></b>: <a href="mailto:<?=$store['EMAIL']?>"><?=$store['EMAIL']?></a>
-										</div>
-									<?endif?>
-
-									<?if(($store['GPS_N'] = floatval($store['GPS_N'])) && ($store['GPS_S'] = floatval($store['GPS_S']))):?>
-										
-										<div id="bx_old_s_map">
-
-											<div class="bx_map_buttons">
-												<a href="javascript:void(0)" class="bx_big bx_bt_button_type_2 bx_cart" id="map-show">
-													<?=GetMessage('SPOD_SHOW_MAP')?>
-												</a>
-
-												<a href="javascript:void(0)" class="bx_big bx_bt_button_type_2 bx_cart" id="map-hide">
-													<?=GetMessage('SPOD_HIDE_MAP')?>
-												</a>
-											</div>
-
-											<?ob_start();?>
-												<div><?$mg = $arResult["DELIVERY"]["STORE_LIST"][$arResult['STORE_ID']]['IMAGE'];?>
-													<?if(!empty($mg['SRC'])):?><img src="<?=$mg['SRC']?>" width="<?=$mg['WIDTH']?>" height="<?=$mg['HEIGHT']?>"><br /><br /><?endif?>
-													<?=$store['TITLE']?></div>
-											<?$ballon = ob_get_contents();?>
-											<?ob_end_clean();?>
-
-											<?
-												$mapId = '__store_map';
-
-												$mapParams = array(
-												'yandex_lat' => $store['GPS_N'],
-												'yandex_lon' => $store['GPS_S'],
-												'yandex_scale' => 16,
-												'PLACEMARKS' => array(
-													array(
-														'LON' => $store['GPS_S'],
-														'LAT' => $store['GPS_N'],
-														'TEXT' => $ballon
-													)
-												));
-											?>
-
-											<div id="map-container">
-
-												<?$APPLICATION->IncludeComponent("bitrix:map.yandex.view", ".default", array(
-													"INIT_MAP_TYPE" => "MAP",
-													"MAP_DATA" => serialize($mapParams),
-													"MAP_WIDTH" => "100%",
-													"MAP_HEIGHT" => "200",
-													"CONTROLS" => array(
-														0 => "SMALLZOOM",
-													),
-													"OPTIONS" => array(
-														0 => "ENABLE_SCROLL_ZOOM",
-														1 => "ENABLE_DBLCLICK_ZOOM",
-														2 => "ENABLE_DRAGGING",
-													),
-													"MAP_ID" => $mapId
-													),
-													false
-												);?>
-
-											</div>
-
-											<?CJSCore::Init();?>
-											<script>
-												new CStoreMap({mapId:"<?=$mapId?>", area: '.bx_old_s_map'});
-											</script>
-
-										</div>
-
-									<?endif?>
-
-								</div>
-
+							<?else:?>
+								<?=GetMessage("SPOD_NONE")?>
 							<?endif?>
-
-						<?else:?>
-							<?=GetMessage("SPOD_NONE")?>
-						<?endif?>
-					</td>
-				</tr>
-
-				<?if($arResult["TRACKING_NUMBER"]):?>
-
-					<tr>
-						<td><?=GetMessage('SPOD_ORDER_TRACKING_NUMBER')?>:</td>
-						<td><?=$arResult["TRACKING_NUMBER"]?></td>
-					</tr>
-
-					<tr><td><br></td><td></td></tr>
-
-				<?endif?>
-
-				<?if($arResult["CAN_REPAY"]=="Y" && $arResult["PAY_SYSTEM"]["PSA_NEW_WINDOW"] != "Y"):?>
-					<tr>
-						<td colspan="2">
-							<?
-								$ORDER_ID = $ID;
-
-								try
-								{
-									include($arResult["PAY_SYSTEM"]["PSA_ACTION_FILE"]);
-								}
-								catch(\Bitrix\Main\SystemException $e)
-								{
-									if($e->getCode() == CSalePaySystemAction::GET_PARAM_VALUE)
-										$message = GetMessage("SOA_TEMPL_ORDER_PS_ERROR");
-									else
-										$message = $e->getMessage();
-
-									ShowError($message);
-								}
-
-							?>
 						</td>
 					</tr>
-				<?endif?>
 
+					<?if($shipment["TRACKING_NUMBER"]):?>
+						<tr>
+							<td><?=GetMessage('SPOD_ORDER_TRACKING_NUMBER')?>:</td>
+							<td><?=$shipment["TRACKING_NUMBER"]?></td>
+						</tr>
+
+						<?if(isset($shipment["TRACKING_STATUS"])):?>
+							<tr>
+								<td><?=GetMessage('SPOD_ORDER_TRACKING_STATUS')?>:</td>
+								<td><?=$shipment["TRACKING_STATUS"]?></td>
+							</tr>
+						<?endif?>
+
+						<?if(!empty($shipment["TRACKING_DESCRIPTION"])):?>
+							<tr>
+								<td><?=GetMessage('SPOD_ORDER_TRACKING_DESCRIPTION')?>:</td>
+								<td><?=$shipment["TRACKING_DESCRIPTION"]?></td>
+							</tr>
+						<?endif?>
+
+					<?endif?>
+
+
+					<tr>
+						<td><?=GetMessage('SPOD_ORDER_SHIPMENT_BASKET')?>:</td>
+						<td>
+							<?foreach ($shipment['ITEMS'] as $item):?>
+								<?=$item['NAME']." (".$item['QUANTITY'].' '.$item['MEASURE_NAME'].") "?><br>
+							<?endforeach;?>
+						</td>
+					</tr>
+					<tr><td><br></td><td></td></tr>
+				<?endforeach;?>
 			</tbody>
 		</table>
 
@@ -352,6 +384,7 @@
 				</tr>
 			</thead>
 			<tbody>
+			<?if (isset($arResult["BASKET"])):?>
 				<?foreach($arResult["BASKET"] as $prod):?>
 					<tr>
 						<?$hasLink = !empty($prod["DETAIL_PAGE_URL"]);?>
@@ -433,7 +466,7 @@
 						</td>
 					</tr>
 				<?endforeach?>
-
+			<?endif;?>
 			</tbody>
 		</table>
 		<br>
@@ -471,14 +504,6 @@
 					</tr>	
 				<?endforeach?>
 
-				<? ///// TAX SUM ?>
-				<?if(floatval($arResult["TAX_VALUE"])):?>
-					<tr>
-						<td class="custom_t1"><?=GetMessage('SPOD_TAX')?>:</td>
-						<td class="custom_t2"><?=$arResult["TAX_VALUE_FORMATED"]?></td>
-					</tr>
-				<?endif?>
-
 				<? ///// DISCOUNT ?>
 				<?if(floatval($arResult["DISCOUNT_VALUE"])):?>
 					<tr>
@@ -500,6 +525,6 @@
 			</tr>
 		</table>
 
-	<?endif?>
+	</div>
 
-</div>
+<?endif?>

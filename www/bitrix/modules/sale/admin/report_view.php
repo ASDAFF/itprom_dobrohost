@@ -212,7 +212,7 @@ if (!$fCriticalError)
 								<td class="adm-filter-item-right"></td>
 							</tr>
 							<!-- person type example -->
-							<tr class="chfilter-field-Bitrix\Sale\Order:BUYER.PERSON_TYPE_ID adm-report-chfilter-control" callback="RTFilter_chooseBoolean">
+							<tr class="chfilter-field-Bitrix\Sale\Internals\Order:USER.PERSON_TYPE_ID adm-report-chfilter-control" callback="RTFilter_chooseBoolean">
 								<td class="adm-filter-item-left">%TITLE% "%COMPARE%":</td>
 								<td class="adm-filter-item-center">
 									<div class="adm-filter-alignment">
@@ -234,7 +234,7 @@ if (!$fCriticalError)
 								<td class="adm-filter-item-right"></td>
 							</tr>
 							<!-- status example -->
-							<tr class="chfilter-field-\Bitrix\Sale\StatusLang adm-report-chfilter-control" callback="RTFilter_chooseBoolean">
+							<tr class="chfilter-field-\Bitrix\Sale\Internals\StatusLang adm-report-chfilter-control" callback="RTFilter_chooseBoolean">
 								<td class="adm-filter-item-left">%TITLE% "%COMPARE%":</td>
 								<td class="adm-filter-item-center">
 									<div class="adm-filter-alignment">
@@ -244,94 +244,6 @@ if (!$fCriticalError)
 												<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
 												<? foreach(CBaseSaleReportHelper::getStatusList() as $kID => $vStatusName): ?>
 												<option value="<?=htmlspecialcharsbx($kID)?>"><?=htmlspecialcharsbx($vStatusName)?></option>
-												<? endforeach; ?>
-											</select>
-										</span>
-									</div>
-									</div>
-								</td>
-								<td class="adm-filter-item-right"></td>
-							</tr>
-							<!-- pay system example -->
-							<tr class="chfilter-field-\Bitrix\Sale\PaySystem adm-report-chfilter-control" callback="RTFilter_chooseBoolean">
-								<td class="adm-filter-item-left">%TITLE% "%COMPARE%":</td>
-								<td class="adm-filter-item-center">
-									<div class="adm-filter-alignment">
-										<div class="adm-filter-box-sizing">
-										<span class="adm-select-wrap">
-											<select class="adm-select sale-report-site-dependent" id="%ID%" name="%NAME%" caller="true" tid="PaySystem">
-												<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
-												<? $siteId = CBaseSaleReportHelper::getDefaultSiteId(); ?>
-												<? foreach(CBaseSaleReportHelper::getPaySystemList() as $kID => $val): ?>
-													<? if ($val['site_id'] === '' || $val['site_id'] === $siteId): ?>
-													<option value="<?=htmlspecialcharsbx($kID)?>"><?=htmlspecialcharsbx($val['value'])?></option>
-													<? endif; ?>
-												<? endforeach; ?>
-											</select>
-										</span>
-									</div>
-									</div>
-								</td>
-								<td class="adm-filter-item-right"></td>
-							</tr>
-							<!-- delivery example -->
-							<tr class="chfilter-field-DELIVERY_ID adm-report-chfilter-control" callback="RTFilter_chooseBoolean">
-								<td class="adm-filter-item-left">%TITLE% "%COMPARE%":</td>
-								<td class="adm-filter-item-center">
-									<div class="adm-filter-alignment">
-										<div class="adm-filter-box-sizing">
-										<span class="adm-select-wrap">
-											<select class="adm-select sale-report-site-dependent" id="%ID%" name="%NAME%" caller="true" tid="Delivery">
-												<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
-												<? $siteId = CBaseSaleReportHelper::getDefaultSiteId(); ?>
-												<? foreach(CBaseSaleReportHelper::getDeliveryList() as $kID => $val): ?>
-												<? if ($val['site_id'] === '' || $val['site_id'] === $siteId): ?>
-													<option value="<?=htmlspecialcharsbx($kID)?>"><?=htmlspecialcharsbx($val['value'])?></option>
-													<? endif; ?>
-												<? endforeach; ?>
-											</select>
-										</span>
-									</div>
-									</div>
-								</td>
-								<td class="adm-filter-item-right"></td>
-							</tr>
-							<!-- delivery example -->
-							<tr class="chfilter-field-ORDER.DELIVERY_ID adm-report-chfilter-control" callback="RTFilter_chooseBoolean">
-								<td class="adm-filter-item-left">%TITLE% "%COMPARE%":</td>
-								<td class="adm-filter-item-center">
-									<div class="adm-filter-alignment">
-										<div class="adm-filter-box-sizing">
-										<span class="adm-select-wrap">
-											<select class="adm-select sale-report-site-dependent" id="%ID%" name="%NAME%" caller="true" tid="Delivery">
-												<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
-												<? $siteId = CBaseSaleReportHelper::getDefaultSiteId(); ?>
-												<? foreach(CBaseSaleReportHelper::getDeliveryList() as $kID => $val): ?>
-												<? if ($val['site_id'] === '' || $val['site_id'] === $siteId): ?>
-													<option value="<?=htmlspecialcharsbx($kID)?>"><?=htmlspecialcharsbx($val['value'])?></option>
-													<? endif; ?>
-												<? endforeach; ?>
-											</select>
-										</span>
-									</div>
-									</div>
-								</td>
-								<td class="adm-filter-item-right"></td>
-							</tr>
-							<!-- delivery example -->
-							<tr class="chfilter-field-Bitrix\Sale\Order:BUYER.DELIVERY_ID adm-report-chfilter-control" callback="RTFilter_chooseBoolean">
-								<td class="adm-filter-item-left">%TITLE% "%COMPARE%":</td>
-								<td class="adm-filter-item-center">
-									<div class="adm-filter-alignment">
-										<div class="adm-filter-box-sizing">
-										<span class="adm-select-wrap">
-											<select class="adm-select sale-report-site-dependent" id="%ID%" name="%NAME%" caller="true" tid="Delivery">
-												<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
-												<? $siteId = CBaseSaleReportHelper::getDefaultSiteId(); ?>
-												<? foreach(CBaseSaleReportHelper::getDeliveryList() as $kID => $val): ?>
-												<? if ($val['site_id'] === '' || $val['site_id'] === $siteId): ?>
-													<option value="<?=htmlspecialcharsbx($kID)?>"><?=htmlspecialcharsbx($val['value'])?></option>
-													<? endif; ?>
 												<? endforeach; ?>
 											</select>
 										</span>
@@ -467,7 +379,7 @@ if (!$fCriticalError)
 								<td class="adm-filter-item-right"></td>
 							</tr>
 							<!-- User example -->
-							<tr class="chfilter-field-\Bitrix\Main\User adm-report-chfilter-control" callback="RTFilter_chooseBUYER">
+							<tr class="chfilter-field-\Bitrix\Main\User adm-report-chfilter-control" callback="RTFilter_chooseSALEUSER">
 								<td class="adm-filter-item-left">%TITLE% "%COMPARE%":</td>
 								<td class="adm-filter-item-center">
 									<div class="adm-filter-alignment">
@@ -483,7 +395,7 @@ if (!$fCriticalError)
 								<td class="adm-filter-item-right"></td>
 							</tr>
 							<!-- SaleSection example -->
-							<tr class="chfilter-field-\Bitrix\Sale\Section adm-report-chfilter-control" callback="RTFilter_chooseBoolean">
+							<tr class="chfilter-field-\Bitrix\Sale\Internals\Section adm-report-chfilter-control" callback="RTFilter_chooseBoolean">
 								<td class="adm-filter-item-left">%TITLE% "%COMPARE%":</td>
 								<td class="adm-filter-item-center">
 									<div class="adm-filter-alignment">
@@ -515,12 +427,12 @@ if (!$fCriticalError)
 								<td class="adm-filter-item-right"></td>
 							</tr>
 							<script type="text/javascript">
-								// BUYER, User controls
+								// ORDER.USER, User controls
 								BX.ready(
 									function ()
 									{
 										var i = 0, temp = [], controls = [];
-										temp[i++] = BX.findChildren(BX('report-rewrite-filter'), { className:'chfilter-field-BUYER' }, true);
+										//temp[i++] = BX.findChildren(BX('report-rewrite-filter'), { className:'chfilter-field-USER' }, true);
 										temp[i++] = BX.findChildren(BX('report-rewrite-filter'), { className:'chfilter-field-\\Bitrix\\Main\\User' }, true);
 										for (i in temp) if (temp[i]) controls = controls.concat(temp[i]);
 										if (controls)
@@ -529,15 +441,15 @@ if (!$fCriticalError)
 											{
 												var inp = BX.findChild(controls[i], {tag:'input', attr:{type:'text'}}, true);
 												var x = BX.findNextSibling(inp, {tag:'a'});
-												BX.bind(inp, 'click', RTFilter_chooseBUYER);
-												BX.bind(inp, 'blur', RTFilter_chooseBUYERCatchFix);
-												BX.bind(x, 'click', RTFilter_chooseBUYERClear);
+												BX.bind(inp, 'click', RTFilter_chooseSALEUSER);
+												BX.bind(inp, 'blur', RTFilter_chooseSALEUSERCatchFix);
+												BX.bind(x, 'click', RTFilter_chooseSALEUSERClear);
 											}
 										}
 									}
 								);
 
-								function RTFilter_chooseBUYER(control)
+								function RTFilter_chooseSALEUSER(control)
 								{
 									var elem = null;
 									if (this.parentNode)
@@ -551,12 +463,12 @@ if (!$fCriticalError)
 
 									BX.Access.Init();
 									BX.Access.SetSelected(null);
-									BX.Access.ShowForm({callback: RTFilter_chooseBUYERCatch_fromBXAccess});
+									BX.Access.ShowForm({callback: RTFilter_chooseSALEUSERCatch_fromBXAccess});
 
-									RTFilter_chooseBUYER_LAST_CALLER = elem;
+									RTFilter_chooseSALEUSER_LAST_CALLER = elem;
 								}
 
-								function RTFilter_chooseBUYERCatch_fromBXAccess(arSelected)
+								function RTFilter_chooseSALEUSERCatch_fromBXAccess(arSelected)
 								{
 									if (arSelected.user)
 									{
@@ -565,14 +477,14 @@ if (!$fCriticalError)
 										if (user)
 										{
 											user.id = user.id.substr(1);
-											RTFilter_chooseBUYERCatch(user);
+											RTFilter_chooseSALEUSERCatch(user);
 										}
 									}
 								}
 
-								function RTFilter_chooseBUYERCatch(user)
+								function RTFilter_chooseSALEUSERCatch(user)
 								{
-									var inp = RTFilter_chooseBUYER_LAST_CALLER;
+									var inp = RTFilter_chooseSALEUSER_LAST_CALLER;
 									var hid = BX.findNextSibling(inp, {tag:'input',attr:{type:'hidden'}});
 									var x = BX.findNextSibling(inp, {tag:'a'});
 
@@ -591,9 +503,9 @@ if (!$fCriticalError)
 									BX.Access.closeWait();
 								}
 
-								function RTFilter_chooseBUYERCatchFix()
+								function RTFilter_chooseSALEUSERCatchFix()
 								{
-									var inp = RTFilter_chooseBUYER_LAST_CALLER;
+									var inp = RTFilter_chooseSALEUSER_LAST_CALLER;
 									var hid = BX.findNextSibling(inp, {tag:'input',attr:{type:'hidden'}});
 
 									if (inp.value.length < 1 && parseInt(hid.value) > 0)
@@ -603,12 +515,12 @@ if (!$fCriticalError)
 									}
 								}
 
-								function RTFilter_chooseBUYERClear(e)
+								function RTFilter_chooseSALEUSERClear(e)
 								{
-									RTFilter_chooseBUYER_LAST_CALLER = BX.findChild(this.parentNode, {tag:'input',attr:{type:'text'}});
+									RTFilter_chooseSALEUSER_LAST_CALLER = BX.findChild(this.parentNode, {tag:'input',attr:{type:'text'}});
 
 									BX.PreventDefault(e);
-									RTFilter_chooseBUYERCatch({id:''});
+									RTFilter_chooseSALEUSERCatch({id:''});
 								}
 							</script>
 

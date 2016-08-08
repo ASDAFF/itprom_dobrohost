@@ -1,6 +1,13 @@
 <?
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
+$arParams['SUPPRESS_ERRORS'] = 				$this->__component->tryParseBoolean($arParams['SUPPRESS_ERRORS']);
+$arParams['DISABLE_KEYBOARD_INPUT'] = 		$this->__component->tryParseBoolean($arParams['DISABLE_KEYBOARD_INPUT']);
+$arParams['JS_CONTROL_GLOBAL_ID'] = 		$this->__component->tryParseStringStrict($arParams['JS_CONTROL_GLOBAL_ID']);
+$arParams['JS_CONTROL_DEFERRED_INIT'] = 	$this->__component->tryParseStringStrict($arParams['JS_CONTROL_DEFERRED_INIT']);
+$arParams['JS_CALLBACK'] = 					$this->__component->tryParseStringStrict($arParams['JS_CALLBACK']);
+$arParams['INITIALIZE_BY_GLOBAL_EVENT'] = 	$this->__component->tryParseStringStrict($arParams['INITIALIZE_BY_GLOBAL_EVENT']);
+
 $arResult['PRECACHED_POOL_JSON'] = array('a' => array()); // force PhpToJSObject to map this to {}, not to []
 
 if(is_array($arResult['PRECACHED_POOL']))

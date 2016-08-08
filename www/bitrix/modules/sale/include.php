@@ -44,7 +44,7 @@ $SALE_TIME_PERIOD_TYPES = array(
 	"Y" => GetMessage("I_PERIOD_YEAR")
 );
 
-define("SALE_VALUE_PRECISION", 2);
+define("SALE_VALUE_PRECISION", 4);
 define("SALE_WEIGHT_PRECISION", 3);
 
 define('BX_SALE_MENU_CATALOG_CLEAR', 'Y');
@@ -77,6 +77,7 @@ $GLOBALS["AVAILABLE_ORDER_FIELDS"] = array(
 CModule::AddAutoloadClasses(
 	"sale",
 	array(
+		"sale" => "install/index.php",
 		"CSaleDelivery" => $DBType."/delivery.php",
 		"CSaleDeliveryHandler" => $DBType."/delivery_handler.php",
 		"CSaleDeliveryHelper" => "general/delivery_helper.php",
@@ -89,9 +90,7 @@ CModule::AddAutoloadClasses(
 		"CSaleUser" => $DBType."/basket.php",
 
 		"CSaleOrder" => $DBType."/order.php",
-		"CSaleOrderProps" => $DBType."/order_props.php",
 		"CSaleOrderPropsGroup" => $DBType."/order_props_group.php",
-		"CSaleOrderPropsValue" => $DBType."/order_props_values.php",
 		"CSaleOrderPropsVariant" => $DBType."/order_props_variant.php",
 		"CSaleOrderUserProps" => $DBType."/order_user_props.php",
 		"CSaleOrderUserPropsValue" => $DBType."/order_user_props_value.php",
@@ -108,11 +107,14 @@ CModule::AddAutoloadClasses(
 
 		"CSalePersonType" => $DBType."/person_type.php",
 		"CSaleDiscount" => $DBType."/discount.php",
+		"CSaleBasketDiscountConvert" => "general/step_operations.php",
+		"CSaleDiscountReindex" => "general/step_operations.php",
+		"CSaleDiscountConvertExt" => "general/step_operations.php",
 		"CSaleUserAccount" => $DBType."/user.php",
 		"CSaleUserTransact" => $DBType."/user_transact.php",
 		"CSaleUserCards" => $DBType."/user_cards.php",
 		"CSaleRecurring" => $DBType."/recurring.php",
-		"CSaleStatus" => $DBType."/status.php",
+
 
 		"CSaleLang" => $DBType."/settings.php",
 		"CSaleGroupAccessToSite" => $DBType."/settings.php",
@@ -125,7 +127,7 @@ CModule::AddAutoloadClasses(
 		"CSaleAffiliatePlanSection" => $DBType."/affiliate_plan_section.php",
 		"CSaleAffiliateTier" => $DBType."/affiliate_tier.php",
 		"CSaleAffiliateTransact" => $DBType."/affiliate_transact.php",
-		"CSaleExport" => $DBType."/export.php",
+		"CSaleExport" => "general/export.php", //"CSaleExport" => $DBType."/export.php",
 		"CSaleOrderLoader" => "general/order_loader.php",
 
 		"CSaleMeasure" => "general/measurement.php",
@@ -150,40 +152,184 @@ CModule::AddAutoloadClasses(
 		"CSaleOrderChange" => $DBType."/order_change.php",
 		"CSaleOrderChangeFormat" => "general/order_change.php",
 
-		"Bitrix\\Sale\\OrderTable" => "lib/order.php",
-		"Bitrix\\Sale\\BasketTable" => "lib/basket.php",
-		"Bitrix\\Sale\\FuserTable" => "lib/fuser.php",
-		"Bitrix\\Sale\\StatusLangTable" => "lib/statuslang.php",
-		"Bitrix\\Sale\\PaySystemTable" => "lib/paysystem.php",
-		"Bitrix\\Sale\\DeliveryTable" => "lib/delivery.php",
-		"Bitrix\\Sale\\DeliveryHandlerTable" => "lib/deliveryhandler.php",
-		"Bitrix\\Sale\\PersonTypeTable" => "lib/persontype.php",
-		"\\Bitrix\\Sale\\OrderTable" => "lib/order.php",
-		"\\Bitrix\\Sale\\BasketTable" => "lib/basket.php",
-		"\\Bitrix\\Sale\\FuserTable" => "lib/fuser.php",
-		"\\Bitrix\\Sale\\StatusLangTable" => "lib/statuslang.php",
-		"\\Bitrix\\Sale\\PaySystemTable" => "lib/paysystem.php",
-		"\\Bitrix\\Sale\\DeliveryTable" => "lib/delivery.php",
-		"\\Bitrix\\Sale\\DeliveryHandlerTable" => "lib/deliveryhandler.php",
-		"\\Bitrix\\Sale\\PersonTypeTable" => "lib/persontype.php",
+		"\\Bitrix\\Sale\\Internals\\FuserTable" => "lib/internals/fuser.php",
+		"\\Bitrix\\Sale\\FuserTable" => "lib/internals/fuser_old.php",
+		"\\Bitrix\\Sale\\Fuser" => "lib/fuser.php",
+
+		// begin lists
+		'\Bitrix\Sale\Internals\Input\Manager' => 'lib/internals/input.php',
+		'\Bitrix\Sale\Internals\Input\Base'    => 'lib/internals/input.php',
+		'\Bitrix\Sale\Internals\Input\File'    => 'lib/internals/input.php',
+		'\Bitrix\Sale\Internals\Input\StringInput'    => 'lib/internals/input.php',
+
+		'\Bitrix\Sale\Internals\SiteCurrencyTable' => 'lib/internals/sitecurrency.php',
+
+		'CSaleStatus'                                 => 'general/status.php',
+		'\Bitrix\Sale\OrderStatus'                    => 'lib/status.php',
+		'\Bitrix\Sale\DeliveryStatus'                 => 'lib/status.php',
+		'\Bitrix\Sale\Internals\StatusTable'          => 'lib/internals/status.php',
+		'\Bitrix\Sale\Internals\StatusLangTable'      => 'lib/internals/status_lang.php',
+		'\Bitrix\Sale\Internals\StatusGroupTaskTable' => 'lib/internals/status_grouptask.php',
+		'CSaleOrderProps'                                => 'general/order_props.php',
+		'CSaleOrderPropsAdapter'                         => 'general/order_props.php',
+		'CSaleOrderPropsValue'                           => 'general/order_props_values.php',
+		'\Bitrix\Sale\PropertyValueCollection'           => 'lib/propertyvaluecollection.php',
+		'\Bitrix\Sale\Internals\OrderPropsTable'         => 'lib/internals/orderprops.php',
+		'\Bitrix\Sale\Internals\OrderPropsGroupTable'    => 'lib/internals/orderprops_group.php',
+		'\Bitrix\Sale\Internals\OrderPropsValueTable'    => 'lib/internals/orderprops_value.php',
+		'\Bitrix\Sale\Internals\OrderPropsVariantTable'  => 'lib/internals/orderprops_variant.php',
+		'\Bitrix\Sale\Internals\OrderPropsRelationTable' => 'lib/internals/orderprops_relation.php',
+		'\Bitrix\Sale\Internals\UserPropsValueTable'     => 'lib/internals/userpropsvalue.php',
+		'\Bitrix\Sale\Internals\UserPropsTable'          => 'lib/internals/userprops.php',
+		'\Bitrix\Sale\BusinessValue'                            => 'lib/businessvalue.php',
+		'\Bitrix\Sale\IBusinessValueProvider'                   => 'lib/businessvalueproviderinterface.php',
+		'\Bitrix\Sale\Internals\BusinessValueTable'             => 'lib/internals/businessvalue.php',
+		'\Bitrix\Sale\Internals\BusinessValuePersonDomainTable' => 'lib/internals/businessvalue_persondomain.php',
+		'\Bitrix\Sale\Internals\BusinessValueCode1CTable'       => 'lib/internals/businessvalue_code_1c.php',
+		'\Bitrix\Sale\Internals\PaySystemActionTable' => 'lib/internals/paysystemaction.php',
+		'\Bitrix\Sale\Internals\PaySystemInner' => 'lib/internals/paysysteminner.php',
+		'\Bitrix\Sale\Internals\DeliveryPaySystemTable' => 'lib/internals/delivery_paysystem.php',
+		'\Bitrix\Sale\UserMessageException' => 'lib/exception.php',
+		// end lists
+
+
+		"Bitrix\\Sale\\Internals\\DeliveryHandlerTable" => "lib/internals/deliveryhandler.php",
+		"Bitrix\\Sale\\DeliveryHandlerTable" => "lib/internals/deliveryhandler_old.php",
+
+		"\\Bitrix\\Sale\\Configuration" => "lib/configuration.php",
+		"\\Bitrix\\Sale\\Order" => "lib/order.php",
+		"\\Bitrix\\Sale\\PersonType" => "lib/persontype.php",
+
 		"CSaleReportSaleGoodsHelper" => "general/sale_report_helper.php",
 		"CSaleReportSaleProductHelper" => "general/sale_report_helper.php",
-		"Bitrix\\Sale\\ProductTable" => "lib/product.php",
-		"Bitrix\\Sale\\GoodsSectionTable" => "lib/goodssection.php",
-		"Bitrix\\Sale\\SectionTable" => "lib/section.php",
-		"Bitrix\\Sale\\StoreProductTable" => "lib/storeproduct.php",
-		"\\Bitrix\\Sale\\ProductTable" => "lib/product.php",
-		"\\Bitrix\\Sale\\GoodsSectionTable" => "lib/goodssection.php",
-		"\\Bitrix\\Sale\\SectionTable" => "lib/section.php",
-		"\\Bitrix\\Sale\\StoreProductTable" => "lib/storeproduct.php",
+
+		"Bitrix\\Sale\\ProductTable" => "lib/internals/product_old.php",
+		"\\Bitrix\\Sale\\ProductTable" => "lib/internals/product_old.php",
+		"\\Bitrix\\Sale\\Internals\\ProductTable" => "lib/internals/product.php",
+
+		"Bitrix\\Sale\\GoodsSectionTable" => "lib/internals/goodssection_old.php",
+		"\\Bitrix\\Sale\\GoodsSectionTable" => "lib/internals/goodssection_old.php",
+		"\\Bitrix\\Sale\\Internals\\GoodsSectionTable" => "lib/internals/goodssection.php",
+
+		"Bitrix\\Sale\\SectionTable" => "lib/internals/section_old.php",
+		"\\Bitrix\\Sale\\SectionTable" => "lib/internals/section_old.php",
+		"\\Bitrix\\Sale\\Internals\\SectionTable" => "lib/internals/section.php",
+
+		"\\Bitrix\\Sale\\Internals\\StoreProductTable" => "lib/internals/storeproduct.php",
+		"\\Bitrix\\Sale\\StoreProductTable" => "lib/internals/storeproduct_old.php",
+
+
+
 		"\\Bitrix\\Sale\\SalesZone" => "lib/saleszone.php",
-		"Bitrix\\Sale\\Delivery\\OrderDeliveryTable" => "lib/delivery/orderdelivery.php",
+		"Bitrix\\Sale\\Internals\\OrderDeliveryReqTable" => "lib/internals/orderdeliveryreq.php",
+		"\\Bitrix\\Sale\\Internals\\OrderDeliveryReqTable" => "lib/internals/orderdeliveryreq.php",
 
 		"Bitrix\\Sale\\SenderEventHandler" => "lib/senderconnector.php",
 		"Bitrix\\Sale\\SenderConnectorBuyer" => "lib/senderconnector.php",
 
-		"Bitrix\\Sale\\Product2ProductTable" => "lib/product2product.php",
-		"Bitrix\\Sale\\OrderProcessingTable" => "lib/orderprocessing.php",
+		"\\Bitrix\\Sale\\Product2ProductTable" => "lib/internals/product2product_old.php",
+		"\\Bitrix\\Sale\\Internals\\Product2ProductTable" => "lib/internals/product2product.php",
+
+		"Bitrix\\Sale\\OrderProcessingTable" => "lib/internals/orderprocessing_old.php",
+		"Bitrix\\Sale\\Internals\\OrderProcessingTable" => "lib/internals/orderprocessing.php",
+
+		"\\Bitrix\\Sale\\OrderBase" => "lib/orderbase.php",
+		"\\Bitrix\\Sale\\Internals\\Entity" => "lib/internals/entity.php",
+		"\\Bitrix\\Sale\\Internals\\EntityCollection" => "lib/internals/entitycollection.php",
+		"\\Bitrix\\Sale\\Internals\\CollectionBase" => "lib/internals/collectionbase.php",
+		//"\\Bitrix\\Sale\\Order" => "lib/order.php",
+
+		"\\Bitrix\\Sale\\Shipment" => "lib/shipment.php",
+		"\\Bitrix\\Sale\\ShipmentCollection" => "lib/shipmentcollection.php",
+		"\\Bitrix\\Sale\\ShipmentItemCollection" => "lib/shipmentitemcollection.php",
+		"\\Bitrix\\Sale\\ShipmentItem" => "lib/shipmentitem.php",
+		"\\Bitrix\\Sale\\ShipmentItemStoreCollection" => "lib/shipmentitemstorecollection.php",
+		"\\Bitrix\\Sale\\ShipmentItemStore" => "lib/shipmentitemstore.php",
+
+		"\\Bitrix\\Sale\\PaymentCollectionBase" => "lib/internals/paymentcollectionbase.php",
+		"\\Bitrix\\Sale\\PaymentCollection" => "lib/paymentcollection.php",
+		"\\Bitrix\\Sale\\Payment" => "lib/payment.php",
+		"\\Bitrix\\Sale\\PaysystemService" => "lib/paysystemservice.php",
+		"\\Bitrix\\Sale\\Internals\\Fields" => "lib/internals/fields.php",
+		"\\Bitrix\\Sale\\Result" => "lib/result.php",
+		"\\Bitrix\\Sale\\ResultError" => "lib/result.php",
+		"\\Bitrix\\Sale\\EventActions" => "lib/eventactions.php",
+
+
+		"\\Bitrix\\Sale\\Internals\\PaymentBase" => "lib/internals/paymentbase.php",
+		"\\Bitrix\\Sale\\BasketBase" => "lib/basketbase.php",
+		"\\Bitrix\\Sale\\BasketItemBase" => "lib/basketitembase.php",
+		"\\Bitrix\\Sale\\Basket" => "lib/basket.php",
+
+		"\\Bitrix\\Sale\\Internals\\BasketItemBase" => "lib/internals/basketitembase.php",
+		"\\Bitrix\\Sale\\BasketItem" => "lib/basketitem.php",
+		"\\Bitrix\\Sale\\BasketBundleCollection" => "lib/basketbundlecollection.php",
+
+		"\\Bitrix\\Sale\\OrderProperties" => "lib/orderprops.php",
+		"\\Bitrix\\Sale\\PropertyValue" => "lib/propertyvalue.php",
+
+		"\\Bitrix\\Sale\\Compatible\\Internals\\EntityCompatibility" => "lib/compatible/internals/entitycompatibility.php",
+		"\\Bitrix\\Sale\\Compatible\\OrderCompatibility" => "lib/compatible/ordercompatibility.php",
+		"\\Bitrix\\Sale\\Compatible\\BasketCompatibility" => "lib/compatible/basketcompatibility.php",
+		"\\Bitrix\\Sale\\Compatible\\EventCompatibility" => "lib/compatible/eventcompatibility.php",
+
+		'\Bitrix\Sale\Compatible\OrderQuery'   => 'lib/compatible/compatible.php',
+		'\Bitrix\Sale\Compatible\OrderQueryLocation'   => 'lib/compatible/compatible.php',
+		'\Bitrix\Sale\Compatible\FetchAdapter' => 'lib/compatible/compatible.php',
+		'\Bitrix\Sale\Compatible\Test'         => 'lib/compatible/compatible.php',
+
+		"\\Bitrix\\Sale\\OrderUserProperties" => "lib/userprops.php",
+
+		"\\Bitrix\\Sale\\BasketPropertiesCollection" => "lib/basketproperties.php",
+		"\\Bitrix\\Sale\\BasketPropertyItem" => "lib/basketpropertiesitem.php",
+
+		"\\Bitrix\\Sale\\Tax" => "lib/tax.php",
+
+		"\\Bitrix\\Sale\\Internals\\OrderTable" => "lib/internals/order.php",
+		"\\Bitrix\\Sale\\OrderTable" => "lib/internals/order_old.php",
+		"\\Bitrix\\Sale\\Internals\\BasketTable" => "lib/internals/basket.php",
+
+		"\\Bitrix\\Sale\\Internals\\ShipmentTable" => "lib/internals/shipment.php",
+		"\\Bitrix\\Sale\\Internals\\ShipmentItemTable" => "lib/internals/shipmentitem.php",
+
+		"\\Bitrix\\Sale\\Internals\\PaySystemServiceTable" => "lib/internals/paysystemservice.php",
+		"\\Bitrix\\Sale\\Internals\\PaymentTable" => "lib/internals/payment.php",
+
+		"\\Bitrix\\Sale\\Internals\\PaySystemTable" => "lib/internals/paysystem.php",
+		"\\Bitrix\\Sale\\PaySystemTable" => "lib/internals/paysystem_old.php",
+
+
+		"\\Bitrix\\Sale\\Internals\\ShipmentItemStoreTable" => "lib/internals/shipmentitemstore.php",
+		"\\Bitrix\\Sale\\Internals\\ShipmentExtraService" => "lib/internals/shipmentextraservice.php",
+
+		"\\Bitrix\\Sale\\Internals\\OrderUserPropertiesTable" => "lib/internals/userprops.php",
+
+		"\\Bitrix\\Sale\\Internals\\CollectableEntity" => "lib/internals/collectableentity.php",
+
+		"\\Bitrix\\Sale\\Provider" => "lib/provider.php",
+		"\\Bitrix\\Sale\\ProviderBase" => "lib/providerbase.php",
+		"\\Bitrix\\Sale\\OrderHistory" => "lib/orderhistory.php",
+
+		"\\Bitrix\\Sale\\Internals\\ProviderBasketCollection" => "lib/providerbasketcollection.php",
+		"\\Bitrix\\Sale\\Internals\\ProviderBasketItem" => "lib/providerbasketitem.php",
+		"\\Bitrix\\Sale\\Internals\\BasketPropertyTable" => "lib/internals/basketproperties.php",
+		"\\Bitrix\\Sale\\Internals\\CompanyTable" => "lib/internals/company.php",
+
+		"\\Bitrix\\Sale\\Internals\\PersonTypeTable" => "lib/internals/persontype.php",
+		"\\Bitrix\\Sale\\PersonTypeTable" => "lib/internals/persontype_old.php",
+		"\\Bitrix\\Sale\\Internals\\PersonTypeSiteTable" => "lib/internals/persontypesite.php",
+
+		"\\Bitrix\\Sale\\Internals\\Pool" => "lib/internals/pool.php",
+		"\\Bitrix\\Sale\\Internals\\UserBudgetPool" => "lib/internals/userbudgetpool.php",
+		"\\Bitrix\\Sale\\Internals\\EventsPool" => "lib/internals/eventspool.php",
+		"\\Bitrix\\Sale\\Internals\\Events" => "lib/internals/events.php",
+
+		"\\Bitrix\\Sale\\PriceMaths" => "lib/pricemaths.php",
+
+		"IPaymentOrder" => "lib/internals/paymentinterface.php",
+		"IShipmentOrder" => "lib/internals/shipmentinterface.php",
+
+
 
 		"Bitrix\\Sale\\Tax\\RateTable" => "lib/tax/rate.php",
 
@@ -244,10 +390,13 @@ CModule::AddAutoloadClasses(
 		"Bitrix\\Sale\\Location\\Import\\ImportProcess" => "lib/location/import/importprocess.php",
 		"Bitrix\\Sale\\Location\\Search\\ReindexProcess" => "lib/location/search/reindexprocess.php",
 
+		// exceptions
+		"\\Bitrix\\Sale\\Location\\Tree\\NodeNotFoundException" => "lib/location/tree/exception.php",
+		"\\Bitrix\\Sale\\Location\\Tree\\NodeIncorrectException" => "lib/location/tree/exception.php",
+
 		// old
 		"CSaleProxyAdminResult" => "general/proxyadminresult.php", // for admin
 		"CSaleProxyResult" => "general/proxyresult.php", // for public
-
 		// other
 		"Bitrix\\Sale\\Location\\Migration\\CUpdaterLocationPro" => "lib/location/migration/migrate.php", // class of migrations
 
@@ -255,13 +404,14 @@ CModule::AddAutoloadClasses(
 		// linked entities
 		////////////////////////////
 
-		"Bitrix\\Sale\\Delivery\\DeliveryTable" => "lib/delivery/delivery.php", // attack of clones???
 		"Bitrix\\Sale\\Delivery\\DeliveryLocationTable" => "lib/delivery/deliverylocation.php",
 		"Bitrix\\Sale\\Tax\\RateLocationTable" => "lib/tax/ratelocation.php",
 
 		////////////////////////////
 
 		"CSaleBasketFilter" => "general/sale_cond.php",
+		"CSaleCondCtrl" => "general/sale_cond.php",
+		"CSaleCondCtrlComplex" => "general/sale_cond.php",
 		"CSaleCondCtrlGroup" => "general/sale_cond.php",
 		"CSaleCondCtrlBasketGroup" => "general/sale_cond.php",
 		"CSaleCondCtrlBasketFields" => "general/sale_cond.php",
@@ -269,9 +419,13 @@ CModule::AddAutoloadClasses(
 		"CSaleCondCtrlOrderFields" => "general/sale_cond.php",
 		"CSaleCondCtrlCommon" => "general/sale_cond.php",
 		"CSaleCondTree" => "general/sale_cond.php",
-		"CSaleDiscountActionApply" => "general/sale_act.php",
+		"CSaleActionCtrl" => "general/sale_act.php",
 		"CSaleActionCtrlGroup" => "general/sale_act.php",
+		"CSaleActionCtrlAction" => "general/sale_act.php",
+		"CSaleDiscountActionApply" => "general/sale_act.php",
 		"CSaleActionCtrlDelivery" => "general/sale_act.php",
+		"CSaleActionGift" => "general/sale_act.php",
+		"CSaleActionGiftCtrlGroup" => "general/sale_act.php",
 		"CSaleActionCtrlBasketGroup" => "general/sale_act.php",
 		"CSaleActionCtrlSubGroup" => "general/sale_act.php",
 		"CSaleActionCondCtrlBasketFields" => "general/sale_act.php",
@@ -280,19 +434,87 @@ CModule::AddAutoloadClasses(
 
 		"CSalePdf" => "general/pdf.php",
 		"CSaleYMHandler" => "general/ym_handler.php",
-		"Bitrix\\Sale\\TradingPlatformTable" => "lib/tradingplatform.php",
 		"CSaleYMLocation" => "general/ym_location.php",
 
+		"Bitrix\\Sale\\Delivery\\CalculationResult" => "lib/delivery/calculationresult.php",
+		"Bitrix\\Sale\\Delivery\\Services\\Table" => "lib/delivery/services/table.php",
+		"Bitrix\\Sale\\Delivery\\Restrictions\\Table" => "lib/delivery/restrictions/table.php",
+		"Bitrix\\Sale\\Delivery\\Services\\Manager" => "lib/delivery/services/manager.php",
+		"Bitrix\\Sale\\Delivery\\Restrictions\\Base" => "lib/delivery/restrictions/base.php",
+		"Bitrix\\Sale\\Delivery\\Restrictions\\Manager" => "lib/delivery/restrictions/manager.php",
+		"Bitrix\\Sale\\Delivery\\Services\\Base" => "lib/delivery/services/base.php",
+		"Bitrix\\Sale\\Delivery\\Menu" => "lib/delivery/menu.php",
 
+		'\Bitrix\Sale\TradingPlatformTable' => 'lib/internals/tradingplatform.php',
+		'\Bitrix\Sale\TradingPlatform\Ebay\Policy' => 'lib/tradingplatform/ebay/policy.php',
+		'\Bitrix\Sale\TradingPlatform\Helper' => 'lib/tradingplatform/helper.php',
+		'\Bitrix\Sale\TradingPlatform\YandexMarket' => 'lib/tradingplatform/yandex_market.php',
+
+		'Bitrix\Sale\Internals\ShipmentExtraServiceTable' => 'lib/internals/shipmentextraservice.php',
+		'Bitrix\Sale\Delivery\ExtraServices\Manager' => 'lib/delivery/extra_services/manager.php',
+		'Bitrix\Sale\Delivery\ExtraServices\Base' => 'lib/delivery/extra_services/base.php',
+		'Bitrix\Sale\Delivery\ExtraServices\Table' => 'lib/delivery/extra_services/table.php',
+		'Bitrix\Sale\Delivery\Tracking\Manager' => 'lib/delivery/tracking/manager.php',
+		'Bitrix\Sale\Delivery\Tracking\Table' => 'lib/delivery/tracking/table.php',
+		'Bitrix\Sale\Delivery\ExternalLocationMap' => 'lib/delivery/externallocationmap.php',
+
+		'Bitrix\Sale\Internals\ServiceRestrictionTable' => 'lib/internals/servicerestriction.php',
+		'Bitrix\Sale\Services\Base\RestrictionManager' => 'lib/services/base/restrictionmanager.php',
+
+		'\Bitrix\Sale\Compatible\DiscountCompatibility' => 'lib/compatible/discountcompatibility.php',
+		'\Bitrix\Sale\Discount\Gift\Collection' => 'lib/discount/gift/collection.php',
+		'\Bitrix\Sale\Discount\Gift\Gift' => 'lib/discount/gift/gift.php',
+		'\Bitrix\Sale\Discount\Gift\Manager' => 'lib/discount/gift/manager.php',
+		'\Bitrix\Sale\Discount\Gift\RelatedDataTable' => 'lib/discount/gift/relateddata.php',
+		'\Bitrix\Sale\Discount\Actions' => 'lib/discount/actions.php',
 		'\Bitrix\Sale\Internals\DiscountTable' => 'lib/internals/discount.php',
 		'\Bitrix\Sale\Internals\DiscountCouponTable' => 'lib/internals/discountcoupon.php',
 		'\Bitrix\Sale\Internals\DiscountEntitiesTable' => 'lib/internals/discountentities.php',
 		'\Bitrix\Sale\Internals\DiscountGroupTable' => 'lib/internals/discountgroup.php',
 		'\Bitrix\Sale\Internals\DiscountModuleTable' => 'lib/internals/discountmodule.php',
-		'\Bitrix\Sale\Configuration' => 'lib/configuration.php',
-		'\Bitrix\Sale\DiscountCouponsManager' => 'lib/discountcoupon.php'
+		'\Bitrix\sale\Internals\OrderDiscountTable' => 'lib/internals/orderdiscount.php',
+		'\Bitrix\Sale\Internals\OrderDiscountDataTable' => 'lib/internals/orderdiscount.php',
+		'\Bitrix\sale\Internals\OrderCouponsTable' => 'lib/internals/orderdiscount.php',
+		'\Bitrix\sale\Internals\OrderModulesTable' => 'lib/internals/orderdiscount.php',
+		'\Bitrix\sale\Internals\OrderRulesTable' => 'lib/internals/orderdiscount.php',
+		'\Bitrix\Sale\Internals\OrderRulesDescrTable' => 'lib/internals/orderdiscount.php',
+		'\Bitrix\Sale\Internals\AccountNumberGenerator' => 'lib/internals/accountnumber.php',
+		'\Bitrix\Sale\Discount' => 'lib/discount.php',
+		'\Bitrix\Sale\DiscountCouponsManager' => 'lib/discountcoupon.php',
+		'\Bitrix\Sale\OrderDiscountManager' => 'lib/orderdiscount.php',
+
+		'\Bitrix\Sale\PaySystem\Service' => 'lib/paysystem/service.php',
+		'\Bitrix\Sale\PaySystem\Manager' => 'lib/paysystem/manager.php',
+		'\Bitrix\Sale\PaySystem\BaseServiceHandler' => 'lib/paysystem/baseservicehandler.php',
+		'\Bitrix\Sale\PaySystem\ServiceHandler' => 'lib/paysystem/servicehandler.php',
+		'\Bitrix\Sale\PaySystem\IRefund' => 'lib/paysystem/irefund.php',
+		'\Bitrix\Sale\PaySystem\IPayable' => 'lib/paysystem/ipayable.php',
+		'\Bitrix\Sale\PaySystem\ICheckable' => 'lib/paysystem/icheckable.php',
+		'\Bitrix\Sale\PaySystem\IPrePayable' => 'lib/paysystem/iprepayable.php',
+		'\Bitrix\Sale\PaySystem\CompatibilityHandler' => 'lib/paysystem/compatibilityhandler.php',
+		'\Bitrix\Sale\PaySystem\IHold' => 'lib/paysystem/ihold.php',
+		'\Bitrix\Sale\Internals\PaymentLogTable' => 'lib/internals/paymentlog.php',
+		'\Bitrix\Sale\Services\PaySystem\Restrictions\Manager' => 'lib/services/paysystem/restrictions/manager.php',
+		'\Bitrix\Sale\Services\Base\Restriction' => 'lib/services/base/restriction.php',
+		'\Bitrix\Sale\Services\Base\RestrictionManager' => 'lib/services/base/restrictionmanager.php',
+
+		'\Bitrix\Sale\Notify' => 'lib/notify.php',
 	)
 );
+
+$psConverted = \Bitrix\Main\Config\Option::get('main', '~sale_paysystem_converted');
+if ($psConverted == '')
+{
+	CAdminNotify::Add(
+		array(
+			"MESSAGE" => GetMessage("SALE_PAYSYSTEM_CONVERT_ERROR", array('#LANG#' => LANGUAGE_ID)),
+			"TAG" => "SALE_PAYSYSTEM_CONVERT_ERROR",
+			"MODULE_ID" => "sale",
+			"ENABLE_CLOSE" => "Y",
+			"PUBLIC_SECTION" => "N"
+		)
+	);
+}
 
 function GetBasketListSimple($bSkipFUserInit = true)
 {
@@ -344,8 +566,26 @@ function GetBasketList($bSkipFUserInit = true)
 	return $arRes;
 }
 
-function SaleFormatCurrency($fSum, $strCurrency, $OnlyValue = false)
+function SaleFormatCurrency($fSum, $strCurrency, $OnlyValue = false, $withoutFormat = false)
 {
+	if ($withoutFormat === true)
+	{
+		if ($fSum === '')
+			return '';
+
+		$currencyFormat = CCurrencyLang::GetFormatDescription($strCurrency);
+		if ($currencyFormat === false)
+		{
+			$currencyFormat = CCurrencyLang::GetDefaultValues();
+		}
+
+		$intDecimals = $currencyFormat['DECIMALS'];
+		if (round($fSum, $currencyFormat["DECIMALS"]) == round($fSum, 0))
+			$intDecimals = 0;
+
+		return number_format($fSum, $intDecimals, '.','');
+	}
+
 	return CCurrencyLang::CurrencyFormat($fSum, $strCurrency, !($OnlyValue === true));
 }
 
@@ -423,40 +663,74 @@ function PayUserAccountDeliveryOrderCallback($productID, $userID, $bPaid, $order
 * Formats user name. Used everywhere in 'sale' module
 *
 */
-function GetFormatedUserName($USER_ID, $bEnableId = true)
+function GetFormatedUserName($userId, $bEnableId = true, $createEditLink = true)
 {
-	$result = "";
-	$USER_ID = IntVal($USER_ID);
+	static $formattedUsersName = array();
+	static $siteNameFormat = '';
 
-	if($USER_ID > 0)
+	$result = (!is_array($userId)) ? '' : array();
+	$newUsers = array();
+
+	if (is_array($userId))
 	{
-		if (!isset($LOCAL_PAYED_USER_CACHE[$USER_ID]) || !is_array($LOCAL_PAYED_USER_CACHE[$USER_ID]))
+		foreach ($userId as $id)
 		{
-			$dbUser = CUser::GetByID($USER_ID);
-			if ($arUser = $dbUser->Fetch())
-			{
-				$LOCAL_PAYED_USER_CACHE[$USER_ID] = CUser::FormatName(
-						CSite::GetNameFormat(false),
-						array(
-							"NAME" => $arUser["NAME"],
-							"LAST_NAME" => $arUser["LAST_NAME"],
-							"SECOND_NAME" => $arUser["SECOND_NAME"],
-							"LOGIN" => $arUser["LOGIN"]
-						),
-						true, true
-					);
-			}
+			if (!isset($formattedUsersName[$id]))
+				$newUsers[] = $id;
 		}
+	}
+	else if(!isset($formattedUsersName[$userId]))
+	{
+		$newUsers[] = $userId;
+	}
 
+	if (count($newUsers) > 0)
+	{
+		$resUsers = \Bitrix\Main\UserTable::getList(
+			array(
+				'select' => array('ID', 'NAME', 'LAST_NAME', 'SECOND_NAME', 'LOGIN', 'EMAIL'),
+				'filter' => array('ID' => $newUsers)
+			)
+		);
+		while ($arUser = $resUsers->Fetch())
+		{
+			if (strlen($siteNameFormat) == 0)
+				$siteNameFormat = CSite::GetNameFormat(false);
+			$formattedUsersName[$arUser['ID']] = CUser::FormatName($siteNameFormat, $arUser, true, true);
+		}
+	}
+
+	if (is_array($userId))
+	{
+		foreach ($userId as $uId)
+		{
+			$formatted = '';
+			if ($bEnableId)
+				$formatted = '[<a href="/bitrix/admin/user_edit.php?ID='.$uId.'&lang='.LANGUAGE_ID.'">'.$uId.'</a>] ';
+
+			if (CBXFeatures::IsFeatureEnabled('SaleAccounts') && !$createEditLink)
+				$formatted .= '<a href="/bitrix/admin/sale_buyers_profile.php?USER_ID='.$uId.'&lang='.LANGUAGE_ID.'">';
+			else
+				$formatted .= '<a href="/bitrix/admin/user_edit.php?ID='.$uId.'&lang='.LANGUAGE_ID.'">';
+			$formatted .= $formattedUsersName[$uId];
+
+			$formatted .= '</a>';
+
+			$result[$uId] = $formatted;
+		}
+	}
+	else
+	{
 		if ($bEnableId)
-			$result .= '[<a href="/bitrix/admin/user_edit.php?ID='.$USER_ID.'&lang='.LANGUAGE_ID.'">'.$USER_ID.'</a>] ';
+			$result .= '[<a href="/bitrix/admin/user_edit.php?ID='.$userId.'&lang='.LANGUAGE_ID.'">'.$userId.'</a>] ';
 
-		if (CBXFeatures::IsFeatureEnabled('SaleAccounts'))
-			$result .= '<a href="/bitrix/admin/sale_buyers_profile.php?USER_ID='.$USER_ID.'&lang='.LANGUAGE_ID.'">';
+		if (CBXFeatures::IsFeatureEnabled('SaleAccounts') && !$createEditLink)
+			$result .= '<a href="/bitrix/admin/sale_buyers_profile.php?USER_ID='.$userId.'&lang='.LANGUAGE_ID.'">';
 		else
-			$result .= '<a href="/bitrix/admin/user_edit.php?ID='.$USER_ID.'&lang='.LANGUAGE_ID.'">';
+			$result .= '<a href="/bitrix/admin/user_edit.php?ID='.$userId.'&lang='.LANGUAGE_ID.'">';
 
-		$result .= $LOCAL_PAYED_USER_CACHE[$USER_ID];
+		$result .= $formattedUsersName[$userId];
+
 		$result .= '</a>';
 	}
 
@@ -472,6 +746,8 @@ function GetFormatedUserName($USER_ID, $bEnableId = true)
  */
 function getMeasures($arBasketItems)
 {
+	static $measures = array();
+	$newMeasure = array();
 	if (Loader::includeModule('catalog'))
 	{
 		$arDefaultMeasure = CCatalogMeasure::getDefaultMeasure(true, true);
@@ -479,13 +755,25 @@ function getMeasures($arBasketItems)
 		$basketLinks = array();
 		foreach ($arBasketItems as $keyBasket => $arItem)
 		{
-			$productID = (int)$arItem["PRODUCT_ID"];
-			if (!isset($basketLinks[$productID]))
-				$basketLinks[$productID] = array();
-			$basketLinks[$productID][] = $keyBasket;
-			$arElementId[] = $productID;
-			$arBasketItems[$keyBasket]['MEASURE_TEXT'] = $arDefaultMeasure['~SYMBOL_RUS'];
-			$arBasketItems[$keyBasket]['MEASURE'] = 0;
+			if (isset($arItem['MEASURE_NAME']) && strlen($arItem['MEASURE_NAME']) > 0)
+			{
+				$measureText = $arItem['MEASURE_NAME'];
+				$measureCode = intval($arItem['MEASURE_CODE']);
+			}
+			else
+			{
+				$productID = (int)$arItem["PRODUCT_ID"];
+				if (!isset($basketLinks[$productID]))
+					$basketLinks[$productID] = array();
+				$basketLinks[$productID][] = $keyBasket;
+				$arElementId[] = $productID;
+
+				$measureText = $arDefaultMeasure['~SYMBOL_RUS'];
+				$measureCode = 0;
+			}
+
+			$arBasketItems[$keyBasket]['MEASURE_TEXT'] = $measureText;
+			$arBasketItems[$keyBasket]['MEASURE'] = $measureCode;
 		}
 		unset($productID, $keyBasket, $arItem);
 
@@ -506,35 +794,36 @@ function getMeasures($arBasketItems)
 				if (!isset($arBasket2Measure[$arRes['MEASURE']]))
 					$arBasket2Measure[$arRes['MEASURE']] = array();
 				$arBasket2Measure[$arRes['MEASURE']][] = $arRes['ID'];
+
+				if (!isset($measures[$arRes['MEASURE']]) && !in_array($arRes['MEASURE'], $newMeasure))
+					$newMeasure[] = $arRes['MEASURE'];
 			}
 			unset($arRes, $dbres);
-			if (!empty($arBasket2Measure))
+
+			if (!empty($newMeasure))
 			{
 				$dbMeasure = CCatalogMeasure::GetList(
 					array(),
-					array("ID" => array_keys($arBasket2Measure)),
+					array("ID" => array_values($newMeasure)),
 					false,
 					false,
 					array('ID', 'SYMBOL_RUS')
 				);
 				while ($arMeasure = $dbMeasure->Fetch())
+					$measures[$arMeasure['ID']] = $arMeasure;
+			}
+
+			foreach ($arBasket2Measure as $measureId => $productIds)
+			{
+				foreach ($productIds as $productId)
 				{
-					$arMeasure['ID'] = (int)$arMeasure['ID'];
-					if (isset($arBasket2Measure[$arMeasure['ID']]) && !empty($arBasket2Measure[$arMeasure['ID']]))
+					if (isset($basketLinks[$productId]) && !empty($basketLinks[$productId]))
 					{
-						foreach ($arBasket2Measure[$arMeasure['ID']] as &$productID)
+						foreach ($basketLinks[$productId] as $keyBasket)
 						{
-							if (isset($basketLinks[$productID]) && !empty($basketLinks[$productID]))
-							{
-								foreach ($basketLinks[$productID] as &$keyBasket)
-								{
-									$arBasketItems[$keyBasket]['MEASURE_TEXT'] = $arMeasure['SYMBOL_RUS'];
-									$arBasketItems[$keyBasket]['MEASURE'] = $arMeasure['ID'];
-								}
-								unset($keyBasket);
-							}
+							$arBasketItems[$keyBasket]['MEASURE_TEXT'] = $measures[$measureId]['SYMBOL_RUS'];
+							$arBasketItems[$keyBasket]['MEASURE'] = $measures[$measureId]['ID'];
 						}
-						unset($productID);
 					}
 				}
 			}
@@ -554,28 +843,51 @@ function getRatio($arBasketItems)
 {
 	if (Loader::includeModule('catalog'))
 	{
+		static $cacheRatio = array();
 		$map = array();
 		$arElementId = array();
 		foreach ($arBasketItems as $key => $arItem)
 		{
-			$arElementId[$arItem["PRODUCT_ID"]] = $arItem["PRODUCT_ID"];
+			$hash = md5((!empty($arItem['PRODUCT_PROVIDER_CLASS']) ? $arItem['PRODUCT_PROVIDER_CLASS']: "")."|".(!empty($arItem['MODULE']) ? $arItem['MODULE']: "")."|".$arItem["PRODUCT_ID"]);
+
+			if (array_key_exists($hash, $cacheRatio))
+			{
+				$arBasketItems[$key]["MEASURE_RATIO"] = $cacheRatio[$hash];
+			}
+			else
+			{
+				$arElementId[$arItem["PRODUCT_ID"]] = $arItem["PRODUCT_ID"];
+			}
+
 			if (!isset($map[$arItem["PRODUCT_ID"]]))
+			{
 				$map[$arItem["PRODUCT_ID"]] = array();
+			}
+
 			$map[$arItem["PRODUCT_ID"]][] = $key;
 		}
 
 		if (!empty($arElementId))
 		{
-			$dbRatio = CCatalogMeasureRatio::getList(array(), array('PRODUCT_ID' => $arElementId), false, false, array('PRODUCT_ID', 'RATIO'));
+			$dbRatio = CCatalogMeasureRatio::getList(array(), array('@PRODUCT_ID' => $arElementId), false, false, array('PRODUCT_ID', 'RATIO'));
 			while ($arRatio = $dbRatio->Fetch())
 			{
 				if (empty($map[$arRatio["PRODUCT_ID"]]))
 					continue;
+
 				foreach ($map[$arRatio["PRODUCT_ID"]] as $key)
 				{
 					$arBasketItems[$key]["MEASURE_RATIO"] = $arRatio["RATIO"];
+
+					$itemData = $arBasketItems[$key];
+
+					$hash = md5((!empty($itemData['PRODUCT_PROVIDER_CLASS']) ? $itemData['PRODUCT_PROVIDER_CLASS']: "")."|".(!empty($itemData['MODULE']) ? $itemData['MODULE']: "")."|".$itemData["PRODUCT_ID"]);
+					
+					$cacheRatio[$hash] = $arRatio["RATIO"];
 				}
+				unset($key);
 			}
+			unset($arRatio, $dbRatio);
 		}
 		unset($arElementId, $map);
 	}

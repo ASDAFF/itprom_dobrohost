@@ -32,7 +32,9 @@ $MESS ["SALE_DH_RP_FEATURE_MARKED"] = "осторожно";
 $MESS ["SALE_DH_RP_FEATURE_VALUE"] = "Посылка с объявленной ценностью";
 $MESS ["SALE_DH_RP_FEATURE_ENABLED"] = "включена";
 $MESS ["SALE_DH_RP_ERROR_LOCATION_NOT_FOUND"] = "Местоположение не найдено";
-$MESS ["SALE_DH_RP_MESS_CONFIG_TARIF_ZONES_SUSP"] = "Необходимо проверить корректность настройки почтовых зон автоматизированного обработчика доставки <a href=\"/bitrix/admin/sale_delivery_handler_edit.php?SID=rus_post&lang=##LANGUAGE_ID##\">\"Почта России\"</a>";
 $MESS ["SALE_DH_RP_SET_DEFAULT_TARIF_ZONES"] = "Почтовые зоны по умолчанию";
 $MESS ["SALE_DH_RP_SET_DEFAULT_TARIF_ZONES_SET"] = "установить";
+$MESS ["SALE_DH_RP_SET_DEFAULT_TARIF"] = "Тарифы по умолчанию";
+$MESS ["SALE_DH_RP_SET_DEFAULT_TARIF_SET"] = "установить";
+$MESS ["SALE_DH_RP_CALCULATE_ERROR"] = "Не удалось рассчитать стоимость доставки";
 ?>

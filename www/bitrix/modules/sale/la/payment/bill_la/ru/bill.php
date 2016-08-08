@@ -1,89 +1,89 @@
 <?
 global $MESS;
 
-$MESS["SBLP_DTITLE"] = "Ñ÷åò (Àíãëèéñêèé)";
-$MESS["SBLP_DDESCR"] = "Ñ÷åò íà îïëàòó äëÿ ðàñïå÷àòêè. Äîëæåí îòêðûâàòüñÿ â íîâîì îêíå.";
+$MESS["SBLP_DTITLE"] = "Счет (Английский)";
+$MESS["SBLP_DDESCR"] = "Счет на оплату для распечатки. Должен открываться в новом окне.";
 
-$MESS["SBLP_DATE"] = "Äàòà çàêàçà";
-$MESS["SBLP_DATE_DESC"] = "Äàòà îôîðìëåíèÿ çàêàçà";
-$MESS["SBLP_PAY_BEFORE"] = "Ñðîê îïëàòû";
-$MESS["SBLP_PAY_BEFORE_DESC"] = "Ñðîê îïëàòû ñ÷åòà";
-$MESS["SBLP_SUPPLI"] = "Íàçâàíèå êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_SUPPLI_DESC"] = "Íàçâàíèå êîìïàíèè-ïîñòàâùèêà (ïðîäàâöà)";
-$MESS["SBLP_ADRESS_SUPPLI"] = "Àäðåñ êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_ADRESS_SUPPLI_DESC"] = "Àäðåñ êîìïàíèè-ïîñòàâùèêà (ïðîäàâöà)";
-$MESS["SBLP_PHONE_SUPPLI"] = "Òåëåôîí êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_PHONE_SUPPLI_DESC"] = "Òåëåôîí êîìïàíèè-ïîñòàâùèêà (ïðîäàâöà)";
+$MESS["SBLP_DATE"] = "Дата заказа";
+$MESS["SBLP_DATE_DESC"] = "Дата оформления заказа";
+$MESS["SBLP_PAY_BEFORE"] = "Срок оплаты";
+$MESS["SBLP_PAY_BEFORE_DESC"] = "Срок оплаты счета";
+$MESS["SBLP_SUPPLI"] = "Название компании-поставщика";
+$MESS["SBLP_SUPPLI_DESC"] = "Название компании-поставщика (продавца)";
+$MESS["SBLP_ADRESS_SUPPLI"] = "Адрес компании-поставщика";
+$MESS["SBLP_ADRESS_SUPPLI_DESC"] = "Адрес компании-поставщика (продавца)";
+$MESS["SBLP_PHONE_SUPPLI"] = "Телефон компании-поставщика";
+$MESS["SBLP_PHONE_SUPPLI_DESC"] = "Телефон компании-поставщика (продавца)";
 
-$MESS["SBLP_BANK_ACCNO_SUPPLI"] = "Íîìåð ñ÷åòà êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_BANK_ACCNO_SUPPLI_DESC"] = "Íîìåð ñ÷åòà êîìïàíèè-ïîñòàâùèêà (ïðîäàâöà)";
-$MESS["SBLP_BANK_ACCNO_SUPPLI_VAL"] = "Íîìåð ñ÷åòà êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_BANK_SUPPLI"] = "Áàíê êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_BANK_SUPPLI_DESC"] = "Áàíê êîìïàíèè-ïîñòàâùèêà (ïðîäàâöà)";
-$MESS["SBLP_BANK_SUPPLI_VAL"] = "Áàíê êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_BANK_ADDR_SUPPLI"] = "Àäðåñ áàíêà êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_BANK_ADDR_SUPPLI_DESC"] = "Àäðåñ áàíêà êîìïàíèè-ïîñòàâùèêà (ïðîäàâöà)";
-$MESS["SBLP_BANK_ADDR_SUPPLI_VAL"] = "Àäðåñ áàíêà êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_BANK_PHONE_SUPPLI"] = "Òåëåôîí áàíêà êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_BANK_PHONE_SUPPLI_DESC"] = "Òåëåôîí áàíêà êîìïàíèè-ïîñòàâùèêà (ïðîäàâöà)";
-$MESS["SBLP_BANK_PHONE_SUPPLI_VAL"] = "Òåëåôîí áàíêà êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_BANK_ROUTENO_SUPPLI"] = "Êîððåñïîíäåíòñêèé ñ÷åò êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_BANK_ROUTENO_SUPPLI_DESC"] = "Êîððåñïîíäåíòñêèé ñ÷åò êîìïàíèè-ïîñòàâùèêà (ïðîäàâöà)";
-$MESS["SBLP_BANK_ROUTENO_SUPPLI_VAL"] = "Êîððåñïîíäåíòñêèé ñ÷åò êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_BANK_SWIFT_SUPPLI"] = "SWIFT êîä áàíêà êîìïàíèè-ïîñòàâùèêà";
-$MESS["SBLP_BANK_SWIFT_SUPPLI_DESC"] = "SWIFT êîä áàíêà êîìïàíèè-ïîñòàâùèêà (ïðîäàâöà)";
-$MESS["SBLP_BANK_SWIFT_SUPPLI_VAL"] = "SWIFT êîä áàíêà êîìïàíèè-ïîñòàâùèêà";
+$MESS["SBLP_BANK_ACCNO_SUPPLI"] = "Номер счета компании-поставщика";
+$MESS["SBLP_BANK_ACCNO_SUPPLI_DESC"] = "Номер счета компании-поставщика (продавца)";
+$MESS["SBLP_BANK_ACCNO_SUPPLI_VAL"] = "Номер счета компании-поставщика";
+$MESS["SBLP_BANK_SUPPLI"] = "Банк компании-поставщика";
+$MESS["SBLP_BANK_SUPPLI_DESC"] = "Банк компании-поставщика (продавца)";
+$MESS["SBLP_BANK_SUPPLI_VAL"] = "Банк компании-поставщика";
+$MESS["SBLP_BANK_ADDR_SUPPLI"] = "Адрес банка компании-поставщика";
+$MESS["SBLP_BANK_ADDR_SUPPLI_DESC"] = "Адрес банка компании-поставщика (продавца)";
+$MESS["SBLP_BANK_ADDR_SUPPLI_VAL"] = "Адрес банка компании-поставщика";
+$MESS["SBLP_BANK_PHONE_SUPPLI"] = "Телефон банка компании-поставщика";
+$MESS["SBLP_BANK_PHONE_SUPPLI_DESC"] = "Телефон банка компании-поставщика (продавца)";
+$MESS["SBLP_BANK_PHONE_SUPPLI_VAL"] = "Телефон банка компании-поставщика";
+$MESS["SBLP_BANK_ROUTENO_SUPPLI"] = "Корреспондентский счет компании-поставщика";
+$MESS["SBLP_BANK_ROUTENO_SUPPLI_DESC"] = "Корреспондентский счет компании-поставщика (продавца)";
+$MESS["SBLP_BANK_ROUTENO_SUPPLI_VAL"] = "Корреспондентский счет компании-поставщика";
+$MESS["SBLP_BANK_SWIFT_SUPPLI"] = "SWIFT код банка компании-поставщика";
+$MESS["SBLP_BANK_SWIFT_SUPPLI_DESC"] = "SWIFT код банка компании-поставщика (продавца)";
+$MESS["SBLP_BANK_SWIFT_SUPPLI_VAL"] = "SWIFT код банка компании-поставщика";
 
-$MESS["SBLP_DIR_POS_SUPPLI"] = "Äîëæíîñòü ðóêîâîäèòåëÿ";
-$MESS["SBLP_DIR_POS_SUPPLI_DESC"] = "Äîëæíîñòü ðóêîâîäèòåëÿ (ïðîäàâöà)";
+$MESS["SBLP_DIR_POS_SUPPLI"] = "Должность руководителя";
+$MESS["SBLP_DIR_POS_SUPPLI_DESC"] = "Должность руководителя (продавца)";
 $MESS["SBLP_DIR_POS_SUPPLI_VAL"] = "The Director";
-$MESS["SBLP_ACC_POS_SUPPLI"] = "Äîëæíîñòü áóõãàëòåðà";
-$MESS["SBLP_ACC_POS_SUPPLI_DESC"] = "Äîëæíîñòü áóõãàëòåðà (ïðîäàâöà)";
+$MESS["SBLP_ACC_POS_SUPPLI"] = "Должность бухгалтера";
+$MESS["SBLP_ACC_POS_SUPPLI_DESC"] = "Должность бухгалтера (продавца)";
 $MESS["SBLP_ACC_POS_SUPPLI_VAL"] = "The Accountant";
 
-$MESS["SBLP_DIR_SUPPLI"] = "ÔÈÎ ðóêîâîäèòåëÿ";
-$MESS["SBLP_DIR_SUPPLI_DESC"] = "ÔÈÎ ðóêîâîäèòåëÿ (ïðîäàâöà)";
-$MESS["SBLP_ACC_SUPPLI"] = "ÔÈÎ áóõãàëòåðà";
-$MESS["SBLP_ACC_SUPPLI_DESC"] = "ÔÈÎ áóõãàëòåðà (ïðîäàâöà)";
+$MESS["SBLP_DIR_SUPPLI"] = "ФИО руководителя";
+$MESS["SBLP_DIR_SUPPLI_DESC"] = "ФИО руководителя (продавца)";
+$MESS["SBLP_ACC_SUPPLI"] = "ФИО бухгалтера";
+$MESS["SBLP_ACC_SUPPLI_DESC"] = "ФИО бухгалтера (продавца)";
 
-$MESS["SBLP_CUSTOMER"] = "Íàçâàíèå êîìïàíèè-çàêàç÷èêà";
-$MESS["SBLP_CUSTOMER_DESC"] = "Íàçâàíèå êîìïàíèè-çàêàç÷èêà (ïîêóïàòåëÿ)";
-$MESS["SBLP_CUSTOMER_ADRES"] = "Àäðåñ êîìïàíèè-çàêàç÷èêà";
-$MESS["SBLP_CUSTOMER_ADRES_DESC"] = "Àäðåñ êîìïàíèè-çàêàç÷èêà (ïîêóïàòåëÿ)";
-$MESS["SBLP_CUSTOMER_PHONE"] = "Òåëåôîí êîìïàíèè-çàêàç÷èêà";
-$MESS["SBLP_CUSTOMER_PHONE_DESC"] = "Òåëåôîí êîìïàíèè-çàêàç÷èêà (ïîêóïàòåëÿ)";
-$MESS["SBLP_CUSTOMER_FAX"] = "Ôàêñ êîìïàíèè-çàêàç÷èêà";
-$MESS["SBLP_CUSTOMER_FAX_DESC"] = "Ôàêñ êîìïàíèè-çàêàç÷èêà (ïîêóïàòåëÿ)";
-$MESS["SBLP_CUSTOMER_PERSON"] = "Êîíòàêòíîå ëèöî êîìïàíèè-çàêàç÷èêà";
-$MESS["SBLP_CUSTOMER_PERSON_DESC"] = "Êîíòàêòíîå ëèöî êîìïàíèè-çàêàç÷èêà (ïîêóïàòåëÿ)";
+$MESS["SBLP_CUSTOMER"] = "Название компании-заказчика";
+$MESS["SBLP_CUSTOMER_DESC"] = "Название компании-заказчика (покупателя)";
+$MESS["SBLP_CUSTOMER_ADRES"] = "Адрес компании-заказчика";
+$MESS["SBLP_CUSTOMER_ADRES_DESC"] = "Адрес компании-заказчика (покупателя)";
+$MESS["SBLP_CUSTOMER_PHONE"] = "Телефон компании-заказчика";
+$MESS["SBLP_CUSTOMER_PHONE_DESC"] = "Телефон компании-заказчика (покупателя)";
+$MESS["SBLP_CUSTOMER_FAX"] = "Факс компании-заказчика";
+$MESS["SBLP_CUSTOMER_FAX_DESC"] = "Факс компании-заказчика (покупателя)";
+$MESS["SBLP_CUSTOMER_PERSON"] = "Контактное лицо компании-заказчика";
+$MESS["SBLP_CUSTOMER_PERSON_DESC"] = "Контактное лицо компании-заказчика (покупателя)";
 
-$MESS["SBLP_PRINT"] = "Ïå÷àòü (ðåêîìåíäóåìûå ðàçìåðû 150x150&nbsp;px)";
-$MESS["SBLP_PRINT_DESC"] = "Èçîáðàæåíèå ïå÷àòè ïîñòàâùèêà íà ñàéòå";
-$MESS["SBLP_LOGO"] = "Ëîãîòèï êîìïàíèè-ïîñòàâùèêà (ðåêîìåíäóåìûå ðàçìåðû 80x80&nbsp;px)";
-$MESS["SBLP_LOGO_DESC"] = "Ëîãîòèï êîìïàíèè-ïîñòàâùèêà";
+$MESS["SBLP_PRINT"] = "Печать (рекомендуемые размеры 150x150&nbsp;px)";
+$MESS["SBLP_PRINT_DESC"] = "Изображение печати поставщика на сайте";
+$MESS["SBLP_LOGO"] = "Логотип компании-поставщика (рекомендуемые размеры 80x80&nbsp;px)";
+$MESS["SBLP_LOGO_DESC"] = "Логотип компании-поставщика";
 
-$MESS["SBLP_DIR_SIGN_SUPPLI"] = "Ïîäïèñü ãåíåðàëüíîãî äèðåêòîðà (ðåêîìåíäóåìûå ðàçìåðû 200x50&nbsp;px)";
-$MESS["SBLP_DIR_SIGN_SUPPLI_DESC"] = "Èçîáðàæåíèå ïîäïèñè ãåíåðàëüíîãî äèðåêòîðà";
-$MESS["SBLP_ACC_SIGN_SUPPLI"] = "Ïîäïèñü ãëàâíîãî áóõãàëòåðà (ðåêîìåíäóåìûå ðàçìåðû 200x50&nbsp;px)";
-$MESS["SBLP_ACC_SIGN_SUPPLI_DESC"] = "Èçîáðàæåíèå ïîäïèñè ãëàâíîãî áóõãàëòåðà";
+$MESS["SBLP_DIR_SIGN_SUPPLI"] = "Подпись генерального директора (рекомендуемые размеры 200x50&nbsp;px)";
+$MESS["SBLP_DIR_SIGN_SUPPLI_DESC"] = "Изображение подписи генерального директора";
+$MESS["SBLP_ACC_SIGN_SUPPLI"] = "Подпись главного бухгалтера (рекомендуемые размеры 200x50&nbsp;px)";
+$MESS["SBLP_ACC_SIGN_SUPPLI_DESC"] = "Изображение подписи главного бухгалтера";
 
-$MESS["SBLP_BACKGROUND"] = "Ôîí (ðåêîìåíäóåìûå ðàçìåðû 800x1120&nbsp;px)";
-$MESS["SBLP_BACKGROUND_DESC"] = "Èçîáðàæåíèå ôîíà äëÿ ñ÷åòà";
+$MESS["SBLP_BACKGROUND"] = "Фон (рекомендуемые размеры 800x1120&nbsp;px)";
+$MESS["SBLP_BACKGROUND_DESC"] = "Изображение фона для счета";
 
-$MESS["SBLP_BACKGROUND_STYLE"] = "Ñòèëü îòîáðàæåíèÿ ôîíà";
-$MESS["SBLP_BACKGROUND_STYLE_NONE"] = "Êàê åñòü";
-$MESS["SBLP_BACKGROUND_STYLE_TILE"] = "Çàìîñòèòü";
-$MESS["SBLP_BACKGROUND_STYLE_STRETCH"] = "Ðàñòÿíóòü";
+$MESS["SBLP_BACKGROUND_STYLE"] = "Стиль отображения фона";
+$MESS["SBLP_BACKGROUND_STYLE_NONE"] = "Как есть";
+$MESS["SBLP_BACKGROUND_STYLE_TILE"] = "Замостить";
+$MESS["SBLP_BACKGROUND_STYLE_STRETCH"] = "Растянуть";
 
-$MESS["SBLP_MARGIN_TOP"] = "Îòñòóï ñâåðõó ñòðàíèöû (ìì)";
-$MESS["SBLP_MARGIN_RIGHT"] = "Îòñòóï ñïðàâà ñòðàíèöû (ìì)";
-$MESS["SBLP_MARGIN_BOTTOM"] = "Îòñòóï ñíèçó ñòðàíèöû (ìì)";
-$MESS["SBLP_MARGIN_LEFT"] = "Îòñòóï ñëåâà ñòðàíèöû (ìì)";
+$MESS["SBLP_MARGIN_TOP"] = "Отступ сверху страницы (мм)";
+$MESS["SBLP_MARGIN_RIGHT"] = "Отступ справа страницы (мм)";
+$MESS["SBLP_MARGIN_BOTTOM"] = "Отступ снизу страницы (мм)";
+$MESS["SBLP_MARGIN_LEFT"] = "Отступ слева страницы (мм)";
 
-$MESS["SBLP_COMMENT1"] = "Êîììåíòàðèé ê ñ÷åòó 1";
-$MESS["SBLP_COMMENT2"] = "Êîììåíòàðèé ê ñ÷åòó 2";
+$MESS["SBLP_COMMENT1"] = "Комментарий к счету 1";
+$MESS["SBLP_COMMENT2"] = "Комментарий к счету 2";
 
-$MESS["SBLP_LOGO_DPI"] = "Ìàñøòàá ëîãîòèïà";
+$MESS["SBLP_LOGO_DPI"] = "Масштаб логотипа";
 $MESS["SBLP_LOGO_DPI_72"] = "133% (72 dpi)";
 $MESS["SBLP_LOGO_DPI_96"] = "100% (96 dpi)";
 $MESS["SBLP_LOGO_DPI_150"] = "64% (150 dpi)";

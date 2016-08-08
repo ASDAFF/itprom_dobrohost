@@ -1,7 +1,12 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
-
 $APPLICATION->AddHeadScript("/bitrix/js/main/cphttprequest.js");
+
+if((string) $arResult['LOCATION_STRING'] != '')
+{
+	$arResult['LOCATION_STRING'] = preg_replace('#,{2,}#', ',', $arResult['LOCATION_STRING']);
+	$arResult['LOCATION_STRING'] = preg_replace('#,\s*$#', '', $arResult['LOCATION_STRING']);
+}
 
 if ($arParams["AJAX_CALL"] != "Y"
 	&& count($arParams["LOC_DEFAULT"]) > 0

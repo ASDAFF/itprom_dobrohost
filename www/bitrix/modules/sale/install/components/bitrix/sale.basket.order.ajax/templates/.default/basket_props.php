@@ -152,6 +152,17 @@ if (!function_exists('PrintPropsForm'))
 							<?
 						}
 					}
+					else if ($arProperties["TYPE"] == "DATE")
+					{
+						global $APPLICATION;
+
+						$APPLICATION->IncludeComponent('bitrix:main.calendar', '', array(
+							'SHOW_INPUT' => 'Y',
+							'INPUT_NAME' => "ORDER_PROP_".$arProperties["ID"],
+							'INPUT_VALUE' => $arProperties["VALUE"],
+							'SHOW_TIME' => 'N'
+						), null, array('HIDE_ICONS' => 'N'));
+					}
 
 					if (strlen($arProperties["DESCRIPTION"]) > 0)
 					{

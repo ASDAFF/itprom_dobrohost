@@ -110,4 +110,7 @@ $arEMSCityList['ЭЛИСТА'] = 'city--elista';
 $arEMSCityList['ЮЖНО-САХАЛИНСК'] = 'city--yuzhno-sahalinsk';
 $arEMSCityList['ЯКУТСК'] = 'city--yakutsk';
 $arEMSCityList['ЯРОСЛАВЛЬ'] = 'city--yaroslavl';
+$arEMSCityList['ОРЕЛ'] = 'city--orel';
+$arEMSCityList['СЕВАСТОПОЛЬ'] = 'city--sevastopol';
+$arEMSCityList['СИМФЕРОПОЛЬ'] = 'city--simferopol';
 ?>

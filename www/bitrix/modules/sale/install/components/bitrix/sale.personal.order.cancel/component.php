@@ -1,11 +1,16 @@
 <?
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
+$this->setFramemode(false);
+
 if (!CModule::IncludeModule("sale"))
 {
 	ShowError(GetMessage("SALE_MODULE_NOT_INSTALL"));
 	return;
 }
+
+global $APPLICATION, $USER;
+
 if (!$USER->IsAuthorized())
 {
 	$APPLICATION->AuthForm(GetMessage("SALE_ACCESS_DENIED"));
@@ -25,6 +30,8 @@ if ($arParams["SET_TITLE"] == 'Y')
 	$APPLICATION->SetTitle(str_replace("#ID#", $ID, GetMessage("SPOC_TITLE")));
 
 $bUseAccountNumber = (COption::GetOptionString("sale", "account_number_template", "") !== "") ? true : false;
+
+$errors = array();
 
 if (strlen($ID) > 0 && $_REQUEST["CANCEL"] == "Y" && $_SERVER["REQUEST_METHOD"]=="POST" && strlen($_REQUEST["action"])>0 && check_bitrix_sessid())
 {
@@ -65,7 +72,16 @@ if (strlen($ID) > 0 && $_REQUEST["CANCEL"] == "Y" && $_SERVER["REQUEST_METHOD"]=
 		if ($arOrder = $dbOrder->Fetch())
 		{
 			CSaleOrder::CancelOrder($arOrder["ID"], "Y", $_REQUEST["REASON_CANCELED"]);
-			LocalRedirect($arParams["PATH_TO_LIST"]);
+
+			if ($ex = $APPLICATION->GetException())
+			{
+				$errors[] = $ex->GetString();
+			}
+			else
+			{
+				LocalRedirect($arParams["PATH_TO_LIST"]);
+			}
+
 		}
 	}
 }
@@ -121,6 +137,14 @@ if ($arOrder)
 }
 else
 	$arResult["ERROR_MESSAGE"] = str_replace("#ID#", $ID, GetMessage("SPOC_NO_ORDER"));
+
+if (!empty($errors) && is_array($errors))
+{
+	foreach ($errors as $errorMessage)
+	{
+		$arResult["ERROR_MESSAGE"] .= $errorMessage.".";
+	}
+}
 
 $this->IncludeComponentTemplate();
 ?>

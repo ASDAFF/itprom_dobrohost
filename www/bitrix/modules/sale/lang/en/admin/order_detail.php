@@ -358,4 +358,5 @@ $MESS["SOD_POPUP_SEEND_AND_SAVE"] = "Save and send";
 $MESS["SOD_POPUP_REQUEST_ERROR"] = "Error sending request to freight company";
 $MESS["SOD_POPUP_REQUEST_SUCCESS"] = "Request has been sent to freight company";
 $MESS["SOA_ERROR_PS"] = "There are issues with the parameters of the selected payment method.";
+$MESS["SOD_ERROR_SEVERAL_P_D"] = "Attention! The order contains one or more partial shipments or payments. Use the new order view form to continue.";
 ?>

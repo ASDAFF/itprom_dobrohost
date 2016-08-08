@@ -28,6 +28,10 @@ class CSaleOrderUserPropsValue extends CAllSaleOrderUserPropsValue
 		if (count($arSelectFields) <= 0)
 			$arSelectFields = array("ID", "USER_PROPS_ID", "ORDER_PROPS_ID", "NAME", "VALUE", "PROP_ID", "PROP_PERSON_TYPE_ID", "PROP_NAME", "PROP_TYPE", "PROP_REQUIED", "PROP_DEFAULT_VALUE", "PROP_SORT", "PROP_USER_PROPS", "PROP_IS_LOCATION", "PROP_PROPS_GROUP_ID", "PROP_SIZE1", "PROP_SIZE2", "PROP_DESCRIPTION", "PROP_IS_EMAIL", "PROP_IS_PROFILE_NAME", "PROP_IS_PAYER", "PROP_IS_LOCATION4TAX", "PROP_IS_ZIP", "PROP_CODE", "VARIANT_ID", "VARIANT_ORDER_PROPS_ID", "VARIANT_NAME", "VARIANT_VALUE", "VARIANT_SORT", "VARIANT_DESCRIPTION");
 
+		// TODO proper compatibility CAllSaleOrderUserPropsValue::getList15
+		$sale15converted = \Bitrix\Main\Config\Option::get('main', '~sale_converted_15', 'N') == 'Y';
+
+
 		// FIELDS -->
 		$arFields = array(
 				"ID" => array("FIELD" => "UP.ID", "TYPE" => "int"),
@@ -39,7 +43,7 @@ class CSaleOrderUserPropsValue extends CAllSaleOrderUserPropsValue
 				"PROP_PERSON_TYPE_ID" => array("FIELD" => "P.PERSON_TYPE_ID", "TYPE" => "int", "FROM" => "INNER JOIN b_sale_order_props P ON (UP.ORDER_PROPS_ID = P.ID)"),
 				"PROP_NAME" => array("FIELD" => "P.NAME", "TYPE" => "string", "FROM" => "INNER JOIN b_sale_order_props P ON (UP.ORDER_PROPS_ID = P.ID)"),
 				"PROP_TYPE" => array("FIELD" => "P.TYPE", "TYPE" => "string", "FROM" => "INNER JOIN b_sale_order_props P ON (UP.ORDER_PROPS_ID = P.ID)"),
-				"PROP_REQUIED" => array("FIELD" => "P.REQUIED", "TYPE" => "char", "FROM" => "INNER JOIN b_sale_order_props P ON (UP.ORDER_PROPS_ID = P.ID)"),
+				"PROP_REQUIED" => array("FIELD" => "P.REQUI".($sale15converted ? 'R' : '')."ED", "TYPE" => "char", "FROM" => "INNER JOIN b_sale_order_props P ON (UP.ORDER_PROPS_ID = P.ID)"),
 				"PROP_DEFAULT_VALUE" => array("FIELD" => "P.DEFAULT_VALUE", "TYPE" => "string", "FROM" => "INNER JOIN b_sale_order_props P ON (UP.ORDER_PROPS_ID = P.ID)"),
 				"PROP_SORT" => array("FIELD" => "P.SORT", "TYPE" => "int", "FROM" => "INNER JOIN b_sale_order_props P ON (UP.ORDER_PROPS_ID = P.ID)"),
 				"PROP_USER_PROPS" => array("FIELD" => "P.USER_PROPS", "TYPE" => "char", "FROM" => "INNER JOIN b_sale_order_props P ON (UP.ORDER_PROPS_ID = P.ID)"),
@@ -71,7 +75,21 @@ class CSaleOrderUserPropsValue extends CAllSaleOrderUserPropsValue
 			);
 		// <-- FIELDS
 
-		CSaleOrderPropsValue::addPropertyValueField('UP', $arFields, $arSelectFields);
+
+		if ($sale15converted && is_array($arSelectFields) && $arSelectFields)
+		{
+			if (($i = array_search('PROP_SIZE1', $arSelectFields)) !== false)
+				unset($arSelectFields[$i]);
+			if (($i = array_search('PROP_SIZE2', $arSelectFields)) !== false)
+				unset($arSelectFields[$i]);
+
+			if (($i = array_search('*', $arSelectFields)) !== false)
+			{
+				unset($arFields['PROP_SIZE1'], $arFields['PROP_SIZE2']);
+			}
+		}
+
+		self::addPropertyValueField('UP', $arFields, $arSelectFields);
 
 		$arSqls = CSaleOrder::PrepareSql($arFields, $arOrder, $arFilter, $arGroupBy, $arSelectFields);
 
@@ -158,7 +176,7 @@ class CSaleOrderUserPropsValue extends CAllSaleOrderUserPropsValue
 		global $DB;
 
 		// translate here
-		$arFields['VALUE'] = CSaleOrderPropsValue::translateLocationIDToCode($arFields['VALUE'], $arFields['ORDER_PROPS_ID']);
+		$arFields['VALUE'] = self::translateLocationIDToCode($arFields['VALUE'], $arFields['ORDER_PROPS_ID']);
 
 		$arInsert = $DB->PrepareInsert("b_sale_user_props_value", $arFields);
 

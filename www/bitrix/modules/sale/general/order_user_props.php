@@ -93,18 +93,37 @@ class CAllSaleOrderUserProps
 		}
 		*/
 
+		$utilPropertyList = array();
+
+
 		$dbOrderProperties = CSaleOrderProps::GetList(
 			array(),
-			array("PERSON_TYPE_ID" => $personTypeId, "ACTIVE" => "Y", "UTIL" => "N", "USER_PROPS" => "Y"),
+			array("PERSON_TYPE_ID" => $personTypeId, "ACTIVE" => "Y", "USER_PROPS" => "Y"),
 			false,
 			false,
-			array("ID", "TYPE", "NAME", "CODE")
+			array("ID", "TYPE", "NAME", "CODE", "UTIL")
 		);
 		while ($arOrderProperty = $dbOrderProperties->Fetch())
 		{
+			if ($arOrderProperty['UTIL'] == "Y")
+			{
+				$utilPropertyList[] = $arIDs[$arOrderProperty["ID"]];
+				continue;
+			}
+
 			$curVal = $orderProps[$arOrderProperty["ID"]];
 			if (($arOrderProperty["TYPE"] == "MULTISELECT") && is_array($curVal))
 				$curVal = implode(",", $curVal);
+
+			if (($arOrderProperty["TYPE"] == "FILE") && is_array($curVal))
+			{
+				$fileList = array();
+				foreach ($curVal as $fileDat)
+				{
+					$fileList[] = $fileDat['ID'];
+				}
+				$curVal = serialize($fileList);
+			}
 
 			if (strlen($curVal) > 0)
 			{
@@ -144,18 +163,24 @@ class CAllSaleOrderUserProps
 		}
 
 		foreach ($arIDs as $id)
+		{
+			if (!empty($utilPropertyList) && in_array($id, $utilPropertyList))
+				continue;
+
 			CSaleOrderUserPropsValue::Delete($id);
+		}
 	}
 
 	public static function DoLoadProfiles($userId, $personTypeId = null)
 	{
 		$userId = intval($userId);
+
 		if ($userId <= 0)
 			return null;
 
 		$arResult = array();
-
 		$arFilter = array("USER_ID" => $userId);
+
 		if ($personTypeId != null)
 			$arFilter["PERSON_TYPE_ID"] = $personTypeId;
 
@@ -166,22 +191,28 @@ class CAllSaleOrderUserProps
 			false,
 			array("ID", "NAME", "PERSON_TYPE_ID", "DATE_UPDATE")
 		);
+
 		while ($arProfile = $dbProfile->GetNext())
 		{
 			if (!array_key_exists($arProfile["PERSON_TYPE_ID"], $arResult))
 				$arResult[$arProfile["PERSON_TYPE_ID"]] = array();
 
-			$arResult[$arProfile["PERSON_TYPE_ID"]][$arProfile["ID"]] = array("NAME" => $arProfile["NAME"], "VALUES" => array());
+			$arResult[$arProfile["PERSON_TYPE_ID"]][$arProfile["ID"]] = array("NAME" => $arProfile["NAME"], "VALUES" => array(), "VALUES_ORIG" => array());
 
 			$dbProps = CSaleOrderUserPropsValue::GetList(
 				array(),
 				array("USER_PROPS_ID" => $arProfile["ID"]),
 				false,
 				false,
-				array("ORDER_PROPS_ID", "NAME", "VALUE")
+				array("ORDER_PROPS_ID", "NAME", "VALUE", "VALUE_ORIG")
 			);
 			while ($arProps = $dbProps->GetNext())
+			{
 				$arResult[$arProfile["PERSON_TYPE_ID"]][$arProfile["ID"]]["VALUES"][$arProps["ORDER_PROPS_ID"]] = $arProps["VALUE"];
+
+				if(isset($arProps["VALUE_ORIG"]))
+					$arResult[$arProfile["PERSON_TYPE_ID"]][$arProfile["ID"]]["VALUES_ORIG"][$arProps["ORDER_PROPS_ID"]] = $arProps["VALUE_ORIG"];
+			}
 		}
 
 		if (count($arResult) > 0)

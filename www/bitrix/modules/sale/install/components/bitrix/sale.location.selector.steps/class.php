@@ -14,6 +14,7 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\Data;
 
 use Bitrix\Sale\Location;
+use Bitrix\Sale\Location\Admin\LocationHelper;
 
 CBitrixComponent::includeComponentClass("bitrix:sale.location.selector.search");
 
@@ -249,18 +250,36 @@ class CBitrixLocationSelectorStepsComponent extends CBitrixLocationSelectorSearc
 	{
 		if($this->filterBySite && is_array($items) && !empty($items))
 		{
-			$linkTypeMap = Location\SiteLocationTable::getLinkStatusForMultipleNodes($items, $this->arParams['FILTER_SITE_ID'], $this->dbResult['TEMP']['CONNECTORS']);
-
-			foreach($linkTypeMap as $id => $linkType)
+			try
 			{
-				$items[$id]['LINK_TYPE'] = $linkType;
+				$linkTypeMap = Location\SiteLocationTable::getLinkStatusForMultipleNodes($items, $this->arParams['FILTER_SITE_ID'], $this->dbResult['TEMP']['CONNECTORS']);
+
+				foreach($linkTypeMap as $id => $linkType)
+				{
+					$items[$id]['LINK_TYPE'] = $linkType;
+				}
+			}
+			catch(\Bitrix\Main\ArgumentException $e) // in case of database damage this will be thrown
+			{
+				LocationHelper::informAdminLocationDatabaseFailure();
+
+				foreach($items as $id => &$item)
+				{
+					$items['LINK_TYPE'] = Location\SiteLocationTable::LSTAT_IN_NOT_CONNECTED_BRANCH;
+				}
 			}
 		}
 	}
 
 	protected function getCacheDependences()
 	{
-		return parent::getCacheDependences().self::getStrForVariable($this->arParams['PRESELECT_TREE_TRUNK']);
+		$cd = array(self::getStrForVariable($this->arParams['PRESELECT_TREE_TRUNK']));
+		$pCd = parent::getCacheDependences();
+
+		if(is_array($pCd))
+			return array_merge($pCd, $cd);
+
+		return $cd;
 	}
 
 	protected static function getPathNodesSelect()

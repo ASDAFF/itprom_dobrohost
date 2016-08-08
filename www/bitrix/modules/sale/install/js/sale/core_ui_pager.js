@@ -60,7 +60,10 @@ BX.merge(BX.ui.scrollablePager.prototype, {
 
 		// add areas to the top and the bottom of the pane
 
-		var nodes = this.createNodesByTemplate('pager-area', {}, true);
+		var nodes = null;
+
+		if(typeof this.template('pager-area') != 'undefined')
+			nodes = this.createNodesByTemplate('pager-area', {}, true);
 
 		if(nodes == null || !BX.type.isDomNode(nodes[0]))
 			nodes = BX.create('div', {style: {'height': parseInt(this.opts.areaHeight)+'px'}});
@@ -232,9 +235,11 @@ BX.merge(BX.ui.scrollablePager.prototype, {
 		else if(BX.type.isDomNode(data))
 			BX.append(data, wrapper);
 		else if('length' in data && data.length > 0){
-			for(var k in data){
-				if(BX.type.isDomNode(data[k]))
-					BX.append(data[k], wrapper);
+			for(var k in data)
+			{
+				if(data.hasOwnProperty(k))
+					if(BX.type.isDomNode(data[k]))
+						BX.append(data[k], wrapper);
 			}
 		}else
 			return false; // smth strange passed

@@ -240,6 +240,10 @@ if(typeof BX.Sale.component.location.selector.search == 'undefined' && typeof BX
 				return this.vars.cache.nodesByCode[value];
 		},
 
+		getNodeByLocationId: function(value){
+			return this.vars.cache.nodes[value];
+		},
+
 		setValue: function(value){
 
 			if(this.opts.provideLinkBy == 'id')

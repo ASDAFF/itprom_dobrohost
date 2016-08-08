@@ -17,5 +17,5 @@ $MESS["SALE_DH_RUSSIANPOST_CONFIG_CATEGORY"] = "Mail type";
 $MESS["SALE_DH_RUSSIANPOST_ERROR_CONNECT"] = "Cannot calculate the delivery cost: connection error";
 $MESS["SALE_DH_RUSSIANPOST_ERROR_RESPONSE"] = "Cannot calculate the delivery cost: bad server response";
 $MESS["SALE_DH_RUSSIANPOST_ERROR_NOZIP"] = "Cannot calculate the delivery cost: cannot identify zip code";
-$MESS["SALE_DH_RUSSIANPOST_DESCRIPTION_INNER2"] = "<br /><b>Note</b> that the handler requires that the order property <b>Use as zip code</b> exists.";
+$MESS["SALE_DH_RUSSIANPOST_DESCRIPTION_INNER2"] = "<br /><b>Note</b> that the services requires that the order property <b>Use as zip code</b> exists.";
 ?>

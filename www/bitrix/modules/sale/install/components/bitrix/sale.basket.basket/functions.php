@@ -19,9 +19,9 @@ if (!function_exists("getProductByProps"))
 		$propertyIterator = Iblock\PropertyTable::getList(array(
 			'select' => array('ID', 'CODE', 'PROPERTY_TYPE', 'USER_TYPE', 'USER_TYPE_SETTINGS', 'XML_ID'),
 			'filter' => array(
-				'IBLOCK_ID' => $iblockID,
-				'ACTIVE' => 'Y',
-				'=PROPERTY_TYPE' => array(Iblock\PropertyTable::TYPE_ELEMENT, Iblock\PropertyTable::TYPE_LIST, Iblock\PropertyTable::TYPE_STRING)
+				'=IBLOCK_ID' => $iblockID,
+				'=ACTIVE' => 'Y',
+				'@PROPERTY_TYPE' => array(Iblock\PropertyTable::TYPE_ELEMENT, Iblock\PropertyTable::TYPE_LIST, Iblock\PropertyTable::TYPE_STRING)
 			),
 			'order' => array('SORT' => 'ASC', 'ID' => 'ASC')
 		));
@@ -38,7 +38,10 @@ if (!function_exists("getProductByProps"))
 			}
 			elseif ($property['PROPERTY_TYPE'] == Iblock\PropertyTable::TYPE_ELEMENT)
 			{
-				$arOfFilter['PROPERTY_'.$property['ID']] = $arSkuProps[$property['CODE']];
+				if ((int)$arSkuProps[$property['CODE']].'' == $arSkuProps[$property['CODE']].'')
+					$arOfFilter['PROPERTY_'.$property['ID']] = $arSkuProps[$property['CODE']];
+				else
+					$arOfFilter['PROPERTY_'.$property['ID'].'.NAME'] = $arSkuProps[$property['CODE']];
 			}
 			elseif ($property['PROPERTY_TYPE'] == Iblock\PropertyTable::TYPE_STRING && $property['USER_TYPE'] == 'directory')
 			{
@@ -119,4 +122,3 @@ if (!function_exists("getProductByProps"))
 		return $result;
 	}
 }
-?>

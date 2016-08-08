@@ -7,7 +7,7 @@ function CStoreMap(opts){
 	var so = opts;
 	var sv = {};
 	var sc = {};
-	
+
 	s.showHide = function(obj, way){
 		var displayOn = (typeof(obj.prevDisplay) == "undefined" ? 'inline-block' : obj.prevDisplay);
 
@@ -51,13 +51,20 @@ function CStoreMap(opts){
 	});
 	s.hide(sc.btnHide);
 
-	BX(function(){
+	(function bx_ymaps_waiter(){
+		if(typeof ymaps !== 'undefined')
+		{
+			ymaps.ready(function ()
+			{
+				sc.map = window.GLOBAL_arMapObjects[so.mapId];
+			});
+		}
+		else
+		{
+			setTimeout(bx_ymaps_waiter, 100);
+		}
 
-		ymaps.ready(function(){
-			sc.map = window.GLOBAL_arMapObjects[so.mapId];
-		});
-
-	});
+	})();
 
 	return s;
 }

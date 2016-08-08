@@ -139,7 +139,7 @@ abstract class Connector extends Entity\DataManager
 	* 
 	* @return Bitrix\Main\Entity\AddResult
 	*/
-	public static function add($data = array())
+	public static function add(array $data)
 	{
 		$res = parent::add($data);
 		if($res->isSuccess())
@@ -159,7 +159,7 @@ abstract class Connector extends Entity\DataManager
 	* 
 	* @return Bitrix\Main\Entity\UpdateResult
 	*/
-	public static function update($primary, $data = array())
+	public static function update($primary, array $data)
 	{
 		$linkFld = static::getLinkField();
 
@@ -416,11 +416,18 @@ abstract class Connector extends Entity\DataManager
 	* @throws ArgumentNullException
 	* @throws NotImplementedException
 	*
-	* @return Bitrix\Main\DB\Result list of locations
+	* @return String an SQL-query string that, being called, returns a list of locations
 	*/
 	public static function getConnectedLocationsQuery($entityPrimary, $parameters = array(), $behaviour = array('GET_LINKED_THROUGH_GROUPS' => false))
 	{
 		$entityPrimary = Assert::expectStringNotNull($entityPrimary, '$entityPrimary');
+
+		if(!is_array($parameters))
+			$parameters = array();
+		if(!is_array($behaviour))
+			$behaviour = array();
+		if(!isset($behaviour['GET_LINKED_THROUGH_GROUPS']))
+			$behaviour['GET_LINKED_THROUGH_GROUPS'] = false;
 
 		$useGroups = GroupTable::checkGroupUsage() && static::getUseGroups(); // check if we have groups in project and entity uses groups
 		$getLinkedThroughGroups = $behaviour['GET_LINKED_THROUGH_GROUPS'];
@@ -428,9 +435,6 @@ abstract class Connector extends Entity\DataManager
 			$getLinkedThroughGroups = false;
 
 		$connType = static::getConnectType();
-
-		if(!is_array($parameters))
-			$parameters = array();
 
 		// proxy select
 		$select = array();
@@ -599,6 +603,14 @@ abstract class Connector extends Entity\DataManager
 			return false;
 
 		return static::unionize($sqls);
+	}
+
+	/**
+	 * More preferable alias for getConnectedLocationsQuery()
+	 */
+	public static function getConnectedLocationsSql($entityPrimary, $parameters = array(), $behaviour = array('GET_LINKED_THROUGH_GROUPS' => false))
+	{
+		return static::getConnectedLocationsQuery($entityPrimary, $parameters, $behaviour);
 	}
 
 	public static function getConnectedLocations($entityPrimary, $parameters = array(), $behaviour = array('GET_LINKED_THROUGH_GROUPS' => false))
@@ -937,19 +949,62 @@ abstract class Connector extends Entity\DataManager
 		return $result;
 	}
 
-	public static function checkConnectionExists($entityPrimary, $locationPrimary)
+	/**
+	 * Check if location is connected with entity
+	 * 
+	 * @param $entityPrimary mixed Entity being checked
+	 * @param $locationPrimary mixed Location being checked. Could be a value of ID or CODE depending on what connection type is selected (see below)
+	 * @param $behaviour mixed[] A set of flags that modify function behaviour
+	 * 		<li> LOCATION_LINK_TYPE string One of: ID, CODE, AUTO. 
+	 * 			If ID, than match by ID is used (default, for compatibility), if CODE than match by CODE. 
+	 * 			In case of AUTO the target field value depends on entity connect type.
+	 * 
+	 * @return boolean
+	 */
+	public static function checkConnectionExists($entityPrimary, $locationPrimary, array $behaviour = array('LOCATION_LINK_TYPE' => 'ID'))
 	{
 		$entityPrimary = Assert::expectStringNotNull($entityPrimary, '$entityPrimary');
-		$locationPrimary = Assert::expectIntegerPositive($locationPrimary, '$locationPrimary');
+		$locationPrimary = Assert::expectStringNotNull($locationPrimary, '$locationPrimary');
+
+		if(!isset($behaviour['LOCATION_LINK_TYPE']))
+		{
+			$behaviour['LOCATION_LINK_TYPE'] = 'ID';
+		}
+		else
+		{
+			$behaviour['LOCATION_LINK_TYPE'] = Assert::expectEnumerationMember($behaviour['LOCATION_LINK_TYPE'], array('AUTO', 'ID', 'CODE'), '$behaviour[LOCATION_LINK_TYPE]');
+		}
 
 		if(!static::checkLinkUsageAny($entityPrimary)) // if there are no links at all, connection virtually exists
+		{
 			return true;
+		}
 
-		// todo: here we can rewrite this to make it to do just one query
-		$node = LocationTable::getById($locationPrimary)->fetch();
+		if($behaviour['LOCATION_LINK_TYPE'] == 'AUTO')
+		{
+			$field = static::getUseCodes() ? 'CODE' : 'ID';
+		}
+		else
+		{
+			$field = $behaviour['LOCATION_LINK_TYPE'];
+		}
+
+		$node = LocationTable::getList(
+			array(
+				'filter' => array('='.$field => $locationPrimary),
+				'select' => array('ID', 'LEFT_MARGIN', 'RIGHT_MARGIN'),
+				'limit' => 1
+			)
+		)->fetch();
+
+		if(!intval($node['ID']))
+		{
+			throw new \Bitrix\Sale\Location\Tree\NodeNotFoundException(false, array('INFO' => array($field => $locationPrimary)));
+		}
+
 		$result = static::getLinkStatusForMultipleNodes(array($node), $entityPrimary);
 
-		return $result[$locationPrimary] == self::LSTAT_IS_CONNECTOR || $result[$locationPrimary] == self::LSTAT_BELOW_CONNECTOR;
+		return $result[$node['ID']] == self::LSTAT_IS_CONNECTOR || $result[$node['ID']] == self::LSTAT_BELOW_CONNECTOR;
 	}
 
 	// a wrapper to getConnectedLocations which returns simple info about connected locations

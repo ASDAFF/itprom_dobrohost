@@ -258,7 +258,7 @@ abstract class Helper
 	##############################################
 	##############################################
 
-	public static function validateUpdateRequest()
+	public static function validateUpdateRequest($data)
 	{
 		return array();
 	}
@@ -432,19 +432,32 @@ abstract class Helper
 		$showAll = $_SESSION[$unique.'SESS_ALL_'.$navNum] || $_GET['SHOWALL_'.$navNum];
 
 		if(ADMIN_SECTION === true && strlen($tableId))
+		{
 			$result = new \CSaleProxyAdminResult($parameters, $entityClass, $tableId); // being in admin and knowing table, do admin result api call
+		}
 		else
+		{
 			$result = new \CSaleProxyResult($parameters, $entityClass); // otherwise - public api call
+		}
 
 		if(!$showAll && $navigation !== false)
 		{
 			if($navigation === true)
+			{
 				$result->NavStart();
+			}
 			else
+			{
 				$result->NavStart($navigation);
+			}
 		}
 		else
+		{
 			$result->NavStart();
+		}
+
+		// temporal fix
+		$result->bShowAll = false;
 
 		return $result;
 	}
@@ -473,12 +486,16 @@ abstract class Helper
 	public static function getIdsByFilter($listFilter)
 	{
 		$ids = array();
-		$res = static::getList(array(
+		$entityClass = static::getEntityClass();
+
+		$res = $entityClass::getList(array(
 			'select' => array('ID'),
 			'filter' => is_array($listFilter) ? $listFilter : array()
 		));
 		while($item = $res->fetch())
+		{
 			$ids[] = intval($item['ID']);
+		}
 
 		return $ids;
 	}

@@ -18,6 +18,8 @@ require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/sale/prolog.php");
 
 ClearVars("l_");
 
+$inputTypes = Bitrix\Sale\Internals\Input\Manager::getTypes();
+
 $sTableID = "tbl_sale_order_props";
 
 $oSort = new CAdminSorting($sTableID, "ID", "asc");
@@ -147,7 +149,6 @@ while ($arPersonType = $dbPersonType->Fetch())
 	$arPersonTypeList[$arPersonType["ID"]] = Array("ID" => $arPersonType["ID"], "NAME" => htmlspecialcharsEx($arPersonType["NAME"]), "LID" => implode(", ", $arPersonType["LIDS"]));
 }
 
-
 $arVisibleColumns = $lAdmin->GetVisibleHeaderColumns();
 while ($arOrderProp = $dbResultList->NavNext(true, "f_"))
 {
@@ -167,7 +168,7 @@ while ($arOrderProp = $dbResultList->NavNext(true, "f_"))
 	$row->AddInputField("NAME");
 	$row->AddInputField("SORT");
 	$row->AddInputField("CODE");
-	$row->AddField("TYPE", "[".$f_TYPE."] ".$SALE_FIELD_TYPES[$f_TYPE]."");
+	$row->AddField('TYPE', "[$f_TYPE] ".$inputTypes[$f_TYPE]['NAME']);
 	$row->AddCheckField("ACTIVE");
 	$row->AddCheckField("REQUIED");
 	$row->AddCheckField("MULTIPLE");
@@ -291,8 +292,8 @@ $oFilter->Begin();
 			<select name="filter_type">
 				<option value="">(<?echo GetMessage("SALE_ALL")?>)</option>
 				<?
-				foreach ($SALE_FIELD_TYPES as $key => $value):
-					?><option value="<?echo $key?>"<?if ($filter_type==$key) echo " selected"?>>[<?echo htmlspecialcharsbx($key) ?>] <?echo htmlspecialcharsbx($value) ?></option><?
+				foreach ($inputTypes as $name => $type):
+					?><option value="<?=$name?>"<?= $filter_type == $name ? ' selected' : ''?>>[<?=$name?>] <?=$type['NAME']?></option><?
 				endforeach;
 				?>
 			</select>

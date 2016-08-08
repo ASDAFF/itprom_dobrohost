@@ -70,6 +70,15 @@ if (count($arResult["REGION_LIST"]) == 1)
 	$rDisabled = true;
 else
 	$rDisabled = false;
+
+if (count($arResult["COUNTRY_LIST"]) <= 0 && count($arResult["REGION_LIST"]) <= 0)
+{
+	$idAttrValue = $arParams["COUNTRY_INPUT_NAME"];
+}
+else
+{
+	$idAttrValue = $arParams["CITY_INPUT_NAME"];
+}
 ?>
 <?if (count($arResult["REGION_LIST"]) > 0):?>
 	<?
@@ -82,7 +91,7 @@ else
 	if ($arResult["EMPTY_CITY"] == "Y")
 		$change = $arParams["ONCITYCHANGE"];
 	else
-		$change = "getLocation(".$arParams["COUNTRY"].", this.value, '', ".$arResult["JS_PARAMS"].", '".CUtil::JSEscape($arParams["SITE_ID"])."', '".$arParams['ADMIN_SECTION']."')";
+		$change = "decideRegionOrCity(".$arParams["COUNTRY"].", this.value, '', ".$arResult["JS_PARAMS"].", '".CUtil::JSEscape($arParams["SITE_ID"])."', '".$arParams['ADMIN_SECTION']."', '".$idAttrValue."')";
 	?>
 
 	<?if($rDisabled):?>
@@ -114,11 +123,8 @@ else
 	else
 		$cDisabled = false;
 
-	if (count($arResult["COUNTRY_LIST"]) <= 0 && count($arResult["REGION_LIST"]) <= 0):
-		$id = "id=\"".$arParams["COUNTRY_INPUT_NAME"]."\"";
-	else:
-		$id = "id=\"".$arParams["CITY_INPUT_NAME"]."\"";
-	endif;?>
+	$id = "id=\"".$idAttrValue."\"";
+	?>
 
 	<?if($cDisabled):?>
 		<div style="display:none">
@@ -155,6 +161,31 @@ else
 			{
 				var elem = arSelect[i];
 				elem.disabled = false;
+			}
+		}
+	}
+
+	function decideRegionOrCity(c, value, hz, jsParams, siteId, admin, idAttrValue)
+	{
+		if(value > 0)
+		{
+			getLocation.apply(window, arguments);
+		}
+		else if(<?=strlen($arParams['ONCITYCHANGE'])?> > 0)
+		{
+			var citySelector = BX(idAttrValue);
+
+			if(BX.type.isElementNode(citySelector))
+			{
+				var firstOpt = citySelector.querySelector('option');
+				if(BX.type.isElementNode(firstOpt))
+				{
+					firstOpt.value = -1*value;
+					firstOpt.selected = 'selected';
+
+					BX.hide(citySelector);
+					<?=$arParams['ONCITYCHANGE']?>;
+				}
 			}
 		}
 	}

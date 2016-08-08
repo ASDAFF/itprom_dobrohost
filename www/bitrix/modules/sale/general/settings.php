@@ -1,104 +1,72 @@
 <?
+use Bitrix\Sale;
+
 IncludeModuleLangFile(__FILE__);
 
-class CAllSaleLang
+class CSaleLang
 {
 	function Add($arFields)
 	{
-		global $DB;
-
-		$db_result = $DB->Query("SELECT 'x' FROM b_sale_lang WHERE LID = '".$DB->ForSql($arFields["LID"], 2)."'");
-		if ($db_result->Fetch())
-			return false;
-		else
+		try
 		{
-			$arInsert = $DB->PrepareInsert("b_sale_lang", $arFields);
+			return Bitrix\Sale\Internals\SiteCurrencyTable::add($arFields)->isSuccess();
+		}
+		catch (Exception $e)
+		{
+			return false;
+		}
+	}
 
-			$strSql =
-				"INSERT INTO b_sale_lang(".$arInsert[0].") ".
-				"VALUES(".$arInsert[1].")";
-			$DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
+	function Update($siteId, $arFields)
+	{
+		if ($siteId == $arFields["LID"])
+		{
+			unset($arFields["LID"]);
+			return Bitrix\Sale\Internals\SiteCurrencyTable::update($siteId, $arFields)->isSuccess();
+		}
+		else
+			die("h3jg53jh2g3jh6g");
+	}
+
+	function Delete($siteId)
+	{
+		return Bitrix\Sale\Internals\SiteCurrencyTable::delete($siteId)->isSuccess();
+	}
+
+	public static function GetByID($siteId)
+	{
+		return Bitrix\Sale\Internals\SiteCurrencyTable::getCurrency($siteId);
+	}
+
+	/*
+	* @deprecated deprecated since sale 15.0.0
+	* @see \Bitrix\Sale\Internals\SiteCurrencyTable::getSiteCurrency
+	*/
+	public static function GetLangCurrency($siteId)
+	{
+		return Sale\Internals\SiteCurrencyTable::getSiteCurrency($siteId);
+	}
+
+	public static function OnBeforeCurrencyDelete($currency)
+	{
+		global $DB, $APPLICATION;
+
+		if (strlen($currency)<=0)
+			return true;
+
+		if (Bitrix\Sale\Internals\SiteCurrencyTable::getList(array(
+			'select' => array('*'),
+			'filter' => array('=CURRENCY' => $DB->ForSQL($currency, 3)),
+			'limit'  => 1
+		))->fetch())
+		{
+			$APPLICATION->ThrowException(str_replace("#CURRENCY#", $currency, GetMessage("SKGO_ERROR_CURRENCY")), "ERROR_CURRENCY");
+			return false;
 		}
 
 		return true;
 	}
-
-	function Update($LID, $arFields)
-	{
-		global $DB;
-
-		if ($LID==$arFields["LID"])
-		{
-			$strUpdate = $DB->PrepareUpdate("b_sale_lang", $arFields);
-			$strSql = "UPDATE b_sale_lang SET ".$strUpdate." WHERE LID = '".$DB->ForSql($LID, 2)."' ";
-			$DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
-
-			return true;
-		}
-		else
-		{
-			die("h3jg53jh2g3jh6g");
-		}
-	}
-
-	function Delete($LID)
-	{
-		global $DB;
-
-		return $DB->Query("DELETE FROM b_sale_lang WHERE LID = '".$DB->ForSQL($LID, 2)."'", true);
-	}
-
-	function GetByID($LID)
-	{
-		global $DB;
-
-		$strSql =
-			"SELECT * ".
-			"FROM b_sale_lang ".
-			"WHERE LID = '".$DB->ForSQL($LID, 2)."'";
-		$db_res = $DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
-
-		if ($res = $db_res->Fetch())
-		{
-			return $res;
-		}
-		return False;
-	}
-
-	function GetLangCurrency($LID)
-	{
-		$LID = trim($LID);
-		if (strlen($LID)<=0) return false;
-		$def_curr = "";
-		if ($res = CSaleLang::GetByID($LID))
-			$def_curr = $res["CURRENCY"];
-		if (strlen($def_curr)<=0)
-			$def_curr = COption::GetOptionString("sale", "default_currency");
-		return $def_curr;
-	}
-
-	function OnBeforeCurrencyDelete($currency)
-	{
-		global $DB;
-		if (strlen($currency)<=0) return false;
-
-		$strSql =
-			"SELECT * ".
-			"FROM b_sale_lang ".
-			"WHERE CURRENCY = '".$DB->ForSQL($currency, 3)."'";
-		$db_res = $DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
-
-		if ($res = $db_res->Fetch())
-		{
-			$GLOBALS["APPLICATION"]->ThrowException(str_replace("#CURRENCY#", $currency, GetMessage("SKGO_ERROR_CURRENCY")), "ERROR_CURRENCY");
-			return false;
-		}
-
-		return True;
-	}
-
 }
-
 
 
 class CAllSaleGroupAccessToSite
@@ -303,4 +271,3 @@ class CAllSaleGroupAccessToFlag
 		return $DB->Query("DELETE FROM b_sale_order_flags2group WHERE ORDER_FLAG = '".$DB->ForSql($ORDER_FLAG, 1)."' ", true);
 	}
 }
-?>

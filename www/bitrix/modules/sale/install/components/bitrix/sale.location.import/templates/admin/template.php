@@ -45,7 +45,7 @@ Loc::loadMessages(__FILE__);
 		),
 	);
 
-	$tabControl = new CAdminTabControl("tabctrl_import", $aTabs, true, true);
+	$tabControl = new CAdminTabControl("tabctrl_import", $aTabs, false, true);
 
 	CJSCore::Init();
 	$APPLICATION->AddHeadScript('/bitrix/js/sale/core_ui_widget.js');
@@ -242,10 +242,10 @@ Loc::loadMessages(__FILE__);
 			<?if(in_array(LANGUAGE_ID, array('ru', 'ua', 'de'))):?>
 				<tr class="bx-ui-load-remote">
 					<td>
-						<label for="loc-i-option-drop-all"><?=Loc::getMessage('SALE_SLI_EXCLUDE_AREAS')?></label>
+						<label for="loc-i-option-exclude-country-district"><?=Loc::getMessage('SALE_SLI_EXCLUDE_AREAS')?></label>
 					</td>
 					<td>
-						<input type="checkbox" value="1" name="EXCLUDE_COUNTRY_DISTRICT" class="bx-ui-loc-i-option" />
+						<input type="checkbox" value="1" name="EXCLUDE_COUNTRY_DISTRICT" class="bx-ui-loc-i-option" id="loc-i-option-exclude-country-district" checked="checked" />
 					</td>
 				</tr>
 			<?endif?>

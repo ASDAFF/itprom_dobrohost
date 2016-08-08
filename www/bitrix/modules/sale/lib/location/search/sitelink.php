@@ -72,7 +72,7 @@ final class SiteLinkTable extends Entity\DataManager
 			union 
 			select LC.ID, LS.SITE_ID
 				from ".$siteLocationTable." LS
-					inner join ".$groupLocationTable." LG on LS.LOCATION_ID = LG.LOCATION_ID and LS.LOCATION_TYPE = 'G'
+					inner join ".$groupLocationTable." LG on LS.LOCATION_ID = LG.LOCATION_GROUP_ID and LS.LOCATION_TYPE = 'G'
 					inner join ".$locationTable." L on LG.LOCATION_ID = L.ID
 					inner join ".$locationTable." LC on LC.LEFT_MARGIN >= L.LEFT_MARGIN and LC.RIGHT_MARGIN <= L.RIGHT_MARGIN
 		";

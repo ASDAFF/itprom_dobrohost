@@ -76,6 +76,9 @@ class Calculator
 
 		if(is_array($arInfo) && !empty($arInfo))
 		{
+			if(strtolower(SITE_CHARSET) != 'utf-8')
+				$arInfo = \Bitrix\Main\Text\Encoding::convertEncodingArray($arInfo, 'UTF-8', SITE_CHARSET);
+
 			if(isset($arInfo[$this->profileId][2]))
 			{
 				$price = 0;
@@ -86,7 +89,7 @@ class Calculator
 					$price += intval($arInfo["take"][2]);
 
 
-				if(isset($arInfo["deliver"][2]) && \CDeliveryPecom::isConfCheckedVal($this->arConfig, 'SERVICE_TAKE_ENABLED'))
+				if(isset($arInfo["deliver"][2]) && \CDeliveryPecom::isConfCheckedVal($this->arConfig, 'SERVICE_DELIVERY_ENABLED'))
 					$price += intval($arInfo["deliver"][2]);
 
 				foreach($arInfo as $key => $value)
@@ -99,16 +102,22 @@ class Calculator
 					'PACKS_COUNT' => $this->packsCount
 				);
 
-				if(isset($arInfo["periods"]))
+				$period = "";
+
+				if($this->profileId == "auto" && !empty($arInfo["periods"]))
+					$period = $arInfo["periods"];
+				elseif($this->profileId == "avia" && !empty($arInfo["aperiods"]))
+					$period = $arInfo["aperiods"];
+
+				if(strlen($period) > 0)
 				{
-					$str = explode("<br>", $arInfo["periods"]);
+					$pos = strpos($period, ':');
 
-					if(isset($str[0]))
+					if($pos !== false)
 					{
-						$days = explode(":",$str[0]);
-
-						if(isset($days[2]) && strlen($days[2]) > 0)
-							$arResult["TRANSIT"] = $days[2];
+						$CBXSanitizer = new \CBXSanitizer;
+						$CBXSanitizer->DelAllTags();
+						$arResult["TRANSIT"] = " (".GetMessage("SALE_DH_PECOM_PERIOD_DAYS").") ".$CBXSanitizer->SanitizeHtml(substr($period, $pos+1));
 					}
 				}
 			}

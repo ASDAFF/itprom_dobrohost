@@ -233,9 +233,13 @@ class Finder
 					}
 
 					if(empty($temporalBuffer))
+					{
 						return static::findNoIndex($parameters);
+					}
 					else
+					{
 						return new DB\ArrayResult($temporalBuffer);
+					}
 				}
 			}
 			else
@@ -418,7 +422,7 @@ class Finder
 		if($filterByPhrase)
 		{
 			$sql = "
-				select ".($dbConnection->getType() == 'oracle' ? '' : 'distinct')/*fix this in more clever way later*/." 
+				select ".($dbConnection->getType() != 'mysql' ? '' : 'distinct')/*fix this in more clever way later*/." 
 					".$sqlSelect.(\Bitrix\Sale\Location\DB\Helper::needSelectFieldsInOrderByWhenDistinct() ? ', A.RELEVANCY' : '')."
 
 				from ".ChainTable::getTableName()." A
@@ -560,7 +564,7 @@ class Finder
 			'L.ID' => 'L.ID',
 			'L.CODE' => 'L.CODE',
 			'L.SORT' => 'L.SORT',
-			'LT_SORT' => 'LT.SORT'
+			'LT_SORT' => 'LT.DISPLAY_SORT'
 		);
 
 		if($nameAlias === false || !preg_match('#^[a-zA-Z0-9]+$#', $nameAlias))
@@ -591,7 +595,7 @@ class Finder
 					continue;
 
 				$fields[$lFld] = $lFld;
-				$groupFields[$lFld] = $lFld;
+				//$groupFields[$lFld] = $lFld;
 			}
 			else // alias is not a number
 			{
@@ -599,8 +603,10 @@ class Finder
 					continue;
 
 				$fields[$alias] = $lFld;
-				$groupFields[$alias] = $lFld;
+				//$groupFields[$alias] = $lFld;
 			}
+
+			$groupFields[$lFld] = $lFld;
 		}
 
 		if($doCountChildren)
@@ -617,7 +623,8 @@ class Finder
 		}
 
 		$selectSql = implode(', ', $selectSql);
-		$groupSql = implode(', ', array_keys($groupFields));
+		//$groupSql = implode(', ', array_keys($groupFields));
+		$groupSql = implode(', ', $groupFields);
 
 		$mainSql = "select {$selectSql}
 						from {$locationTable} L 
@@ -634,11 +641,8 @@ class Finder
 
 							%MAIN_FILTER_CONDITION%
 
-							".
-
-							($doCountChildren ? "
-								group by {$groupSql}
-							" : "");
+							%GROUP_BY%
+							";
 
 		$where = array();
 
@@ -660,10 +664,15 @@ class Finder
 		if($doFilterByName)
 			$where[] = "LN.NAME_UPPER like '".$filterName."%'";
 
-		$mainSql = str_replace('%MAIN_FILTER_CONDITION%', implode(' and ', $where), $mainSql);
+		$mainSql = 			str_replace('%MAIN_FILTER_CONDITION%', implode(' and ', $where), $mainSql);
+		$needDistinct = 	false;
+		$unionized = 		false;
+		$artificialNav = 	false;
 
 		if(!$doFilterBySite)
+		{
 			$sql = str_replace('%SITE_FILTER_CONDITION%', '', $mainSql);
+		}
 		else
 		{
 			$sql = array();
@@ -685,14 +694,32 @@ class Finder
 					inner join {$locationSiteTable} LS2 on LG.LOCATION_GROUP_ID = LS2.LOCATION_ID and LS2.LOCATION_TYPE = 'G' and LS2.SITE_ID = '{$filterSite}'
 
 				", $mainSql);
+
+				$useDistinct = true;
 			}
 
 			$cnt = count($sql);
+
+			if($cnt == 1)
+			{
+				$needDistinct = true;
+			}
+			else
+			{
+				// UNION removes duplicates, so distinct is required only when no union here
+				$unionized = true;
+			}
+
 			$sql = ($cnt > 1 ? '(' : '').implode(') union (', $sql).($cnt > 1 ? ')' : '');
 		}
 
+		// set groupping if needed
+		$sql = str_replace('%GROUP_BY%', $needDistinct || $doCountChildren ? "group by {$groupSql}" : '', $sql);
+
 		if(!is_array($parameters['order']))
+		{
 			$sql .= " order by 3, 4 asc, 5";
+		}
 		else
 		{
 			// currenly spike
@@ -700,20 +727,20 @@ class Finder
 				$sql .= " order by 5 ".($parameters['order']['NAME.NAME'] == 'asc' ? 'asc' : 'desc');
 		}
 
-		$artificialNav = false;
 		$offset = intval($parameters['offset']);
 		$limit = intval($parameters['limit']);
 
 		if($limit)
 		{
-			if($dbConnection->getType() != 'mssql')
+			if($dbConnection->getType() == 'mssql')
 			{
-				$sql = $dbHelper->getTopSql($sql, $limit, $offset);
+				// due to huge amount of limitations of windowed functions in transact, using artificial nav here
+				// (does not support UNION and integer indices in ORDER BY)
+				$artificialNav = true;
 			}
 			else
 			{
-				// have no idea how to use limit-offset in UNION for transact
-				$artificialNav = true;
+				$sql = $dbHelper->getTopSql($sql, $limit, $offset);
 			}
 		}
 
@@ -739,7 +766,9 @@ class Finder
 			return new DB\ArrayResult($result);
 		}
 		else
+		{
 			return $res;
+		}
 	}
 }
 

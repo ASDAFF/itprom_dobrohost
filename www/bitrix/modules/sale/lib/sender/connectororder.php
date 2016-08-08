@@ -35,15 +35,15 @@ class ConnectorOrder extends \Bitrix\Sender\Connector
         {
             $filter['=BASKET.PRODUCT_ID'] = $this->getFieldValue('BASKET_PRODUCT_ID', 0);
             $runtime['BASKET'] = array(
-                'data_type' => 'Bitrix\Sale\Basket',
+                'data_type' => 'Bitrix\Sale\Internals\Basket',
                 'reference' => array(
                     '=this.ID' => 'ref.ORDER_ID'
                 )
             );
         }
 
-        $resultDb = \Bitrix\Sale\OrderTable::getList(array(
-            'select' => array('USER_ID', 'NAME' => 'BUYER.NAME', 'EMAIL' => 'BUYER.EMAIL'),
+        $resultDb = \Bitrix\Sale\Internals\OrderTable::getList(array(
+            'select' => array('USER_ID', 'NAME' => 'USER.NAME', 'EMAIL' => 'USER.EMAIL'),
             'filter' => $filter,
             'runtime' => $runtime,
             'group' => array('USER_ID', 'NAME', 'EMAIL'),

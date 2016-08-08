@@ -1,6 +1,6 @@
 <?
 /**********************************************************************
-Delivery handler for CPCR delivery service (http://www.cpcr.ru/)
+Delivery services for CPCR delivery service (http://www.cpcr.ru/)
 It uses on-line calculator. Calculation only to Russia.
 Files:
 cpcr/cities.php - cache of cpcr ids for cities
@@ -74,26 +74,22 @@ class CDeliveryCPCR
 	function Init()
 	{
 		// fix a possible currency bug
-		if ($arCurrency = CCurrency::GetByID('RUR'))
-		{
+		if (\Bitrix\Main\Loader::includeModule('currency') && $arCurrency = CCurrency::GetByID('RUR'))
 			$base_currency = 'RUR';
-		}
 		else
-		{
 			$base_currency = 'RUB';
-		}
 
 		return array(
 			/* Basic description */
 			"SID" => "cpcr", // unique string identifier
-			"NAME" => GetMessage('SALE_DH_CPCR_NAME'), // handler public title
-			"DESCRIPTION" => GetMessage('SALE_DH_CPCR_DESCRIPTION'), // handler public dedcription
-			"DESCRIPTION_INNER" => GetMessage('SALE_DH_CPCR_DESCRIPTION_INNER'), // handler private description for admin panel
-			"BASE_CURRENCY" => $base_currency, // handler base currency
+			"NAME" => GetMessage('SALE_DH_CPCR_NAME'), // services public title
+			"DESCRIPTION" => GetMessage('SALE_DH_CPCR_DESCRIPTION'), // services public dedcription
+			"DESCRIPTION_INNER" => GetMessage('SALE_DH_CPCR_DESCRIPTION_INNER'), // services private description for admin panel
+			"BASE_CURRENCY" => $base_currency, // services base currency
 
-			"HANDLER" => __FILE__, // handler path - don't change it if you do not surely know what you are doin
+			"HANDLER" => __FILE__, // services path - don't change it if you do not surely know what you are doin
 
-			"COMPABILITY" => array("CDeliveryCPCR", "Compability"), // callback method to check whether handler is compatible with current order
+			"COMPABILITY" => array("CDeliveryCPCR", "Compability"), // callback method to check whether services is compatible with current order
 			"CALCULATOR" => array("CDeliveryCPCR", "Calculate"), // callback method to calculate delivery price
 
 			/* List of delivery profiles */
@@ -208,7 +204,7 @@ class CDeliveryCPCR
 		static $arCPCRCountries;
 		static $arCPCRCity;
 
-		$arLocation = CSaleLocation::GetByID($location);
+		$arLocation = CSaleHelper::getLocationByIdHitCached($location);
 
 		$arReturn = array();
 
@@ -288,7 +284,12 @@ class CDeliveryCPCR
 		$arLocationTo = CDeliveryCPCR::__GetLocation($arOrder["LOCATION_TO"]);
 
 		// caching is dependent from category, locations "from" & "to" and from weight interval
-		$cache_id = "sale3|9.5.0|cpcr|".$arConfig["category"]['VALUE']."|".$arLocationFrom["ORIGINAL"]["COUNTRY_ID"]."|".$arLocationFrom["ORIGINAL"]["CITY_ID"]."|".$arLocationTo["ORIGINAL"]["COUNTRY_ID"]."|".$arLocationTo["ORIGINAL"]["CITY_ID"];
+		$cache_id = "sale3|9.5.0|cpcr|".
+			$arConfig["category"]['VALUE']."|".
+			$arLocationFrom["ORIGINAL"]["COUNTRY_ID"]."|".
+			$arLocationFrom["ORIGINAL"]["CITY_ID"]."|".
+			$arLocationTo["ORIGINAL"]["COUNTRY_ID"]."|".
+			$arLocationTo["ORIGINAL"]["CITY_ID"];
 
 		if ($arOrder["WEIGHT"] <= 0.5) $cache_id .= "|0"; // first interval - up to 0.5 kg
 		elseif ($arOrder["WEIGHT"] <= 1) $cache_id .= "|1"; //2nd interval - up to 1 kg
@@ -409,7 +410,7 @@ class CDeliveryCPCR
 								{
 									$arTmpResult[ToLower($prof)] = array(
 										'VALUE' => $val["#"]["Total_Dost"][0]["#"],
-										'TRANSIT' => $val["#"]["DP"][0]["#"]
+										'TRANSIT' => $val["#"]["DP"][0]["#"]." ".GetMessage("SALE_DH_CPCR_DAYS")
 									);
 									unset($arProfiles[$prof]);
 									break;

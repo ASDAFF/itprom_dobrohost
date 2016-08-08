@@ -137,16 +137,18 @@ $MESS['SALE_REPORT_HELPER_NAME_sale_SaleProduct'] = 'Товар';
 $MESS['REPORT_sale_SaleOrder_Basket:ORDER'] = 'Состав заказа';
 $MESS['REPORT_sale_SaleOrder_STATUS'] = 'Статус';
 $MESS['REPORT_sale_SaleOrder_PAY_SYSTEM'] = 'Платёжная система';
-$MESS['REPORT_sale_SaleOrder_BUYER'] = 'Покупатель';
-$MESS['REPORT_sale_SaleOrder_BUYER.UserGroup:USER.GROUP'] = 'Группа покупателя';
-$MESS['REPORT_sale_SaleOrder_BUYER.UserGroup:USER.GROUP.ID'] = 'ID';
-$MESS['REPORT_sale_SaleOrder_BUYER.UserGroup:USER.GROUP.NAME'] = 'Наименование';
+$MESS['REPORT_sale_SaleOrder_USER'] = 'Покупатель';
+$MESS['REPORT_sale_SaleOrder_USER.UserGroup:USER.GROUP'] = 'Группа покупателя';
+$MESS['REPORT_sale_SaleOrder_USER.UserGroup:USER.GROUP.ID'] = 'ID';
+$MESS['REPORT_sale_SaleOrder_USER.UserGroup:USER.GROUP.NAME'] = 'Наименование';
 $MESS['REPORT_sale_SaleOrder_Basket:ORDER.PRODUCT.QUANTITY'] = 'Остаток товара';
 $MESS['REPORT_sale_SaleOrder_Basket:ORDER.PRODUCT.GoodsSection:PRODUCT.SECT'] = 'Категория товара';
+$MESS['REPORT_sale_SaleOrder_Payment:ORDER'] = 'Оплата';
+$MESS['REPORT_sale_SaleOrder_Shipment:REPS_ORDER'] = 'Отгрузка';
 
 // User helper
-$MESS['REPORT_sale_User_Bitrix\Sale\Order:BUYER'] = 'Заказ';
-$MESS['REPORT_sale_User_Bitrix\Sale\Order:BUYER.STATUS'] = 'Статус';
+$MESS['REPORT_sale_User_Bitrix\Sale\Internals\Order:USER'] = 'Заказ';
+$MESS['REPORT_sale_User_Bitrix\Sale\Internals\Order:USER.STATUS'] = 'Статус';
 $MESS['REPORT_sale_User_LID'] = 'Магазин';
 $MESS['REPORT_sale_User_UserGroup:USER.GROUP'] = 'Группа покупателя';
 $MESS['REPORT_sale_User_UserGroup:USER.GROUP.ID'] = 'ID';
@@ -163,7 +165,7 @@ $MESS['REPORT_sale_SaleFuser_USER.UserGroup:USER.GROUP.NAME'] = 'Наимено�
 $MESS['REPORT_sale_SaleBasket_ORDER'] = 'Заказ';
 $MESS['REPORT_sale_SaleBasket_ORDER.STATUS'] = 'Статус';
 $MESS['REPORT_sale_SaleBasket_ORDER.PAY_SYSTEM'] = 'Платёжная система';
-$MESS['REPORT_sale_SaleBasket_ORDER.BUYER'] = 'Покупатель';
+$MESS['REPORT_sale_SaleBasket_ORDER.USER'] = 'Покупатель';
 $MESS['REPORT_sale_SaleBasket_PRODUCT.ACTIVE'] = 'Товар активен';
 $MESS['REPORT_sale_SaleBasket_PRODUCT.GoodsSection:PRODUCT.SECT'] = 'Категория товара';
 $MESS['REPORT_sale_SaleBasket_PRODUCT.GoodsSection:PRODUCT.SECT.ID'] = 'ID';
@@ -171,6 +173,8 @@ $MESS['REPORT_sale_SaleBasket_PRODUCT.GoodsSection:PRODUCT.SECT.NAME'] = 'Наи
 $MESS['REPORT_sale_SaleBasket_FUSER.USER.UserGroup:USER.GROUP'] = 'Группа покупателя';
 $MESS['REPORT_sale_SaleBasket_FUSER.USER.UserGroup:USER.GROUP.ID'] = 'ID';
 $MESS['REPORT_sale_SaleBasket_FUSER.USER.UserGroup:USER.GROUP.NAME'] = 'Наименование';
+$MESS['REPORT_sale_SaleBasket_ORDER.Payment:ORDER'] = 'Оплата';
+$MESS['REPORT_sale_SaleBasket_ORDER.Shipment:REPS_ORDER'] = 'Отгрузка';
 
 // SaleProduct helper
 $MESS['REPORT_sale_SaleProduct_PRICE_SITECURR'] = 'Цена';

@@ -149,4 +149,15 @@ $MESS["BUYER_NO_ORDER"] = "У покупателя нет заказов";
 $MESS["BUYER_F_DELIVERY"] = "Доставка разрешена";
 $MESS["BUYER_F_SHOW_SET"] = "Развернуть";
 $MESS["BUYER_F_HIDE_SET"] = "Свернуть";
+
+$MESS["SOB_PAYMENTS_PAID"] = "Оплачен";
+$MESS["SOB_PAYMENTS_UNPAID"] = "Не оплачен";
+$MESS["SOB_PAYMENTS_STATUS"] = "Статус";
+$MESS["SOB_SHIPMENTS_ALLOW_DELIVERY"] = "Доставка разрешена";
+$MESS["SOB_SHIPMENTS_NOT_ALLOW_DELIVERY"] = "Доставка не разрешена";
+$MESS["SOB_SHIPMENTS_CANCELED"] = "Отгрузка отменена";
+$MESS["SOB_SHIPMENTS_DEDUCTED"] = "Отгружена";
+$MESS["SOB_SHIPMENTS_MARKED"] = "Проблемный";
+$MESS["SOB_SHIPMENTS_STATUS"] = "Статус";
+
 ?>

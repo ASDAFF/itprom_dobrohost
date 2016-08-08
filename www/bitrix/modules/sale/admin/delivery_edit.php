@@ -519,7 +519,7 @@ $tabControl->BeginNextTab();
 			<select multiple="multiple" size="5" name="PAY_SYSTEM[]">
 			<?
 			$arPaySystemId = array();
-			$dbRes = CSaleDelivery::GetDelivery2PaySystem(array("DELIVERY_ID" => $ID, "LID" => $str_LID));
+			$dbRes = CSaleDelivery::GetDelivery2PaySystem(array("DELIVERY_ID" => $ID));
 			while ($arRes = $dbRes->Fetch())
 				$arPaySystemId[] = $arRes["PAYSYSTEM_ID"];
 

@@ -12,6 +12,9 @@
 
 	margin-bottom: 10px;
 }
+.bx-slst .dropdown-block:last-child {
+	margin-bottom: 0;
+}
 
 .bx-slst .dropdown-arrow {
 	background: url(/bitrix/components/bitrix/sale.location.selector.steps/templates/.default/images/dropdown-errow.png) no-repeat center center;
@@ -328,11 +331,7 @@ div[data-bx-ui-id="error"]{
 
 .bx-ui-combobox-container .bx-combobox-fake-as-input{
 	padding-top: 9px;
-	height: 24px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
-/*
-.block-body-scroll {
-	position: relative;
-	overflow: hidden !important;
-}
-*/

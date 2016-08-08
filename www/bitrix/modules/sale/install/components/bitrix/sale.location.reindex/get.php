@@ -1,6 +1,7 @@
 <?
 define("NO_KEEP_STATISTIC", true);
 define("NO_AGENT_STATISTIC", true);
+define("NO_AGENT_CHECK", true);
 
 use Bitrix\Main;
 use Bitrix\Main\Loader;

@@ -45,4 +45,7 @@ $MESS["SPOD_HIDE_MAP"] = "Hide map";
 $MESS["SPOD_REPEAT_PAY"] = "Pay again";
 $MESS["SPOD_CUR_ORDERS"] = "View orders";
 $MESS["SPOD_NUM_SIGN"] = "No.";
+$MESS["SPOD_PRICE_FORMATED"] = "Price";
+$MESS["SPOD_WEIGHT_FORMATTED"] = "Weight";
+$MESS["SPOD_DISCOUNT_PRICE_PERCENT_FORMATED"] = "Discount";
 ?>

@@ -10,6 +10,7 @@ $APPLICATION->IncludeComponent(
 		"AJAX_CALL" => "Y",
 		"STEP" => intval($_REQUEST["STEP"]),
 		"DELIVERY" => $_REQUEST["DELIVERY"],
+		"DELIVERY_ID" => $_REQUEST["DELIVERY_ID"],
 		"PROFILE" => $_REQUEST["PROFILE"],
 		"ORDER_WEIGHT" => doubleval($_REQUEST["WEIGHT"]),
 		"ORDER_PRICE" => doubleval($_REQUEST["PRICE"]),

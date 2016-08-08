@@ -17,16 +17,19 @@ $arResult['FOR_JS'] = array(
 );
 
 if(is_array($arResult['CONNECTIONS']['LOCATION']))
+{
 	$arResult['FOR_JS']['DATA']['LOCATION'] = $arResult['CONNECTIONS']['LOCATION'];
+}
 
 foreach($arResult['FOR_JS']['DATA']['LOCATION'] as &$location)
 {
+	$location['VALUE'] = $location['ID'];
+
 	$pathIds = array();
 	if(is_array($location['PATH']))
 	{
 		$name = current($location['PATH']);
 		$location['DISPLAY'] = $name['NAME'];
-		$location['VALUE'] = $location['ID'];
 
 		foreach($location['PATH'] as $id => $pathElem)
 		{
@@ -37,11 +40,9 @@ foreach($arResult['FOR_JS']['DATA']['LOCATION'] as &$location)
 		array_shift($pathIds);
 		$location['PATH'] = $pathIds;
 	}
+	//else PATH is supposed to be downloaded on-demand
 
 	unset($location['SORT']);
-
-	//unset($location['CODE']);
-	//else PATH is supposed to be downloaded on-demand
 }
 unset($location);
 

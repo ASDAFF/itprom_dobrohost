@@ -1,7 +1,18 @@
 <?
-IncludeModuleLangFile(__FILE__);
 
-class CAllSaleOrderProps
+use
+	Bitrix\Sale\Internals\OrderPropsTable,
+	Bitrix\Sale\Compatible\OrderQuery,
+	Bitrix\Sale\Compatible\FetchAdapter,
+	Bitrix\Main\Entity,
+	Bitrix\Main\Application,
+	Bitrix\Main\SystemException,
+	Bitrix\Main\Localization\Loc;
+
+Loc::loadMessages(__FILE__);
+
+/** @deprecated */
+class CSaleOrderProps
 {
 	/*
 	 * Checks order properties' values on the basis of order properties' restrictions
@@ -114,13 +125,15 @@ class CAllSaleOrderProps
 						if(intval($res['ID']))
 						{
 							$curVal = $res['ID'];
+							$locId = $res['ID'];
 						}
 						else
 						{
 							$curVal = null;
+							$locId = false;
 						}
 					}
-					else
+					else // dead branch in 15.5.x
 					{
 						$dbVariants = CSaleLocation::GetList(
 							array(),
@@ -140,11 +153,11 @@ class CAllSaleOrderProps
 			if ($arOrderProp["TYPE"] == "LOCATION" && ($arOrderProp["IS_LOCATION"] == "Y" || $arOrderProp["IS_LOCATION4TAX"] == "Y"))
 			{
 				if ($arOrderProp["IS_LOCATION"] == "Y")
-					$arOrder["DELIVERY_LOCATION"] = $curVal;
+					$arOrder["DELIVERY_LOCATION"] = $locId;
 				if ($arOrderProp["IS_LOCATION4TAX"] == "Y")
-					$arOrder["TAX_LOCATION"] = $curVal;
+					$arOrder["TAX_LOCATION"] = $locId;
 
-				if (!$curVal)
+				if (!$locId)
 					$bErrorField = true;
 			}
 			elseif ($arOrderProp["IS_PROFILE_NAME"] == "Y" || $arOrderProp["IS_PAYER"] == "Y" || $arOrderProp["IS_EMAIL"] == "Y" || $arOrderProp["IS_ZIP"] == "Y")
@@ -333,60 +346,141 @@ class CAllSaleOrderProps
 			CSaleOrderPropsValue::Delete($id);
 	}
 
-	function GetByID($ID)
+	function GetList($arOrder = array(), $arFilter = array(), $arGroupBy = false, $arNavStartParams = false, $arSelectFields = array())
 	{
-		global $DB;
-
-		$ID = intval($ID);
-		if ($ID <= 0)
-			return false;
-
-		if(CSaleLocation::isLocationProMigrated())
+		if (!is_array($arOrder) && !is_array($arFilter))
 		{
-			$strSql = "
-				SELECT
-					P.ID,
-					P.PERSON_TYPE_ID,
-					P.NAME,
-					P.TYPE,
-					P.REQUIED,
-					".self::getPropertyDefaultValueFieldSelectSql().",
-					P.SORT,
-					P.USER_PROPS,
-					P.IS_LOCATION,
-					P.PROPS_GROUP_ID,
-					P.SIZE1,
-					P.SIZE2,
-					P.DESCRIPTION,
-					P.IS_EMAIL,
-					P.IS_PROFILE_NAME,
-					P.IS_PAYER,
-					P.IS_LOCATION4TAX,
-					P.IS_FILTERED,
-					P.CODE,
-					P.IS_ZIP,
-					P.IS_PHONE,
-					P.ACTIVE,
-					P.UTIL,
-					P.INPUT_FIELD_LOCATION,
-					P.MULTIPLE
-				FROM 
-					b_sale_order_props P
-					".self::getLocationTableJoinSql()."
-				WHERE P.ID = ".$ID;
+			$arOrder = strval($arOrder);
+			$arFilter = strval($arFilter);
+			if (strlen($arOrder) > 0 && strlen($arFilter) > 0)
+				$arOrder = array($arOrder => $arFilter);
+			else
+				$arOrder = array();
+			if (is_array($arGroupBy))
+				$arFilter = $arGroupBy;
+			else
+				$arFilter = array();
+			$arGroupBy = false;
+
+			$arSelectFields = array();
+		}
+
+		if (! $arSelectFields)
+			$arSelectFields = array(
+				"ID", "PERSON_TYPE_ID", "NAME", "TYPE", "REQUIED", "DEFAULT_VALUE", "DEFAULT_VALUE_ORIG", "SORT", "USER_PROPS",
+				"IS_LOCATION", "PROPS_GROUP_ID", "SIZE1", "SIZE2", "DESCRIPTION", "IS_EMAIL", "IS_PROFILE_NAME",
+				"IS_PAYER", "IS_LOCATION4TAX", "IS_ZIP", "CODE", "IS_FILTERED", "ACTIVE", "UTIL",
+				"INPUT_FIELD_LOCATION", "MULTIPLE", "PAYSYSTEM_ID", "DELIVERY_ID"
+			);
+
+		// add aliases
+
+		$query = new \Bitrix\Sale\Compatible\OrderQueryLocation(OrderPropsTable::getEntity());
+		$query->addLocationRuntimeField('DEFAULT_VALUE');
+		$query->addAliases(array(
+			'REQUIED'              => 'REQUIRED',
+			'GROUP_ID'             => 'GROUP.ID',
+			'GROUP_PERSON_TYPE_ID' => 'GROUP.PERSON_TYPE_ID',
+			'GROUP_NAME'           => 'GROUP.NAME',
+			'GROUP_SORT'           => 'GROUP.SORT',
+			'PERSON_TYPE_LID'      => 'PERSON_TYPE.LID',
+			'PERSON_TYPE_NAME'     => 'PERSON_TYPE.NAME',
+			'PERSON_TYPE_SORT'     => 'PERSON_TYPE.SORT',
+			'PERSON_TYPE_ACTIVE'   => 'PERSON_TYPE.ACTIVE',
+			'PAYSYSTEM_ID'         => 'Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.PROPERTY_ID',
+			'DELIVERY_ID'          => 'Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.PROPERTY_ID',
+		));
+
+		// relations
+
+		if (isset($arFilter['RELATED']))
+		{
+			// 1. filter related to something
+			if (is_array($arFilter['RELATED']))
+			{
+				$relationFilter = array();
+
+				if ($arFilter['RELATED']['PAYSYSTEM_ID'])
+					$relationFilter []= array(
+						'=Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.ENTITY_TYPE' => 'P',
+						'=Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.ENTITY_ID' => $arFilter['RELATED']['PAYSYSTEM_ID'],
+					);
+
+				if ($arFilter['RELATED']['DELIVERY_ID'])
+				{
+					if ($relationFilter)
+						$relationFilter['LOGIC'] = $arFilter['RELATED']['LOGIC'] == 'AND' ? 'AND' : 'OR';
+
+					$relationFilter []= array(
+						'=Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.ENTITY_TYPE' => 'D',
+						'=Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.ENTITY_ID' => \CSaleDelivery::getIdByCode($arFilter['RELATED']['DELIVERY_ID']),
+					);
+				}
+
+				// all other
+				if ($arFilter['RELATED']['TYPE'] == 'WITH_NOT_RELATED' && $relationFilter)
+				{
+					$relationFilter = array(
+						'LOGIC' => 'OR',
+						$relationFilter,
+						array('=Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.PROPERTY_ID' => null),
+					);
+				}
+
+				if ($relationFilter)
+					$query->addFilter(null, $relationFilter);
+			}
+			// 2. filter all not related to anything
+			else
+			{
+				$query->addFilter('=Bitrix\Sale\Internals\OrderPropsRelationTable:lPROPERTY.PROPERTY_ID', null);
+
+				if (($key = array_search('PAYSYSTEM_ID', $arSelectFields)) !== false)
+					unset($arSelectFields[$key]);
+
+				if (($key = array_search('DELIVERY_ID', $arSelectFields)) !== false)
+					unset($arSelectFields[$key]);
+			}
+
+			unset($arFilter['RELATED']);
+		}
+
+		if (isset($arFilter['PERSON_TYPE_ID']) && is_array($arFilter['PERSON_TYPE_ID']))
+		{
+			foreach ($arFilter['PERSON_TYPE_ID'] as $personTypeKey => $personTypeValue)
+			{
+				if (!is_array($personTypeValue) && !empty($personTypeValue) && intval($personTypeValue) > 0)
+				{
+					unset($arFilter['PERSON_TYPE_ID'][$personTypeKey]);
+					$arFilter['PERSON_TYPE_ID'][] = $personTypeValue;
+				}
+			}
+		}
+
+		// execute
+
+		$query->prepare($arOrder, $arFilter, $arGroupBy, $arSelectFields);
+
+		if ($query->counted())
+		{
+			return $query->exec()->getSelectedRowsCount();
 		}
 		else
 		{
-			$strSql = "SELECT * FROM b_sale_order_props WHERE ID = ".$ID;
+			$result = new \Bitrix\Sale\Compatible\CDBResult;
+			$adapter = new CSaleOrderPropsAdapter($query, $arSelectFields);
+			$adapter->addFieldProxy('DEFAULT_VALUE');
+			$result->addFetchAdapter($adapter);
+			return $query->compatibleExec($result, $arNavStartParams);
 		}
+	}
 
-		$db_res = $DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
-
-		if ($res = $db_res->Fetch())
-		{
-			return $res;
-		}
-		return false;
+	function GetByID($ID)
+	{
+		$id = (int) $ID;
+		return $id > 0 && $id == $ID
+			? self::GetList(array(), array('ID' => $ID))->Fetch()
+			: false;
 	}
 
 	function CheckFields($ACTION, &$arFields, $ID = 0)
@@ -398,17 +492,17 @@ class CAllSaleOrderProps
 
 		if ((is_set($arFields, "PERSON_TYPE_ID") || $ACTION=="ADD") && IntVal($arFields["PERSON_TYPE_ID"]) <= 0)
 		{
-			$APPLICATION->ThrowException(GetMessage("SKGOP_EMPTY_PERS_TYPE"), "ERROR_NO_PERSON_TYPE");
+			$APPLICATION->ThrowException(Loc::getMessage("SKGOP_EMPTY_PERS_TYPE"), "ERROR_NO_PERSON_TYPE");
 			return false;
 		}
 		if ((is_set($arFields, "NAME") || $ACTION=="ADD") && strlen($arFields["NAME"]) <= 0)
 		{
-			$APPLICATION->ThrowException(GetMessage("SKGOP_EMPTY_PROP_NAME"), "ERROR_NO_NAME");
+			$APPLICATION->ThrowException(Loc::getMessage("SKGOP_EMPTY_PROP_NAME"), "ERROR_NO_NAME");
 			return false;
 		}
 		if ((is_set($arFields, "TYPE") || $ACTION=="ADD") && strlen($arFields["TYPE"]) <= 0)
 		{
-			$APPLICATION->ThrowException(GetMessage("SKGOP_EMPTY_PROP_TYPE"), "ERROR_NO_TYPE");
+			$APPLICATION->ThrowException(Loc::getMessage("SKGOP_EMPTY_PROP_TYPE"), "ERROR_NO_TYPE");
 			return false;
 		}
 
@@ -433,18 +527,18 @@ class CAllSaleOrderProps
 
 		if (is_set($arFields, "IS_LOCATION") && is_set($arFields, "TYPE") && $arFields["IS_LOCATION"]=="Y" && $arFields["TYPE"]!="LOCATION")
 		{
-			$APPLICATION->ThrowException(GetMessage("SKGOP_WRONG_PROP_TYPE"), "ERROR_WRONG_TYPE1");
+			$APPLICATION->ThrowException(Loc::getMessage("SKGOP_WRONG_PROP_TYPE"), "ERROR_WRONG_TYPE1");
 			return false;
 		}
 		if (is_set($arFields, "IS_LOCATION4TAX") && is_set($arFields, "TYPE") && $arFields["IS_LOCATION4TAX"]=="Y" && $arFields["TYPE"]!="LOCATION")
 		{
-			$APPLICATION->ThrowException(GetMessage("SKGOP_WRONG_PROP_TYPE"), "ERROR_WRONG_TYPE2");
+			$APPLICATION->ThrowException(Loc::getMessage("SKGOP_WRONG_PROP_TYPE"), "ERROR_WRONG_TYPE2");
 			return false;
 		}
 
 		if ((is_set($arFields, "PROPS_GROUP_ID") || $ACTION=="ADD") && IntVal($arFields["PROPS_GROUP_ID"])<=0)
 		{
-			$APPLICATION->ThrowException(GetMessage("SKGOP_EMPTY_PROP_GROUP"), "ERROR_NO_GROUP");
+			$APPLICATION->ThrowException(Loc::getMessage("SKGOP_EMPTY_PROP_GROUP"), "ERROR_NO_GROUP");
 			return false;
 		}
 
@@ -452,7 +546,7 @@ class CAllSaleOrderProps
 		{
 			if (!($arPersonType = CSalePersonType::GetByID($arFields["PERSON_TYPE_ID"])))
 			{
-				$APPLICATION->ThrowException(str_replace("#ID#", $arFields["PERSON_TYPE_ID"], GetMessage("SKGOP_NO_PERS_TYPE")), "ERROR_NO_PERSON_TYPE");
+				$APPLICATION->ThrowException(str_replace("#ID#", $arFields["PERSON_TYPE_ID"], Loc::getMessage("SKGOP_NO_PERS_TYPE")), "ERROR_NO_PERSON_TYPE");
 				return false;
 			}
 		}
@@ -460,75 +554,55 @@ class CAllSaleOrderProps
 		return true;
 	}
 
+	function Add($arFields)
+	{
+		foreach (GetModuleEvents('sale', 'OnBeforeOrderPropsAdd', true) as $arEvent)
+			if (ExecuteModuleEventEx($arEvent, array(&$arFields)) === false)
+				return false;
+
+		if (! self::CheckFields('ADD', $arFields))
+			return false;
+
+		$newProperty = CSaleOrderPropsAdapter::convertOldToNew($arFields);
+		$ID = OrderPropsTable::add(array_intersect_key($newProperty, CSaleOrderPropsAdapter::$allFields))->getId();
+
+		foreach(GetModuleEvents('sale', 'OnOrderPropsAdd', true) as $arEvent)
+			ExecuteModuleEventEx($arEvent, array($ID, $arFields));
+
+		return $ID;
+	}
+
 	function Update($ID, $arFields)
 	{
-		global $DB;
-
-		$ID = intval($ID);
-		if ($ID <= 0)
+		if (! $ID)
 			return false;
 
-		foreach(GetModuleEvents("sale", "OnBeforeOrderPropsUpdate", true) as $arEvent)
-		{
-			if (ExecuteModuleEventEx($arEvent, array($ID, &$arFields))===false)
+		foreach (GetModuleEvents('sale', 'OnBeforeOrderPropsUpdate', true) as $arEvent)
+			if (ExecuteModuleEventEx($arEvent, array($ID, &$arFields)) === false)
 				return false;
-		}
 
-		$prevDefault = $arFields['DEFAULT_VALUE'];
-
-		// need to check here if we got CODE or ID came
-		if(isset($arFields['DEFAULT_VALUE']) && ((string) $arFields['DEFAULT_VALUE'] != '') && CSaleLocation::isLocationProMigrated())
-		{
-			$type = '';
-			if(!isset($arFields['TYPE']))
-			{
-				$prop = self::GetByID($ID);
-				$type = $prop['TYPE'];
-			}
-			else
-			{
-				$type = $arFields['TYPE'];
-			}
-
-			if($type == 'LOCATION')
-			{
-				$arFields['DEFAULT_VALUE'] = CSaleLocation::tryTranslateIDToCode($arFields['DEFAULT_VALUE']);
-			}
-		}
-
-		if (!CSaleOrderProps::CheckFields("UPDATE", $arFields, $ID))
+		if (! self::CheckFields('UPDATE', $arFields, $ID))
 			return false;
 
-		$strUpdate = $DB->PrepareUpdate("b_sale_order_props", $arFields);
-		if (!empty($strUpdate))
-		{
-			$strSql = "UPDATE b_sale_order_props SET ".$strUpdate." WHERE ID = ".$ID;
-			$DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
-		}
+		$newProperty = CSaleOrderPropsAdapter::convertOldToNew($arFields + self::GetByID($ID));
+		OrderPropsTable::update($ID, array_intersect_key($newProperty, CSaleOrderPropsAdapter::$allFields));
 
-		$arFields['DEFAULT_VALUE'] = $prevDefault;
-
-		foreach(GetModuleEvents("sale", "OnOrderPropsUpdate", true) as $arEvent)
-		{
+		foreach(GetModuleEvents('sale', 'OnOrderPropsUpdate', true) as $arEvent)
 			ExecuteModuleEventEx($arEvent, array($ID, $arFields));
-		}
 
 		return $ID;
 	}
 
 	function Delete($ID)
 	{
-		global $DB;
-
-		$ID = intval($ID);
-		if ($ID <= 0)
+		if (! $ID)
 			return false;
 
-		foreach(GetModuleEvents("sale", "OnBeforeOrderPropsDelete", true) as $arEvent)
-		{
-			if (ExecuteModuleEventEx($arEvent, array($ID))===false)
+		foreach (GetModuleEvents('sale', 'OnBeforeOrderPropsDelete', true) as $arEvent)
+			if (ExecuteModuleEventEx($arEvent, array($ID)) === false)
 				return false;
-		}
+
+		global $DB;
 
 		$DB->Query("DELETE FROM b_sale_order_props_variant WHERE ORDER_PROPS_ID = ".$ID, true);
 		$DB->Query("UPDATE b_sale_order_props_value SET ORDER_PROPS_ID = NULL WHERE ORDER_PROPS_ID = ".$ID, true);
@@ -536,10 +610,8 @@ class CAllSaleOrderProps
 		$DB->Query("DELETE FROM b_sale_order_props_relation WHERE PROPERTY_ID = ".$ID, true);
 		CSaleOrderUserProps::ClearEmpty();
 
-		foreach(GetModuleEvents("sale", "OnOrderPropsDelete", true) as $arEvent)
-		{
+		foreach(GetModuleEvents('sale', 'OnOrderPropsDelete', true) as $arEvent)
 			ExecuteModuleEventEx($arEvent, array($ID));
-		}
 
 		return $DB->Query("DELETE FROM b_sale_order_props WHERE ID = ".$ID, true);
 	}
@@ -720,6 +792,9 @@ class CAllSaleOrderProps
 
 		foreach ($arEntityIDs as $val)
 		{
+			if (strval(trim($val)) == '')
+				continue;
+
 			$arTmp = array("ENTITY_ID" => $val, "ENTITY_TYPE" => $entityType);
 			$arInsert = $DB->PrepareInsert("b_sale_order_props_relation", $arTmp);
 
@@ -737,88 +812,280 @@ class CAllSaleOrderProps
 	{
 		return false;
 	}
+}
 
-	public static function getPropertyDefaultValueFieldSelectSql($tableAlias = 'P')
+/** @deprecated */
+final class CSaleOrderPropsAdapter implements FetchAdapter
+{
+	private $select;
+
+	private $fieldProxy = array();
+
+	function __construct(OrderQuery $query, array $select)
 	{
-		$tableAlias = \Bitrix\Main\HttpApplication::getConnection()->getSqlHelper()->forSql($tableAlias);
+		$this->select = $query->getSelectNamesAssoc() + array_flip($select);
 
-		if(CSaleLocation::isLocationProMigrated())
-
-			return "
-				CASE
-
-					WHEN 
-						".$tableAlias.".TYPE = 'LOCATION'
-					THEN 
-						CAST(L.ID as ".\Bitrix\Sale\Location\DB\Helper::getSqlForDataType('char', 255).")
-
-					ELSE 
-						".$tableAlias.".DEFAULT_VALUE
-
-				END as DEFAULT_VALUE, ".$tableAlias.".DEFAULT_VALUE as DEFAULT_VALUE_ORIG";
-
-			//return "CASE WHEN L.ID IS NULL THEN ".$tableAlias.".DEFAULT_VALUE ELSE L.ID END as DEFAULT_VALUE, ".$tableAlias.".DEFAULT_VALUE as DEFAULT_VALUE_ORIG";
-		else
-			return $tableAlias.".DEFAULT_VALUE";
-	}
-
-	public static function getLocationTableJoinSql($tableAlias = 'P')
-	{
-		$tableAlias = \Bitrix\Main\HttpApplication::getConnection()->getSqlHelper()->forSql($tableAlias);
-
-		if(CSaleLocation::isLocationProMigrated())
-			return "LEFT JOIN b_sale_location L ON (".$tableAlias.".TYPE = 'LOCATION' AND ".$tableAlias.".DEFAULT_VALUE IS NOT NULL AND (".$tableAlias.".DEFAULT_VALUE = L.CODE))";
-		else
-			return " ";
-	}
-
-	public static function addPropertyDefaultValueField($tableAlias = 'V', &$arFields)
-	{
-		$tableAlias = \Bitrix\Main\HttpApplication::getConnection()->getSqlHelper()->forSql($tableAlias);
-
-		// locations kept in CODEs, but must be shown as IDs
-		if(CSaleLocation::isLocationProMigrated())
+		if (! $query->aggregated())
 		{
-			$arFields['DEFAULT_VALUE'] = array("FIELD" => "
-
-				CASE 
-
-					WHEN 
-						TYPE = 'LOCATION'
-					THEN 
-						CAST(L.ID as ".\Bitrix\Sale\Location\DB\Helper::getSqlForDataType('char', 255).")
-
-					ELSE 
-						".$tableAlias.".DEFAULT_VALUE 
-				END",
-
-				/*
-				"CASE WHEN L.ID IS NULL THEN ".$tableAlias.".DEFAULT_VALUE ELSE L.ID END", 
-				*/
-				"TYPE" => "string", "FROM" => "LEFT JOIN b_sale_location L ON (TYPE = 'LOCATION' AND ".$tableAlias.".DEFAULT_VALUE IS NOT NULL AND ".$tableAlias.".DEFAULT_VALUE = L.CODE)");
-			$arFields['DEFAULT_VALUE_ORIG'] = array("FIELD" => $tableAlias.".DEFAULT_VALUE", "TYPE" => "string");
-		}
-		else
-		{
-			$arFields['DEFAULT_VALUE'] = array("FIELD" => $tableAlias.".DEFAULT_VALUE", "TYPE" => "string");
+			$query->addAliasSelect('TYPE');
+			$query->addAliasSelect('SETTINGS');
+			$query->addAliasSelect('MULTIPLE');
+			$query->registerRuntimeField('PROPERTY_ID', new Entity\ExpressionField('PROPERTY_ID', 'DISTINCT(%s)', 'ID'));
+			$sel = $query->getSelect();
+			array_unshift($sel, 'PROPERTY_ID');
+			$query->setSelect($sel);
 		}
 	}
 
-	public static function translateLocationIDToCode($arFields)
+	public function addFieldProxy($field)
 	{
-		if(!CSaleLocation::isLocationProMigrated())
-			return $arFields['DEFAULT_VALUE'];
+		if((string) $field == '')
+			return false;
 
-		if(isset($arFields['TYPE']) && $arFields['TYPE'] == 'LOCATION')
+		$this->fieldProxy['PROXY_'.$field] = $field;
+
+		return true;
+	}
+
+	public function adapt(array $newProperty)
+	{
+		if(is_array($newProperty))
 		{
-			if((string) $arFields['DEFAULT_VALUE'] === (string) intval($arFields['DEFAULT_VALUE'])) // real ID, need to translate
+			foreach($newProperty as $k => $v)
 			{
-				return CSaleLocation::tryTranslateIDToCode($arFields['DEFAULT_VALUE']);
+				if(isset($this->fieldProxy[$k]))
+				{
+					unset($newProperty[$k]);
+					$newProperty[$this->fieldProxy[$k]] = $v;
+				}
 			}
 		}
 
-		return $arFields['DEFAULT_VALUE'];
+		$oldProperty = self::convertNewToOld($newProperty);
+		$oldProperty['VALUE'] = self::getOldValue($newProperty['VALUE'], $newProperty['TYPE']);
+
+		return array_intersect_key($oldProperty, $this->select);
+	}
+
+	static function getOldValue($value, $type)
+	{
+		if (is_array($value))
+		{
+			switch ($type)
+			{
+				case 'ENUM': $value = implode(',', $value); break;
+				case 'FILE': $value = implode(', ', $value); break;
+				default    : $value = reset($value);
+			}
+		}
+
+		return $value;
+	}
+
+	static public function convertNewToOld(array $property)
+	{
+		if (isset($property['REQUIRED']) && !empty($property['REQUIRED']))
+			$property['REQUIED'] = $property['REQUIRED'];
+
+		$settings = $property['SETTINGS'];
+
+		switch ($property['TYPE'])
+		{
+			case 'STRING':
+
+				if ($settings['MULTILINE'] == 'Y')
+				{
+					$property['TYPE'] = 'TEXTAREA';
+					$property['SIZE1'] = $settings['COLS'];
+					$property['SIZE2'] = $settings['ROWS'];
+				}
+				else
+				{
+					$property['TYPE'] = 'TEXT';
+					$property['SIZE1'] = $settings['SIZE'];
+				}
+
+				break;
+
+			case 'Y/N':
+
+				$property['TYPE'] = 'CHECKBOX';
+
+				break;
+
+			case 'DATE':
+
+				$property['TYPE'] = 'DATE';
+
+				break;
+
+			case 'FILE':
+
+				$property['TYPE'] = 'FILE';
+
+				break;
+
+			case 'ENUM':
+
+				if ($property['MULTIPLE'] == 'Y')
+				{
+					$property['TYPE'] = 'MULTISELECT';
+					$property['SIZE1'] = $settings['SIZE'];
+				}
+				elseif ($settings['MULTIELEMENT'] == 'Y')
+				{
+					$property['TYPE'] = 'RADIO';
+				}
+				else
+				{
+					$property['TYPE'] = 'SELECT';
+					$property['SIZE1'] = $settings['SIZE'];
+				}
+
+				break;
+
+			case 'LOCATION':
+
+				$property['SIZE1'] = $settings['SIZE'];
+
+				break;
+
+			default: $property['TYPE'] = 'TEXT';
+		}
+
+		return $property;
+	}
+
+	// M I G R A T I O N
+
+	static function convertOldToNew(array $property)
+	{
+		if (isset($property['REQUIED']) && !empty($property['REQUIED']))
+			$property['REQUIRED'] = $property['REQUIED'];
+
+		$size1 = intval($property['SIZE1']);
+		$size2 = intval($property['SIZE2']);
+
+		$settings = array();
+
+		// TODO remove sale/include.php - $GLOBALS["SALE_FIELD_TYPES"]
+		switch ($property['TYPE'])
+		{
+			case 'TEXT':
+
+				$property['TYPE'] = 'STRING';
+
+				if ($size1 > 0)
+					$settings['SIZE'] = $size1;
+
+				break;
+
+			case 'TEXTAREA':
+
+				$property['TYPE'] = 'STRING';
+
+				$settings['MULTILINE'] = 'Y';
+
+				if ($size1 > 0)
+					$settings['COLS'] = $size1;
+
+				if ($size2 > 0)
+					$settings['ROWS'] = $size2;
+
+				break;
+
+			case 'CHECKBOX':
+
+				$property['TYPE'] = 'Y/N';
+
+				break;
+
+			case 'RADIO':
+
+				$property['TYPE'] = 'ENUM';
+
+				$settings['MULTIELEMENT'] = 'Y';
+
+				break;
+
+			case 'SELECT':
+
+				$property['TYPE'] = 'ENUM';
+
+				if ($size1 > 0)
+					$settings['SIZE'] = $size1;
+
+				break;
+
+			case 'MULTISELECT':
+
+				$property['TYPE'] = 'ENUM';
+
+				$property['MULTIPLE'] = 'Y';
+
+				if ($size1 > 0)
+					$settings['SIZE'] = $size1;
+
+				break;
+
+			case 'LOCATION':
+
+				// ID came, should store CODE
+				if (intval($property['DEFAULT_VALUE']))
+				{
+					$res = \Bitrix\Sale\Location\LocationTable::getList(array('filter' => array('=ID' => intval($property['DEFAULT_VALUE'])), 'select' => array('CODE')))->fetch();
+					if(is_array($res) && (string) $res['CODE'] != '')
+					{
+						$property['DEFAULT_VALUE'] = $res['CODE'];
+					}
+				}
+
+				if ($size1 > 0)
+					$settings['SIZE'] = $size1;
+
+				break;
+		}
+
+		$property['SETTINGS'] = $settings;
+
+		return $property;
+	}
+
+	static $allFields = array(
+		'PERSON_TYPE_ID'=>1, 'NAME'=>1, 'TYPE'=>1, 'REQUIRED'=>1, 'DEFAULT_VALUE'=>1, 'SORT'=>1, 'USER_PROPS'=>1,
+		'IS_LOCATION'=>1, 'PROPS_GROUP_ID'=>1, 'DESCRIPTION'=>1, 'IS_EMAIL'=>1, 'IS_PROFILE_NAME'=>1, 'IS_PAYER'=>1,
+		'IS_LOCATION4TAX'=>1, 'IS_FILTERED'=>1, 'CODE'=>1, 'IS_ZIP'=>1, 'IS_PHONE'=>1, 'ACTIVE'=>1, 'UTIL'=>1,
+		'INPUT_FIELD_LOCATION'=>1, 'MULTIPLE'=>1, 'IS_ADDRESS'=>1, 'SETTINGS'=>1,
+	);
+
+	static function migrate()
+	{
+		$errors = '';
+		$result = Application::getConnection()->query('SELECT * FROM b_sale_order_props');
+
+		while ($oldProperty = $result->fetch())
+		{
+			$newProperty = self::convertOldToNew($oldProperty);
+			$newProperty['IS_ADDRESS'] = 'N'; // fix oracle's mb default
+
+			if (array_key_exists('REQUIRED', $newProperty))
+			{
+				$newProperty['REQUIRED'] = ToUpper($newProperty['REQUIRED']);
+			}
+
+			$update = OrderPropsTable::update($newProperty['ID'], array_intersect_key($newProperty, self::$allFields));
+
+			if ($update->isSuccess())
+			{
+				//////CSaleOrderPropsValueAdapter::migrate($oldProperty);
+			}
+			else
+			{
+				$errors .= 'cannot update property: '.$oldProperty['ID']."\n".implode("\n", $update->getErrorMessages())."\n\n";
+			}
+		}
+
+		if ($errors)
+			throw new SystemException($errors, 0, __FILE__, __LINE__);
 	}
 }
-
-?>

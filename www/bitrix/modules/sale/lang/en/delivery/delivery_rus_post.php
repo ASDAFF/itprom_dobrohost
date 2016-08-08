@@ -32,7 +32,9 @@ $MESS["SALE_DH_RP_FEATURE_MARKED"] = " ";
 $MESS["SALE_DH_RP_FEATURE_VALUE"] = " ";
 $MESS["SALE_DH_RP_FEATURE_ENABLED"] = " ";
 $MESS["SALE_DH_RP_ERROR_LOCATION_NOT_FOUND"] = "Location was not found";
-$MESS["SALE_DH_RP_MESS_CONFIG_TARIF_ZONES_SUSP"] = "Please check postal service zone configuration for <a href=\"/bitrix/admin/sale_delivery_handler_edit.php?SID=rus_post&lang=##LANGUAGE_ID##\">Russian Post</a>";
 $MESS["SALE_DH_RP_SET_DEFAULT_TARIF_ZONES"] = "Default postal zones";
 $MESS["SALE_DH_RP_SET_DEFAULT_TARIF_ZONES_SET"] = "set";
+$MESS["SALE_DH_RP_SET_DEFAULT_TARIF"] = "Default tariffs";
+$MESS["SALE_DH_RP_SET_DEFAULT_TARIF_SET"] = "set";
+$MESS["SALE_DH_RP_CALCULATE_ERROR"] = "Cannot calculate delivery cost.";
 ?>

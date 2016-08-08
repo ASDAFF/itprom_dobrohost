@@ -31,4 +31,5 @@ $MESS["SALE_DH_CPCR_CONFIG_CATEGORY_8"] = "другое";
 $MESS["SALE_DH_CPCR_ERROR_CONNECT"] = "Не удалось рассчитать стоимость доставки: ошибка соединения";
 $MESS["SALE_DH_CPCR_ERROR_RESPONSE"] = "Не удалось рассчитать стоимость доставки: неверный ответ сервера";
 $MESS["SALE_DH_CPCR_NEXT_STEP"] = "Корректировка местоположений";
+$MESS["SALE_DH_CPCR_DAYS"] = "дней";
 ?>

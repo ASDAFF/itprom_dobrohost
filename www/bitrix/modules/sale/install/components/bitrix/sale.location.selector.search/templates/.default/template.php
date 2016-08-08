@@ -46,31 +46,31 @@ Loc::loadMessages(__FILE__);
 
 		</div>
 
-		<?if(!$arParams['SUPPRESS_ERRORS']):?>
-			<script type="text/html" data-template-id="bx-ui-sls-error">
-				<div class="bx-ui-sls-error">
-					<div></div>
-					{{message}}
-				</div>
-			</script>
-		<?endif?>
+		<script type="text/html" data-template-id="bx-ui-sls-error">
+			<div class="bx-ui-sls-error">
+				<div></div>
+				{{message}}
+			</div>
+		</script>
 
 		<script type="text/html" data-template-id="bx-ui-sls-dropdown-item">
-			<li class="dropdown-item bx-ui-sls-variant">
+			<div class="dropdown-item bx-ui-sls-variant">
 				<span class="dropdown-item-text">{{display_wrapped}}</span>
 				<?if($arResult['ADMIN_MODE']):?>
 					[{{id}}]
 				<?endif?>
-			</li>
+			</div>
 		</script>
 
 		<div class="bx-ui-sls-error-message">
-			<?if(!empty($arResult['ERRORS']['NONFATAL'])):?>
+			<?if(!$arParams['SUPPRESS_ERRORS']):?>
+				<?if(!empty($arResult['ERRORS']['NONFATAL'])):?>
 
-				<?foreach($arResult['ERRORS']['NONFATAL'] as $error):?>
-					<?ShowError($error)?>
-				<?endforeach?>
+					<?foreach($arResult['ERRORS']['NONFATAL'] as $error):?>
+						<?ShowError($error)?>
+					<?endforeach?>
 
+				<?endif?>
 			<?endif?>
 		</div>
 

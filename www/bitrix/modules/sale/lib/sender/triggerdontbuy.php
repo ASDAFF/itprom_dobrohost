@@ -62,8 +62,8 @@ class TriggerDontBuy extends \Bitrix\Sender\TriggerConnectorClosed
 			'=LID' => $this->getSiteId()
 		);
 
-		$userListDb = \Bitrix\Sale\OrderTable::getList(array(
-			'select' => array('BUYER_USER_ID' => 'BUYER.ID', 'EMAIL' => 'BUYER.EMAIL', 'BUYER_USER_NAME' => 'BUYER.NAME'),
+		$userListDb = \Bitrix\Sale\Internals\OrderTable::getList(array(
+			'select' => array('BUYER_USER_ID' => 'USER.ID', 'EMAIL' => 'USER.EMAIL', 'BUYER_USER_NAME' => 'USER.NAME'),
 			'filter' => $filter,
 			'runtime' => array(
 				new \Bitrix\Main\Entity\ExpressionField('MAX_DATE_INSERT', 'MAX(%s)', 'DATE_INSERT'),

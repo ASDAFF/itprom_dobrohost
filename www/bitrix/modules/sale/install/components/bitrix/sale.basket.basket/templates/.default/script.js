@@ -1,3 +1,90 @@
+
+BasketPoolQuantity = function()
+{
+	this.processing = false;
+	this.poolQuantity = {};
+	this.updateTimer = null;
+	this.currentQuantity = {};
+
+	this.updateQuantity();
+};
+
+
+BasketPoolQuantity.prototype.updateQuantity = function()
+{
+	var items = BX('basket_items');
+
+	if (!!items && items.rows.length > 0)
+	{
+		for (var i = 1; items.rows.length > i; i++)
+		{
+			var itemId = items.rows[i].id;
+			this.currentQuantity[itemId] = BX('QUANTITY_' + itemId).value;
+		}
+	}
+
+};
+
+
+BasketPoolQuantity.prototype.changeQuantity = function(itemId)
+{
+	var quantity = BX('QUANTITY_' + itemId).value;
+	var isPoolEmpty = this.isPoolEmpty();
+
+	if (this.currentQuantity[itemId] && this.currentQuantity[itemId] != quantity)
+	{
+		this.poolQuantity[itemId] = this.currentQuantity[itemId] = quantity;
+	}
+
+	if (!isPoolEmpty)
+	{
+		this.enableTimer(true);
+	}
+	else
+	{
+		this.trySendPool();
+	}
+};
+
+
+BasketPoolQuantity.prototype.trySendPool = function()
+{
+	if (!this.isPoolEmpty() && !this.isProcessing())
+	{
+		this.enableTimer(false);
+		recalcBasketAjax({});
+	}
+};
+
+BasketPoolQuantity.prototype.isPoolEmpty = function()
+{
+	return ( Object.keys(this.poolQuantity).length == 0 );
+};
+
+BasketPoolQuantity.prototype.clearPool = function()
+{
+	this.poolQuantity = {};
+};
+
+BasketPoolQuantity.prototype.isProcessing = function()
+{
+	return (this.processing === true);
+};
+
+BasketPoolQuantity.prototype.setProcessing = function(value)
+{
+	this.processing = (value === true);
+};
+
+BasketPoolQuantity.prototype.enableTimer = function(value)
+{
+	clearTimeout(this.updateTimer);
+	if (value === false)
+		return;
+
+	this.updateTimer = setTimeout(function(){ basketPoolQuantity.trySendPool(); }, 1500);
+};
+
 /**
  * @param basketItemId
  * @param {{BASKET_ID : string, BASKET_DATA : { GRID : { ROWS : {} }}, COLUMNS: {}, PARAMS: {}, DELETE_ORIGINAL : string }} res
@@ -243,19 +330,17 @@ function updateBasketTable(basketItemId, res)
 											if (arItemProp['CODE'] === arProp['CODE'])
 											{
 												if (arItemProp['VALUE'] === arSkuValue['NAME'] || arItemProp['VALUE'] === arSkuValue['XML_ID'])
-													selected = 'bx_active';
+													selected = ' bx_active';
 											}
 										}
 
 										cellItemHTML += '<li style="width:10%;"\
-															class="sku_prop ' + selected + '"\
+															class="sku_prop' + selected + '"\
 															data-value-id="' + arSkuValue['XML_ID'] + '"\
 															data-element="' + arItem['ID'] + '"\
 															data-property="' + arProp['CODE'] + '"\
 															>\
-															<a href="javascript:void(0);">\
-																<span style="background-image:url(' + arSkuValue['PICT']['SRC'] + ')"></span>\
-															</a>\
+															<a href="javascript:void(0)" class="cnt"><span class="cnt_item" style="background-image:url(' + arSkuValue['PICT']['SRC'] + '"></span></a>\
 														</li>';
 									}
 
@@ -300,7 +385,7 @@ function updateBasketTable(basketItemId, res)
 															data-element="' + arItem['ID'] + '"\
 															data-property="' + arProp['CODE'] + '"\
 															>\
-															<a href="javascript:void(0);">' + arSkuValue['NAME'] + '</span></a>\
+															<a href="javascript:void(0)" class="cnt">' + arSkuValue['NAME'] + '</a>\
 														</li>';
 									}
 
@@ -817,6 +902,11 @@ function checkOut()
 	return true;
 }
 
+function updateBasket()
+{
+	recalcBasketAjax({});
+}
+
 function enterCoupon()
 {
 	var newCoupon = BX('coupon');
@@ -830,7 +920,8 @@ function updateQuantity(controlId, basketId, ratio, bUseFloatQuantity)
 {
 	var oldVal = BX(controlId).defaultValue,
 		newVal = parseFloat(BX(controlId).value) || 0,
-		bIsCorrectQuantityForRatio = false;
+		bIsCorrectQuantityForRatio = false,
+		autoCalculate = ((BX("auto_calculation") && BX("auto_calculation").value == "Y") || !BX("auto_calculation"));
 
 	if (ratio === 0 || ratio == 1)
 	{
@@ -857,7 +948,8 @@ function updateQuantity(controlId, basketId, ratio, bUseFloatQuantity)
 		bIsQuantityFloat = true;
 	}
 
-	newVal = (bUseFloatQuantity === false && bIsQuantityFloat === false) ? parseInt(newVal) : parseFloat(newVal).toFixed(2);
+	newVal = (bUseFloatQuantity === false && bIsQuantityFloat === false) ? parseInt(newVal) : parseFloat(newVal).toFixed(4);
+	newVal = correctQuantity(newVal);
 
 	if (bIsCorrectQuantityForRatio)
 	{
@@ -868,17 +960,25 @@ function updateQuantity(controlId, basketId, ratio, bUseFloatQuantity)
 		// set hidden real quantity value (will be used in actual calculation)
 		BX("QUANTITY_" + basketId).value = newVal;
 
-		recalcBasketAjax({});
+		if (autoCalculate)
+		{
+			basketPoolQuantity.changeQuantity(basketId);
+		}
 	}
 	else
 	{
 		newVal = getCorrectRatioQuantity(newVal, ratio, bUseFloatQuantity);
+		newVal = correctQuantity(newVal);
 
 		if (newVal != oldVal)
 		{
 			BX("QUANTITY_INPUT_" + basketId).value = newVal;
 			BX("QUANTITY_" + basketId).value = newVal;
-			recalcBasketAjax({});
+
+			if (autoCalculate)
+			{
+				basketPoolQuantity.changeQuantity(basketId);
+			}
 		}else
 		{
 			BX(controlId).value = oldVal;
@@ -899,20 +999,22 @@ function setQuantity(basketId, ratio, sign, bUseFloatQuantity)
 
 	if (bUseFloatQuantity)
 	{
-		newVal = newVal.toFixed(2);
+		newVal = parseFloat(newVal).toFixed(4);
 	}
+	newVal = correctQuantity(newVal);
 
 	if (ratio > 0 && newVal < ratio)
 	{
 		newVal = ratio;
 	}
 
-	if (!bUseFloatQuantity && newVal != newVal.toFixed(2))
+	if (!bUseFloatQuantity && newVal != newVal.toFixed(4))
 	{
-		newVal = newVal.toFixed(2);
+		newVal = parseFloat(newVal).toFixed(4);
 	}
 
 	newVal = getCorrectRatioQuantity(newVal, ratio, bUseFloatQuantity);
+	newVal = correctQuantity(newVal);
 
 	BX("QUANTITY_INPUT_" + basketId).value = newVal;
 	BX("QUANTITY_INPUT_" + basketId).defaultValue = newVal;
@@ -924,20 +1026,20 @@ function getCorrectRatioQuantity(quantity, ratio, bUseFloatQuantity)
 {
 	var newValInt = quantity * 10000,
 		ratioInt = ratio * 10000,
-		reminder = newValInt % ratioInt,
+		reminder = (quantity / ratio - ((quantity / ratio).toFixed(0))).toFixed(6),
 		result = quantity,
 		bIsQuantityFloat = false,
 		i;
 	ratio = parseFloat(ratio);
 
-	if (reminder === 0)
+	if (reminder == 0)
 	{
 		return result;
 	}
 
 	if (ratio !== 0 && ratio != 1)
 	{
-		for (i = ratio, max = parseFloat(quantity) + parseFloat(ratio); i <= max; i = parseFloat(parseFloat(i) + parseFloat(ratio)).toFixed(2))
+		for (i = ratio, max = parseFloat(quantity) + parseFloat(ratio); i <= max; i = parseFloat(parseFloat(i) + parseFloat(ratio)).toFixed(4))
 		{
 			result = i;
 		}
@@ -952,16 +1054,28 @@ function getCorrectRatioQuantity(quantity, ratio, bUseFloatQuantity)
 		bIsQuantityFloat = true;
 	}
 
-	result = (bUseFloatQuantity === false && bIsQuantityFloat === false) ? parseInt(result, 10) : parseFloat(result).toFixed(2);
-
+	result = (bUseFloatQuantity === false && bIsQuantityFloat === false) ? parseInt(result, 10) : parseFloat(result).toFixed(4);
+	result = correctQuantity(result);
 	return result;
 }
+
+function correctQuantity(quantity)
+{
+	return parseFloat((quantity * 1).toString());
+}
+
+
 /**
  *
  * @param {} params
  */
 function recalcBasketAjax(params)
 {
+	if (basketPoolQuantity.isProcessing())
+	{
+		return false;
+	}
+
 	BX.showWait();
 
 	var property_values = {},
@@ -1006,6 +1120,9 @@ function recalcBasketAjax(params)
 			postData['DELAY_' + delayedItems.rows[i].id] = 'Y';
 	}
 
+	basketPoolQuantity.setProcessing(true);
+	basketPoolQuantity.clearPool();
+
 	BX.ajax({
 		url: '/bitrix/components/bitrix/sale.basket.basket/ajax.php',
 		method: 'POST',
@@ -1014,7 +1131,26 @@ function recalcBasketAjax(params)
 		onsuccess: function(result)
 		{
 			BX.closeWait();
-			updateBasketTable(null, result);
+			basketPoolQuantity.setProcessing(false);
+
+			if(params.coupon)
+			{
+				//hello, gifts!
+				if(!!result && !!result.BASKET_DATA && !!result.BASKET_DATA.NEED_TO_RELOAD_FOR_GETTING_GIFTS)
+				{
+					BX.reload();
+				}
+			}
+
+			if (basketPoolQuantity.isPoolEmpty())
+			{
+				updateBasketTable(null, result);
+				basketPoolQuantity.updateQuantity();
+			}
+			else
+			{
+				basketPoolQuantity.enableTimer(true);
+			}
 		}
 	});
 }
@@ -1109,6 +1245,8 @@ function deleteCoupon(e)
 }
 
 BX.ready(function() {
+
+	basketPoolQuantity = new BasketPoolQuantity();
 	var sku_props = BX.findChildren(BX('basket_items'), {tagName: 'li', className: 'sku_prop'}, true),
 		i,
 		couponBlock;

@@ -32,4 +32,6 @@ $MESS["SALE_BASKET_ITEMS_SUBSCRIBED"] = "Back in stock soon";
 $MESS["SALE_BASKET_ITEMS_NOT_AVAILABLE"] = "Unavailable";
 $MESS["SALE_NO_ITEMS"] = "There are still no items in your cart.";
 $MESS["SALE_REFRESH"] = "Refresh";
+$MESS["SALE_COUPON_APPLY"] = "OK";
+$MESS["SALE_COUPON_APPLY_TITLE"] = "Click to apply the new coupon";
 ?>

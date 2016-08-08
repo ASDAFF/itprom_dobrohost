@@ -80,4 +80,10 @@ $MESS["SALE_PROPERTY_PAYSYSTEM"] = "Payment systems";
 $MESS["SALE_PROPERTY_DELIVERY"] = "Delivery services";
 $MESS["SALE_PROPERTY_SELECT_ALL"] = "All";
 $MESS["F_MULTIPLE"] = "Multiple";
+$MESS["NO_DEFAULT_VALUE"] = "Undefined";
+$MESS["TYPE_TITLE"] = "Data type";
+$MESS["PROPERTY_TITLE"] = "Property";
+$MESS["MULTIPLE_DESCRIPTION"] = "multiple value unavailable in filter";
+$MESS["F_IS_PHONE"] = "Is phone";
+$MESS["F_IS_ADDRESS"] = "Is address";
 ?>

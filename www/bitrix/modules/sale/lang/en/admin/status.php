@@ -27,4 +27,10 @@ $MESS["SALE_NOTES1"] = "<b>N</b> is the initial order status applied upon creati
 $MESS["SALE_NOTES2"] = "<b>F</b> is the final order status applied upon order successful completion. You cannot delete this status.";
 $MESS["SSAN_ADD_NEW"] = "New status";
 $MESS["SSAN_ADD_NEW_ALT"] = "Click to add a new status";
+$MESS["SSAN_NOTIFY"] = "Notifications";
+$MESS["SSAN_NOTIFY_Y"] = "Yes";
+$MESS["SSAN_NOTIFY_N"] = "No";
+$MESS["SSAN_TYPE"] = "Status type";
+$MESS["SSEN_TYPE_O"] = "Order";
+$MESS["SSEN_TYPE_D"] = "Delivery";
 ?>

@@ -10,6 +10,12 @@
 /** @var string $templateFolder */
 /** @var string $componentPath */
 /** @var CBitrixBasketComponent $component */
+$templateData = array(
+	'TEMPLATE_THEME' => $this->GetFolder().'/themes/'.$arParams['TEMPLATE_THEME'].'/style.css',
+	'TEMPLATE_CLASS' => 'bx_'.$arParams['TEMPLATE_THEME'],
+);
+$this->addExternalCss($templateData['TEMPLATE_THEME']);
+
 $curPage = $APPLICATION->GetCurPage().'?'.$arParams["ACTION_VARIABLE"].'=';
 $arUrls = array(
 	"delete" => $curPage."delete&id=#ID#",
@@ -33,6 +39,49 @@ $arBasketJSParams = array(
 </script>
 <?
 $APPLICATION->AddHeadScript($templateFolder."/script.js");
+
+if($arParams['USE_GIFTS'] === 'Y' && $arParams['GIFTS_PLACE'] === 'TOP')
+{
+	$APPLICATION->IncludeComponent(
+		"bitrix:sale.gift.basket",
+		".default",
+		array(
+			"SHOW_PRICE_COUNT" => 1,
+			"PRODUCT_SUBSCRIPTION" => 'N',
+			'PRODUCT_ID_VARIABLE' => 'id',
+			"PARTIAL_PRODUCT_PROPERTIES" => 'N',
+			"USE_PRODUCT_QUANTITY" => 'N',
+			"ACTION_VARIABLE" => "actionGift",
+			"ADD_PROPERTIES_TO_BASKET" => "Y",
+
+			"BASKET_URL" => $APPLICATION->GetCurPage(),
+			"APPLIED_DISCOUNT_LIST" => $arResult["APPLIED_DISCOUNT_LIST"],
+			"FULL_DISCOUNT_LIST" => $arResult["FULL_DISCOUNT_LIST"],
+
+			"TEMPLATE_THEME" => $arParams["TEMPLATE_THEME"],
+			"PRICE_VAT_INCLUDE" => $arParams["PRICE_VAT_SHOW_VALUE"],
+			"CACHE_GROUPS" => $arParams["CACHE_GROUPS"],
+
+			'BLOCK_TITLE' => $arParams['GIFTS_BLOCK_TITLE'],
+			'HIDE_BLOCK_TITLE' => $arParams['GIFTS_HIDE_BLOCK_TITLE'],
+			'TEXT_LABEL_GIFT' => $arParams['GIFTS_TEXT_LABEL_GIFT'],
+			'PRODUCT_QUANTITY_VARIABLE' => $arParams['GIFTS_PRODUCT_QUANTITY_VARIABLE'],
+			'PRODUCT_PROPS_VARIABLE' => $arParams['GIFTS_PRODUCT_PROPS_VARIABLE'],
+			'SHOW_OLD_PRICE' => $arParams['GIFTS_SHOW_OLD_PRICE'],
+			'SHOW_DISCOUNT_PERCENT' => $arParams['GIFTS_SHOW_DISCOUNT_PERCENT'],
+			'SHOW_NAME' => $arParams['GIFTS_SHOW_NAME'],
+			'SHOW_IMAGE' => $arParams['GIFTS_SHOW_IMAGE'],
+			'MESS_BTN_BUY' => $arParams['GIFTS_MESS_BTN_BUY'],
+			'MESS_BTN_DETAIL' => $arParams['GIFTS_MESS_BTN_DETAIL'],
+			'PAGE_ELEMENT_COUNT' => $arParams['GIFTS_PAGE_ELEMENT_COUNT'],
+			'CONVERT_CURRENCY' => $arParams['GIFTS_CONVERT_CURRENCY'],
+			'HIDE_NOT_AVAILABLE' => $arParams['GIFTS_HIDE_NOT_AVAILABLE'],
+
+			"LINE_ELEMENT_COUNT" => $arParams['GIFTS_PAGE_ELEMENT_COUNT'],
+		),
+		false
+	);
+}
 
 if (strlen($arResult["ERROR_MESSAGE"]) <= 0)
 {
@@ -63,7 +112,7 @@ if (strlen($arResult["ERROR_MESSAGE"]) <= 0)
 	?>
 		<form method="post" action="<?=POST_FORM_ACTION_URI?>" name="basket_form" id="basket_form">
 			<div id="basket_form_container">
-				<div class="bx_ordercart">
+				<div class="bx_ordercart <?=$templateData['TEMPLATE_CLASS']; ?>">
 					<div class="bx_sort_container">
 						<span><?=GetMessage("SALE_ITEMS")?></span>
 						<a href="javascript:void(0)" id="basket_toolbar_button" class="current" onclick="showBasketItemsList()"><?=GetMessage("SALE_BASKET_ITEMS")?><div id="normal_count" class="flat" style="display:none">&nbsp;(<?=$normalCount?>)</div></a>
@@ -83,6 +132,51 @@ if (strlen($arResult["ERROR_MESSAGE"]) <= 0)
 			<!-- <input type="hidden" name="ajax_post" id="ajax_post" value="Y"> -->
 		</form>
 	<?
+
+	if($arParams['USE_GIFTS'] === 'Y' && $arParams['GIFTS_PLACE'] === 'BOTTOM')
+	{
+		?>
+		<div style="margin-top: 35px;"><? $APPLICATION->IncludeComponent(
+			"bitrix:sale.gift.basket",
+			".default",
+			array(
+				"SHOW_PRICE_COUNT" => 1,
+				"PRODUCT_SUBSCRIPTION" => 'N',
+				'PRODUCT_ID_VARIABLE' => 'id',
+				"PARTIAL_PRODUCT_PROPERTIES" => 'N',
+				"USE_PRODUCT_QUANTITY" => 'N',
+				"ACTION_VARIABLE" => "actionGift",
+				"ADD_PROPERTIES_TO_BASKET" => "Y",
+
+				"BASKET_URL" => $APPLICATION->GetCurPage(),
+				"APPLIED_DISCOUNT_LIST" => $arResult["APPLIED_DISCOUNT_LIST"],
+				"FULL_DISCOUNT_LIST" => $arResult["FULL_DISCOUNT_LIST"],
+
+				"TEMPLATE_THEME" => $arParams["TEMPLATE_THEME"],
+				"PRICE_VAT_INCLUDE" => $arParams["PRICE_VAT_SHOW_VALUE"],
+				"CACHE_GROUPS" => $arParams["CACHE_GROUPS"],
+
+				'BLOCK_TITLE' => $arParams['GIFTS_BLOCK_TITLE'],
+				'HIDE_BLOCK_TITLE' => $arParams['GIFTS_HIDE_BLOCK_TITLE'],
+				'TEXT_LABEL_GIFT' => $arParams['GIFTS_TEXT_LABEL_GIFT'],
+				'PRODUCT_QUANTITY_VARIABLE' => $arParams['GIFTS_PRODUCT_QUANTITY_VARIABLE'],
+				'PRODUCT_PROPS_VARIABLE' => $arParams['GIFTS_PRODUCT_PROPS_VARIABLE'],
+				'SHOW_OLD_PRICE' => $arParams['GIFTS_SHOW_OLD_PRICE'],
+				'SHOW_DISCOUNT_PERCENT' => $arParams['GIFTS_SHOW_DISCOUNT_PERCENT'],
+				'SHOW_NAME' => $arParams['GIFTS_SHOW_NAME'],
+				'SHOW_IMAGE' => $arParams['GIFTS_SHOW_IMAGE'],
+				'MESS_BTN_BUY' => $arParams['GIFTS_MESS_BTN_BUY'],
+				'MESS_BTN_DETAIL' => $arParams['GIFTS_MESS_BTN_DETAIL'],
+				'PAGE_ELEMENT_COUNT' => $arParams['GIFTS_PAGE_ELEMENT_COUNT'],
+				'CONVERT_CURRENCY' => $arParams['GIFTS_CONVERT_CURRENCY'],
+				'HIDE_NOT_AVAILABLE' => $arParams['GIFTS_HIDE_NOT_AVAILABLE'],
+
+				"LINE_ELEMENT_COUNT" => $arParams['GIFTS_PAGE_ELEMENT_COUNT'],
+			),
+			false
+		); ?>
+		</div><?
+	}
 }
 else
 {

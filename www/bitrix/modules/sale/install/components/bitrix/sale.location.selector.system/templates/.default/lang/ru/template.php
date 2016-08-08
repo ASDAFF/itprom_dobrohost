@@ -32,3 +32,4 @@ $MESS["SALE_SLSS_LOCATION_SELECTOR_CLEAN_SELECTION"] = "Очистить спи�
 $MESS['SALE_SLSS_AJAX_LOADING'] = 'Загрузка ...';
 $MESS['SALE_SLSS_AJAX_LOAD_MORE'] = 'Загрузить ещё ...';
 $MESS['SALE_SLSS_AJAX_RETRY'] = 'Попробовать снова';
+$MESS["SALE_SLSS_NO_LOCATIONS"] = "База местоположений пуста. #ANCHOR_IMPORT#Импортировать местоположения#ANCHOR_END#";

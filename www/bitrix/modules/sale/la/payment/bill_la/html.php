@@ -179,7 +179,10 @@ if ($arBasket = $dbBasket->Fetch())
 		$arBasket["PROPS"] = $arProdProps;
 
 		// @TODO: replace with real vatless price
-		$arBasket["VATLESS_PRICE"] = roundEx($arBasket["PRICE"] / (1 + $arBasket["VAT_RATE"]), SALE_VALUE_PRECISION);
+		if (isset($arBasket['VAT_INCLUDED']) && $arBasket['VAT_INCLUDED'] === 'Y')
+			$arBasket["VATLESS_PRICE"] = roundEx($arBasket["PRICE"] / (1 + $arBasket["VAT_RATE"]), SALE_VALUE_PRECISION);
+		else
+			$arBasket["VATLESS_PRICE"] = $arBasket["PRICE"];
 
 		$productName = $arBasket["NAME"];
 		if ($productName == "OrderDelivery")
@@ -421,7 +424,7 @@ for ($n = 1; $n <= $rowsCnt; $n++)
 		} ?>
 		<? if (!is_null($arCells[$n][2])) { ?>
 		<td align="left"
-			style="word-break: break-all; <? if ($accumulated) {?>border-width: 0pt 1pt 0pt 0pt; <? } ?>"
+			style="word-break: break-word; word-wrap: break-word; <? if ($accumulated) {?>border-width: 0pt 1pt 0pt 0pt; <? } ?>"
 			<? if ($accumulated) { ?>colspan="<?=($accumulated+1); ?>"<? $accumulated = 0; } ?>>
 			<?=$arCells[$n][2]; ?>
 			<? if (isset($arProps[$n]) && is_array($arProps[$n])) { ?>

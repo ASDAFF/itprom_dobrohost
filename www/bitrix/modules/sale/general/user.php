@@ -290,7 +290,7 @@ class CAllSaleUserAccount
 	// $orderID - ID of order (if known)
 	// $useCC - increase the local user account from credit card if necessary (default - True)
 	// Return True if the necessary sum withdraw from an account or False in other way
-	function Pay($userID, $paySum, $payCurrency, $orderID = 0, $useCC = True)
+	function Pay($userID, $paySum, $payCurrency, $orderID = 0, $useCC = True, $paymentId = null)
 	{
 		global $DB;
 
@@ -319,6 +319,7 @@ class CAllSaleUserAccount
 		}
 
 		$orderID = IntVal($orderID);
+		$paymentId = IntVal($paymentId);
 
 		$useCC = ($useCC ? True : False);
 
@@ -383,6 +384,7 @@ class CAllSaleUserAccount
 						"CURRENCY" => $payCurrency,
 						"DEBIT" => "Y",
 						"ORDER_ID" => (($orderID > 0) ? $orderID : False),
+						"PAYMENT_ID" => (($paymentId > 0) ? $paymentId : False),
 						"DESCRIPTION" => "CC_CHARGE_OFF",
 						"EMPLOYEE_ID" => ($GLOBALS["USER"]->IsAuthorized() ? $GLOBALS["USER"]->GetID() : False)
 					);
@@ -433,6 +435,7 @@ class CAllSaleUserAccount
 					"CURRENCY" => $payCurrency,
 					"DEBIT" => "N",
 					"ORDER_ID" => (($orderID > 0) ? $orderID : False),
+					"PAYMENT_ID" => (($paymentId > 0) ? $paymentId : False),
 					"DESCRIPTION" => "ORDER_PAY",
 					"EMPLOYEE_ID" => ($GLOBALS["USER"]->IsAuthorized() ? $GLOBALS["USER"]->GetID() : False)
 				);
@@ -503,6 +506,23 @@ class CAllSaleUserAccount
 		{
 			$currentBudget = DoubleVal($arUserAccount["CURRENT_BUDGET"]);
 
+			if ($orderID > 0)
+			{
+				/** @var \Bitrix\Sale\Order $order */
+				if ($order = \Bitrix\Sale\Order::load($orderID))
+				{
+					/** @var \Bitrix\Sale\PaymentCollection $paymentCollection */
+					if (($paymentCollection = $order->getPaymentCollection()) && $paymentCollection->isExistsInnerPayment())
+					{
+						/** @var \Bitrix\Sale\Payment $payment */
+						if (($payment = $paymentCollection->getInnerPayment()) && $payment->isPaid())
+						{
+							return 0;
+						}
+					}
+				}
+			}
+
 			if ($currentBudget > 0)
 			{
 				$withdrawSum = $paySum;
@@ -542,7 +562,7 @@ class CAllSaleUserAccount
 	// $currency - currency
 	// $description - reason of modification
 	// Return True on success or False in other way
-	function UpdateAccount($userID, $sum, $currency, $description = "", $orderID = 0, $notes = "")
+	function UpdateAccount($userID, $sum, $currency, $description = "", $orderID = 0, $notes = "", $paymentId = null)
 	{
 		global $DB, $APPLICATION;
 
@@ -569,11 +589,14 @@ class CAllSaleUserAccount
 		}
 
 		$orderID = (int)$orderID;
+		$paymentId = (int)$paymentId;
 		if (!CSaleUserAccount::Lock($userID, $currency))
 		{
 			$APPLICATION->ThrowException(GetMessage("SKGU_ACCOUNT_NOT_WORK"), "ACCOUNT_NOT_LOCKED");
 			return False;
 		}
+
+		$currentBudget = 0.0000;
 
 		$result = false;
 
@@ -583,6 +606,7 @@ class CAllSaleUserAccount
 			);
 		if ($arUserAccount = $dbUserAccount->Fetch())
 		{
+			$currentBudget = floatval($arUserAccount["CURRENT_BUDGET"]);
 			$arFields = array(
 					"CURRENT_BUDGET" => $arUserAccount["CURRENT_BUDGET"] + $sum
 				);
@@ -590,6 +614,7 @@ class CAllSaleUserAccount
 		}
 		else
 		{
+			$currentBudget = floatval($sum);
 			$arFields = array(
 					"USER_ID" => $userID,
 					"CURRENT_BUDGET" => $sum,
@@ -608,11 +633,13 @@ class CAllSaleUserAccount
 			$arFields = array(
 					"USER_ID" => $userID,
 					"TRANSACT_DATE" => date($DB->DateFormatToPHP(CSite::GetDateFormat("FULL", SITE_ID))),
+					"CURRENT_BUDGET" => $currentBudget,
 					"AMOUNT" => (($sum > 0) ? $sum : -$sum),
 					"CURRENCY" => $currency,
 					"DEBIT" => (($sum > 0) ? "Y" : "N"),
 					"ORDER_ID" => (($orderID > 0) ? $orderID : False),
-					"DESCRIPTION" => ((strlen($description) > 0) ? $description : False),
+					"PAYMENT_ID" => (($paymentId > 0) ? $paymentId : false),
+					"DESCRIPTION" => ((strlen($description) > 0) ? $description : null),
 					"NOTES" => ((strlen($notes) > 0) ? $notes : False),
 					"EMPLOYEE_ID" => ($GLOBALS["USER"]->IsAuthorized() ? $GLOBALS["USER"]->GetID() : False)
 				);

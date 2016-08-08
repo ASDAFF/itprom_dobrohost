@@ -68,6 +68,12 @@ if ($fEditMode || $fCopyMode)
 	}
 }
 
+if ($fEditMode && isset($arRepParams['MARK_DEFAULT']) && intval($arRepParams['MARK_DEFAULT']) > 0)
+{
+	$errorMessage .= GetMessage("SALE_REPORT_DEFAULT_CAN_NOT_BE_EDITED").'<br>';
+	$fCriticalError = true;
+}
+
 CBaseSaleReportHelper::init();
 
 //<editor-fold defaultstate='collapsed' desc="Forming parameters of component report.construct">
@@ -358,7 +364,7 @@ if (!$fCriticalError)
 							</select>
 						</span>
 
-						<span name="report-filter-value-control-Bitrix\Sale\Order:BUYER.PERSON_TYPE_ID">
+						<span name="report-filter-value-control-Bitrix\Sale\Internals\Order:USER.PERSON_TYPE_ID">
 							<select class="report-filter-select sale-report-site-dependent" name="value" tid="PersonType">
 								<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
 								<? $siteId = CBaseSaleReportHelper::getDefaultSiteId(); ?>
@@ -370,7 +376,7 @@ if (!$fCriticalError)
 							</select>
 						</span>
 
-						<span name="report-filter-value-control-\Bitrix\Sale\StatusLang">
+						<span name="report-filter-value-control-\Bitrix\Sale\Internals\StatusLang">
 							<select class="report-filter-select" name="value">
 								<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
 								<? foreach(CBaseSaleReportHelper::getStatusList() as $kID => $vStatusName): ?>
@@ -379,55 +385,7 @@ if (!$fCriticalError)
 							</select>
 						</span>
 
-						<span name="report-filter-value-control-\Bitrix\Sale\PaySystem">
-							<select class="report-filter-select sale-report-site-dependent" name="value" tid="PaySystem">
-								<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
-								<? $siteId = CBaseSaleReportHelper::getDefaultSiteId(); ?>
-								<? foreach(CBaseSaleReportHelper::getPaySystemList() as $kID => $val): ?>
-									<? if ($val['site_id'] === '' || $val['site_id'] === $siteId): ?>
-									<option value="<?=htmlspecialcharsbx($kID)?>"><?=htmlspecialcharsbx($val['value'])?></option>
-									<? endif; ?>
-								<? endforeach; ?>
-							</select>
-						</span>
-
-						<span name="report-filter-value-control-DELIVERY_ID">
-							<select class="report-filter-select sale-report-site-dependent" name="value" tid="Delivery">
-								<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
-								<? $siteId = CBaseSaleReportHelper::getDefaultSiteId(); ?>
-								<? foreach(CBaseSaleReportHelper::getDeliveryList() as $kID => $val): ?>
-									<? if ($val['site_id'] === '' || $val['site_id'] === $siteId): ?>
-									<option value="<?=htmlspecialcharsbx($kID)?>"><?=htmlspecialcharsbx($val['value'])?></option>
-									<? endif; ?>
-								<? endforeach; ?>
-							</select>
-						</span>
-
-						<span name="report-filter-value-control-ORDER.DELIVERY_ID">
-							<select class="report-filter-select sale-report-site-dependent" name="value" tid="Delivery">
-								<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
-								<? $siteId = CBaseSaleReportHelper::getDefaultSiteId(); ?>
-								<? foreach(CBaseSaleReportHelper::getDeliveryList() as $kID => $val): ?>
-									<? if ($val['site_id'] === '' || $val['site_id'] === $siteId): ?>
-									<option value="<?=htmlspecialcharsbx($kID)?>"><?=htmlspecialcharsbx($val['value'])?></option>
-									<? endif; ?>
-								<? endforeach; ?>
-							</select>
-						</span>
-
-						<span name="report-filter-value-control-Bitrix\Sale\Order:BUYER.DELIVERY_ID">
-							<select class="report-filter-select sale-report-site-dependent" name="value" tid="Delivery">
-								<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
-								<? $siteId = CBaseSaleReportHelper::getDefaultSiteId(); ?>
-								<? foreach(CBaseSaleReportHelper::getDeliveryList() as $kID => $val): ?>
-									<? if ($val['site_id'] === '' || $val['site_id'] === $siteId): ?>
-									<option value="<?=htmlspecialcharsbx($kID)?>"><?=htmlspecialcharsbx($val['value'])?></option>
-									<? endif; ?>
-								<? endforeach; ?>
-							</select>
-						</span>
-
-						<span name="report-filter-value-control-Order:BUYER.LID">
+						<span name="report-filter-value-control-Order:USER.LID">
 							<select class="report-filter-select" name="value">
 								<option value=""><?=GetMessage('REPORT_IGNORE_FILTER_VALUE')?></option>
 								<? foreach(CBaseSaleReportHelper::getSiteList() as $kID => $vSiteName): ?>
@@ -575,36 +533,36 @@ if (!$fCriticalError)
 							/* hide compares for User and Group */
 							.report-filter-compare-\\Bitrix\\Main\\User {display: none;}
 							.report-filter-compare-\\Bitrix\\Main\\Group {display: none;}
-							.report-filter-compare-BUYER\.UserGroup\:USER\.GROUP {display: none;}
+							.report-filter-compare-USER\.UserGroup\:USER\.GROUP {display: none;}
 							.report-filter-compare-USER\.UserGroup\:USER\.GROUP {display: none;}
 							.report-filter-compare-UserGroup\:USER\.GROUP {display: none;}
 							.report-filter-compare-FUSER\.USER\.UserGroup\:USER\.GROUP {display: none;}
 							.report-filter-value-control-Basket\:PRODUCT\.FUSER\.USER  {display: none;}
 						</style>
 
-						<span name="report-filter-value-control-\Bitrix\Main\User" callback="RTFilter_chooseBUYER">
+						<span name="report-filter-value-control-\Bitrix\Main\User" callback="RTFilter_chooseSALEUSER">
 							<a class="report-select-popup-link" caller="true" style="cursor: pointer;"><?=GetMessage('REPORT_CHOOSE')?></a>
 							<input type="hidden" name="value" />
 						</span>
 						<script type="text/javascript">
-							var RTFilter_chooseBUYER_LAST_CALLER;
-							function RTFilter_chooseBUYER(span)
+							var RTFilter_chooseSALEUSER_LAST_CALLER;
+							function RTFilter_chooseSALEUSER(span)
 							{
 								var a = BX.findChild(span, {tag:'a'});
 
-								BX.bind(a, 'click', RTFilter_showBUYERSelector);
+								BX.bind(a, 'click', RTFilter_showSALEUSERSelector);
 								BX.bind(a, 'click', function(e){
-									RTFilter_chooseBUYER_LAST_CALLER = this;
+									RTFilter_chooseSALEUSER_LAST_CALLER = this;
 								});
 
 							}
-							function RTFilter_showBUYERSelector()
+							function RTFilter_showSALEUSERSelector()
 							{
 								BX.Access.Init();
 								BX.Access.SetSelected(null);
-								BX.Access.ShowForm({callback: RTFilter_chooseBUYERCatch_fromBXAccess});
+								BX.Access.ShowForm({callback: RTFilter_chooseSALEUSERCatch_fromBXAccess});
 							}
-							function RTFilter_chooseBUYERCatch_fromBXAccess(arSelected)
+							function RTFilter_chooseSALEUSERCatch_fromBXAccess(arSelected)
 							{
 								if (arSelected.user)
 								{
@@ -613,13 +571,13 @@ if (!$fCriticalError)
 									if (user)
 									{
 										user.id = user.id.substr(1);
-										RTFilter_chooseBUYERCatch(user);
+										RTFilter_chooseSALEUSERCatch(user);
 									}
 								}
 							}
-							function RTFilter_chooseBUYERCatch(user)
+							function RTFilter_chooseSALEUSERCatch(user)
 							{
-								var userContainer = RTFilter_chooseBUYER_LAST_CALLER.parentNode;
+								var userContainer = RTFilter_chooseSALEUSER_LAST_CALLER.parentNode;
 
 								if (parseInt(user.id) > 0)
 								{

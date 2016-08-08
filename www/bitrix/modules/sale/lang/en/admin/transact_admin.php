@@ -38,4 +38,7 @@ $MESS["STA_MAILTO"] = "Write a letter";
 $MESS["STA_USER_INFO"] = "User profile";
 $MESS["STA_ORDER_VIEW"] = "View order";
 $MESS["STA_AF_VIP"] = "Affiliate payment";
+$MESS["STA_TPAY_PART"] = "Partial order payment";
+$MESS["STA_TTRANSF_EXCESS_SUM_PAID"] = "Transfer overpaid amount";
+$MESS["STA_TRETURN"] = "Refund order";
 ?>

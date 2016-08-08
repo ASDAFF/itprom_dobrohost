@@ -124,7 +124,7 @@ final class LocationHelper extends NameHelper
 	##############################################
 
 	// high-level validators used when accepting data typed in form. There can be some misspelling, etc, so additional buisness-logic required
-	public static function validateUpdateRequest(&$data)
+	public static function validateUpdateRequest($data)
 	{
 		$errors = parent::validateUpdateRequest($data);
 
@@ -242,7 +242,7 @@ final class LocationHelper extends NameHelper
 		$errors = array();
 		$entityClass = static::getEntityClass();
 
-		$res = $entityClass::delete($primary, array('RESET_LEGACY' => !$batch));
+		$res = $entityClass::deleteExtended($primary, array('RESET_LEGACY' => !$batch));
 		if(!$res->isSuccess())
 		{
 			$success = false;
@@ -612,6 +612,35 @@ final class LocationHelper extends NameHelper
 	public static function checkLocationEnabled()
 	{
 		return static::checkLocationMigrated();
+	}
+
+	// informers
+	public static function informAdminLocationDatabaseFailure()
+	{
+		static::deleteInformer('SALE_LOCATIONPRO_DATABASE_FAILURE');
+
+		$fields = array(
+			"MESSAGE" => Loc::getMessage('SALE_LOCATION_ADMIN_LOCATION_HELPER_DATABASE_FAILURE', array(
+				'#ANCHOR_IMPORT_URL#' => '<a target="_blank" href="'.static::getImportUrl().'">',
+				'#ANCHOR_END#' => '</a>'
+			)),
+			"TAG" => 'SALE_LOCATIONPRO_DATABASE_FAILURE',
+			"MODULE_ID" => "sale",
+			"ENABLE_CLOSE" => "Y",
+			"PUBLIC_SECTION" => "N"
+		);
+		\CAdminNotify::Add($fields);
+	}
+	public static function deleteInformer($informerTag)
+	{
+		if((string) $informerTag == '')
+			return;
+
+		$rsAdminNotify = \CAdminNotify::GetList(array(), array('MODULE_ID'=>'sale', 'TAG' => $informerTag));
+		if ($arAdminNotify = $rsAdminNotify->Fetch())
+		{
+			\CAdminNotify::DeleteByTag($informerTag);
+		}
 	}
 
 	/**

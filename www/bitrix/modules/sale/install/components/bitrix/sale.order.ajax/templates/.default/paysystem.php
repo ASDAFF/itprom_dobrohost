@@ -52,8 +52,11 @@
 		}
 	</script>
 	<div class="bx_section">
-		<h4><?=GetMessage("SOA_TEMPL_PAY_SYSTEM")?></h4>
 		<?
+		if (!empty($arResult["PAY_SYSTEM"]) && is_array($arResult["PAY_SYSTEM"]) || $arResult["PAY_FROM_ACCOUNT"] == "Y")
+		{
+			?><h4><?=GetMessage("SOA_TEMPL_PAY_SYSTEM")?></h4><?
+		}
 		if ($arResult["PAY_FROM_ACCOUNT"] == "Y")
 		{
 			$accountOnly = ($arParams["ONLY_FULL_PAY_FROM_ACCOUNT"] == "Y") ? "Y" : "N";
@@ -107,7 +110,13 @@
 							<label for="ID_PAY_SYSTEM_ID_<?=$arPaySystem["ID"]?>" onclick="BX('ID_PAY_SYSTEM_ID_<?=$arPaySystem["ID"]?>').checked=true;changePaySystem();">
 								<?
 								if (count($arPaySystem["PSA_LOGOTIP"]) > 0):
-									$imgUrl = $arPaySystem["PSA_LOGOTIP"]["SRC"];
+									$arFileTmp = CFile::ResizeImageGet(
+											$arPaySystem["PSA_LOGOTIP"]['ID'],
+											array("width" => "95", "height" =>"55"),
+											BX_RESIZE_IMAGE_PROPORTIONAL,
+											true
+									);
+									$imgUrl = $arFileTmp["src"];
 								else:
 									$imgUrl = $templateFolder."/images/logo-default-ps.gif";
 								endif;
@@ -148,7 +157,13 @@
 							<label for="ID_PAY_SYSTEM_ID_<?=$arPaySystem["ID"]?>" onclick="BX('ID_PAY_SYSTEM_ID_<?=$arPaySystem["ID"]?>').checked=true;changePaySystem();">
 								<?
 								if (count($arPaySystem["PSA_LOGOTIP"]) > 0):
-									$imgUrl = $arPaySystem["PSA_LOGOTIP"]["SRC"];
+									$arFileTmp = CFile::ResizeImageGet(
+											$arPaySystem["PSA_LOGOTIP"]['ID'],
+											array("width" => "95", "height" =>"55"),
+											BX_RESIZE_IMAGE_PROPORTIONAL,
+											true
+									);
+									$imgUrl = $arFileTmp["src"];
 								else:
 									$imgUrl = $templateFolder."/images/logo-default-ps.gif";
 								endif;
@@ -195,7 +210,13 @@
 							<label for="ID_PAY_SYSTEM_ID_<?=$arPaySystem["ID"]?>" onclick="BX('ID_PAY_SYSTEM_ID_<?=$arPaySystem["ID"]?>').checked=true;changePaySystem();">
 							<?
 							if (count($arPaySystem["PSA_LOGOTIP"]) > 0):
-								$imgUrl = $arPaySystem["PSA_LOGOTIP"]["SRC"];
+								$arFileTmp = CFile::ResizeImageGet(
+										$arPaySystem["PSA_LOGOTIP"]['ID'],
+										array("width" => "95", "height" =>"55"),
+										BX_RESIZE_IMAGE_PROPORTIONAL,
+										true
+								);
+								$imgUrl = $arFileTmp["src"];
 							else:
 								$imgUrl = $templateFolder."/images/logo-default-ps.gif";
 							endif;
@@ -209,6 +230,7 @@
 									<strong><?=$arPaySystem["PSA_NAME"];?></strong>
 								</div>
 							<?endif;?>
+							</label>
 						</div>
 					</div>
 				<?
@@ -229,7 +251,13 @@
 							<label for="ID_PAY_SYSTEM_ID_<?=$arPaySystem["ID"]?>" onclick="BX('ID_PAY_SYSTEM_ID_<?=$arPaySystem["ID"]?>').checked=true;changePaySystem();">
 								<?
 								if (count($arPaySystem["PSA_LOGOTIP"]) > 0):
-									$imgUrl = $arPaySystem["PSA_LOGOTIP"]["SRC"];
+									$arFileTmp = CFile::ResizeImageGet(
+											$arPaySystem["PSA_LOGOTIP"]['ID'],
+											array("width" => "95", "height" =>"55"),
+											BX_RESIZE_IMAGE_PROPORTIONAL,
+											true
+									);
+									$imgUrl = $arFileTmp["src"];
 								else:
 									$imgUrl = $templateFolder."/images/logo-default-ps.gif";
 								endif;
@@ -249,7 +277,6 @@
 										</strong>
 									</div>
 								<?endif;?>
-
 							</label>
 						</div>
 					</div>

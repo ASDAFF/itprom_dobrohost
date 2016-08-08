@@ -254,4 +254,6 @@ $MESS["NEWO_UP_RATIO"] = "Increase by #RATIO#";
 $MESS["NEWO_DOWN_RATIO"] = "Decrease by #RATIO#";
 $MESS["SOE_SHOW_SET"] = "Expand";
 $MESS["SOE_HIDE_SET"] = "Hide";
+$MESS["NEW_ERROR_SEVERAL_P_D"] = "Attention! The order contains one or more partial shipments or payments. Use the new order edit form to continue.";
+$MESS["COUPONS_RECALC_BLOCKED"] = "Cannot apply the coupon because the order has already been paid. New coupons can be applied only when updating order details (delivery address, payment system, owner), or when changing products in the order.";
 ?>

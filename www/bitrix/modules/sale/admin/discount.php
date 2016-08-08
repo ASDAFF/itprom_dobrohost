@@ -1,11 +1,11 @@
 <?
 /** @global CMain $APPLICATION */
+use Bitrix\Main;
 use Bitrix\Main\Application;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\SiteTable;
 use Bitrix\Main\UserTable;
-use Bitrix\Main\Entity;
 use Bitrix\Main\Config\Option;
 use Bitrix\Sale\Internals;
 
@@ -100,9 +100,8 @@ if (!$readOnly && ($listID = $adminList->GroupAction()))
 				{
 					$result = Internals\DiscountTable::update($discountID, $fields);
 					if (!$result->isSuccess())
-					{
-						$adminList->AddGroupError(implode('<br>', $result->getErrorMessages(), $discountID));
-					}
+						$adminList->AddGroupError(implode('<br>', $result->getErrorMessages()), $discountID);
+					unset($result);
 				}
 				unset($discountID, $fields);
 				break;
@@ -111,9 +110,8 @@ if (!$readOnly && ($listID = $adminList->GroupAction()))
 				{
 					$result = Internals\DiscountTable::delete($discountID);
 					if (!$result->isSuccess())
-					{
-						$adminList->AddGroupError(implode('<br>', $result->getErrorMessages(), $discountID));
-					}
+						$adminList->AddGroupError(implode('<br>', $result->getErrorMessages()), $discountID);
+					unset($result);
 				}
 				unset($discountID);
 				break;
@@ -306,8 +304,8 @@ if ($usePageNavigation)
 $discountIterator = new CAdminResult(Internals\DiscountTable::getList($getListParams), $adminListTableID);
 if ($usePageNavigation)
 {
-	$countQuery = new Entity\Query(Internals\DiscountTable::getEntity());
-	$countQuery->addSelect(new Entity\ExpressionField('CNT', 'COUNT(1)'));
+	$countQuery = new Main\Entity\Query(Internals\DiscountTable::getEntity());
+	$countQuery->addSelect(new Main\Entity\ExpressionField('CNT', 'COUNT(1)'));
 	$countQuery->setFilter($getListParams['filter']);
 	$totalCount = $countQuery->setLimit(null)->setOffset(null)->exec()->fetch();
 	$totalCount = (int)$totalCount['CNT'];
@@ -575,7 +573,7 @@ $oFilter->Begin();
 ?>
 	<tr>
 		<td><?echo Loc::getMessage('LANG_FILTER_NAME')?>:</td>
-		<td><?echo CLang::SelectBox('filter_lang', (isset($filter['LID']) ? $filter['LID'] : ''), Loc::getMessage('DS_ALL')); ?>
+		<td><?echo CLang::SelectBox('filter_lang', (isset($filter['LID']) ? $filter['LID'] : ''), Loc::getMessage('DS_ALL')); ?></td>
 	</tr>
 	<tr>
 		<td><? echo Loc::getMessage('FILTER_ACTIVE'); ?>:</td>

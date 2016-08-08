@@ -52,8 +52,17 @@ if (($arID = $lAdmin->GroupAction()) && $saleModulePermissions >= "W")
 		switch ($_REQUEST['action'])
 		{
 			case "delete":
-				if (($ID == "N") || ($ID == "F"))
+				$lockedStatusList = array(
+					\Bitrix\Sale\OrderStatus::getInitialStatus(),
+					\Bitrix\Sale\OrderStatus::getFinalStatus(),
+					\Bitrix\Sale\DeliveryStatus::getInitialStatus(),
+					\Bitrix\Sale\DeliveryStatus::getFinalStatus(),
+				);
+
+				if (in_array($ID, $lockedStatusList))
+				{
 					continue;
+				}
 
 				@set_time_limit(0);
 
@@ -78,12 +87,12 @@ if (($arID = $lAdmin->GroupAction()) && $saleModulePermissions >= "W")
 }
 
 $dbResultList = CSaleStatus::GetList(
-		array($by => $order),
-		$arFilter,
-		false,
-		false,
-		array("ID", "SORT", "LID", "NAME", "DESCRIPTION", $by)
-	);
+	array($by => $order),
+	$arFilter,
+	false,
+	false,
+	array('ID', 'SORT', 'TYPE', 'NOTIFY', 'LID', 'NAME', 'DESCRIPTION', $by)
+);
 
 $dbResultList = new CAdminResult($dbResultList, $sTableID);
 $dbResultList->NavStart();
@@ -94,6 +103,8 @@ $lAdmin->AddHeaders(array(
 	array("id"=>"ID", "content"=>GetMessage("STATUS_ID"), "sort"=>"ID", "default"=>true),
 	array("id"=>"SORT", "content"=>GetMessage("STATUS_SORT"), "sort"=>"SORT", "default"=>true),
 	array("id"=>"NAME", "content"=>GetMessage("SALE_NAME"), "sort"=>"", "default"=>true),
+	array("id"=>"TYPE", "content"=>GetMessage("SSAN_TYPE"), "sort"=>"TYPE", "default"=>true),
+	array('id' => 'NOTIFY', 'content' => GetMessage('SSAN_NOTIFY'), 'sort' => 'NOTIFY', 'default' => true),
 ));
 
 $arVisibleColumns = $lAdmin->GetVisibleHeaderColumns();
@@ -105,6 +116,13 @@ while ($arCCard = $dbResultList->NavNext(true, "f_"))
 	$row->AddField("ID", "<a href=\"/bitrix/admin/sale_status_edit.php?ID=".$f_ID."&lang=".LANG.GetFilterParams("filter_")."\" title=\"".GetMessage("SALE_EDIT_DESCR")."\">".$f_ID."</a>");
 	$row->AddField("SORT", $f_SORT);
 	$row->AddField("NAME", $f_NAME."<br><small>".$f_DESCRIPTION."</small><br>");
+	$row->AddField("TYPE", (
+		$f_TYPE == 'O' ? GetMessage('SSEN_TYPE_O') :
+		($f_TYPE == 'D' ? GetMessage('SSEN_TYPE_D') :
+		'Invalid '.$f_TYPE)));
+	$row->AddField("NOTIFY", $f_NOTIFY == 'Y'
+		? '<a href="/bitrix/admin/message_admin.php?find_event_type=SALE_STATUS_CHANGED_'.$f_ID.'" target="_blank">'.GetMessage('SSAN_NOTIFY_Y').'</a>'
+		: GetMessage('SSAN_NOTIFY_N'));
 
 	$arActions = Array();
 	$arActions[] = array("ICON"=>"edit", "TEXT"=>GetMessage("SALE_EDIT_DESCR"), "ACTION"=>$lAdmin->ActionRedirect("sale_status_edit.php?ID=".$f_ID."&lang=".LANG.GetFilterParams("filter_").""), "DEFAULT"=>true);

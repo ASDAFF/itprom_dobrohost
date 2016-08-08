@@ -34,7 +34,98 @@ if ($arParams["ZIPCODE"] > 0)
 	}
 }
 
+######################################################
+######################################################
+######################################################
+
+if(!isset($arParams['CACHE_TIME']))
+	$arParams['CACHE_TIME'] = 999999;
+if(!isset($arParams['CACHE_TYPE']))
+	$arParams['CACHE_TYPE'] = 'A';
+
+// obtain cached data
+$cacheNeeded = intval($arParams['CACHE_TIME']) > 0 && $arParams['CACHE_TYPE'] != 'N' && \Bitrix\Main\Config\Option::get("main", "component_cache_on", "Y") == "Y";
+$cachedData = array();
+
+if($cacheNeeded)
+{
+	$currentCache = \Bitrix\Main\Data\Cache::createInstance();
+	$cacheDir = '/sale/location/legacy/component/sal';
+
+	if($currentCache->startDataCache(intval($arParams['CACHE_TIME']), implode('|', array_merge($arParams, array(SITE_ID, LANGUAGE_ID))), $cacheDir))
+	{
+		global $CACHE_MANAGER;
+		$CACHE_MANAGER->StartTagCache($cacheDir);
+
+		try
+		{
+			$cachedData['ZONE_IDS'] = SalesZone::getSelectedIds($arParams["SITE_ID"]);
+
+			$cachedData['DEFAULT_LOCS'] = array();
+			$res = CSaleLocation::GetList(
+					array(
+						"SORT" => "ASC",
+						"COUNTRY_NAME_LANG" => "ASC",
+						"CITY_NAME_LANG" => "ASC"
+					),
+					array("LOC_DEFAULT" => "Y", "LID" => LANGUAGE_ID),
+					false,
+					false,
+					array("*")
+			);
+			while($item = $res->fetch())
+			{
+				$cachedData['DEFAULT_LOCS'][] = $item;
+			}
+		}
+		catch (Exception $e)
+		{
+			if($cacheNeeded)
+			{
+				$CACHE_MANAGER->AbortTagCache();
+				$currentCache->abortDataCache();
+			}
+		}
+
+		$CACHE_MANAGER->RegisterTag(\Bitrix\Sale\Location\Admin\LocationHelper::LOCATION_LINK_DATA_CACHE_TAG);
+		$CACHE_MANAGER->EndTagCache();
+		$currentCache->endDataCache($cachedData);
+	}
+	else
+	{
+		$cachedData = $currentCache->getVars();
+	}
+}
+else
+{
+	$cachedData['ZONE_IDS'] = SalesZone::getSelectedIds($arParams["SITE_ID"]);
+
+	$cachedData['DEFAULT_LOCS'] = array();
+	$res = CSaleLocation::GetList(
+			array(
+				"SORT" => "ASC",
+				"COUNTRY_NAME_LANG" => "ASC",
+				"CITY_NAME_LANG" => "ASC"
+			),
+			array("LOC_DEFAULT" => "Y", "LID" => LANGUAGE_ID),
+			false,
+			false,
+			array("*")
+	);
+	while($item = $res->fetch())
+	{
+		$cachedData['DEFAULT_LOCS'][] = $item;
+	}
+}
+
+SalesZone::setSelectedIds($arParams["SITE_ID"], $cachedData['ZONE_IDS']);
+
+######################################################
+######################################################
+######################################################
+
 // take into account sales zone
+// 1. check if ONLY a single city is connected to sale zone
 $arResult["SINGLE_CITY"] = "N";
 $citiesIds = SalesZone::getCitiesIds($arParams["SITE_ID"]);
 
@@ -55,6 +146,7 @@ if(count($citiesIds) == 1 && strlen($citiesIds[0]) > 0)
 	}
 }
 
+// 2. check location is connected to a sale zone
 if(!SalesZone::checkLocationId($arParams["LOCATION_VALUE"], $arParams["SITE_ID"]))
 	$arParams["LOCATION_VALUE"] = 0;
 
@@ -99,23 +191,11 @@ if ($arResult["EMPTY_CITY"] == "Y" && $arResult["EMPTY_REGION"] == "Y")
 
 //location default
 $arParams["LOC_DEFAULT"] = array();
-$dbLocDefault = CSaleLocation::GetList(
-		array(
-			"SORT" => "ASC",
-			"COUNTRY_NAME_LANG" => "ASC",
-			"CITY_NAME_LANG" => "ASC"
-		),
-		array("LOC_DEFAULT" => "Y", "LID" => LANGUAGE_ID),
-		false,
-		false,
-		array("*")
-);
-
-while ($arLocDefault = $dbLocDefault->Fetch())
+foreach($cachedData['DEFAULT_LOCS'] as $arLocDefault)
 {
 	if ($arLocDefault["LOC_DEFAULT"] == "Y"
-		&& SalesZone::checkCountryId($arLocDefault["COUNTRY_ID"], $arParams["SITE_ID"])
-		&& SalesZone::checkRegionId($arLocDefault["REGION_ID"], $arParams["SITE_ID"])
+		&& (!intval($arLocDefault["COUNTRY_ID"]) || (intval($arLocDefault["COUNTRY_ID"]) && SalesZone::checkCountryId($arLocDefault["COUNTRY_ID"], $arParams["SITE_ID"])))
+		&& (!intval($arLocDefault["REGION_ID"]) || (intval($arLocDefault["REGION_ID"]) && SalesZone::checkRegionId($arLocDefault["REGION_ID"], $arParams["SITE_ID"])))
 		&& SalesZone::checkCityId($arLocDefault["CITY_ID"], $arParams["SITE_ID"])
 	)
 	{
@@ -197,12 +277,14 @@ if (($arParams["COUNTRY"] > 0 || count($arResult["COUNTRY_LIST"]) <= 0) && (strl
 
 	if ($arResult["EMPTY_CITY"] == "Y")
 	{
-		$rsRegionList = CSaleLocation::GetList(array("SORT" => "ASC", "NAME_LANG" => "ASC"), $arRegionFilter, false, false, array("ID", "REGION_ID", "REGION_NAME_LANG"));
+		$rsRegionList = CSaleLocation::GetList(array("SORT" => "ASC", "NAME_LANG" => "ASC"), $arRegionFilter, false, false, array("ID", "REGION_ID", "REGION_NAME_LANG", "SORT"));
 	}
 	else
 	{
 		$rsRegionList = CSaleLocation::GetRegionList(array("SORT" => "ASC", "NAME_LANG" => "ASC"), $arRegionFilter);
 	}
+
+	$regionSortIndex = array();
 
 	while ($arRegion = $rsRegionList->GetNext())
 	{
@@ -214,11 +296,64 @@ if (($arParams["COUNTRY"] > 0 || count($arResult["COUNTRY_LIST"]) <= 0) && (strl
 		if ($arResult["EMPTY_CITY"] == "Y")
 			$arRegion["NAME_LANG"] = $arRegion["REGION_NAME_LANG"];
 
-		$arResult["REGION_LIST"][] = $arRegion;
+		$arResult["REGION_LIST"][$arRegion['ID']] = $arRegion;
+		$regionSortIndex[$arRegion['SORT']][$arRegion['NAME_LANG']] = $arRegion['ID'];
+
 		if ($arRegion["ID"] == $arParams["REGION"] && strlen($arRegion["NAME_LANG"]) > 0)
 			$locationString = $arRegion["NAME_LANG"].", ".$locationString;
 	}
+
+	// also cities with no regions...
+	if(count($arResult["REGION_LIST"]))
+	{
+		$filter = array("LID" => LANGUAGE_ID, "REGION_ID" => "NULL");
+		if ($arParams["COUNTRY"] > 0)
+			$filter["COUNTRY_ID"] = IntVal($arParams["COUNTRY"]);
+		$res = CSaleLocation::GetList(array("SORT" => "ASC", "NAME_LANG" => "ASC"), $filter, false, false);//, array("ID", "CITY_ID", "CITY_NAME_LANG"));
+		while($item = $res->fetch())
+		{
+			if(!intval($item["CITY_ID"]))
+				continue;
+
+			if(!SalesZone::checkCityId($item["CITY_ID"], $arParams["SITE_ID"]))
+			{
+				continue;
+			}
+
+			$arResult["REGION_LIST"][-$item['CITY_ID']] = array(
+				'ID' => -$item['CITY_ID'],
+				'NAME' => $item['CITY_NAME'],
+				'NAME_ORIG' => $item['CITY_NAME_ORIG'],
+				'NAME_LANG' => $item['CITY_NAME'],
+			);
+			$regionSortIndex[$item['SORT']][$item['CITY_NAME']] = -$item['CITY_ID'];
+		}
+	}
 }
+
+if(is_array($regionSortIndex))
+{
+	ksort($regionSortIndex);
+	$regionListSorted = array();
+	foreach($regionSortIndex as $s => &$v)
+	{
+		ksort($v, SORT_STRING);
+		foreach($v as $regionId)
+		{
+			if($regionId < 0)
+			{
+				$regionListSorted[$regionId] = $arResult["REGION_LIST"][$regionId];
+			}
+			else
+			{
+				$regionListSorted[] = $arResult["REGION_LIST"][$regionId];
+			}
+		}
+	}
+}
+
+$arResult["REGION_LIST"] = $regionListSorted;
+
 if (count($arResult["REGION_LIST"]) <= 0)
 	$arResult["REGION_LIST"] = array();
 elseif (count($arResult["REGION_LIST"]) == 1)
@@ -277,6 +412,60 @@ if (
 	}//end if
 }
 
+$appendEmptyCity = true;
+
+if($arParams["REGION"] < 0)
+{
+	$arParams["CITY"] = abs($arParams["REGION"]);
+	$arParams["LOCATION_VALUE"] = $arParams["CITY"];
+
+	$city = $arResult["REGION_LIST"][$arParams["REGION"]];
+	$city['ID'] = abs($city['ID']);
+	$locationString = (strlen($city["NAME"]) > 0 ? $city["NAME"].", " : "").$locationString;
+
+	$arResult["CITY_LIST"][] = $city;
+
+	$appendEmptyCity = false;
+}
+elseif(intval($arParams["CITY"]) && isset($arResult['REGION_LIST'][-$arParams["CITY"]]))
+{
+	$arParams["REGION"] = -$arParams["CITY"];
+
+	$city = $arResult["REGION_LIST"][$arParams["REGION"]];
+	$city['ID'] = abs($city['ID']);
+	$locationString = (strlen($city["NAME"]) > 0 ? $city["NAME"].", " : "").$locationString;
+
+	$arResult["CITY_LIST"][] = $city;
+
+	$appendEmptyCity = false;
+}
+
+if($appendEmptyCity)
+{
+	$found = false;
+	foreach($arResult['CITY_LIST'] as $city)
+	{
+		if((array_key_exists('NAME', $city) && $city['NAME'] == '') || (array_key_exists('CITY_NAME', $city) && $city['CITY_NAME'] == ''))
+		{
+			$found = true;
+			break;
+		}
+	}
+
+	if(!$found)
+	{
+		array_unshift($arResult['CITY_LIST'], array(
+			"ID" => intval($arParams["REGION"]) ? $arParams["REGION"] : $arParams["COUNTRY"],
+			"CITY_ID" => 0,
+			"CITY_NAME" => '',
+		));
+	}
+}
+
+######################################################
+######################################################
+######################################################
+
 if ($arResult["EMPTY_CITY"] == "Y")
 	$arParams["REGION_INPUT_NAME"] = "";
 
@@ -302,6 +491,15 @@ if (strlen($serverName) > 0)
 	$arParams["SERVER_NAME"] = "http://".$serverName;
 
 $arResult["ADDITIONAL_VALUES"] = "siteId:".$arParams["SITE_ID"];
+
+//_print_r('C: '.$arParams['COUNTRY']);
+//_print_r('R: '.$arParams['REGION']);
+//_print_r('C: '.$arParams['CITY']);
+//_print_r('L: '.$arParams['LOCATION_VALUE']);
+
+//_print_r($arResult['COUNTRY_LIST']);
+//_print_r($arResult['REGION_LIST']);
+//_print_r($arResult['CITY_LIST']);
 
 $this->IncludeComponentTemplate();
 

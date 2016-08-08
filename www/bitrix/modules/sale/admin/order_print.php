@@ -24,8 +24,22 @@ $APPLICATION->SetTitle(GetMessage("SALE_PRINT_RECORD", array("#ID#"=>$ID)));
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_after.php");
 
-$bUserCanViewOrder = CSaleOrder::CanUserViewOrder($ID, $GLOBALS["USER"]->GetUserGroupArray(), $GLOBALS["USER"]->GetID());
-$bUserCanEditOrder = CSaleOrder::CanUserUpdateOrder($ID, $GLOBALS["USER"]->GetUserGroupArray());
+global $USER;
+
+$bUserCanViewOrder = false;
+$bUserCanEditOrder = false;
+
+$allowedStatusesView = \Bitrix\Sale\OrderStatus::getStatusesGroupCanDoOperations($USER->GetUserGroupArray(), array('view'));
+if(in_array($str_STATUS_ID, $allowedStatusesView))
+{
+	$bUserCanViewOrder = true;
+}
+
+$allowedStatusesUpdate = \Bitrix\Sale\OrderStatus::getStatusesGroupCanDoOperations($USER->GetUserGroupArray(), array('update'));
+if(in_array($str_STATUS_ID, $allowedStatusesUpdate))
+{
+	$bUserCanEditOrder = true;
+}
 
 $errorMessage = "";
 
@@ -33,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && strlen($Print)>0 && check_bitrix_ses
 {
 	if(count($REPORT_ID) > 0)
 	{
-		$db_basket = CSaleBasket::GetList(array(), array("ORDER_ID"=>$ID));
+		$db_basket = CSaleBasket::GetList(array('ID' => 'ASC'), array("ORDER_ID"=>$ID));
 		$productCountInBasket = $db_basket->SelectedRowsCount();
 		$showAll = "N";
 		if ($productCountInBasket == count($BASKET_IDS))
@@ -99,7 +113,7 @@ if ($bUserCanEditOrder)
 {
 	$aMenu[] = array(
 			"TEXT" => GetMessage("SOP_TO_EDIT"),
-			"LINK" => "/bitrix/admin/sale_order_new.php?ID=".$ID."&lang=".LANGUAGE_ID.GetFilterParams("filter_")
+			"LINK" => "/bitrix/admin/sale_order_edit.php?ID=".$ID."&lang=".LANGUAGE_ID.GetFilterParams("filter_")
 		);
 }
 
@@ -107,7 +121,7 @@ if ($bUserCanViewOrder)
 {
 	$aMenu[] = array(
 			"TEXT" => GetMessage("SOP_TO_DETAIL"),
-			"LINK" => "/bitrix/admin/sale_order_detail.php?ID=".$ID."&lang=".LANGUAGE_ID.GetFilterParams("filter_")
+			"LINK" => "/bitrix/admin/sale_order_view.php?ID=".$ID."&lang=".LANGUAGE_ID.GetFilterParams("filter_")
 		);
 }
 
@@ -205,7 +219,7 @@ else
 						<td><?echo GetMessage("SALE_PR_SUM")?></td>
 					</tr>
 					<?
-					$db_basket = CSaleBasket::GetList(($b="NAME"), ($o="ASC"), array("ORDER_ID"=>$ID));
+					$db_basket = CSaleBasket::GetList(array('ID' => 'ASC'), array("ORDER_ID"=>$ID));
 					while ($arBasket = $db_basket->GetNext())
 					{
 						?>

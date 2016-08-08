@@ -12,8 +12,10 @@ use Bitrix\Main;
 use Bitrix\Main\DB;
 use Bitrix\Main\Config;
 use Bitrix\Main\Localization\Loc;
-use Bitrix\Sale\Location;
 use Bitrix\Main\Data;
+
+use Bitrix\Sale\Location;
+use Bitrix\Sale\Location\Admin\LocationHelper;
 
 CBitrixComponent::includeComponentClass("bitrix:sale.location.selector.search");
 
@@ -130,40 +132,40 @@ class CBitrixLocationSelectorSystemComponent extends CBitrixLocationSelectorSear
 	 * @param mixed[] $parameters
 	 * @param string $fieldCode identify what type of linking is used. Only two of legal values allowed: ID and CODE
 	 *
-     * @return Bitrix\Main\DB\ArrayResult $result
+	 * @return Bitrix\Main\DB\ArrayResult $result
 	 */
 	protected static function getEntityListByListOfPrimary($entityClass, $list = array(), $parameters = array(), $fieldCode = 'ID')
 	{
 		$result = array();
 
-        if(is_array($list) && !empty($list))
-        {
-            $block = array();
-            $cnt = count($list);
-            for($i = 0, $j = 0; $i < $cnt; $i++, $j++)
-            {
-                if($j == self::ID_BLOCK_LEN)
-                {
-                    $parameters['filter']['='.$fieldCode] = $block;
-                    $res = $entityClass::getList($parameters);
-                    while($item = $res->fetch())
-                        $result[] = $item;
+		if(is_array($list) && !empty($list))
+		{
+			$block = array();
+			$cnt = count($list);
+			for($i = 0, $j = 0; $i < $cnt; $i++, $j++)
+			{
+				if($j == self::ID_BLOCK_LEN)
+				{
+					$parameters['filter']['='.$fieldCode] = $block;
+					$res = $entityClass::getList($parameters);
+					while($item = $res->fetch())
+						$result[] = $item;
 
-                    $block = array();
-                    $j = 0;
-                }
+					$block = array();
+					$j = 0;
+				}
 
-                $block[] = $list[$i];
-            }
+				$block[] = $list[$i];
+			}
 
-            if(!empty($block))
-            {
-                $parameters['filter']['='.$fieldCode] = $block;
-                $res = $entityClass::getList($parameters);
-                while($item = $res->fetch())
-                    $result[] = $item;
-            }
-        }
+			if(!empty($block))
+			{
+				$parameters['filter']['='.$fieldCode] = $block;
+				$res = $entityClass::getList($parameters);
+				while($item = $res->fetch())
+					$result[] = $item;
+			}
+		}
 
 		return new DB\ArrayResult($result);
 	}
@@ -211,7 +213,6 @@ class CBitrixLocationSelectorSystemComponent extends CBitrixLocationSelectorSear
 				$points[$item['ID']] = $item;
 		}
 
-
 		if(!empty($points))
 		{
 			// same algorythm repeated on client side - fetch PATH for only visible items
@@ -220,31 +221,44 @@ class CBitrixLocationSelectorSystemComponent extends CBitrixLocationSelectorSear
 			else
 				$pointsToGetPath = $points;
 
-			$res = Location\LocationTable::getPathToMultipleNodes($pointsToGetPath, array(
-				'select' => array(
-					//'ID',
-					//'CODE',
-					'LNAME' => 'NAME.NAME'
-				),
-				'filter' => array(
-					'NAME.LANGUAGE_ID' => LANGUAGE_ID
-				)
-			));
-
-			while($item = $res->Fetch())
+			try
 			{
-				$item['ID'] = intval($item['ID']);
+				$res = Location\LocationTable::getPathToMultipleNodes($pointsToGetPath, array(
+					'select' => array(
+						'LNAME' => 'NAME.NAME'
+					),
+					'filter' => array(
+						'NAME.LANGUAGE_ID' => LANGUAGE_ID
+					)
+				));
 
-				foreach($item['PATH'] as &$node)
+				while($item = $res->Fetch())
 				{
-					$node['NAME'] = $node['LNAME'];
-					unset($node['LNAME']);
-				}
+					$item['ID'] = intval($item['ID']);
 
-				$points[$item['ID']]['PATH'] = $item['PATH'];
+					if(!is_array($item['PATH']) || empty($item['PATH']))
+					{
+						// we got empty PATH. This is not a normal case, item without a path is not sutable for displaying. Skip.
+						unset($points[$item['ID']]);
+					}
+					else
+					{
+						foreach($item['PATH'] as &$node)
+						{
+							$node['NAME'] = $node['LNAME'];
+							unset($node['LNAME']);
+						}
+						$points[$item['ID']]['PATH'] = $item['PATH'];
+					}
+				}
+			}
+			catch(\Bitrix\Main\ArgumentException $e)
+			{
+				LocationHelper::informAdminLocationDatabaseFailure();
 			}
 
-			foreach($points as &$location)
+			// clean up some fields
+			foreach($points as $i => &$location)
 			{
 				unset($location['LEFT_MARGIN']); // system fields should not figure in $arResult
 				unset($location['RIGHT_MARGIN']); // same

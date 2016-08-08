@@ -108,6 +108,22 @@ class CSaleOrderTax extends CAllSaleOrderTax
 		if (!CSaleOrderTax::CheckFields("ADD", $arFields))
 			return false;
 
+		$dbResult = CSaleOrderTax::GetList(
+			array(),
+			array(
+				"ORDER_ID" => $arFields['ORDER_ID'],
+				"TAX_NAME" => $arFields['TAX_NAME'],
+				"CODE" => $arFields['CODE'],
+			),
+			false,
+			false,
+			array("ID")
+		);
+		if ($dbResult->Fetch())
+		{
+			return false;
+		}
+
 		$arInsert = $DB->PrepareInsert("b_sale_order_tax", $arFields);
 		$strSql =
 			"INSERT INTO b_sale_order_tax(".$arInsert[0].") ".

@@ -228,12 +228,12 @@ class CSaleHelper
 				$wrapHtml .= '<tr';
 
 				if(isset($arConfig["BLOCK_HIDEABLE"]))
-					$wrapHtml .= ' onclick="psToggleNextSiblings(this,'.intval($arConfig["BLOCK_LENGTH"]).');" class="ps-admin-hide" ';
+					$wrapHtml .= ' onclick="BX.Sale.PaySystem.toggleNextSiblings(this,'.intval($arConfig["BLOCK_LENGTH"]).');" class="ps-admin-hide" ';
 
 				$wrapHtml .= '><td style="text-align: center; font-weight: bold;'.$tdStyle.'" colspan="2">'.$controlHtml;
 
 				if(isset($arConfig["BLOCK_DELETABLE"]))
-					$wrapHtml .= '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="psDeleteObjAndNextSiblings(this,'.intval($arConfig["BLOCK_LENGTH"]).',2);" style="border-bottom: 1px dashed; text-decoration: none;">'.GetMessage("SALE_HELPER_DELETE").'</a>';
+					$wrapHtml .= '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="BX.Sale.PaySystem.deleteObjectAndNextSiblings(this,'.intval($arConfig["BLOCK_LENGTH"]).',2);" style="border-bottom: 1px dashed; text-decoration: none;">'.GetMessage("SALE_HELPER_DELETE").'</a>';
 
 				$wrapHtml .= '</td></tr>';
 			break;
@@ -250,13 +250,13 @@ class CSaleHelper
 		return $wrapHtml;
 	}
 
-	public function getOptionOrImportValues($optName, $importFuncName = false, $arFuncParams = array())
+	public static function getOptionOrImportValues($optName, $importFuncName = false, $arFuncParams = array(), $siteId = "")
 	{
 		$arResult = array();
 
 		if(strlen(trim($optName)) >= 0)
 		{
-			$optValue = COption::GetOptionString('sale', $optName, '');
+			$optValue = COption::GetOptionString('sale', $optName, '', $siteId);
 			$arOptValue = unserialize($optValue);
 
 			if(empty($arOptValue))
@@ -264,7 +264,7 @@ class CSaleHelper
 				if($importFuncName !== false && is_callable($importFuncName))
 				{
 					$arResult = call_user_func_array($importFuncName, $arFuncParams);
-					COption::SetOptionString('sale', $optName, serialize($arResult));
+					COption::SetOptionString('sale', $optName, serialize($arResult), false, $siteId);
 				}
 			}
 			else
@@ -309,7 +309,8 @@ class CSaleHelper
 
 		if((string) $locId != '')
 		{
-			$location = CSaleLocation::GetByID($locId);
+			$location = self::getLocationByIdHitCached($locId);
+
 			if(intval($location['ID']))
 				$locId = $location['ID'];
 		}
@@ -384,7 +385,7 @@ class CSaleHelper
 	* @param array $arSize - width and height for image thumbnail
 	* @return string
 	*/
-	function getFileInfo($fileId, $arSize = array("WIDTH" => 90, "HEIGHT" => 90))
+	public static function getFileInfo($fileId, $arSize = array("WIDTH" => 90, "HEIGHT" => 90))
 	{
 		$resultHTML = "";
 		$arFile = CFile::GetFileArray($fileId);
@@ -399,7 +400,7 @@ class CSaleHelper
 		return $resultHTML;
 	}
 
-	function getIblockPropInfo($value, $propData, $arSize = array("WIDTH" => 90, "HEIGHT" => 90))
+	public static function getIblockPropInfo($value, $propData, $arSize = array("WIDTH" => 90, "HEIGHT" => 90))
 	{
 		$res = "";
 
@@ -446,5 +447,15 @@ class CSaleHelper
 		}
 
 		return $res;
+	}
+
+	public static function getLocationByIdHitCached($id)
+	{
+		static $result = array();
+
+		if(!isset($result[$id]))
+			$result[$id] = CSaleLocation::GetByIDForLegacyDelivery($id);
+
+		return $result[$id];
 	}
 }

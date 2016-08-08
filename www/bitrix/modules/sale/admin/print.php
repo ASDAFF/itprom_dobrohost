@@ -50,6 +50,34 @@ if (CModule::IncludeModule("sale"))
 {
 	if ($arOrder = CSaleOrder::GetByID($ORDER_ID))
 	{
+		if (isset($_REQUEST['SHIPMENT_ID']) && intval($_REQUEST['SHIPMENT_ID']) > 0)
+		{
+			$shipmentId = $_REQUEST['SHIPMENT_ID'];
+			$res = \Bitrix\Sale\Internals\ShipmentTable::getList(array(
+				'select' => array('PRICE_DELIVERY'),
+				'filter' => array(
+					'ID' => $_REQUEST['SHIPMENT_ID']
+				)
+			));
+			$data = $res->fetch();
+			$arOrder['PRICE_DELIVERY'] = $data['PRICE_DELIVERY'];
+		}
+
+		$shipmentRes = \Bitrix\Sale\Shipment::getList(array(
+			'select' => array( 'DATE_ALLOW_DELIVERY', 'EMP_ALLOW_DELIVERY_ID', 'DATE_DEDUCTED', 'EMP_ALLOW_DELIVERY_ID', 'TRACKING_NUMBER', 'DELIVERY_DOC_NUM', 'DELIVERY_DOC_DATE' ),
+			'filter' => array(
+				'ORDER_ID' => $arOrder['ID'],
+				'SYSTEM' => 'N'
+			),
+			'order' => array('ID' => 'DESC'),
+			'limit' => 1
+		));
+
+		if ($shipmentData = $shipmentRes->fetch())
+		{
+			$arOrder = array_merge($arOrder, $shipmentData);
+		}
+
 		$rep_file_name = GetRealPath2Report($doc.".php");
 		if (strlen($rep_file_name)<=0)
 		{
@@ -111,9 +139,19 @@ if (CModule::IncludeModule("sale"))
 		}
 		else
 		{
-			$db_basket = CSaleBasket::GetList(array("NAME" => "ASC"), array("ORDER_ID"=>$ORDER_ID), false, false, array("ID", "QUANTITY"));
+			$params = array(
+				'select' => array("ID", "QUANTITY", "SET_PARENT_ID"),
+				'filter' => array(
+					"ORDER_ID" => $ORDER_ID
+				),
+				'order' => array("ID" => "ASC")
+			);
+			$db_basket = \Bitrix\Sale\Internals\BasketTable::getList($params);
 			while ($arBasket = $db_basket->Fetch())
 			{
+				if (intval($arBasket['SET_PARENT_ID']) > 0)
+					continue;
+
 				$arBasketIDs[] = $arBasket["ID"];
 				$arQuantities[] = $arBasket["QUANTITY"];
 			}

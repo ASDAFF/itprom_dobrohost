@@ -42,4 +42,14 @@ $MESS["SSEN_PERM_DELETE"] = "Delete";
 $MESS["SSEN_PERM_GROUPS_ABSENT"] = "There are no user groups with access permission [U] - order processing.";
 $MESS["SSEN_PERM_GROUPS_SET"] = "Use the e-Store module's <a href=\"#LINK#\">settings page</a> to set access permissions.";
 $MESS["SSEN_ALL_PERM"] = "All operations";
+$MESS["SSEN_TYPE_O"] = "Order";
+$MESS["SSEN_TYPE_D"] = "Delivery";
+$MESS["SSEN_NOTIFY_ASK"] = "Notify user by e-mail when order moves to this status";
+$MESS["SSEN_NOTIFY_W_TITLE"] = "Status was not saved!";
+$MESS["SSEN_NOTIFY_W_CONTENT"] = "The template will become available once the status is saved.";
+$MESS["SSEN_NOTIFY_LINK"] = "Status e-mail template";
+$MESS["SSEN_TASKS_LINK"] = "Access permissions";
+$MESS["SSEN_GROUPS_LINK"] = "User groups";
+$MESS["SSEN_INVALID_TASK_ID_FOR"] = "Incorrect access permission for";
+$MESS["SALE_STATUS_WRONG_TYPE"] = "Status \"#STATUS_ID#\" cannot be set to \"#STATUS_TYPE#\" type.";
 ?>

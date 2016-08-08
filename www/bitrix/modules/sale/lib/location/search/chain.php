@@ -56,14 +56,17 @@ final class ChainTable extends Entity\DataManager implements \Serializable
 		}
 
 		$typeSort = array();
-		$res = Location\TypeTable::getList(array('select' => array('ID', 'CODE', 'SORT')));
+		$res = Location\TypeTable::getList(array('select' => array('ID', 'CODE', 'DISPLAY_SORT')));
+
+		$this->procData['TYPES'] = array();
+		$this->procData['TYPE_SORT'] = array();
 
 		while($item = $res->fetch())
 		{
 			if(!is_array($this->procData['ALLOWED_TYPES']) || (is_array($this->procData['ALLOWED_TYPES']) && in_array($item['ID'], $this->procData['ALLOWED_TYPES'])))
 				$this->procData['TYPES'][$item['CODE']] = $item['ID'];
 
-			$this->procData['TYPE_SORT'][$item['ID']] = $item['SORT'];
+			$this->procData['TYPE_SORT'][$item['ID']] = $item['DISPLAY_SORT'];
 		}
 
 		$this->procData['TYPES_BACK'] = array_flip($this->procData['TYPES']);
@@ -126,6 +129,27 @@ final class ChainTable extends Entity\DataManager implements \Serializable
 		return $filter;
 	}
 
+	protected static function rarefact($sorts, $window = 10000)
+	{
+		if(!intval($window))
+			$window = 10000;
+
+		$rSorts = array();
+		$w = $window;
+		if(is_array($sorts))
+		{
+			asort($sorts);
+
+			foreach($sorts as $id => $sort)
+			{
+				$rSorts[$id] = $w;
+				$w += $window;
+			}
+		}
+
+		return $rSorts;
+	}
+
 	public function initializeData()
 	{
 		$dbConnection = Main\HttpApplication::getConnection();
@@ -145,10 +169,13 @@ final class ChainTable extends Entity\DataManager implements \Serializable
 			'offset' => $this->procData['OFFSET']
 		));
 
+		$this->procData['TYPE_SORT'] = $this->rarefact($this->procData['TYPE_SORT']);
+
 		$cnt = 0;
 		while($item = $res->fetch())
 		{
-			$name = Location\Name\LocationTable::getList(array('select' => array('NAME'), 'filter' => array('=LOCATION_ID' => $item['ID'], '=LANGUAGE_ID' => 'ru')))->fetch();
+			// tmp!!!!
+			//$name = Location\Name\LocationTable::getList(array('select' => array('NAME'), 'filter' => array('=LOCATION_ID' => $item['ID'], '=LANGUAGE_ID' => 'ru')))->fetch();
 
 			if($item['DEPTH_LEVEL'] < $this->procData['DEPTH'])
 			{
@@ -170,20 +197,29 @@ final class ChainTable extends Entity\DataManager implements \Serializable
 				'ID' => $item['ID']
 			);
 
-			$this->procData['DEPTH'] = $item['DEPTH_LEVEL'];
-
 			if(is_array($this->procData['ALLOWED_TYPES']) && in_array($item['TYPE_ID'], $this->procData['ALLOWED_TYPES']))
 			{
 				$data = array(
 					'LOCATION_ID' => $item['ID'],
-					'RELEVANCY' => $this->procData['TYPE_SORT'][$item['TYPE_ID']], // tmp, will be more complicated calc here later
+					'RELEVANCY' => $this->procData['TYPE_SORT'][$item['TYPE_ID']] + $item['SORT'],// * $item['DEPTH_LEVEL'], // tmp, will be more complicated calc here later
 				);
 				$wordsAdded = array();
-				$k = 1;
 
+				/*
+				_dump_r('############################');
+				_dump_r('LOCATION: '.$name['NAME']);
+				_dump_r('TYPE RELEVANCY: '.$data['RELEVANCY']);
+				_dump_r('PATH:');
+				_dump_r($this->procData['PATH']);
+				*/
+
+				$this->procData['DEPTH'] = $item['DEPTH_LEVEL'];
+
+				// pre-load missing words
+				$wordCount = 0;
 				foreach($this->procData['PATH'] as &$pathItem)
 				{
-					if(!isset($pathItem['WORDS']))
+					if(!isset($pathItem['WORDS'])) // words were not loaded previously for this part of the path
 					{
 						$sql = "
 							select WS.POSITION from ".WordTable::getTableNameWord2Location()." WL
@@ -202,13 +238,31 @@ final class ChainTable extends Entity\DataManager implements \Serializable
 						$pathItem['WORDS'] = array_unique($pathItem['WORDS']);
 					}
 
-					foreach($pathItem['WORDS'] as $position)
+					$wordCount += count($pathItem['WORDS']);
+				}
+
+				// count words
+				//_dump_r('Words total: '.$wordCount);
+
+				$wOffset = 0;
+				foreach($this->procData['PATH'] as &$pathItem)
+				{
+					foreach($pathItem['WORDS'] as $i => $position)
 					{
+						$wordWeight = $wordCount - $wOffset;
+
+						$tmpData = $data;
+						$tmpData['RELEVANCY'] += $wordWeight;
+
+						//_dump_r('	Word relevancy: '.$data['RELEVANCY'].' ==>> '.$tmpData['RELEVANCY']);
+
 						if(!isset($wordsAdded[$position]))
 						{
-							$this->indexInserter->insert(array_merge(array('POSITION' => $position), $data));
+							$this->indexInserter->insert(array_merge(array('POSITION' => $position), $tmpData));
 							$wordsAdded[$position] = true;
 						}
+
+						$wOffset++;
 					}
 				}
 				unset($pathItem);

@@ -1,4 +1,7 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();?><?
+
+use Bitrix\Sale\Order;
+
 include(GetLangFileName(dirname(__FILE__)."/", "/payment.php"));
 
 class CSalePaySystemPrePayment
@@ -20,15 +23,15 @@ class CSalePaySystemPrePayment
 
 	function init()
 	{
-		$this->username = CSalePaySystemAction::GetParamValue("USER");
-		$this->pwd = CSalePaySystemAction::GetParamValue("PWD");
-		$this->signature = CSalePaySystemAction::GetParamValue("SIGNATURE");
-		$this->currency = CSalePaySystemAction::GetParamValue("CURRENCY");
-		$this->testMode = (CSalePaySystemAction::GetParamValue("TEST") == "Y");
-		$this->notifyUrl = CSalePaySystemAction::GetParamValue("NOTIFY_URL");
+		$this->username = CSalePaySystemAction::GetParamValue("PAYPAL_USER");
+		$this->pwd = CSalePaySystemAction::GetParamValue("PAYPAL_PWD");
+		$this->signature = CSalePaySystemAction::GetParamValue("PAYPAL_SIGNATURE");
+		$this->currency = CSalePaySystemAction::GetParamValue("PAYMENT_CURRENCY");
+		$this->testMode = (CSalePaySystemAction::GetParamValue("PS_IS_TEST") == "Y");
+		$this->notifyUrl = CSalePaySystemAction::GetParamValue("PAYPAL_NOTIFY_URL");
 
 		if(strlen($this->currency) <= 0)
-			$this->currency =CSaleLang::GetLangCurrency(SITE_ID);
+			$this->currency = CSaleLang::GetLangCurrency(SITE_ID);
 
 		if($this->testMode)
 			$this->domain = "sandbox.";
@@ -67,13 +70,13 @@ class CSalePaySystemPrePayment
 			$imgSrc = "//www.paypal.com/de_DE/i/btn/btn_xpressCheckout.gif";
 		else
 			$imgSrc = "//www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif";
-		return "<input style=\"padding-top:7px;\" type=\"image\" name=\"paypalbutton\" value=\"".GetMessage("PPL_BUTTON")."\" src=\"".$imgSrc."\">";
+		return "<input name=\"paypalbutton\" style=\"padding-top:7px;\" type=\"image\" src=\"".$imgSrc."\" value=\"".GetMessage("PPL_BUTTON")."\">";
 	}
 
 	function BasketButtonAction($orderData = array())
 	{
 		global $APPLICATION;
-		if(strlen($_POST["paypalbutton"]) > 0)
+		if (array_key_exists('paypalbutton_x', $_POST) && array_key_exists('paypalbutton_y', $_POST))
 		{
 			$url = "https://api-3t.".$this->domain."paypal.com/nvp";
 
@@ -107,7 +110,7 @@ class CSalePaySystemPrePayment
 			$arFields["RETURNURL"] .= ((strpos($arFields["RETURNURL"], "?") === false) ? "?" : "&")."paypal=Y";
 
 			$ht = new \Bitrix\Main\Web\HttpClient(array("version" => "1.1"));
-			if($res = $ht->post($url, $arFields))
+			if($res = @$ht->post($url, $arFields))
 			{
 				$result = $this->parseResult($res);
 
@@ -117,6 +120,11 @@ class CSalePaySystemPrePayment
 					if($orderData["ORDER_REQUEST"] == "Y")
 						return $url;
 					LocalRedirect($url);
+				}
+				else
+				{
+					$GLOBALS["APPLICATION"]->ThrowException($result['L_SHORTMESSAGE0'].' : '.$result['L_LONGMESSAGE0'], "CSalePaySystemPrePayment_action_error");
+					return false;
 				}
 			}
 			else
@@ -234,6 +242,7 @@ class CSalePaySystemPrePayment
 					$arFields["PAYMENTREQUEST_0_DESC"] = "Order #".$this->orderId;
 					$arFields["PAYMENTREQUEST_0_NOTETEX"] = "Order #".$this->orderId;
 					$arFields["PAYMENTREQUEST_0_INVNUM"] = $this->orderId;
+					$arFields["PAYMENTREQUEST_0_CUSTOM"] = $this->paymentId;
 
 					if(DoubleVal($this->deliveryAmount) > 0)
 					{
@@ -271,9 +280,13 @@ class CSalePaySystemPrePayment
 					{
 						$result2 = $this->parseResult($res2);
 
+						/** @var \Bitrix\Sale\Order $order */
+						$order = Order::load($this->orderId);
+						$payment = $order->getPaymentCollection()->getItemById($this->paymentId);
+
 						if($result2["ACK"] == "Success" && in_array($result2["PAYMENTINFO_0_PAYMENTSTATUS"], array("Completed")))
 						{
-							CSaleOrder::PayOrder($this->orderId, "Y");
+							$payment->setField('PAID', 'Y');
 							$strPS_STATUS_MESSAGE = "";
 							$strPS_STATUS_MESSAGE .= "Name: ".$result["FIRSTNAME"]." ".$result["LASTNAME"]."; ";
 							$strPS_STATUS_MESSAGE .= "Email: ".$result["EMAIL"]."; ";
@@ -289,9 +302,9 @@ class CSalePaySystemPrePayment
 									"PS_STATUS_MESSAGE" => $strPS_STATUS_MESSAGE,
 									"PS_SUM" => $result2["PAYMENTINFO_0_AMT"],
 									"PS_CURRENCY" => $result2["PAYMENTINFO_0_CURRENCYCODE"],
-									"PS_RESPONSE_DATE" => ConvertTimeStamp(false, "FULL"),
+									"PS_RESPONSE_DATE" => new \Bitrix\Main\Type\DateTime,
 									"PAY_VOUCHER_NUM" => $result2["PAYMENTINFO_0_TRANSACTIONID"],
-									"PAY_VOUCHER_DATE" => ConvertTimeStamp(false, "FULL"),
+									"PAY_VOUCHER_DATE" => new \Bitrix\Main\Type\DateTime,
 								);
 						}
 						else
@@ -312,12 +325,15 @@ class CSalePaySystemPrePayment
 									"PS_STATUS_MESSAGE" => $strPS_STATUS_MESSAGE,
 									"PS_SUM" => $result2["PAYMENTINFO_0_AMT"],
 									"PS_CURRENCY" => $result2["PAYMENTINFO_0_CURRENCYCODE"],
-									"PS_RESPONSE_DATE" => ConvertTimeStamp(false, "FULL"),
+									"PS_RESPONSE_DATE" => new \Bitrix\Main\Type\DateTime,
 									"PAY_VOUCHER_NUM" => $result2["PAYMENTINFO_0_TRANSACTIONID"],
-									"PAY_VOUCHER_DATE" => ConvertTimeStamp(false, "FULL"),
+									"PAY_VOUCHER_DATE" => new \Bitrix\Main\Type\DateTime,
 								);
 						}
-						CSaleOrder::Update($this->orderId, $arOrderFields);
+
+						$result = $payment->setFields($arOrderFields);
+						if ($result->isSuccess())
+							$order->save();
 					}
 				}
 			}

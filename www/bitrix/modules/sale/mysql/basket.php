@@ -1,6 +1,9 @@
 <?
 require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/sale/general/basket.php");
 
+
+use \Bitrix\Main\Localization;
+
 class CSaleBasket extends CAllSaleBasket
 {
 	/**
@@ -31,6 +34,8 @@ class CSaleBasket extends CAllSaleBasket
 	{
 		global $DB, $USER;
 
+		$isOrderConverted = \Bitrix\Main\Config\Option::get("main", "~sale_converted_15", 'N');
+
 		if (!is_array($arOrder) && !is_array($arFilter))
 		{
 			$arOrder = strval($arOrder);
@@ -50,6 +55,16 @@ class CSaleBasket extends CAllSaleBasket
 				$arFilter["ORDER_ID"] = 0;
 			}
 		}
+
+		if ($isOrderConverted == "Y")
+		{
+			$result = \Bitrix\Sale\Compatible\BasketCompatibility::getList($arOrder, $arFilter, $arGroupBy, $arNavStartParams, $arSelectFields);
+			if ($result instanceof \Bitrix\Sale\Compatible\CDBResult)
+				$result->addFetchAdapter(new \Bitrix\Sale\Compatible\BasketFetchAdapter());
+			return $result;
+		}
+
+
 
 		if (count($arSelectFields) <= 0)
 		{
@@ -200,6 +215,7 @@ class CSaleBasket extends CAllSaleBasket
 
 				"ORDER_ALLOW_DELIVERY" => array("FIELD" => "O.ALLOW_DELIVERY", "TYPE" => "string", "FROM" => "LEFT JOIN b_sale_order O ON (O.ID = B.ORDER_ID)"),
 				"ORDER_DATE_ALLOW_DELIVERY" => array("FIELD" => "O.DATE_ALLOW_DELIVERY", "TYPE" => "datetime", "FROM" => "LEFT JOIN b_sale_order O ON (O.ID = B.ORDER_ID)"),
+
 				"ORDER_STATUS" => array("FIELD" => "O.STATUS_ID", "TYPE" => "string", "FROM" => "LEFT JOIN b_sale_order O ON (O.ID = B.ORDER_ID)"),
 				"ORDER_CANCELED" => array("FIELD" => "O.CANCELED", "TYPE" => "string", "FROM" => "LEFT JOIN b_sale_order O ON (O.ID = B.ORDER_ID)"),
 				"ORDER_DATE" => array("FIELD" => "O.DATE_INSERT", "TYPE" => "datetime", "FROM" => "LEFT JOIN b_sale_order O ON (O.ID = B.ORDER_ID)"),
@@ -414,233 +430,226 @@ class CSaleBasket extends CAllSaleBasket
 	*/
 	function Add($arFields)
 	{
-		global $DB;
+		global $DB, $APPLICATION;
 
 		if (isset($arFields["ID"]))
 			unset($arFields["ID"]);
+
+		$isOrderConverted = \Bitrix\Main\Config\Option::get("main", "~sale_converted_15", 'N');
 
 		CSaleBasket::Init();
 		if (!CSaleBasket::CheckFields("ADD", $arFields))
 			return false;
 
-		if (!array_key_exists('IGNORE_CALLBACK_FUNC', $arFields) || 'Y' != $arFields['IGNORE_CALLBACK_FUNC'])
+		if ($isOrderConverted != "Y")
 		{
-			if ((array_key_exists("CALLBACK_FUNC", $arFields) && !empty($arFields["CALLBACK_FUNC"]))
-				|| (array_key_exists("PRODUCT_PROVIDER_CLASS", $arFields) && !empty($arFields["PRODUCT_PROVIDER_CLASS"]))
-			)
-			{
-				/** @var $productProvider IBXSaleProductProvider */
-				if ($productProvider = CSaleBasket::GetProductProvider(array("MODULE" => $arFields["MODULE"], "PRODUCT_PROVIDER_CLASS" => $arFields["PRODUCT_PROVIDER_CLASS"])))
-				{
-					$providerParams = array(
-						"PRODUCT_ID" => $arFields["PRODUCT_ID"],
-						"QUANTITY" => $arFields["QUANTITY"],
-						"RENEWAL" => $arFields["RENEWAL"],
-						"USER_ID" => (isset($arFields["USER_ID"]) ? $arFields["USER_ID"] : 0),
-						"SITE_ID" => (isset($arFields["LID"]) ? $arFields["LID"] : false),
-					);
-					if (isset($arFields['NOTES']))
-						$providerParams['NOTES'] = $arFields['NOTES'];
-
-					if (!($productProvider::GetProductData($providerParams)))
-					{
-						return false;
-					}
-				}
-				else
-				{
-					if (!(CSaleBasket::ExecuteCallbackFunction(
-						$arFields["CALLBACK_FUNC"],
-						$arFields["MODULE"],
-						$arFields["PRODUCT_ID"],
-						$arFields["QUANTITY"],
-						$arFields["RENEWAL"],
-						$arFields["USER_ID"],
-						$arFields["LID"]
-					)))
-					{
-						return false;
-					}
-				}
-			}
+			foreach(GetModuleEvents("sale", "OnBeforeBasketAdd", true) as $arEvent)
+				if (ExecuteModuleEventEx($arEvent, Array(&$arFields))===false)
+					return false;
 		}
-
-		foreach(GetModuleEvents("sale", "OnBeforeBasketAdd", true) as $arEvent)
-			if (ExecuteModuleEventEx($arEvent, Array(&$arFields))===false)
-				return false;
 
 		$bFound = false;
 		$bEqAr = false;
 
-		$boolProps = (!empty($arFields["PROPS"]) && is_array($arFields["PROPS"]));
-
-		// check if this item is already in the basket
-		$arDuplicateFilter = array(
-			"FUSER_ID" => $arFields["FUSER_ID"],
-			"PRODUCT_ID" => $arFields["PRODUCT_ID"],
-			"LID" => $arFields["LID"],
-			"ORDER_ID" => "NULL"
-		);
-
-		if (!(isset($arFields["TYPE"]) && $arFields["TYPE"] == CSaleBasket::TYPE_SET))
+		//TODO: is order converted?
+		if ($isOrderConverted == "Y")
 		{
-			if (isset($arFields["SET_PARENT_ID"]))
-				$arDuplicateFilter["SET_PARENT_ID"] = $arFields["SET_PARENT_ID"];
-			else
-				$arDuplicateFilter["SET_PARENT_ID"] = "NULL";
-		}
-
-		$db_res = CSaleBasket::GetList(
-			array(),
-			$arDuplicateFilter,
-			false,
-			false,
-			array("ID", "QUANTITY")
-		);
-		while($res = $db_res->Fetch())
-		{
-			if(!$bEqAr)
+			/** @var \Bitrix\Sale\Result $result */
+			$result = \Bitrix\Sale\Compatible\BasketCompatibility::add($arFields);
+			if (!$result->isSuccess())
 			{
-				$arPropsCur = array();
-				$arPropsOld = array();
-
-				if ($boolProps)
+				foreach($result->getErrorMessages() as $error)
 				{
-					foreach($arFields["PROPS"] as &$arProp)
+					$APPLICATION->ThrowException($error);
+				}
+
+				return false;
+			}
+
+			$ID = $result->getId();
+
+			$basketItemData = $result->getData();
+			if (array_key_exists('QUANTITY', $basketItemData))
+			{
+				$arFields['QUANTITY'] = $basketItemData['QUANTITY'];
+			}
+		}
+		else
+		{
+			$boolProps = (!empty($arFields["PROPS"]) && is_array($arFields["PROPS"]));
+
+			// check if this item is already in the basket
+			$arDuplicateFilter = array(
+				"FUSER_ID" => $arFields["FUSER_ID"],
+				"PRODUCT_ID" => $arFields["PRODUCT_ID"],
+				"LID" => $arFields["LID"],
+				"ORDER_ID" => "NULL"
+			);
+
+			if (!(isset($arFields["TYPE"]) && $arFields["TYPE"] == CSaleBasket::TYPE_SET))
+			{
+				if (isset($arFields["SET_PARENT_ID"]))
+					$arDuplicateFilter["SET_PARENT_ID"] = $arFields["SET_PARENT_ID"];
+				else
+					$arDuplicateFilter["SET_PARENT_ID"] = "NULL";
+			}
+
+			$db_res = CSaleBasket::GetList(
+				array(),
+				$arDuplicateFilter,
+				false,
+				false,
+				array("ID", "QUANTITY")
+			);
+			while($res = $db_res->Fetch())
+			{
+				if(!$bEqAr)
+				{
+					$arPropsCur = array();
+					$arPropsOld = array();
+
+					if ($boolProps)
 					{
-						if (array_key_exists('VALUE', $arProp) && '' != $arProp["VALUE"])
+						foreach($arFields["PROPS"] as &$arProp)
+						{
+							if (array_key_exists('VALUE', $arProp)&& '' != $arProp["VALUE"])
+							{
+								$propID = '';
+								if (array_key_exists('CODE', $arProp) && '' != $arProp["CODE"])
+								{
+									$propID = $arProp["CODE"];
+								}
+								elseif (array_key_exists('NAME', $arProp) && '' != $arProp["NAME"])
+								{
+									$propID = $arProp["NAME"];
+								}
+								if ('' == $propID)
+									continue;
+								$arPropsCur[$propID] = $arProp["VALUE"];
+							}
+						}
+						if (isset($arProp))
+							unset($arProp);
+					}
+
+					$dbProp = CSaleBasket::GetPropsList(
+						array(),
+						array("BASKET_ID" => $res["ID"]),
+						false,
+						false,
+						array('NAME', 'VALUE', 'CODE')
+					);
+					while ($arProp = $dbProp->Fetch())
+					{
+						if ('' != $arProp["VALUE"])
 						{
 							$propID = '';
-							if (array_key_exists('CODE', $arProp) && '' != $arProp["CODE"])
+							if ('' != $arProp["CODE"])
 							{
 								$propID = $arProp["CODE"];
 							}
-							elseif (array_key_exists('NAME', $arProp) && '' != $arProp["NAME"])
+							elseif ('' != $arProp["NAME"])
 							{
 								$propID = $arProp["NAME"];
 							}
 							if ('' == $propID)
 								continue;
-							$arPropsCur[$propID] = $arProp["VALUE"];
+							$arPropsOld[$propID] = $arProp["VALUE"];
 						}
 					}
-					if (isset($arProp))
-						unset($arProp);
-				}
 
-				$dbProp = CSaleBasket::GetPropsList(
-					array(),
-					array("BASKET_ID" => $res["ID"]),
-					false,
-					false,
-					array('NAME', 'VALUE', 'CODE')
-				);
-				while ($arProp = $dbProp->Fetch())
-				{
-					if ('' != $arProp["VALUE"])
+					$bEqAr = false;
+					if (count($arPropsCur) == count($arPropsOld))
 					{
-						$propID = '';
-						if ('' != $arProp["CODE"])
+						$bEqAr = true;
+						foreach($arPropsCur as $key => $val)
 						{
-							$propID = $arProp["CODE"];
+							if (!array_key_exists($key, $arPropsOld) || $arPropsOld[$key] != $val)
+							{
+								$bEqAr = false;
+								break;
+							}
 						}
-						elseif ('' != $arProp["NAME"])
-						{
-							$propID = $arProp["NAME"];
-						}
-						if ('' == $propID)
-							continue;
-						$arPropsOld[$propID] = $arProp["VALUE"];
 					}
-				}
 
-				$bEqAr = false;
-				if (count($arPropsCur) == count($arPropsOld))
-				{
-					$bEqAr = true;
-					foreach($arPropsCur as $key => $val)
+					if ($bEqAr)
 					{
-						if (!array_key_exists($key, $arPropsOld) || $arPropsOld[$key] != $val)
-						{
-							$bEqAr = false;
-							break;
-						}
+						$ID = $res["ID"];
+						$arFields["QUANTITY"] += $res["QUANTITY"];
+						CSaleBasket::Update($ID, $arFields);
+						$bFound = true;
+						continue;
 					}
-				}
-
-				if ($bEqAr)
-				{
-					$ID = $res["ID"];
-					$arFields["QUANTITY"] += $res["QUANTITY"];
-					CSaleBasket::Update($ID, $arFields);
-					$bFound = true;
-					continue;
 				}
 			}
 		}
 
 		if (!$bFound)
 		{
-			$arInsert = $DB->PrepareInsert("b_sale_basket", $arFields);
-
-			$strSql = "INSERT INTO b_sale_basket(".$arInsert[0].", DATE_INSERT, DATE_UPDATE) VALUES(".$arInsert[1].", ".$DB->GetNowFunction().", ".$DB->GetNowFunction().")";
-			$DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
-
-			$ID = intval($DB->LastID());
-
-			$boolOrder = false;
-			if (isset($arFields['ORDER_ID']))
+			//TODO: is order converted?
+			if ($isOrderConverted != "Y")
 			{
-				$boolOrder = (0 < (int)$arFields['ORDER_ID']);
-			}
+				$arInsert = $DB->PrepareInsert("b_sale_basket", $arFields);
 
-			if (!$boolOrder && !CSaleBasketHelper::isSetItem($arFields))
-			{
-				$siteID = (isset($arFields["LID"])) ? $arFields["LID"] : SITE_ID;
-				$_SESSION["SALE_BASKET_NUM_PRODUCTS"][$siteID]++;
-			}
+				$strSql = "INSERT INTO b_sale_basket(".$arInsert[0].", DATE_INSERT, DATE_UPDATE) VALUES(".$arInsert[1].", ".$DB->GetNowFunction().", ".$DB->GetNowFunction().")";
+				$DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
 
-			if ($boolProps)
-			{
-				foreach ($arFields["PROPS"] as &$prop)
+				$ID = intval($DB->LastID());
+
+				$boolOrder = false;
+				if (isset($arFields['ORDER_ID']))
 				{
-					if ('' != $prop["NAME"])
-					{
-						$arInsert = $DB->PrepareInsert("b_sale_basket_props", $prop);
-
-						$strSql = "INSERT INTO b_sale_basket_props(BASKET_ID, ".$arInsert[0].") VALUES(".$ID.", ".$arInsert[1].")";
-						$DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
-					}
+					$boolOrder = (0 < (int)$arFields['ORDER_ID']);
 				}
-				if (isset($prop))
-					unset($prop);
-			}
 
-			// if item is set parent
-			if (isset($arFields["TYPE"]) && $arFields["TYPE"] == CSaleBasket::TYPE_SET)
-			{
-				CSaleBasket::Update($ID, array("SET_PARENT_ID" => $ID));
-
-				if (!isset($arFields["MANUAL_SET_ITEMS_INSERTION"])) // set items will be added separately (from admin form data)
+				if (!$boolOrder && !CSaleBasketHelper::isSetItem($arFields))
 				{
-					/** @var $productProvider IBXSaleProductProvider */
-					if ($productProvider = CSaleBasket::GetProductProvider($arFields))
-					{
-						if (method_exists($productProvider, "GetSetItems"))
-						{
-							$arSets = $productProvider::GetSetItems($arFields["PRODUCT_ID"], CSaleBasket::TYPE_SET, array('BASKET_ID' => $ID));
+					$siteID = (isset($arFields["LID"])) ? $arFields["LID"] : SITE_ID;
+					$_SESSION["SALE_BASKET_NUM_PRODUCTS"][$siteID]++;
+				}
 
-							if (is_array($arSets))
+				if ($boolProps)
+				{
+					foreach ($arFields["PROPS"] as &$prop)
+					{
+						if ('' != $prop["NAME"])
+						{
+							$arInsert = $DB->PrepareInsert("b_sale_basket_props", $prop);
+
+							$strSql = "INSERT INTO b_sale_basket_props(BASKET_ID, ".$arInsert[0].") VALUES(".$ID.", ".$arInsert[1].")";
+							$DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
+						}
+					}
+					if (isset($prop))
+						unset($prop);
+				}
+
+				// if item is set parent
+				if (isset($arFields["TYPE"]) && $arFields["TYPE"] == CSaleBasket::TYPE_SET)
+				{
+					CSaleBasket::Update($ID, array("SET_PARENT_ID" => $ID));
+
+					if (!isset($arFields["MANUAL_SET_ITEMS_INSERTION"])) // set items will be added separately (from admin form data)
+					{
+						/** @var $productProvider IBXSaleProductProvider */
+						if ($productProvider = CSaleBasket::GetProductProvider($arFields))
+						{
+							if (method_exists($productProvider, "GetSetItems"))
 							{
-								foreach ($arSets as $arSetData)
+								$arSets = $productProvider::GetSetItems($arFields["PRODUCT_ID"], CSaleBasket::TYPE_SET, array('BASKET_ID' => $ID));
+
+								if (is_array($arSets))
 								{
-									foreach ($arSetData["ITEMS"] as $setItem)
+									foreach ($arSets as $arSetData)
 									{
-										$setItem["SET_PARENT_ID"] = $ID;
-										$setItem["LID"] = $arFields["LID"];
-										$setItem["QUANTITY"] = $setItem["QUANTITY"] * $arFields["QUANTITY"];
-										$setItem['FUSER_ID'] = $arFields['FUSER_ID'];
-										CSaleBasket::Add($setItem);
+										foreach ($arSetData["ITEMS"] as $setItem)
+										{
+											$setItem["SET_PARENT_ID"] = $ID;
+											$setItem["LID"] = $arFields["LID"];
+											$setItem["QUANTITY"] = $setItem["QUANTITY"] * $arFields["QUANTITY"];
+											$setItem['FUSER_ID'] = $arFields['FUSER_ID'];
+											CSaleBasket::Add($setItem);
+										}
 									}
 								}
 							}
@@ -663,19 +672,41 @@ class CSaleBasket extends CAllSaleBasket
 			}
 		}
 
-		foreach(GetModuleEvents("sale", "OnBasketAdd", true) as $arEvent)
-			ExecuteModuleEventEx($arEvent, Array($ID, $arFields));
+		if ($isOrderConverted != "Y")
+		{
+			foreach(GetModuleEvents("sale", "OnBasketAdd", true) as $arEvent)
+				ExecuteModuleEventEx($arEvent, Array($ID, $arFields));
+		}
 
 		return $ID;
 	}
 
 	function Delete($ID)
 	{
-		global $DB;
+		global $DB, $APPLICATION;
+
+		$isOrderConverted = \Bitrix\Main\Config\Option::get("main", "~sale_converted_15", 'N');
 
 		$ID = intval($ID);
 		if (0 >= $ID)
 			return false;
+
+		if ($isOrderConverted == "Y")
+		{
+			/** @var \Bitrix\Sale\Result $r */
+			$r = \Bitrix\Sale\Compatible\BasketCompatibility::delete($ID);
+			if (!$r->isSuccess(true))
+			{
+				foreach($r->getErrorMessages() as $error)
+				{
+					$APPLICATION->ThrowException($error);
+				}
+
+				return false;
+			}
+
+			return true;
+		}
 
 		$rsBaskets = CSaleBasket::GetList(
 			array(),
@@ -758,6 +789,8 @@ class CSaleBasket extends CAllSaleBasket
 	{
 		global $DB, $APPLICATION;
 
+		$isOrderConverted = \Bitrix\Main\Config\Option::get("main", "~sale_converted_15", 'N');
+
 		$bIncOrdered = ($bIncOrdered ? True : False);
 		$FUSER_ID = intval($FUSER_ID);
 		if ($FUSER_ID <= 0)
@@ -781,12 +814,29 @@ class CSaleBasket extends CAllSaleBasket
 		);
 		while ($arBasket = $dbBasket->Fetch())
 		{
-			if (0 < intval($arBasket["ORDER_ID"]))
-				CSaleOrderChange::AddRecord($arBasket["ORDER_ID"], "BASKET_REMOVED", array("PRODUCT_ID" => $arBasket["PRODUCT_ID"], "NAME" => $arBasket["NAME"]));
+			if ($isOrderConverted == "Y")
+			{
+				/** @var \Bitrix\Sale\Result $r */
+				$r = \Bitrix\Sale\Compatible\BasketCompatibility::delete($arBasket["ID"]);
+				if (!$r->isSuccess(true))
+				{
+					foreach($r->getErrorMessages() as $error)
+					{
+						$APPLICATION->ThrowException($error);
+					}
 
-			$DB->Query("DELETE FROM b_sale_basket_props WHERE BASKET_ID = ".$arBasket["ID"], true);
-			$DB->Query("DELETE FROM b_sale_store_barcode WHERE BASKET_ID = ".$arBasket["ID"], true);
-			$DB->Query("DELETE FROM b_sale_basket WHERE ID = ".$arBasket["ID"], true);
+					return false;
+				}
+			}
+			else
+			{
+				if (0 < intval($arBasket["ORDER_ID"]))
+					CSaleOrderChange::AddRecord($arBasket["ORDER_ID"], "BASKET_REMOVED", array("PRODUCT_ID" => $arBasket["PRODUCT_ID"], "NAME" => $arBasket["NAME"]));
+
+				$DB->Query("DELETE FROM b_sale_basket_props WHERE BASKET_ID = ".$arBasket["ID"], true);
+				$DB->Query("DELETE FROM b_sale_store_barcode WHERE BASKET_ID = ".$arBasket["ID"], true);
+				$DB->Query("DELETE FROM b_sale_basket WHERE ID = ".$arBasket["ID"], true);
+			}
 		}
 
 
@@ -794,27 +844,6 @@ class CSaleBasket extends CAllSaleBasket
 
 		return true;
 	}
-/*
-	function TransferBasket($FROM_FUSER_ID, $TO_FUSER_ID)
-	{
-		global $DB;
-
-		$FROM_FUSER_ID = IntVal($FROM_FUSER_ID);
-		$TO_FUSER_ID = IntVal($TO_FUSER_ID);
-
-		if (($TO_FUSER_ID>0) && (CSaleUser::GetList(array("ID"=>$TO_FUSER_ID))))
-		{
-			$strSql =
-				"UPDATE b_sale_basket SET ".
-				"	FUSER_ID = ".$TO_FUSER_ID." ".
-				"WHERE FUSER_ID = ".$FROM_FUSER_ID." ";
-			$DB->Query($strSql, false, "File: ".__FILE__."<br>Line: ".__LINE__);
-
-			return true;
-		}
-		return false;
-	}
-*/
 
 	function GetLeave($arOrder = Array(), $arFilter = Array(), $arGroupBy = false, $arNavStartParams = false, $arSelectFields = Array())
 	{
@@ -960,6 +989,9 @@ class CSaleUser extends CAllSaleUser
 		$ID = CSaleUser::_Add($arFields);
 		$ID = IntVal($ID);
 
+		$cookie_name = COption::GetOptionString("main", "cookie_name", "BITRIX_SM");
+		$_COOKIE[$cookie_name."_SALE_UID"] = $ID;
+
 		$secure = false;
 		if(COption::GetOptionString("sale", "use_secure_cookies", "N") == "Y" && CMain::IsHTTPS())
 			$secure=1;
@@ -968,7 +1000,10 @@ class CSaleUser extends CAllSaleUser
 		{
 			$arRes = CSaleUser::GetList(array("ID" => $ID));
 			if(!empty($arRes))
+			{
 				$GLOBALS["APPLICATION"]->set_cookie("SALE_UID", $arRes["CODE"], false, "/", false, $secure, "Y", false);
+				$_COOKIE[$cookie_name."_SALE_UID"] = $arRes["CODE"];
+			}
 		}
 		else
 		{
@@ -1181,4 +1216,6 @@ class CSaleUser extends CAllSaleUser
 		return false;
 	}
 }
+
+
 ?>

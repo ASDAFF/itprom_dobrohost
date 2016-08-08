@@ -40,6 +40,7 @@ $lAdmin = new CAdminList($sTableID, $oSort);
 $arFilterFields = array(
 	"filter_universal",
 	"filter_user_id",
+	"filter_fuser_id",
 	"filter_login",
 	"filter_price_all_from",
 	"filter_price_all_to",
@@ -93,6 +94,8 @@ $arFilter = array("ORDER_ID" => false);
 
 if (IntVal($filter_user_id) > 0)
 	$arFilter["USER_ID"] = IntVal($filter_user_id);
+if (IntVal($filter_fuser_id) > 0)
+	$arFilter["FUSER_ID"] = IntVal($filter_fuser_id);
 if (strlen($filter_login) > 0)
 	$arFilter["USER_LOGIN"] = $filter_login;
 if (strlen($filter_currency) > 0)
@@ -196,7 +199,7 @@ if (isset($_REQUEST['action']))
 		{
 			$userID = IntVal($_REQUEST["USER_ID"]);
 			$siteID = $_REQUEST["SITE_ID"];
-			$url = "/bitrix/admin/sale_order_new.php?lang=".LANG."&LID=".$siteID."&user_id=".$userID;
+			$url = "/bitrix/admin/sale_order_create.php?lang=".LANG."&SITE_ID=".$siteID."&USER_ID=".$userID."&FUSER_ID=".$fuserID;
 
 			$dbBasketList = CSaleBasket::GetList(
 				array("ID" => "ASC"),
@@ -216,7 +219,6 @@ if (isset($_REQUEST['action']))
 			{
 				if($arItems["CAN_BUY"] == "Y" && $arItems["DELAY"] == "N")
 				{
-					$url .= "&product[".$arItems["PRODUCT_ID"]."]=".$arItems["QUANTITY"];
 					$arID[] = $arItems["ID"];
 				}
 				elseif($arItems["DELAY"] == "Y")
@@ -316,7 +318,7 @@ while ($arBasket = $dbResultList->Fetch())
 		$arFilterBasket,
 		false,
 		false,
-		array("ID", "PRODUCT_ID", "NAME", "QUANTITY", "PRICE", "CURRENCY", "DETAIL_PAGE_URL", "LID", "CAN_BUY", "SUBSCRIBE", "DELAY")
+		array("ID", "PRODUCT_ID", "NAME", "QUANTITY", "PRICE", "CURRENCY", "DETAIL_PAGE_URL", "LID", "CAN_BUY", "SUBSCRIBE", "DELAY", "SET_PARENT_ID", "TYPE")
 	);
 	while($arB = $dbB->Fetch())
 		$arBasketItems[] = $arB;
@@ -325,6 +327,9 @@ while ($arBasket = $dbResultList->Fetch())
 
 	foreach ($arBasketItems as $arB)
 	{
+		if (CSaleBasketHelper::isSetItem($arB))
+			continue;
+		
 		$productId .= "&product[]=".$arB["PRODUCT_ID"];
 		if ($bNeedLine)
 		{
@@ -418,7 +423,8 @@ $oFilter = new CAdminFilter(
 	$sTableID."_filter",
 	array(
 		"find_universal" => GetMessage("SB_UNIVERSAL"),
-		"find_user" => GetMessage("SB_FUSER_ID"),
+		"find_user" => GetMessage("SB_USER_ID"),
+		"find_fuser" => GetMessage("SB_FUSER_ID"),
 		"find_user_login" => GetMessage("SB_USER_LOGIN"),
 		"find_price" => GetMessage("SB_PRICE_ALL"),
 		"find_quantity" => GetMessage("SB_QUANTITY_ALL"),
@@ -466,9 +472,15 @@ $oFilter->Begin();
 		</td>
 	</tr>
 	<tr>
-		<td><?echo GetMessage("SB_FUSER_ID")?>:</td>
+		<td><?echo GetMessage("SB_USER_ID")?>:</td>
 		<td>
 			<?echo FindUserID("filter_user_id", $filter_user_id, "", "find_form");?>
+		</td>
+	</tr>
+	<tr>
+		<td><?echo GetMessage("SB_FUSER_ID")?>:</td>
+		<td>
+			<input type="text" name="filter_fuser_id" size="50" value="<?=((intval($filter_fuser_id) > 0) ? intval($filter_fuser_id):"")?>">
 		</td>
 	</tr>
 	<tr>

@@ -10,6 +10,8 @@ class SalesZone
 	const CONN_ENTITY_NAME = 		'Bitrix\Sale\Location\SiteLocation';
 	const LOCATION_ENTITY_NAME = 	'Bitrix\Sale\Location\Location';
 
+	static $zoneCache = array(); // functionality is called hell number of times outside, so a little cache is provided
+
 	/**
 	 * @param string $lang - language Id
 	 * @return array - list of all regions
@@ -57,21 +59,11 @@ class SalesZone
 	 */
 	public static function checkCountryId($countryId, $siteId)
 	{
+		if(!strlen($siteId))
+			return false;
 
-		if(\CSaleLocation::isLocationProMigrated())
-		{
-			if(!intval($countryId) || !strlen($siteId))
-				return false;
-
-			return self::checkLocationIsInLinkedPart($countryId, $siteId);
-		}
-		else
-		{
-
-			$cIds = static::getCountriesIds($siteId);
-			return in_array($countryId, $cIds) || in_array("", $cIds);
-
-		}
+		$cIds = static::getCountriesIds($siteId);
+		return in_array($countryId, $cIds) || in_array("", $cIds);
 	}
 
 	/**
@@ -82,20 +74,11 @@ class SalesZone
 	 */
 	public static function checkRegionId($regionId, $siteId)
 	{
-		if(\CSaleLocation::isLocationProMigrated())
-		{
-			if(!intval($regionId) || !strlen($siteId))
-				return false;
+		if(!strlen($siteId))
+			return false;
 
-			return self::checkLocationIsInLinkedPart($regionId, $siteId);
-		}
-		else
-		{
-
-			$rIds = static::getRegionsIds($siteId);
-			return in_array($regionId, $rIds) || in_array("", $rIds);
-
-		}
+		$rIds = static::getRegionsIds($siteId);
+		return in_array($regionId, $rIds) || in_array("", $rIds);
 	}
 
 	/**
@@ -106,23 +89,11 @@ class SalesZone
 	 */
 	public static function checkCityId($cityId, $siteId)
 	{
-		if(\CSaleLocation::isLocationProMigrated())
-		{
-			if(!strlen($siteId))
-				return false;
+		if(!strlen($siteId))
+			return false;
 
-			if(!strlen($cityId) || $cityId == 0)
-				return in_array("", static::getCitiesIds($siteId));
-
-			return self::checkLocationIsInLinkedPart($cityId, $siteId);
-		}
-		else
-		{
-
-			$cIds = static::getCitiesIds($siteId);
-			return in_array($cityId, $cIds) || in_array("", $cIds);
-
-		}
+		$cIds = static::getCitiesIds($siteId);
+		return in_array($cityId, $cIds) || in_array("", $cIds);
 	}
 
 	/**
@@ -183,79 +154,77 @@ class SalesZone
 		return $stat[$node['ID']] !== $class::LSTAT_IN_NOT_CONNECTED_BRANCH;
 	}
 
-	// returns a list of IDs of locations that are linked with $siteId and have type of $type
-	private static function getSelectedTypeIds($type, $siteId)
+	public static function setSelectedIds($siteId, $ids)
 	{
-		static $index; // this function is called hell number of times outside, so a little cache is provided
+		static::$zoneCache[$siteId] = $ids;
+	}
 
-		if(!strlen($siteId))
-			return array(''); // means "all"
+	public static function getSelectedIds($siteId)
+	{
+		$typesAll = \CSaleLocation::getTypes();
 
-		if($index == null)
-			$index = array();
+		$types = array();
+		if(isset($typesAll['COUNTRY']))
+			$types[] = "'".intval($typesAll['COUNTRY'])."'";
+		if(isset($typesAll['REGION']))
+			$types[] = "'".intval($typesAll['REGION'])."'";
+		if(isset($typesAll['CITY']))
+			$types[] = "'".intval($typesAll['CITY'])."'";
 
-		if(!isset($index[$type][$siteId]))
+		$typesAll = array_flip($typesAll);
+
+		if((string) $siteId != '' && \Bitrix\Sale\Location\SiteLocationTable::checkLinkUsageAny($siteId) && !empty($types))
 		{
 			$result = array();
-			$class = self::CONN_ENTITY_NAME.'Table';
 
-			$index[$type][$siteId] = array();
+			$sql = \Bitrix\Sale\Location\SiteLocationTable::getConnectedLocationsSql(
+				$siteId,
+				array('select' => array('ID', 'LEFT_MARGIN', 'RIGHT_MARGIN')),
+				array('GET_LINKED_THROUGH_GROUPS' => true)
+			);
 
-			// check if link even used
-			if(!$class::checkLinkUsageAny($siteId))
-				$index[$type][$siteId] = array('');
-			else
+			if((string) $sql != '')
 			{
-				$types = \CSaleLocation::getTypes();
+				$res = $GLOBALS['DB']->query("
 
-				$query = new \Bitrix\Main\Entity\Query(self::LOCATION_ENTITY_NAME);
-
-				$query
-					->registerRuntimeField(
-						'L',
-						array(
-							'data_type' => self::LOCATION_ENTITY_NAME,
-							'reference' => array(
-								'=ref.TYPE_ID' => array('?', $types[$type]),
-								array(
-									'LOGIC' => 'OR',
-									array(
-										'<=ref.LEFT_MARGIN' => 'this.LEFT_MARGIN',
-										'>=ref.RIGHT_MARGIN' => 'this.RIGHT_MARGIN'
-									),
-									array(
-										'>=ref.LEFT_MARGIN' => 'this.LEFT_MARGIN',
-										'<=ref.RIGHT_MARGIN' => 'this.RIGHT_MARGIN'
+					select SL.ID, SL.TYPE_ID from b_sale_location SL 
+						inner join (
+						".$sql."
+						) as TT on 
+							(
+								(
+									(
+										SL.LEFT_MARGIN >= TT.LEFT_MARGIN 
+										and 
+										SL.RIGHT_MARGIN <= TT.RIGHT_MARGIN
+									)
+									or
+									(
+										SL.LEFT_MARGIN <= TT.LEFT_MARGIN 
+										and 
+										SL.RIGHT_MARGIN >= TT.RIGHT_MARGIN
 									)
 								)
-							),
-							'join_type' => 'inner'
-						)
-					);
+								and
+								SL.TYPE_ID in (".implode(', ', $types).")
+							)
 
-				$query->setSelect(array('ID__' => 'L.ID', /*'L.CODE', 'L.NAME.NAME'*/));
+					group by SL.ID
+				");
 
-				// get all connection points of interested types (if any)
-				$sql = $class::getConnectedLocationsQuery(
-					$siteId, 
-					array(/*'filter' => array('TYPE_ID' => \CSaleLocation::getTypeFilterCondition()), */'select' => array('ID')),
-					array('GET_LINKED_THROUGH_GROUPS' => true)
-				);
-
-				if($sql)
-					$query->setFilter(array('@ID' => new \Bitrix\Main\DB\SqlExpression($sql)/*, '=L.NAME.LANGUAGE_ID' => LANGUAGE_ID*/));
-
-				$res = $query->exec();
 				while($item = $res->fetch())
 				{
-					$index[$type][$siteId][] = $item['ID__'];
+					$typeId = $item['TYPE_ID'];
+					unset($item['TYPE_ID']);
+
+					$result[$typesAll[$typeId]][$item['ID']] = $item['ID'];
 				}
 
-				// special case: when all types are actually selected, an empty string ('') SHOULD be present among $index[$type][$siteId]
+				// special case: when all types are actually selected, an empty string ('') SHOULD be present among $index[$siteId][$type]
 
 				$res = Location\LocationTable::getList(array(
 					'filter' => array(
-						'TYPE_ID' => $types[$type]
+						'TYPE_ID' => $types
 					),
 					'runtime' => array(
 						'CNT' => array(
@@ -264,16 +233,48 @@ class SalesZone
 						)
 					),
 					'select' => array(
-						'CNT'
+						'CNT',
+						'TYPE_ID'
 					)
-				))->fetch();
-
-				if($res['CNT'] == count($index[$type][$siteId]))
-					$index[$type][$siteId][] = '';
+				));
+				while($item = $res->fetch())
+				{
+					if(intval($item['TYPE_ID']))
+					{
+						$typeCode = $typesAll[$item['TYPE_ID']];
+						if(isset($result[$typeCode]) && $item['CNT'] == count($result[$typeCode]))
+						{
+							$result[$typeCode][] = '';
+						}
+					}
+				}
 			}
+
+			return $result;
+		}
+		else
+		{
+			return array(
+				'COUNTRY' => array(''),
+				'REGION' => array(''),
+				'CITY' => array(''),
+			); // means "all"
+		}
+	}
+
+	// returns a list of IDs of locations that are linked with $siteId and have type of $type
+	private static function getSelectedTypeIds($type, $siteId)
+	{
+		$index =& static::$zoneCache;
+
+		if(!isset($index[$siteId]))
+		{
+			$result = array();
+
+			$index[$siteId] = static::getSelectedIds($siteId);
 		}
 
-		return $index[$type][$siteId];
+		return $index[$siteId][$type];
 	}
 
 	/**

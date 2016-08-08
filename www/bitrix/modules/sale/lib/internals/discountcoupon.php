@@ -43,6 +43,7 @@ class DiscountCouponTable extends Main\Entity\DataManager
 	const TYPE_BASKET_ROW = 0x0001;
 	const TYPE_ONE_ORDER = 0x0002;
 	const TYPE_MULTI_ORDER = 0x0004;
+	const TYPE_ARCHIVED = 0x0008;
 
 	const EVENT_ON_GENERATE_COUPON = 'onGenerateCoupon';
 	const EVENT_ON_AFTER_DELETE_DISCOUNT = 'onAfterDeleteDiscountCoupons';
@@ -93,7 +94,6 @@ class DiscountCouponTable extends Main\Entity\DataManager
 			)),
 			'COUPON' => new Main\Entity\StringField('COUPON', array(
 				'required' => true,
-				'unique' => true,
 				'validation' => array(__CLASS__, 'validateCoupon'),
 				'title' => Loc::getMessage('DISCOUNT_COUPON_ENTITY_COUPON_FIELD')
 			)),
@@ -207,9 +207,8 @@ class DiscountCouponTable extends Main\Entity\DataManager
 	public static function checkDiscountId($value, $primary, array $row, Main\Entity\Field $field)
 	{
 		if ((int)$value <= 0)
-		{
 			return Loc::getMessage('DISCOUNT_COUPON_VALIDATOR_DISCOUNT_ID');
-		}
+
 		return true;
 	}
 
@@ -229,9 +228,8 @@ class DiscountCouponTable extends Main\Entity\DataManager
 			|| $value == self::TYPE_ONE_ORDER
 			|| $value == self::TYPE_MULTI_ORDER
 		)
-		{
 			return true;
-		}
+
 		return Loc::getMessage('DISCOUNT_COUPON_VALIDATOR_TYPE');
 	}
 
@@ -248,9 +246,8 @@ class DiscountCouponTable extends Main\Entity\DataManager
 	{
 		$value = trim((string)$value);
 		if ($value == '')
-		{
 			return Loc::getMessage('DISCOUNT_COUPON_VALIDATOR_COUPON_EMPTY');
-		}
+
 		$existCoupon = Sale\DiscountCouponsManager::isExist($value);
 		if (!empty($existCoupon))
 		{
@@ -278,7 +275,7 @@ class DiscountCouponTable extends Main\Entity\DataManager
 
 		if (!empty($modifyFieldList))
 			$result->modifyFields($modifyFieldList);
-		unset($modifyFieldList);
+		unset($modifyFieldList, $data);
 
 		return $result;
 	}
@@ -294,7 +291,9 @@ class DiscountCouponTable extends Main\Entity\DataManager
 		if (!self::isCheckedCouponsUse())
 			return;
 		$data = $event->getParameter('fields');
-		self::$discountCheckList[] = $data['DISCOUNT_ID'];
+		$id = (int)$data['DISCOUNT_ID'];
+		self::$discountCheckList[$id] = $id;
+		unset($id, $data);
 		self::updateUseCoupons();
 	}
 
@@ -315,7 +314,7 @@ class DiscountCouponTable extends Main\Entity\DataManager
 
 		if (!empty($modifyFieldList))
 			$result->modifyFields($modifyFieldList);
-		unset($modifyFieldList);
+		unset($modifyFieldList, $data);
 
 		return $result;
 	}
@@ -334,22 +333,22 @@ class DiscountCouponTable extends Main\Entity\DataManager
 		if (isset($data['DISCOUNT_ID']))
 		{
 			$data['DISCOUNT_ID'] = (int)$data['DISCOUNT_ID'];
-			$id = $event->getParameter('id');
-			$couponIterator = self::getList(array(
+			$coupon = static::getList(array(
 				'select' => array('ID', 'DISCOUNT_ID'),
-				'filter' => array('=ID' => $id)
-			));
-			if ($coupon = $couponIterator->fetch())
+				'filter' => array('=ID' => $event->getParameter('id'))
+			))->fetch();
+			if (!empty($coupon))
 			{
 				$coupon['DISCOUNT_ID'] = (int)$coupon['DISCOUNT_ID'];
 				if ($coupon['DISCOUNT_ID'] !== $data['DISCOUNT_ID'])
 				{
-					self::$discountCheckList[] = $data['DISCOUNT_ID'];
-					self::$discountCheckList[] = $coupon['DISCOUNT_ID'];
+					self::$discountCheckList[$data['DISCOUNT_ID']] = $data['DISCOUNT_ID'];
+					self::$discountCheckList[$coupon['DISCOUNT_ID']] = $coupon['DISCOUNT_ID'];
 				}
 			}
-			unset($coupon, $couponIterator);
+			unset($coupon);
 		}
+		unset($data);
 	}
 
 	/**
@@ -373,14 +372,16 @@ class DiscountCouponTable extends Main\Entity\DataManager
 	{
 		if (!self::isCheckedCouponsUse())
 			return;
-		$id = $event->getParameter('id');
-		$couponIterator = self::getList(array(
+		$coupon = self::getList(array(
 			'select' => array('ID', 'DISCOUNT_ID'),
-			'filter' => array('=ID' => $id)
-		));
-		if ($coupon = $couponIterator->fetch())
-			self::$discountCheckList[] = (int)$coupon['DISCOUNT_ID'];
-		unset($coupon, $couponIterator);
+			'filter' => array('=ID' => $event->getParameter('id'))
+		))->fetch();
+		if (!empty($coupon))
+		{
+			$coupon['DISCOUNT_ID'] = (int)$coupon['DISCOUNT_ID'];
+			self::$discountCheckList[$coupon['DISCOUNT_ID']] = $coupon['DISCOUNT_ID'];
+		}
+		unset($coupon);
 	}
 
 	/**
@@ -457,13 +458,13 @@ class DiscountCouponTable extends Main\Entity\DataManager
 	/**
 	 * Fill discount list for update use coupons flag.
 	 *
-	 * @param array $discountList			Discount ids for check.
+	 * @param array|int $discountList			Discount ids for check.
 	 * @return void
 	 */
 	public static function setDiscountCheckList($discountList)
 	{
 		if (!is_array($discountList))
-			$discountList = array($discountList);
+			$discountList = array($discountList => $discountList);
 		if (!empty($discountList))
 			self::$discountCheckList = (empty(self::$discountCheckList) ? $discountList : array_merge(self::$discountCheckList, $discountList));
 	}
@@ -512,7 +513,7 @@ class DiscountCouponTable extends Main\Entity\DataManager
 		}
 		unset($withCoupons, $withoutCoupons);
 
-		self::$discountCheckList = array();
+		static::clearDiscountCheckList();
 	}
 
 	/**
@@ -533,9 +534,8 @@ class DiscountCouponTable extends Main\Entity\DataManager
 			'filter' => array('=DISCOUNT_ID' => $discount)
 		));
 		while ($coupon = $couponIterator->fetch())
-		{
 			$couponsList[] = $coupon['ID'];
-		}
+		unset($coupon, $couponIterator);
 		if (!empty($couponsList))
 		{
 			$conn = Application::getConnection();
@@ -952,15 +952,16 @@ class DiscountCouponTable extends Main\Entity\DataManager
 	 * @param array $keys				List with checked keys (userId info).
 	 * @return void
 	 */
-	protected static function setUserID(&$result, $data, $keys)
+	protected static function setUserID(array &$result, array $data, array $keys)
 	{
 		static $currentUserID = false;
 		if ($currentUserID === false)
 		{
 			global $USER;
+			/** @noinspection PhpMethodOrClassCallIsNotCaseSensitiveInspection */
 			$currentUserID = (isset($USER) && $USER instanceof \CUser ? (int)$USER->getID() : null);
 		}
-		foreach ($keys as &$oneKey)
+		foreach ($keys as $oneKey)
 		{
 			$setField = true;
 			if (array_key_exists($oneKey, $data))
@@ -980,9 +981,9 @@ class DiscountCouponTable extends Main\Entity\DataManager
 	 * @param array $keys				List with checked keys (datetime info).
 	 * @return void
 	 */
-	protected static function setTimestamp(&$result, $data, $keys)
+	protected static function setTimestamp(array &$result, array $data, array $keys)
 	{
-		foreach ($keys as &$oneKey)
+		foreach ($keys as $oneKey)
 		{
 			$setField = true;
 			if (array_key_exists($oneKey, $data))

@@ -1,28 +1,26 @@
 <?
+use Bitrix\Main\Loader;
+
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_before.php");
 
 $FM_RIGHT = $APPLICATION->GetGroupRight("sale");
 if ($FM_RIGHT=="D")
 	$APPLICATION->AuthForm(GetMessage("ACCESS_DENIED"));
 
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/sale/include.php");
+Loader::includeModule('sale');
 
-if(!CBXFeatures::IsFeatureEnabled('SaleAffiliate'))
+if (!CBXFeatures::IsFeatureEnabled('SaleAffiliate'))
 {
-	require($DOCUMENT_ROOT."/bitrix/modules/main/include/prolog_admin_after.php");
-
+	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_after.php");
 	ShowError(GetMessage("SALE_FEATURE_NOT_ALLOW"));
-
 	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/epilog_admin.php");
 	die();
 }
-?>
-<HTML>
-<HEAD>
+?><html>
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=Windows-1251">
-</HEAD>
-<BODY>
-<?
+</head>
+<body><?
 $res = "";
 $ID = IntVal($ID);
 $func_name = preg_replace("/[^a-zA-Z0-9_-]/is", "", $func_name);
@@ -36,11 +34,9 @@ if ($ID > 0)
 		$res = "NA";
 }
 ?>
-<script language="JavaScript">
-<!--
+<script type="text/javascript">
 window.parent.<?= $func_name ?>('<?= CUtil::JSEscape($res) ?>');
-//-->
 </script>
-</BODY>
-</HTML>
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/epilog_after.php");?>
+</body>
+</html><?
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/epilog_after.php");

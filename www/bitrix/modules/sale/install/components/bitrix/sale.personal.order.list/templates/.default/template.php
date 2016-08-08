@@ -6,6 +6,11 @@
 		<?=ShowError($error)?>
 	<?endforeach?>
 
+	<?$component = $this->__component;?>
+	<?if($arParams['AUTH_FORM_IN_TEMPLATE'] && isset($arResult['ERRORS']['FATAL'][$component::E_NOT_AUTHORIZED])):?>
+		<?$APPLICATION->AuthForm('', false, false, 'N', false);?>
+	<?endif?>
+
 <?else:?>
 
 	<?if(!empty($arResult['ERRORS']['NONFATAL'])):?>
@@ -75,26 +80,23 @@
 									<strong><?=GetMessage('SPOL_PAYED')?>:</strong> <?=GetMessage('SPOL_'.($order["ORDER"]["PAYED"] == "Y" ? 'YES' : 'NO'))?> <br />
 
 									<? // PAY SYSTEM ?>
-									<?if(intval($order["ORDER"]["PAY_SYSTEM_ID"])):?>
-										<strong><?=GetMessage('SPOL_PAYSYSTEM')?>:</strong> <?=$arResult["INFO"]["PAY_SYSTEM"][$order["ORDER"]["PAY_SYSTEM_ID"]]["NAME"]?> <br />
+									<? $paySystemList = array();?>
+									<?foreach($order["PAYMENT"] as $payment):?>
+										<?$paySystemList[] = $arResult['INFO']['PAY_SYSTEM'][$payment['PAY_SYSTEM_ID']]['NAME'];?>
+									<?endforeach;?>
+
+									<?if(!empty($paySystemList)):?>
+										<strong><?=GetMessage('SPOL_PAYSYSTEM')?>:</strong> <?=implode(', ', $paySystemList)?> <br />
 									<?endif?>
 
 									<? // DELIVERY SYSTEM ?>
-									<?if($order['HAS_DELIVERY']):?>
+									<? $deliveryServiceList = array(); ?>
+									<?foreach ($order['SHIPMENT'] as $shipment):?>
+										<? $deliveryServiceList[] = $arResult['INFO']['DELIVERY'][$shipment['DELIVERY_ID']]['NAME'];?>
+									<?endforeach;?>
 
-										<strong><?=GetMessage('SPOL_DELIVERY')?>:</strong>
-
-										<?if(intval($order["ORDER"]["DELIVERY_ID"])):?>
-										
-											<?=$arResult["INFO"]["DELIVERY"][$order["ORDER"]["DELIVERY_ID"]]["NAME"]?> <br />
-										
-										<?elseif(strpos($order["ORDER"]["DELIVERY_ID"], ":") !== false):?>
-										
-											<?$arId = explode(":", $order["ORDER"]["DELIVERY_ID"])?>
-											<?=$arResult["INFO"]["DELIVERY_HANDLERS"][$arId[0]]["NAME"]?> (<?=$arResult["INFO"]["DELIVERY_HANDLERS"][$arId[0]]["PROFILES"][$arId[1]]["TITLE"]?>) <br />
-
-										<?endif?>
-
+									<?if(!empty($deliveryServiceList)):?>
+										<strong><?=GetMessage('SPOL_DELIVERY')?>:</strong> <?=implode(', ', $deliveryServiceList)?> <br />
 									<?endif?>
 
 									<strong><?=GetMessage('SPOL_BASKET')?>:</strong>

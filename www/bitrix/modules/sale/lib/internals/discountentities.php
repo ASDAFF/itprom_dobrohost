@@ -164,6 +164,8 @@ class DiscountEntitiesTable extends Main\Entity\DataManager
 					'ENTITY' => $entity['ENTITY'],
 					'FIELD_ENTITY' => $entity['FIELD_ENTITY'],
 				);
+				if (is_array($fields['FIELD_ENTITY']))
+					$fields['FIELD_ENTITY'] = implode('-', $fields['FIELD_ENTITY']);
 				if (isset($entity['FIELD_TABLE']) && is_array($entity['FIELD_TABLE']))
 				{
 					foreach ($entity['FIELD_TABLE'] as $oneField)

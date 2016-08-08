@@ -1057,16 +1057,19 @@ class CUpdaterLocationPro extends \CUpdater implements \Serializable
 			'COUNTRY' => array(
 				'CODE' => 'COUNTRY',
 				'SORT' => 100,
+				'DISPLAY_SORT' => 700,
 				'NAME' => array()
 			),
 			'REGION' => array(
 				'CODE' => 'REGION',
 				'SORT' => 300,
+				'DISPLAY_SORT' => 500,
 				'NAME' => array()
 			),
 			'CITY' => array(
 				'CODE' => 'CITY',
 				'SORT' => 600,
+				'DISPLAY_SORT' => 100,
 				'NAME' => array()
 			),
 		);

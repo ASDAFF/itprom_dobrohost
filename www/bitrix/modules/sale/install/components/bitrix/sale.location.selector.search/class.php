@@ -92,9 +92,6 @@ class CBitrixLocationSelectorSearchComponent extends CBitrixComponent
 		self::tryParseInt($arParams['ID']);
 		self::tryParseString($arParams['CODE']);
 		self::tryParseString($arParams['INPUT_NAME'], 'LOCATION');
-		self::tryParseStringStrict($arParams['JS_CONTROL_GLOBAL_ID']);
-		self::tryParseStringStrict($arParams['JS_CONTROL_DEFERRED_INIT']);
-		self::tryParseStringStrict($arParams['JS_CALLBACK']);
 		self::tryParseWhiteList($arParams['PROVIDE_LINK_BY'], array('id', 'code'));
 		self::tryParseInt($arParams['CACHE_TIME'], false, true);
 
@@ -110,7 +107,11 @@ class CBitrixLocationSelectorSearchComponent extends CBitrixComponent
 
 		self::tryParseBoolean($arParams['FILTER_BY_SITE']);
 		self::tryParseBoolean($arParams['SHOW_DEFAULT_LOCATIONS']);
-		//self::tryParseBoolean($arParams['SKIP_SELECTED_ITEM_CHECK']);
+
+		// the code below should not be here, is should belong to a template
+		self::tryParseStringStrict($arParams['JS_CONTROL_GLOBAL_ID']);
+		self::tryParseStringStrict($arParams['JS_CONTROL_DEFERRED_INIT']);
+		self::tryParseStringStrict($arParams['JS_CALLBACK']);
 
 		return $arParams;
 	}
@@ -373,7 +374,9 @@ class CBitrixLocationSelectorSearchComponent extends CBitrixComponent
 	protected function obtainDataDefaultLocations(&$cachedData)
 	{
 		if(!$this->arParams['SHOW_DEFAULT_LOCATIONS'])
+		{
 			return;
+		}
 
 		$res = Location\DefaultSiteTable::getList(array(
 			'filter' => array(
@@ -400,7 +403,9 @@ class CBitrixLocationSelectorSearchComponent extends CBitrixComponent
 		));
 		$defaults = array();
 		while($item = $res->Fetch())
+		{
 			$defaults[$item['ID']] = $item;
+		}
 
 		if($this->filterBySite && !empty($defaults))
 		{
@@ -759,7 +764,7 @@ class CBitrixLocationSelectorSearchComponent extends CBitrixComponent
 		return array('ID', 'DISPLAY' => 'NAME.NAME');
 	}
 
-	protected static function getPathToNodesV2($list, $parameters)
+	protected static function getPathToNodesV2($list, $parameters = array())
 	{
 		$select = static::getPathNodesSelect();
 		if(is_array($parameters['select']))
@@ -771,17 +776,28 @@ class CBitrixLocationSelectorSearchComponent extends CBitrixComponent
 			$select[] = 'ID';
 		}
 
-		$res = Location\LocationTable::getPathToMultipleNodes(
-			$list, 
-			array(
-				'select' => $select,
-				'filter' => array('=NAME.LANGUAGE_ID' => (string) $parameters['filter']['=NAME.LANGUAGE_ID'] != '' ? $parameters['filter']['=NAME.LANGUAGE_ID'] : LANGUAGE_ID)
-			)
+		$result = array(
+			'ITEM_NAMES' => array(),
+			'PATH_ITEMS' => array()
 		);
 
-		$pathItems = array();
-		$result = array('ITEM_NAMES' => array());
+		try
+		{
+			$res = Location\LocationTable::getPathToMultipleNodes(
+				$list, 
+				array(
+					'select' => $select,
+					'filter' => array('=NAME.LANGUAGE_ID' => (string) $parameters['filter']['=NAME.LANGUAGE_ID'] != '' ? $parameters['filter']['=NAME.LANGUAGE_ID'] : LANGUAGE_ID)
+				)
+			);
+		}
+		catch(\Bitrix\Main\ArgumentException $e) // in case of database damage this will be thrown
+		{
+			LocationHelper::informAdminLocationDatabaseFailure();
+			return $result;
+		}
 
+		$pathItems = array();
 		while($path = $res->fetch())
 		{
 			// format path as required for JSON responce
@@ -824,8 +840,15 @@ class CBitrixLocationSelectorSearchComponent extends CBitrixComponent
 		$pathes = static::getPathToNodesV2($data['ITEMS'], $parameters);
 		$nameAlias = static::processSearchRequestV2GetNameAlias($parameters);
 
-		foreach($data['ITEMS'] as &$item)
+		foreach($data['ITEMS'] as $i => &$item)
 		{
+			if(empty($pathes['ITEM_NAMES']) || empty($pathes['ITEM_NAMES'][$item['ID']]))
+			{
+				// we got empty ITEM_NAMES. This is not a normal case, item without a name is not sutable for displaying. Skip.
+				unset($data['ITEMS'][$i]);
+				continue;
+			}
+
 			$item['PATH'] = $pathes['PATH'][$item['ID']];
 
 			if(isset($pathes['ITEM_NAMES'][$item['ID']]) && $nameAlias !== false)

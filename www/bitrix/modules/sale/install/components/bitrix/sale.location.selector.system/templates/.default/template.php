@@ -152,7 +152,7 @@ Loc::loadMessages(__FILE__);
 											<?else:?>
 												<div class="adm-loc-error">
 													<?=Loc::getMessage('SALE_SLSS_NO_LOCATIONS', array(
-														'#ANCHOR_IMPORT#' => '<a href="'.Location\Admin\Helper::getImportUrl().'" target="_blank">',
+														'#ANCHOR_IMPORT#' => '<a href="'.((string) $arParams['PATH_TO_LOCATION_IMPORT'] != '' ? $arParams['PATH_TO_LOCATION_IMPORT'] : Location\Admin\Helper::getImportUrl()).'" target="_blank">',
 														'#ANCHOR_END#' => '</a>'
 													))?>
 												</div>

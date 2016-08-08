@@ -27,9 +27,8 @@ class Configuration
 		{
 			return array(
 				self::RESERVE_ON_CREATE => Loc::getMessage('SALE_CONFIGURATION_RESERVE_ON_CREATE'),
-				self::RESERVE_ON_FULL_PAY => Loc::getMessage('SALE_CONFIGURATION_RESERVE_ON_FULL_PAY_OLD'),
-				//self::RESERVE_ON_FULL_PAY => Loc::getMessage('SALE_CONFIGURATION_RESERVE_ON_FULL_PAY'),
-				//self::RESERVE_ON_PAY => Loc::getMessage('SALE_CONFIGURATION_RESERVE_ON_PAY'),
+				self::RESERVE_ON_FULL_PAY => Loc::getMessage('SALE_CONFIGURATION_RESERVE_ON_FULL_PAY'),
+				self::RESERVE_ON_PAY => Loc::getMessage('SALE_CONFIGURATION_RESERVE_ON_PAY'),
 				self::RESERVE_ON_ALLOW_DELIVERY => Loc::getMessage('SALE_CONFIGURATION_RESERVE_ON_ALLOW_DELIVERY'),
 				self::RESERVE_ON_SHIP => Loc::getMessage('SALE_CONFIGURATION_RESERVE_ON_SHIP')
 			);
@@ -37,7 +36,7 @@ class Configuration
 		return array(
 			self::RESERVE_ON_CREATE,
 			self::RESERVE_ON_FULL_PAY,
-			//self::RESERVE_ON_PAY,
+			self::RESERVE_ON_PAY,
 			self::RESERVE_ON_ALLOW_DELIVERY,
 			self::RESERVE_ON_SHIP
 		);

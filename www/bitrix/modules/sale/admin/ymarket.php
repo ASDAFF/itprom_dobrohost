@@ -46,7 +46,6 @@ else if($REQUEST_METHOD=="POST" && check_bitrix_sessid())
 	}
 }
 
-
 $siteList = array();
 $rsSites = CSite::GetList($by = "sort", $order = "asc", Array());
 
@@ -124,7 +123,7 @@ if($bSaved)
 <form method="post" action="<?=$APPLICATION->GetCurPage()?>?lang=<?=LANGUAGE_ID?>" name="ymform">
 <?
 
-if(CSaleYMHandler::isActive(false))
+if(CSaleYMHandler::isActive())
 {
 
 	$tabControl->Begin();
@@ -132,7 +131,7 @@ if(CSaleYMHandler::isActive(false))
 	foreach($arTabs as $arTab)
 	{
 		$tabControl->BeginNextTab();
-		$siteSetts = CSaleYMHandler::getSettingsBySiteId($arTab["SITE_ID"]);
+		$siteSetts = CSaleYMHandler::getSettingsBySiteId($arTab["SITE_ID"], false);
 
 		$arDeliveryFilter = array(
 			"LID" => $arTab["SITE_ID"],

@@ -20,11 +20,12 @@ final class ImportProcess extends Location\Util\Process
 {
 	const DISTRIBUTOR_HOST = 				'www.1c-bitrix.ru';
 	const DISTRIBUTOR_PORT = 				80;
+	//const REMOTE_PATH = 					'/locations_data/compiled/';
 	const REMOTE_PATH = 					'/download/files/locations/pro/';
 	const REMOTE_SETS_PATH = 				'bundles/';
 	const REMOTE_LAYOUT_FILE = 				'bundles/layout.csv';
 	const REMOTE_TYPE_GROUP_FILE = 			'typegroup.csv';
-	const REMOTE_TYPE_FILE = 				'type.csv';
+	const REMOTE_TYPE_FILE = 				'type.v2.csv';
 	const REMOTE_EXTERNAL_SERVICE_FILE = 	'externalservice.csv';
 
 	const PACK_STANDARD = 					'standard';
@@ -230,10 +231,6 @@ final class ImportProcess extends Location\Util\Process
 					'memgroup' => 'static'
 				)
 			);
-
-			// commented out to have an ability to do is several times
-			//$this->deleteDirectory($_SESSION[static::USER_FILE_DIRECTORY_SESSION_KEY]);
-			//unset($_SESSION[static::USER_FILE_DIRECTORY_SESSION_KEY]);
 
 			$this->nextStage();
 		}
@@ -461,10 +458,14 @@ final class ImportProcess extends Location\Util\Process
 		$this->data['current']['linesRead'] += count($block);
 
 		if(empty($block))
+		{
 			return array();
+		}
 
 		if($this->hitData['csv']->CheckFileIsLegacy())
+		{
 			$block = self::convertBlock($block);
+		}
 
 		if(is_array($onlyThese))
 		{
@@ -931,7 +932,8 @@ final class ImportProcess extends Location\Util\Process
 			return;
 		}
 
-		$this->rebalanceInserter->flush();
+		if($this->rebalanceInserter)
+			$this->rebalanceInserter->flush();
 
 		$this->nextStep();
 	}
@@ -1223,9 +1225,13 @@ final class ImportProcess extends Location\Util\Process
 			for($k = 1; $k < $lineLen; $k++)
 			{
 				if($expectLang)
+				{
 					$lang = $line[$k];
+				}
 				else
-					$cLine['NAME'][$lang]['NAME'] = $line[$k];
+				{
+					$cLine['NAME'][ToUpper($lang)]['NAME'] = $line[$k];
+				}
 
 				$expectLang = !$expectLang;
 			}
@@ -2066,6 +2072,7 @@ final class ImportProcess extends Location\Util\Process
 				{
 					$names[ToUpper($lid)] = static::getTranslatedName($line['NAME'], $lid);
 				}
+				$line['NAME'] = $names;
 			}
 
 			if(!isset($existed[$line['CODE']]))
@@ -2099,6 +2106,19 @@ final class ImportProcess extends Location\Util\Process
 
 	public static function createType($type)
 	{
+		$map = Location\TypeTable::getMap($type);
+
+		if(is_array($type))
+		{
+			foreach($type as $fld => $val)
+			{
+				if(!isset($map[$fld]))
+				{
+					unset($type[$fld]);
+				}
+			}
+		}
+
 		$res = Location\TypeTable::add($type);
 		if(!$res->isSuccess())
 			throw new Main\SystemException('Type creation failed: '.implode(', ', $res->getErrorMessages()));
@@ -2187,7 +2207,7 @@ final class ImportProcess extends Location\Util\Process
 
 			while(time() < $endTime)
 			{
-				$block = $csvReader->ReadBlockLowLevel($descriptior['POS']/*changed inside*/, 100);
+				$block = $csvReader->ReadBlockLowLevel($descriptior['POS']/*changed inside*/, 10);
 
 				if(!count($block))
 					break;
@@ -2247,7 +2267,14 @@ final class ImportProcess extends Location\Util\Process
 					}
 					unset($item['EXT']);
 
-					$res = Location\LocationTable::add($item, array('REBALANCE' => false, 'RESET_LEGACY' => false));
+					$res = Location\LocationTable::addExtended(
+						$item,
+						array(
+							'RESET_LEGACY' => false,
+							'REBALANCE' => false
+						)
+					);
+
 					if(!$res->isSuccess())
 						throw new Main\SystemException('Cannot create location');
 

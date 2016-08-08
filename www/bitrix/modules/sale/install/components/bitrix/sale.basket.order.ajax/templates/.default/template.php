@@ -2,6 +2,7 @@
 <div id="order_form_div">
 <?
 
+
 if ('' != $arResult["ERROR_MESSAGE"])
 {
 	ShowNote($arResult["ERROR_MESSAGE"]);

@@ -358,7 +358,7 @@ for ($n = 1; $n <= $rowsCnt; $n++)
 		} ?>
 		<? if (!is_null($arCells[$n][2])) { ?>
 		<td align="left"
-			style="word-break: break-all; <? if ($accumulated) {?>border-width: 0pt 1pt 0pt 0pt; <? } ?>"
+			style="word-break: break-word; word-wrap: break-word; <? if ($accumulated) {?>border-width: 0pt 1pt 0pt 0pt; <? } ?>"
 			<? if ($accumulated) { ?>colspan="<?=($accumulated+1); ?>"<? $accumulated = 0; } ?>>
 			<?=$arCells[$n][2]; ?>
 			<? if (isset($arProps[$n]) && is_array($arProps[$n])) { ?>

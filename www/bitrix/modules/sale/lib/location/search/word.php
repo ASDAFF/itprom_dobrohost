@@ -416,7 +416,7 @@ final class WordTable extends Entity\DataManager implements \Serializable
 		}
 
 		// resort bounds to have sorted smallest to largest
-		asort($sizes, SORT_NUMERIC);
+		//asort($sizes, SORT_NUMERIC);
 
 		$boundsSorted = array();
 		foreach($sizes as $j => $size)

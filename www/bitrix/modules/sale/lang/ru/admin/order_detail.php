@@ -21,7 +21,7 @@ $MESS["P_ORDER_PAY_SYSTEM"] = "Способ оплаты";
 $MESS["P_ORDER_PAYED"] = "Оплачен";
 $MESS["P_ORDER_DATE_PAYED"] = "оплачен";
 $MESS["P_ORDER_DELIVERY"] = "Служба доставки";
-$MESS["P_ORDER_DELIVERY_TITLE"] = "Доставка";
+$MESS["P_ORDER_DELIVERY_TITLE"] = "Отгрузка";
 $MESS["P_ORDER_COMMENTS"] = "Менеджер";
 $MESS["P_ORDER_ADDITIONAL_INFO"] = "Дополнительная информация";
 $MESS["P_ORDER_USER_COMMENTS"] = "Покупатель";
@@ -358,4 +358,5 @@ $MESS["SOD_POPUP_SEEND_AND_SAVE"] = "Сохранить и отправить";
 $MESS["SOD_POPUP_REQUEST_ERROR"] = "При отправке запроса в ТК произошла ошибка";
 $MESS["SOD_POPUP_REQUEST_SUCCESS"] = "Заявка в ТК успешно отправлена";
 $MESS["SOA_ERROR_PS"] = "Ошибка настройки выбранного способа оплаты.";
+$MESS["SOD_ERROR_SEVERAL_P_D"] = 'Внимание, в заказе несколько частичных отгрузок или оплат. Для корректной работы перейдите на новую форму просмотра заказа';
 ?>

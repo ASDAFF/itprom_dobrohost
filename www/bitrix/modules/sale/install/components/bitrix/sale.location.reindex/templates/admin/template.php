@@ -40,26 +40,6 @@ Loc::loadMessages(__FILE__);
 
 	<div id="location-reindex">
 
-		<?/*
-		<?=BeginNote()?>
-			<?=Loc::getMessage('SALE_SLRI_STAT_TITLE')?>:
-			<ul class="bx-ui-loc-ri-stat-list">
-				<?foreach($arResult['STATISTICS'] as $code => $stat):?>
-					<?if(strlen($stat['NAME'])):?>
-						<li><?=htmlspecialcharsbx($stat['NAME'])?>: <?=intval($stat['CNT'])?></li>
-					<?endif?>
-				<?endforeach?>
-				<script type="text/html" data-template-id="bx-ui-loc-ri-stat-item">
-					<li>{{type}}: {{count}}</li>
-				</script>
-			</ul>
-			<ul>
-				<li><?=Loc::getMessage('SALE_SLRI_STAT_TOTAL')?>: <span class="bx-ui-loc-ri-stat-all"><?=intval($arResult['STATISTICS']['TOTAL']['CNT'])?></span></li>
-				<li><?=Loc::getMessage('SALE_SLRI_STAT_TOTAL_GROUPS')?>: <span class="bx-ui-loc-ri-stat-groups"><?=intval($arResult['STATISTICS']['GROUPS']['CNT'])?></span></li>
-			</ul>
-		<?=EndNote();?>
-		*/?>
-
 		<div class="bx-ui-loc-ri-progressbar">
 			<?
 			CAdminMessage::ShowMessage(array(
@@ -85,11 +65,11 @@ Loc::loadMessages(__FILE__);
 
 			<tr>
 				<td>
-					<?=Loc::getMessage('SALE_SLRI_TYPES4INDEX')?>
+					<?=Loc::getMessage('SALE_SLRI_TYPES4INDEX_2')?>
 				</td>
 				<td>
 					<select multiple class="bx-ui-loc-ri-option" name="TYPES">
-						<option value=""<?=($arResult['TYPES_UNSELECTED'] ? ' selected' : '')?>>- <?=Loc::getMessage('SALE_SLRI_ALL_TYPES')?></option>
+						<option value=""<?=($arResult['TYPES_UNSELECTED'] ? ' selected' : '')?>>- <?=Loc::getMessage('SALE_SLRI_ALL_TYPES_2')?></option>
 						<?foreach($arResult['TYPES'] as $id => $type):?>
 							<option value="<?=intval($id)?>"<?=($type['SELECTED'] ? ' selected' : '')?>><?=htmlspecialcharsbx($type['NAME'])?></option>
 						<?endforeach?>
@@ -99,11 +79,11 @@ Loc::loadMessages(__FILE__);
 
 			<tr>
 				<td>
-					<?=Loc::getMessage('SALE_SLRI_LANGS4INDEX')?>
+					<?=Loc::getMessage('SALE_SLRI_LANGS4INDEX_2')?>
 				</td>
 				<td>
 					<select multiple class="bx-ui-loc-ri-option" name="LANG">
-						<option value=""<?=($arResult['LANGS_UNSELECTED'] ? ' selected' : '')?>>- <?=Loc::getMessage('SALE_SLRI_ALL_LANGS')?></option>
+						<option value=""<?=($arResult['LANGS_UNSELECTED'] ? ' selected' : '')?>>- <?=Loc::getMessage('SALE_SLRI_ALL_LANGS_2')?></option>
 						<?foreach($arResult['LANGS'] as $id => $lang):?>
 							<option value="<?=htmlspecialcharsbx($id)?>"<?=($lang['SELECTED'] ? ' selected' : '')?>><?=htmlspecialcharsbx($lang['NAME'])?></option>
 						<?endforeach?>

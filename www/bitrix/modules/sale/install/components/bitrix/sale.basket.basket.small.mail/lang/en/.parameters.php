@@ -15,4 +15,5 @@ $MESS["SBB_BDELETE"] = "Delete";
 $MESS["SBB_BDELAY"] = "Hold";
 $MESS["SBB_BWEIGHT"] = "Weight";
 $MESS["SBB_BDISCOUNT"] = "Discount";
+$MESS["SBBS_USER_ID"] = "User ID";
 ?>

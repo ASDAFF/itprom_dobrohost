@@ -60,6 +60,7 @@ $siteCount = count($siteList);
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_REQUEST["Update"]) && check_bitrix_sessid())
 {
 	$arHandlersData = isset($_POST["STRUCTURE"]) ? urldecode($_POST["STRUCTURE"]) : '';
+
 	$arHandlersData = json_decode($arHandlersData, true);
 
 	if( 'utf-8' != strtolower(SITE_CHARSET))
@@ -194,6 +195,7 @@ if (count($arDeliveryInfo) > 0 && !isset($arDeliveryInfo['ALL']) && count($arDel
 		{
 			$arDeliveryInfo[$arSite['ID']] = $ar;
 			$arDeliveryInfo[$arSite['ID']]['ACTIVE'] = 'N';
+			unset($arDeliveryInfo[$arSite['ID']]["ID"]);
 		}
 	}
 }
@@ -391,6 +393,7 @@ foreach ($arDeliveryInfo[$SITE_ID]["CONFIG"]["CONFIG"] as $config_id => $arConfi
 ?>
 <script language="JavaScript">
 var arStructure = <?=CUtil::PhpToJSObject($arDeliveryInfo)?>;
+
 </script>
 <script language="javascript">
 var cur_site = '<?=htmlspecialcharsbx(CUtil::JSEscape($siteList[0]["ID"]))?>';

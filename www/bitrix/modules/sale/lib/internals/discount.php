@@ -9,7 +9,9 @@ namespace Bitrix\Sale\Internals;
 
 use Bitrix\Main;
 use Bitrix\Main\Application;
+use Bitrix\Main\Entity\Event;
 use Bitrix\Main\Localization\Loc;
+use Bitrix\Sale\Discount\Gift;
 
 Loc::loadMessages(__FILE__);
 
@@ -37,7 +39,7 @@ Loc::loadMessages(__FILE__);
  * <li> CREATED_BY int optional
  * <li> PRIORITY int optional default 1
  * <li> LAST_DISCOUNT bool optional default 'Y'
- * <li> VERSION int optional default 1
+ * <li> VERSION int optional default 3
  * <li> CONDITIONS text optional
  * <li> CONDITIONS_LIST text optional
  * <li> UNPACK text optional
@@ -54,6 +56,10 @@ Loc::loadMessages(__FILE__);
  **/
 class DiscountTable extends Main\Entity\DataManager
 {
+	const VERSION_OLD = 0x0001;
+	const VERSION_NEW = 0x0002;
+	const VERSION_15 = 0x0003;
+
 	protected static $deleteCoupons = false;
 
 	/**
@@ -144,23 +150,24 @@ class DiscountTable extends Main\Entity\DataManager
 				'default_value' => 'Y',
 				'title' => Loc::getMessage('DISCOUNT_ENTITY_LAST_DISCOUNT_FIELD')
 			)),
-			'VERSION' => new Main\Entity\IntegerField('VERSION', array(
-				'default_value' => 2,
+			'VERSION' => new Main\Entity\EnumField('VERSION', array(
+				'values' => array(self::VERSION_OLD, self::VERSION_NEW, self::VERSION_15),
+				'default_value' => self::VERSION_15,
 				'title' => Loc::getMessage('DISCOUNT_ENTITY_VERSION_FIELD')
 			)),
-			'CONDITIONS' => new Main\Entity\TextField('CONDITIONS', array()),
 			'CONDITIONS_LIST' => new Main\Entity\TextField('CONDITIONS_LIST', array(
 				'serialized' => true,
 				'column_name' => 'CONDITIONS',
 				'title' => Loc::getMessage('DISCOUNT_ENTITY_CONDITIONS_LIST_FIELD')
 			)),
+			'CONDITIONS' => new Main\Entity\ExpressionField('CONDITIONS', '%s', 'CONDITIONS_LIST'),
 			'UNPACK' => new Main\Entity\TextField('UNPACK', array()),
-			'ACTIONS' => new Main\Entity\TextField('ACTIONS', array()),
 			'ACTIONS_LIST' => new Main\Entity\TextField('ACTIONS_LIST', array(
 				'serialized' => true,
 				'column_name' => 'ACTIONS',
 				'title' => Loc::getMessage('DISCOUNT_ENTITY_ACTIONS_LIST_FIELD')
 			)),
+			'ACTIONS' => new Main\Entity\ExpressionField('ACTIONS', '%s', 'ACTIONS_LIST'),
 			'APPLICATION' => new Main\Entity\TextField('APPLICATION', array()),
 			'USE_COUPONS' => new Main\Entity\BooleanField('USE_COUPONS', array(
 				'values' => array('N', 'Y'),
@@ -186,6 +193,12 @@ class DiscountTable extends Main\Entity\DataManager
 			'COUPON' => new Main\Entity\ReferenceField(
 				'COUPON',
 				'Bitrix\Sale\Internals\DiscountCoupon',
+				array('=this.ID' => 'ref.DISCOUNT_ID'),
+				array('join_type' => 'LEFT')
+			),
+			'DISCOUNT_ENTITY' => new Main\Entity\ReferenceField(
+				'DISCOUNT_ENTITY',
+				'Bitrix\Sale\Internals\DiscountEntities',
 				array('=this.ID' => 'ref.DISCOUNT_ID'),
 				array('join_type' => 'LEFT')
 			)
@@ -275,7 +288,7 @@ class DiscountTable extends Main\Entity\DataManager
 			'DISCOUNT_TYPE' => 'P',
 		);
 		if (isset($data['LID']))
-			$modifyFieldList['CURRENCY'] = \CSaleLang::getLangCurrency($data['LID']);
+			$modifyFieldList['CURRENCY'] = SiteCurrencyTable::getSiteCurrency($data['LID']);
 		self::setUserID($modifyFieldList, $data, array('CREATED_BY', 'MODIFIED_BY'));
 		self::setTimestamp($modifyFieldList, $data, array('DATE_CREATE', 'TIMESTAMP_X'));
 
@@ -288,6 +301,25 @@ class DiscountTable extends Main\Entity\DataManager
 		unset($modifyFieldList);
 
 		return $result;
+	}
+
+	/**
+	 * Default onAfterAdd handler. Absolutely necessary.
+	 *
+	 * @param Main\Entity\Event $event		Event object.
+	 * @return void
+	 */
+	public static function onAfterAdd(Main\Entity\Event $event)
+	{
+		$fields = $event->getParameter('fields');
+		if(isset($fields['ACTIONS_LIST']))
+		{
+			$giftManager = Gift\Manager::getInstance();
+			if(!$giftManager->existsDiscountsWithGift() && $giftManager->isContainGiftAction($fields))
+			{
+				$giftManager->enableExistenceDiscountsWithGift();
+			}
+		}
 	}
 
 	/**
@@ -329,6 +361,15 @@ class DiscountTable extends Main\Entity\DataManager
 		$data = $event->getParameter('fields');
 		if (isset($data['ACTIVE']))
 			DiscountGroupTable::changeActiveByDiscount($id, $data['ACTIVE']);
+
+		if(isset($fields['ACTIONS_LIST']))
+		{
+			$giftManager = Gift\Manager::getInstance();
+			if(!$giftManager->existsDiscountsWithGift() && $giftManager->isContainGiftAction($data))
+			{
+				$giftManager->enableExistenceDiscountsWithGift();
+			}
+		}
 		unset($data, $id);
 	}
 
@@ -371,6 +412,8 @@ class DiscountTable extends Main\Entity\DataManager
 			DiscountCouponTable::deleteByDiscount(self::$deleteCoupons);
 			self::$deleteCoupons = false;
 		}
+		Gift\RelatedDataTable::deleteByDiscount($id);
+
 		unset($id);
 	}
 
@@ -398,6 +441,11 @@ class DiscountTable extends Main\Entity\DataManager
 			' set '.$helper->quote('USE_COUPONS').' = \''.$use.'\' where '.
 			$helper->quote('ID').' in ('.implode(',', $discountList).')'
 		);
+
+		if($use === 'Y')
+		{
+			Gift\RelatedDataTable::deleteByDiscounts($discountList);
+		}
 	}
 
 	/**
@@ -414,8 +462,7 @@ class DiscountTable extends Main\Entity\DataManager
 		$conn = Application::getConnection();
 		$helper = $conn->getSqlHelper();
 		$conn->queryExecute(
-			'update '.$helper->quote(self::getTableName()).
-			' set '.$helper->quote('USE_COUPONS').' = \''.$use.'\''
+			'update '.$helper->quote(self::getTableName()).' set '.$helper->quote('USE_COUPONS').' = \''.$use.'\''
 		);
 	}
 
@@ -439,9 +486,8 @@ class DiscountTable extends Main\Entity\DataManager
 		{
 			$setField = true;
 			if (array_key_exists($oneKey, $data))
-			{
 				$setField = ($data[$oneKey] !== null && (int)$data[$oneKey] <= 0);
-			}
+
 			if ($setField)
 				$result[$oneKey] = $currentUserID;
 		}
@@ -462,9 +508,8 @@ class DiscountTable extends Main\Entity\DataManager
 		{
 			$setField = true;
 			if (array_key_exists($oneKey, $data))
-			{
 				$setField = ($data[$oneKey] !== null && !is_object($data[$oneKey]));
-			}
+
 			if ($setField)
 				$result[$oneKey] = new Main\Type\DateTime();
 		}
@@ -481,12 +526,9 @@ class DiscountTable extends Main\Entity\DataManager
 	protected static function copyOldFields(&$result, $data)
 	{
 		if (!isset($data['CONDITIONS_LIST']) && isset($data['CONDITIONS']))
-		{
 			$result['CONDITIONS_LIST'] = (is_array($data['CONDITIONS']) ? $data['CONDITIONS'] : unserialize($data['CONDITIONS']));
-		}
+
 		if (!isset($data['ACTIONS_LIST']) && isset($data['ACTIONS']))
-		{
 			$result['ACTIONS_LIST'] = (is_array($data['ACTIONS']) ? $data['ACTIONS'] : unserialize($data['ACTIONS']));
-		}
 	}
 }

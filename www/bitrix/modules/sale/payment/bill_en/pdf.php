@@ -223,7 +223,10 @@ if ($arBasket = $dbBasket->Fetch())
 		$arBasket["PROPS"] = $arProdProps;
 
 		// @TODO: replace with real vatless price
-		$arBasket["VATLESS_PRICE"] = roundEx($arBasket["PRICE"] / (1 + $arBasket["VAT_RATE"]), SALE_VALUE_PRECISION);
+		if (isset($arBasket['VAT_INCLUDED']) && $arBasket['VAT_INCLUDED'] === 'Y')
+			$arBasket["VATLESS_PRICE"] = roundEx($arBasket["PRICE"] / (1 + $arBasket["VAT_RATE"]), SALE_VALUE_PRECISION);
+		else
+			$arBasket["VATLESS_PRICE"] = $arBasket["PRICE"];
 
 		$productName = $arBasket["NAME"];
 		if ($productName == "OrderDelivery")

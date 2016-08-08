@@ -1,4 +1,5 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();?><?
+
 $ORDER_ID = IntVal($GLOBALS["SALE_INPUT_PARAMS"]["ORDER"]["ID"]);
 if (!is_array($arOrder))
 	$arOrder = CSaleOrder::GetByID($ORDER_ID);
@@ -6,7 +7,8 @@ if (!is_array($arOrder))
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<title>Счет</title>
+<title>Счет на оплату</title>
+
 <meta http-equiv="Content-Type" content="text/html; charset=<?=LANG_CHARSET?>">
 <style>
 	table { border-collapse: collapse; }
@@ -184,7 +186,7 @@ else
 	<tr>
 		<td></td>
 		<td style="font-size: 2em; font-weight: bold; text-align: center"><nobr><?=sprintf(
-			"СЧЕТ № %s от %s",
+/*			"СЧЕТ № %s от %s",*/"Компред",
 			htmlspecialcharsbx($GLOBALS["SALE_INPUT_PARAMS"]["ORDER"]["ACCOUNT_NUMBER"]),
 			CSalePaySystemAction::GetParamValue("DATE_INSERT", false)
 		); ?></nobr></td>

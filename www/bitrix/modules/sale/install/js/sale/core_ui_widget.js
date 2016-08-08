@@ -94,9 +94,11 @@
 
 			// events
 			if(typeof so.bindEvents == 'object'){
-				for(var k in so.bindEvents){
-					if(BX.type.isFunction(so.bindEvents[k]))
-						this.bindEvent(k, so.bindEvents[k]);
+				for(var k in so.bindEvents)
+				{
+					if(so.bindEvents.hasOwnProperty(k))
+						if(BX.type.isFunction(so.bindEvents[k]))
+							this.bindEvent(k, so.bindEvents[k]);
 				}
 			}
 			so.bindEvents = null;
@@ -206,14 +208,36 @@
 		////////////////////////////
 		/// about templating
 
+		template: function(id, html)
+		{
+			if(typeof html == 'undefined')
+			{
+				return this.tmpls[id];
+			}
+			else
+			{
+				if(!BX.type.isString(html))
+					throw new TypeError('Bad template html');
+
+				this.tmpls[id] = html;
+			}
+		},
+
 		getHTMLByTemplate: function(templateId, replacements){
 
 			var html = this.tmpls[templateId];
 
 			if(!BX.type.isNotEmptyString(html))
+			{
+				BX.debug("template not found: "+templateId);
 				return '';
+			}
 
-			for(var k in replacements){
+			for(var k in replacements)
+			{
+				if(!replacements.hasOwnProperty(k))
+					continue;
+
 				if(typeof replacements[k] != 'undefined' && replacements.hasOwnProperty(k)){
 
 					var replaceWith = '';
@@ -238,14 +262,15 @@
 
 		createNodesByTemplate: function(templateId, replacements, onlyTags){
 
-			//var template = this.tmpls[templateId].trim(); // not working in IE8
-			var template = this.tmpls[templateId];
-
-			if(!BX.type.isNotEmptyString(template))
-				return null;
-
-			template = template.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 			var html = this.getHTMLByTemplate(templateId, replacements);
+
+			var template = this.tmpls[templateId];
+			if(!BX.type.isNotEmptyString(template))
+			{
+				return null;
+			}
+
+			template = template.replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // trim
 
 			// table makeup behaves not so well when being parsed by a browser, so a little hack is on route:
 
@@ -315,14 +340,16 @@
 
 					this.resolveFuncStack('init'); // resove init stacks
 
-					for(var i in this.sys.stack){
-						if(i != 'init')
-							this.resolveFuncStack(i, true); // resolve all other stacks
+					for(var i in this.sys.stack)
+					{
+						if(this.sys.stack.hasOwnProperty(i))
+							if(i != 'init')
+								this.resolveFuncStack(i, true); // resolve all other stacks
 					}
 
 					this.sys.initialized = true;
 					this.fireEvent('init', [this]);
-				}
+				};
 
 				if(BX.type.isString(this.opts.initializeByGlobalEvent) && this.opts.initializeByGlobalEvent.length > 0){
 					var scope = this.opts.globalEventScope == 'window' ? window : document;

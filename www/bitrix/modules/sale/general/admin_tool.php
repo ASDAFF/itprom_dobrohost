@@ -572,7 +572,7 @@ function fGetBuyerType($PERSON_TYPE_ID, $LID, $USER_ID = '', $ORDER_ID = 0, $for
 		false,
 		array("*")
 	);
-	while($property = $dbProperties->Fetch())
+	while($property = $dbProperties->GetNext())
 	{
 		$arPropertiesList[$property['ID']] = $property;
 	}
@@ -1382,8 +1382,9 @@ function fGetPayFromAccount($USER_ID, $CURRENCY)
 	return $arResult;
 }
 
-/*
+/**
  * Returns HTML select control with delivery services data for admin pages
+ * @deprecated
  */
 function fGetDeliverySystemsHTML($location, $locationZip, $weight, $price, $currency, $siteId, $defaultDelivery, $arShoppingCart)
 {
@@ -2069,7 +2070,7 @@ function convertHistoryToNewFormat($arFields)
 	{
 		if (strlen($fieldvalue) > 0)
 		{
-			foreach (CSaleOrderChangeFormat::$arOperationTypes as $code => $arInfo)
+			foreach (CSaleOrderChangeFormat::$operationTypes as $code => $arInfo)
 			{
 				if (in_array($fieldname, $arInfo["TRIGGER_FIELDS"]))
 				{
@@ -2206,6 +2207,7 @@ function getColumnsHeaders($arUserColumns, $page = "edit", $bWithStores = false)
 				if ($bWithStores):
 				?>
 					<td><?=GetMessage("SALE_F_STORE")?></td>
+					<td><?=GetMessage("SALE_F_STORE_CUR_AMOUNT")?></td>
 					<td><?=GetMessage("SALE_F_STORE_AMOUNT")?></td>
 					<td><?=GetMessage("SALE_F_STORE_BARCODE")?></td>
 				<?
@@ -2271,12 +2273,32 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 
 	$arParams = array();
 
+	static $proxyIblockElement = array();
+	static $proxyCatalogMeasure = array();
+	static $proxyParent = array();
+	static $proxyIblockProperty = array();
+	static $proxyProductData = array();
+	static $proxyCatalogProduct = array();
+	static $proxyCatalogMeasureRatio = array();
+
 	$productId = (int)$productId;
 	if ($productId <= 0)
 	{
 		return $arParams;
 	}
-	$iblockId = (int)CIBlockElement::GetIBlockByID($productId);
+
+	if (!empty($proxyIblockElement[$productId]))
+	{
+		$iblockId = $proxyIblockElement[$productId];
+	}
+	else
+	{
+		$iblockId = (int)CIBlockElement::GetIBlockByID($productId);
+
+		if (intval($iblockId) > 0)
+			$proxyIblockElement[$productId] = $iblockId;
+	}
+
 	if ($iblockId <= 0)
 	{
 		return $arParams;
@@ -2286,7 +2308,20 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 	$arElementId = array();
 
 	$arElementId[] = $productId;
-	$arParent = CCatalogSku::GetProductInfo($productId, $iblockId);
+
+	$proxyParentKey = $productId."|".$iblockId;
+
+	if (!empty($proxyParent[$proxyParentKey]) && is_array($proxyParent[$proxyParentKey]))
+	{
+		$arParent = $proxyParent[$proxyParentKey];
+	}
+	else
+	{
+		$arParent = CCatalogSku::GetProductInfo($productId, $iblockId);
+		$proxyParent[$proxyParentKey] = $arParent;
+	}
+
+
 	if ($arParent)
 	{
 		$arElementId[] = $arParent["ID"];
@@ -2304,15 +2339,28 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 		}
 		else
 		{
+			$column = strtoupper($column);
 			$propertyCode = substr($column, 9);
 			if ($propertyCode == '')
 			{
 				unset($arUserColumns[$key]);
 				continue;
 			}
-			$dbres = CIBlockProperty::GetList(array(), array("CODE" => $propertyCode));
-			if ($arPropData = $dbres->GetNext())
-				$arPropertyInfo[$column] = $arPropData;
+
+			if (!empty($proxyIblockProperty[$propertyCode]) && is_array($proxyIblockProperty[$propertyCode]))
+			{
+				$arPropertyInfo[$column] = $proxyIblockProperty[$propertyCode];
+			}
+			else
+			{
+				$dbres = CIBlockProperty::GetList(array(), array("CODE" => $propertyCode));
+				if ($arPropData = $dbres->GetNext())
+				{
+					$arPropertyInfo[$column] = $arPropData;
+					$proxyIblockProperty[$propertyCode] = $arPropData;
+				}
+			}
+
 		}
 	}
 
@@ -2321,7 +2369,17 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 		$arUserColumns
 	);
 
-	$arProductData = getProductProps($arElementId, $arSelect);
+
+	$proxyProductDataKey = md5(join('|', $arElementId)."_".join('|', $arSelect));
+	if (!empty($proxyProductData[$proxyProductDataKey]) && is_array($proxyProductData[$proxyProductDataKey]))
+	{
+		$arProductData = $proxyProductData[$proxyProductDataKey];
+	}
+	else
+	{
+		$arProductData = getProductProps($arElementId, $arSelect);
+		$proxyProductData[$proxyProductDataKey] = $arProductData;
+	}
 
 	$defaultMeasure = CCatalogMeasure::getDefaultMeasure(true, true);
 
@@ -2335,7 +2393,13 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 				if (strncmp($key, 'PROPERTY_', 9) == 0 && substr($key, -6) == "_VALUE")
 				{
 					$columnCode = str_replace("_VALUE", "", $key);
+					if (!isset($arPropertyInfo[$columnCode]))
+						continue;
+					$keyResult = 'PROPERTY_'.$arPropertyInfo[$columnCode]['CODE'].'_VALUE';
 					$arElement[$key] = getIblockPropInfo($value, $arPropertyInfo[$columnCode], array("WIDTH" => 90, "HEIGHT" => 90));
+					if ($keyResult != $key)
+						$arElement[$keyResult] = $arElement[$key];
+					unset($keyResult);
 				}
 			}
 		}
@@ -2400,17 +2464,36 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 		$currentTotalPrice = $arPrice['RESULT_PRICE']['BASE_PRICE'];
 		$discountPercent = (int)$arPrice['RESULT_PRICE']['PERCENT'];
 
-		$rsProducts = CCatalogProduct::GetList(
-			array(),
-			array('ID' => $productId),
-			false,
-			false,
-			array('ID', 'QUANTITY', 'WEIGHT', 'MEASURE', 'TYPE', 'BARCODE_MULTI')
-		);
-		if (!($arProduct = $rsProducts->Fetch()))
+
+
+
+
+		$arProduct = array();
+
+		if (!empty($proxyCatalogProduct[$productId]) && is_array($proxyCatalogProduct[$productId]))
+		{
+			$arProduct = $proxyCatalogProduct[$productId];
+		}
+		else
+		{
+			$rsProducts = CCatalogProduct::GetList(
+				array(),
+				array('ID' => $productId),
+				false,
+				false,
+				array('ID', 'QUANTITY', 'WEIGHT', 'MEASURE', 'TYPE', 'BARCODE_MULTI')
+			);
+			if ($arProduct = $rsProducts->Fetch())
+			{
+				$proxyCatalogProduct[$productId] = $arProduct;
+			}
+		}
+
+		if (empty($arProduct) || !is_array($arProduct))
 		{
 			return array();
 		}
+
 		$balance = floatval($arProduct["QUANTITY"]);
 
 		// sku props
@@ -2420,7 +2503,19 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 			"CODE" => "CATALOG.XML_ID",
 			"VALUE" => $arElementInfo['~IBLOCK_XML_ID']
 		);
-		$arSkuProperty = CSaleProduct::GetProductSkuProps($productId, '', true);
+
+		static $proxySkuProperty = array();
+
+		if (!empty($proxySkuProperty[$productId]) && is_array($proxySkuProperty[$productId]))
+		{
+			$arSkuProperty = $proxySkuProperty[$productId];
+		}
+		else
+		{
+			$arSkuProperty = CSaleProduct::GetProductSkuProps($productId, '', true);
+			$proxySkuProperty[$productId] = $arSkuProperty;
+		}
+
 		if (!empty($arSkuProperty))
 		{
 			foreach ($arSkuProperty as &$val)
@@ -2433,6 +2528,8 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 			}
 			unset($val);
 		}
+
+
 		$arSkuData[] = array(
 			"NAME" => "Product XML_ID",
 			"CODE" => "PRODUCT.XML_ID",
@@ -2447,11 +2544,28 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 
 		// measure
 		$arElementInfo["MEASURE_TEXT"] = "";
+		$arElementInfo["MEASURE_CODE"] = 0;
 		if ((int)$arProduct["MEASURE"] > 0)
 		{
-			$dbMeasure = CCatalogMeasure::GetList(array(), array("ID" => intval($arProduct["MEASURE"])), false, false, array("ID", "SYMBOL_RUS", "SYMBOL_INTL"));
-			if ($arMeasure = $dbMeasure->Fetch())
+
+			if (!empty($proxyCatalogMeasure[$arProduct["MEASURE"]]) && is_array($proxyCatalogMeasure[$arProduct["MEASURE"]]))
+			{
+				$arMeasure = $proxyCatalogMeasure[$arProduct["MEASURE"]];
+			}
+			else
+			{
+				$dbMeasure = CCatalogMeasure::GetList(array(), array("ID" => intval($arProduct["MEASURE"])), false, false, array("ID", "SYMBOL_RUS", "SYMBOL_INTL"));
+				if ($arMeasure = $dbMeasure->Fetch())
+				{
+					$proxyCatalogMeasure[$arProduct["MEASURE"]] = $arMeasure;
+				}
+			}
+
+			if (!empty($arMeasure) && is_array($arMeasure))
+			{
 				$arElementInfo["MEASURE_TEXT"] = ($arMeasure["SYMBOL_RUS"] != '' ? $arMeasure["SYMBOL_RUS"] : $arMeasure["SYMBOL_INTL"]);
+				$arElementInfo["MEASURE_CODE"] = $arMeasure["CODE"];
+			}
 		}
 		if ($arElementInfo["MEASURE_TEXT"] == '')
 		{
@@ -2461,8 +2575,22 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 
 		// ratio
 		$arElementInfo["RATIO"] = 1;
-		$dbratio = CCatalogMeasureRatio::GetList(array(), array("PRODUCT_ID" => $productId));
-		if ($arRatio = $dbratio->Fetch())
+
+		if (!empty($proxyCatalogMeasureRatio[$productId]) && is_array($proxyCatalogMeasureRatio[$productId]))
+		{
+			$arRatio = $proxyCatalogMeasureRatio[$productId];
+		}
+		else
+		{
+			$dbratio = CCatalogMeasureRatio::GetList(array(), array("PRODUCT_ID" => $productId));
+			if ($arRatio = $dbratio->Fetch())
+			{
+				$proxyCatalogMeasureRatio[$productId] = $arRatio;
+			}
+
+		}
+
+		if (!empty($arRatio) && is_array($arRatio))
 			$arElementInfo["RATIO"] = $arRatio["RATIO"];
 
 		// image
@@ -2581,6 +2709,7 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 		$arParams["productProviderClass"] = $arElementInfo["PRODUCT_PROVIDER_CLASS"];
 		$arParams["skuProps"] = $arSkuData;
 		$arParams["measureText"] = $arElementInfo["MEASURE_TEXT"];
+		$arParams["measureCode"] = $arElementInfo["MEASURE_CODE"];
 		$arParams["ratio"] = $arElementInfo["RATIO"];
 		$arParams["barcodeMulti"] = $arProduct["BARCODE_MULTI"];
 
@@ -2596,5 +2725,45 @@ function getProductDataToFillBasket($productId, $quantity, $userId, $LID, $userC
 	}
 
 	return $arParams;
+}
+
+
+class CAdminSaleList extends CAdminList
+{
+	public function AddAdminContextMenu($aContext=array(), $bShowExcel=true, $bShowSettings=true)
+	{
+		/** @global CMain $APPLICATION */
+		global $APPLICATION;
+
+		$aAdditionalMenu = array();
+
+		if($bShowSettings)
+		{
+			$link = DeleteParam(array("mode"));
+			$link = $APPLICATION->GetCurPage()."?mode=settings".($link <> ""? "&".$link:"");
+			$aAdditionalMenu[] = array(
+				"TEXT"=>GetMessage("admin_lib_context_sett"),
+				"TITLE"=>GetMessage("admin_lib_context_sett_title"),
+				"ONCLICK"=>$this->table_id.".ShowSettings('".CUtil::JSEscape($link)."')",
+				"GLOBAL_ICON"=>"adm-menu-setting",
+			);
+		}
+
+		if($bShowExcel)
+		{
+			$link = DeleteParam(array("mode"));
+			$link = $APPLICATION->GetCurPage()."?mode=excel".($link <> ""? "&".$link:"");
+			$aAdditionalMenu[] = array(
+				"TEXT"=>"Excel",
+				"TITLE"=>GetMessage("admin_lib_excel"),
+				//"LINK"=>htmlspecialcharsbx($link),
+				"ONCLICK"=>"javascript:exportData('excel');",
+				"GLOBAL_ICON"=>"adm-menu-excel",
+			);
+		}
+
+		if(count($aContext)>0 || count($aAdditionalMenu) > 0)
+			$this->context = new CAdminContextMenuList($aContext, $aAdditionalMenu);
+	}
 }
 ?>

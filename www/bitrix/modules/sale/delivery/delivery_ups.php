@@ -14,7 +14,7 @@ class CDeliveryUPS
 {
 	function Init()
 	{
-		if ($arCurrency = CCurrency::GetByID('RUR'))
+		if (\Bitrix\Main\Loader::includeModule('currency') && $arCurrency = CCurrency::GetByID('RUR'))
 		{
 			$base_currency = 'RUR';
 		}

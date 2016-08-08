@@ -1,492 +1,421 @@
 <?
-require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_before.php");
-require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/sale/prolog.php");
-$saleModulePermissions = $APPLICATION->GetGroupRight("sale");
-$bReadOnly = $saleModulePermissions < "W";
-if ($bReadOnly)
-	$APPLICATION->AuthForm(GetMessage("ACCESS_DENIED"));
-CModule::IncludeModule('sale');
-IncludeModuleLangFile(__FILE__);
+require_once($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_admin_before.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/sale/prolog.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/sale/include.php');
 
-$ID = '';
-if (isset($_REQUEST['ID']))
-	$ID = $DB->ForSql($_REQUEST['ID'], 1);
+$readOnly = $APPLICATION->GetGroupRight('sale') < 'W';
 
-$arLangList = array();
-$arLangIDs = array();
-$rsLangs = CLangAdmin::GetList(
-	($b="sort"),
-	($o="asc"),
-	array("ACTIVE" => "Y")
-);
-while ($arLang = $rsLangs->Fetch())
+if ($readOnly)
+	$APPLICATION->AuthForm(GetMessage('ACCESS_DENIED'));
+
+use	Bitrix\Sale\Internals\StatusTable,
+	Bitrix\Sale\Internals\StatusLangTable,
+	Bitrix\Sale\Internals\StatusGroupTaskTable,
+	Bitrix\Main\Loader,
+	Bitrix\Main\TaskTable,
+	Bitrix\Main\GroupTable,
+	Bitrix\Main\Localization\Loc,
+	Bitrix\Main\Localization\LanguageTable;
+
+Loader::includeModule('sale');
+Loc::loadMessages(__FILE__);
+Loc::loadMessages(__DIR__.'/task_description.php');
+
+// initialise variables
+$statusId     = $_REQUEST['ID'] ? $DB->ForSql($_REQUEST['ID'], 2) : null;
+$status       = array(); // TYPE, SORT, NOTIFY
+$translations = array(); // LID => LID, NAME, DESCRIPTION
+$groupTasks   = array(); // GROUP_ID => GROUP_ID, TASK_ID
+
+$languages = array(); // LID => NAME
+$groups    = array(); // ID => NAME
+$errors    = array();
+
+$tasks = array(); // ID => TASK
+$result = TaskTable::getList(array(
+	'select' => array('*'),
+	'filter' => array('=MODULE_ID' => 'sale', '=BINDING' => 'status'),
+));
+while ($row = $result->fetch())
+	$tasks[$row['ID']] = $row;
+asort($tasks);
+
+$statusFields = StatusTable::getEntity()->getFields();
+$statusLangFields = StatusLangTable::getEntity()->getFields();
+
+// get languages
+$result = LanguageTable::getList(array(
+	'select' => array('LID', 'NAME'),
+	'filter' => array('=ACTIVE' => 'Y')
+));
+while ($row = $result->fetch())
+	$languages[$row['LID']] = $row['NAME'];
+
+// get groups
+$saleGroupIds = array();
+$result = $APPLICATION->GetGroupRightList(array('MODULE_ID' => 'sale', 'G_ACCESS' => 'U'));
+while ($row = $result->Fetch())
+	if ($row['GROUP_ID'] > 2)
+		$saleGroupIds[] = $row['GROUP_ID'];
+if ($saleGroupIds)
 {
-	$arLangIDs[] = $arLang["LID"];
-	$arLangList[$arLang["LID"]] = $arLang["NAME"];
+	$result = GroupTable::getList(array(
+		'select' => array('ID', 'NAME'),
+		'filter' => array('=ID' => $saleGroupIds),
+		'order'  => array('C_SORT' => 'ASC', 'ID' => 'ASC'),
+	));
+	while ($row = $result->fetch())
+		$groups[$row['ID']] = $row['NAME'];
 }
 
-$arStatusGroups = array();
-$arStatusGroupIDs = array();
-$arSaleManagerGroups = array();
-$rsSaleManagerGroups = $APPLICATION->GetGroupRightList(array("MODULE_ID" => "sale", "G_ACCESS" => "U"));
-while ($arSaleManagerGroup = $rsSaleManagerGroups->Fetch())
+// A D D / U P D A T E /////////////////////////////////////////////////////////////////////////////////////////////////
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$readOnly && check_bitrix_sessid() && ($_POST['save'] || $_POST['apply']))
 {
-	$arSaleManagerGroup["GROUP_ID"] = intval($arSaleManagerGroup["GROUP_ID"]);
-	if (2 >= $arSaleManagerGroup["GROUP_ID"])
-		continue;
-	$arSaleManagerGroups[] = $arSaleManagerGroup["GROUP_ID"];
-}
-if (!empty($arSaleManagerGroups))
-{
-	$rsGroups = CGroup::GetListEx(
-		array('SORT' => 'ASC', 'ID' => 'ASC'),
-		array('ID' => $arSaleManagerGroups),
-		false,
-		false,
-		array('ID', 'NAME')
+	$errors = array();
+	$statusType = $_REQUEST['TYPE'] == 'O' ? 'O' : 'D';
+	$lockedStatusList = array(
+		"O" => array(
+			\Bitrix\Sale\OrderStatus::getInitialStatus(),
+			\Bitrix\Sale\OrderStatus::getFinalStatus(),
+		),
+		"D" => array(
+			\Bitrix\Sale\DeliveryStatus::getInitialStatus(),
+			\Bitrix\Sale\DeliveryStatus::getFinalStatus(),
+		),
 	);
-	while ($arGroup = $rsGroups->Fetch())
+
+	if ($statusId)
 	{
-		$arGroup['ID'] = intval($arGroup['ID']);
-		$arStatusGroups[$arGroup['ID']] = $arGroup['NAME'];
-		$arStatusGroupIDs[] = $arGroup['ID'];
-	}
-}
-
-$arErrors = array();
-$bVarsFromForm = false;
-$arFields = array();
-$arPerms = array();
-$arLangName = array();
-
-$arPermFields = array(
-	"GROUP_ID" => 0,
-	"PERM_VIEW" => 'N',
-	"PERM_CANCEL" => 'N',
-	"PERM_MARK" => 'N',
-	"PERM_DELIVERY" => 'N',
-	"PERM_DEDUCTION" => 'N',
-	"PERM_PAYMENT" => 'N',
-	"PERM_STATUS" => 'N',
-	"PERM_STATUS_FROM" => 'N',
-	"PERM_UPDATE" => 'N',
-	"PERM_DELETE" => 'N'
-);
-$arPermFieldKeys = array_keys($arPermFields);
-$arPermFieldKeysCut = $arPermFieldKeys;
-unset($arPermFieldKeysCut[0]);
-$arPermFieldKeysCut = array_values($arPermFieldKeysCut);
-
-$arLangFields = array(
-	'LID' => '',
-	'NAME' => '',
-	'DESCRIPTION' => ''
-);
-
-if (
-	'POST' == $_SERVER['REQUEST_METHOD']
-	&& !$bReadOnly
-	&& check_bitrix_sessid()
-	&& (
-		(isset($_POST['save']) && '' != $_POST['save'])
-		|| (isset($_POST['apply']) && '' != $_POST['apply'])
-	)
-)
-{
-	$NEW_ID = '';
-	if (isset($_POST['NEW_ID']))
-		$NEW_ID = $DB->ForSql($_POST['NEW_ID'], 1);
-
-	$arLangName = array_fill_keys($arLangIDs, $arLangFields);
-	foreach ($arLangIDs as &$strLangID)
-	{
-		$arLangName[$strLangID]['LID'] = $strLangID;
-		if (isset($_REQUEST['NAME_'.$strLangID]))
-			$arLangName[$strLangID]['NAME'] = trim($_REQUEST['NAME_'.$strLangID]);
-		if (isset($_REQUEST['DESCRIPTION_'.$strLangID]))
-			$arLangName[$strLangID]['DESCRIPTION'] = trim($_REQUEST['DESCRIPTION_'.$strLangID]);
-		if ('' == $arLangName[$strLangID]['NAME'])
+		foreach ($lockedStatusList as $lockStatusType => $lockStatusIdList)
 		{
-			$arErrors[] = GetMessage("ERROR_NO_NAME")." [".$strLangID."] ".htmlspecialcharsex($arLangList[$strLangID]);
-			$bVarsFromForm = true;
-		}
-	}
-	if (isset($strLangID))
-		unset($strLangID);
-
-	if (!empty($arStatusGroupIDs))
-	{
-		$arPerms = array_fill_keys($arStatusGroupIDs, $arPermFields);
-		foreach ($arStatusGroupIDs as &$intOneGroupID)
-		{
-			$boolViewPerm = false;
-			$arPerms[$intOneGroupID]['GROUP_ID'] = $intOneGroupID;
-			foreach ($arPermFieldKeys as &$strKey)
+			foreach ($lockStatusIdList as $lockStatusId)
 			{
-				if ('GROUP_ID' == $strKey)
-					continue;
-				if (isset($_REQUEST[$strKey.'_'.$intOneGroupID]) && 'Y' == $_REQUEST[$strKey.'_'.$intOneGroupID])
+				if ($lockStatusId == $statusId && $statusType != $lockStatusType)
 				{
-					$boolViewPerm = true;
-					$arPerms[$intOneGroupID][$strKey] = 'Y';
+					$errors[] = Loc::getMessage('SALE_STATUS_WRONG_TYPE', array(
+						'#STATUS_ID#' => htmlspecialcharsEx($statusId),
+						'#STATUS_TYPE#' => Loc::getMessage('SSEN_TYPE_'.$statusType))
+					);
+					break;
 				}
 			}
-			if (isset($strKey))
-				unset($strKey);
-			if ($boolViewPerm)
-			{
-				$arPerms[$intOneGroupID]['PERM_VIEW'] = 'Y';
-			}
-			$arPerms[$intOneGroupID]['EXT'] = ($boolViewPerm ? 'Y' : 'N');
 		}
-		if (isset($intOneGroupID))
-			unset($intOneGroupID);
 	}
 
-	$arFields = array(
-		'ID' => ('' != $ID ? $ID : $NEW_ID),
-		'SORT' => (isset($_POST['SORT']) ? $_POST['SORT'] : 100),
-		'LANG' => array_values($arLangName),
-		'PERMS' => array_values($arPerms),
+
+	// prepare & check status
+	$status = array(
+		'TYPE'   => $statusType,
+		'SORT'   => ($statusSort = intval($_POST['SORT'])) ? $statusSort : 100,
+		'NOTIFY' => $_POST['NOTIFY'] ? 'Y' : 'N',
 	);
 
-	if (!$bVarsFromForm)
+	$isNew = true;
+
+	$result = new \Bitrix\Main\Entity\Result;
+	if ($statusId)
 	{
-		if ('' != $ID)
-		{
-			if (!CSaleStatus::Update($ID, $arFields))
-			{
-				$strError = GetMessage("ERROR_EDIT_STATUS").": ";
-				if ($ex = $APPLICATION->GetException())
-					$strError .= $ex->GetString();
-				$arErrors[] = $strError;
-				$bVarsFromForm = true;
-			}
-		}
-		else
-		{
-			$ID = CSaleStatus::Add($arFields);
-			if ('' == $ID)
-			{
-				$strError = GetMessage("ERROR_ADD_STATUS").": ";
-				if ($ex = $APPLICATION->GetException())
-					$strError .= $ex->GetString();
-				$arErrors[] = $strError;
-				$bVarsFromForm = true;
-			}
-			else
-			{
-				CSaleStatus::CreateMailTemplate($ID);
-			}
-		}
-	}
-
-	if (!$bVarsFromForm)
-	{
-		if (isset($_POST['save']) && '' != $_POST['save'])
-		{
-			LocalRedirect("sale_status.php?lang=".LANGUAGE_ID.GetFilterParams("filter_", false));
-		}
-	}
-}
-
-$arDefaultValues = array(
-	'ID' => '',
-	'SORT' => '',
-);
-
-$arSelect = array_keys($arDefaultValues);
-$arStatus = $arDefaultValues;
-$arStatusLangs = array();
-$arStatusPerms = array();
-
-if ('' != $ID)
-{
-	$rsStatus = CSaleStatus::GetList(
-		array(),
-		array('ID' => $ID),
-		false,
-		false,
-		$arSelect
-	);
-	if (!($arStatus = $rsStatus->Fetch()))
-	{
-		$ID = '';
-		$arStatus = $arDefaultValues;
-		$arStatusLangs = array_fill_keys($arLangIDs, $arLangFields);
-		if (!empty($arStatusGroupIDs))
-		{
-			$arStatusPerms = array_fill_keys($arStatusGroupIDs, $arPermFields);
-			foreach ($arStatusGroupIDs as &$intOneGroupID)
-			{
-				$arStatusPerms[$intOneGroupID]['GROUP_ID'] = $intOneGroupID;
-			}
-			if (isset($intOneGroupID))
-				unset($intOneGroupID);
-		}
+		$isNew = false;
+		$sid = $statusId;
+		StatusTable::checkFields($result, $statusId, $status);
 	}
 	else
 	{
-		$arStatusLangs = array_fill_keys($arLangIDs, $arLangFields);
-		$rsStatusLangs = CSaleStatus::GetList(
-			array(),
-			array('ID' => $ID),
-			false,
-			false,
-			array('ID', 'LID', 'NAME', 'DESCRIPTION')
-		);
-		while ($arOneLang = $rsStatusLangs->Fetch())
-		{
-			if (!isset($arStatusLangs[$arOneLang['LID']]))
-				continue;
-			$arStatusLangs[$arOneLang['LID']] = $arOneLang;
-		}
-
-		if (!empty($arStatusGroupIDs))
-		{
-			$arStatusPerms = array_fill_keys($arStatusGroupIDs, $arPermFields);
-			foreach ($arStatusGroupIDs as &$intOneGroupID)
-			{
-				$arStatusPerms[$intOneGroupID]['GROUP_ID'] = $intOneGroupID;
-			}
-			if (isset($intOneGroupID))
-				unset($intOneGroupID);
-			$rsPerms = CSaleStatus::GetList(
-				array(),
-				array('ID' => $ID, 'GROUP_ID' => $arStatusGroupIDs),
-				false,
-				false,
-				array('*')
-			);
-			while ($arOnePerm = $rsPerms->Fetch())
-			{
-				$arOnePerm['GROUP_ID'] = intval($arOnePerm['GROUP_ID']);
-				$strSelected = 'N';
-				foreach ($arOnePerm as $key => $value)
-				{
-					if ('GROUP_ID' == $key || 'PERM_VIEW' == $key)
-						continue;
-					if ('Y' == $value)
-					{
-						$strSelected = 'Y';
-						break;
-					}
-				}
-				$arOnePerm['EXT'] = $strSelected;
-				$arStatusPerms[$arOnePerm['GROUP_ID']] = $arOnePerm;
-			}
-		}
+		$sid = $status['ID'] = trim($_POST['NEW_ID']);
+		StatusTable::checkFields($result, null, $status);
 	}
-}
-else
-{
-	$arStatusLangs = array_fill_keys($arLangIDs, $arLangFields);
-	if (!empty($arStatusGroupIDs))
+
+	$errors = array_merge($errors, $result->getErrorMessages());
+
+	// prepare & check translations
+	foreach ($languages as $languageId => $languageName)
 	{
-		$arStatusPerms = array_fill_keys($arStatusGroupIDs, $arPermFields);
-		foreach ($arStatusGroupIDs as &$intOneGroupID)
+		$translationName = trim($_REQUEST['NAME_'.$languageId]);
+		$translations[$languageId] = array(
+			'STATUS_ID'   => $sid,
+			'LID'         => $languageId,
+			'NAME'        => $translationName,
+			'DESCRIPTION' => trim($_REQUEST['DESCRIPTION_'.$languageId]),
+		);
+		if (! $translationName)
+			$errors[] = Loc::getMessage('ERROR_NO_NAME')." [$languageId] ".htmlspecialcharsbx($languageName);
+	}
+
+	// prepare & check group tasks
+	foreach ($groups as $groupId => $groupName)
+	{
+		$taskId = $_REQUEST['TASK'.$groupId];
+		$groupTasks[$groupId] = array(
+			'STATUS_ID' => $sid,
+			'GROUP_ID'  => $groupId,
+			'TASK_ID'   => $taskId,
+		);
+		if (! $tasks[$taskId])
+			$errors[] = Loc::getMessage('SSEN_INVALID_TASK_ID_FOR').' '.$groupName;
+	}
+
+	// add or update status
+	if (! $errors)
+	{
+		// update status, delete translations and group tasks
+		if (!$isNew)
 		{
-			$arStatusPerms[$intOneGroupID]['GROUP_ID'] = $intOneGroupID;
+			$result = StatusTable::update($statusId, $status);
+			if ($result->isSuccess())
+			{
+				StatusLangTable::deleteByStatus($statusId);
+				StatusGroupTaskTable::deleteByStatus($statusId);
+			}
+			else
+				$errors = $result->getErrorMessages();
 		}
-		if (isset($intOneGroupID))
-			unset($intOneGroupID);
+		// add new status, create mail template
+		else
+		{
+			$result = StatusTable::add($status);
+			if ($result->isSuccess())
+			{
+				$statusId = $status['ID'];
+			}
+			else
+			{
+				$errors = $result->getErrorMessages();
+			}
+
+		}
+	}
+
+	// add translations and group tasks, redirect
+	if (! $errors)
+	{
+		foreach ($translations as $data)
+		{
+			StatusLangTable::add($data);
+		}
+		
+		foreach ($groupTasks as $data)
+		{
+			StatusGroupTaskTable::add($data);
+		}
+
+		if ($result->isSuccess())
+		{
+			if ($isNew)
+			{
+				CSaleStatus::CreateMailTemplate($statusId);
+			}
+		}
+
+
+		if ($_POST['save'])
+			LocalRedirect('sale_status.php?lang='.LANGUAGE_ID.GetFilterParams('filter_', false));
+		else
+			LocalRedirect("sale_status_edit.php?ID=".$statusId."&lang=".LANGUAGE_ID.GetFilterParams("filter_", false));
+	}
+}
+// L O A D  O R  N E W /////////////////////////////////////////////////////////////////////////////////////////////////
+else if ($statusId)
+{
+	if ($row = StatusTable::getList(array(
+		'select' => array('*'),
+		'filter' => array('=ID' => $statusId),
+		'limit'  => 1,
+	))->fetch())
+	{
+		$status = $row;
+
+		$result = StatusLangTable::getList(array(
+			'select' => array('*'),
+			'filter' => array('=STATUS_ID' => $statusId),
+		));
+		while ($row = $result->fetch())
+			$translations[$row['LID']] = $row;
+
+		$result = StatusGroupTaskTable::getList(array(
+			'select' => array('*'),
+			'filter' => array('=STATUS_ID' => $statusId),
+		));
+		while ($row = $result->fetch())
+			$groupTasks[$row['GROUP_ID']] = $row;
+	}
+	else
+	{
+		$status['ID'] = $statusId;
+		$statusId = null;
 	}
 }
 
-if ($bVarsFromForm)
-{
-	$arStatus = $arFields;
-	$arStatusLangs = array();
-	$arStatusPerms = $arFields['PERMS'];
+// V I E W /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	foreach($arFields['LANG'] as $val)
-		$arStatusLangs[$val["LID"]] = $val;
-}
-
-if('' != $ID)
-	$APPLICATION->SetTitle(GetMessage("SALE_EDIT_RECORD", array("#ID#"=>$ID)));
+if($statusId)
+	$APPLICATION->SetTitle(Loc::getMessage('SALE_EDIT_RECORD', array('#ID#' => $statusId)));
 else
-	$APPLICATION->SetTitle(GetMessage("SALE_NEW_RECORD"));
+	$APPLICATION->SetTitle(Loc::getMessage('SALE_NEW_RECORD'));
 
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_after.php");
-
-$APPLICATION->AddHeadScript('/bitrix/js/sale/status_perms.js');
+require($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_admin_after.php');
 
 $aMenu = array(
 	array(
-		"TEXT" => GetMessage("SSEN_2FLIST"),
+		"TEXT" => Loc::getMessage("SSEN_2FLIST"),
 		"ICON" => "btn_list",
 		"LINK" => "/bitrix/admin/sale_status.php?lang=".LANGUAGE_ID.GetFilterParams("filter_")
 	)
 );
 
-if ('' != $ID && !$bReadOnly)
+if ($statusId && !$readOnly)
 {
 	$aMenu[] = array("SEPARATOR" => "Y");
-
 	$aMenu[] = array(
-		"TEXT" => GetMessage("SSEN_NEW_STATUS"),
+		"TEXT" => Loc::getMessage("SSEN_NEW_STATUS"),
 		"ICON" => "btn_new",
 		"LINK" => "/bitrix/admin/sale_status_edit.php?lang=".LANGUAGE_ID.GetFilterParams("filter_")
 	);
-
 	$aMenu[] = array(
-		"TEXT" => GetMessage("SSEN_DELETE_STATUS"),
+		"TEXT" => Loc::getMessage("SSEN_DELETE_STATUS"),
 		"ICON" => "btn_delete",
-		"LINK" => "javascript:if(confirm('".GetMessageJS("SSEN_DELETE_STATUS_CONFIRM")."')) window.location='/bitrix/admin/sale_status.php?action=delete&ID[]=".urlencode($ID)."&lang=".LANGUAGE_ID."&".bitrix_sessid_get()."#tb';",
+		"LINK" => "javascript:if(confirm('".GetMessageJS("SSEN_DELETE_STATUS_CONFIRM")."')) window.location='/bitrix/admin/sale_status.php?action=delete&ID[]=".urlencode($statusId)."&lang=".LANGUAGE_ID."&".bitrix_sessid_get()."#tb';",
 	);
 }
 $context = new CAdminContextMenu($aMenu);
 $context->Show();
 
-if (!empty($arErrors))
-	CAdminMessage::ShowMessage(implode('<br>', $arErrors));
+if ($errors)
+	CAdminMessage::ShowMessage(implode('<br>', $errors));
+
 ?>
 <form method="POST" action="<?echo $APPLICATION->GetCurPage()?>?" name="fform">
-<?echo GetFilterHiddens("filter_");?>
-<input type="hidden" name="Update" value="Y">
-<input type="hidden" name="lang" value="<?echo LANGUAGE_ID; ?>">
-<input type="hidden" name="ID" value="<? echo $ID; ?>">
-<? echo bitrix_sessid_post();
+	<?=GetFilterHiddens('filter_')?>
+	<input type="hidden" name="Update" value="Y">
+	<input type="hidden" name="lang" value="<?=LANGUAGE_ID?>">
+	<input type="hidden" name="ID" value="<?=$statusId?>">
+	<?=bitrix_sessid_post()?>
 
-$aTabs = array(
-	array("DIV" => "edit1", "TAB" => GetMessage("SSEN_TAB_STATUS"), "ICON" => "sale", "TITLE" => GetMessage("SSEN_TAB_STATUS_DESCR"))
-);
+	<?
+	$tabControl = new CAdminTabControl("tabControl", array(
+		array("DIV" => "edit1", "TAB" => Loc::getMessage("SSEN_TAB_STATUS"), "ICON" => "sale", "TITLE" => Loc::getMessage("SSEN_TAB_STATUS_DESCR")),
+	));
+	$tabControl->Begin();
+	$tabControl->BeginNextTab();
+	?>
 
-$tabControl = new CAdminTabControl("tabControl", $aTabs);
-$tabControl->Begin();
-
-$tabControl->BeginNextTab();
-?>
 	<tr class="adm-detail-required-field">
-		<td width="40%"><? echo GetMessage("SALE_CODE"); ?><? echo ('' != $ID ? ' (1 '.GetMessage("SALE_CODE_LEN").')' : ''); ?>:</td>
+		<td width="40%"><?=$statusFields['ID']->getTitle()?><?=$statusId ? '' : ' (1-2 '.Loc::getMessage('SALE_CODE_LEN').')'?>:</td>
 		<td width="60%">
-			<?if ('' != $ID)
-			{
-				?><b><?echo $ID ?></b><?
-			}
-			else
-			{
-				?><input type="text" name="NEW_ID" value="<? echo htmlspecialcharsbx($arStatus['ID']); ?>" size="3" maxlength="1"><?
-			}?>
+			<?if ($statusId):?>
+				<b><?=$statusId?></b>
+			<?else:?>
+				<input type="text" name="NEW_ID" value="<?=htmlspecialcharsbx($status['ID'])?>" size="4" maxlength="2">
+			<?endif?>
 		</td>
 	</tr>
 	<tr>
-		<td width="40%"><? echo GetMessage("SALE_SORT"); ?>:</td>
-		<td width="60%"><input type="text" name="SORT" value="<? echo intval($arStatus['SORT']); ?>" size="10"></td>
+		<td><?=$statusFields['TYPE']->getTitle()?>:</td>
+		<td>
+			<select name="TYPE">
+				<option value="O"<?=$status['TYPE'] == 'O' ? 'selected' : ''?>><?=Loc::getMessage('SSEN_TYPE_O')?></option>
+				<option value="D"<?=$status['TYPE'] == 'D' ? 'selected' : ''?>><?=Loc::getMessage('SSEN_TYPE_D')?></option>
+			</select>
+		</td>
 	</tr>
-	<?
-	foreach ($arLangIDs as &$strLangID)
-	{
-		?><tr class="heading">
-			<td colspan="2">[<? echo htmlspecialcharsex($strLangID); ?>] <? echo htmlspecialcharsex($arLangList[$strLangID]); ?></td>
+	<tr>
+		<td><?=$statusFields['SORT']->getTitle()?>:</td>
+		<td><input type="text" name="SORT" value="<?=intval($status['SORT'])?>" size="10"></td>
+	</tr>
+	<tr>
+		<td><?=Loc::getMessage('SSEN_NOTIFY_ASK')?>:</td>
+		<td>
+			<input type="checkbox" name="NOTIFY"<?if (! ($statusId && $status['NOTIFY'] == 'N')):?> checked="checked"<?endif?> onclick="(
+				function (box)
+				{
+					var link = BX('status-template-link');
+					if (box.checked)
+						link.style.display = 'inline-block';
+					else
+						link.style.display = 'none';
+				}
+			)(this)">
+			&nbsp;
+			<a id="status-template-link"
+				<?if ($statusId):?>
+					href="/bitrix/admin/message_admin.php?lang=<?=LANGUAGE_ID?>&find_event_type=SALE_STATUS_CHANGED_<?=$statusId?>" target="_blank"
+				<?else:?>
+					href="#" onclick="(new BX.CDialog({
+						title: '<?=Loc::getMessage('SSEN_NOTIFY_W_TITLE')?>',
+						content: '<?=Loc::getMessage('SSEN_NOTIFY_W_CONTENT')?>',
+						height: 100,
+						width: 250,
+						resizable: false,
+						buttons: [BX.CDialog.prototype.btnClose]
+					})).Show()"
+				<?endif?>
+				<?if ($statusId && $status['NOTIFY'] == 'N'):?>
+					style="display:none"
+				<?endif?>
+			><?=Loc::getMessage('SSEN_NOTIFY_LINK')?></a>
+		</td>
+	</tr>
+	<?foreach ($languages as $languageId => $languageName):?>
+		<tr class="heading">
+			<td colspan="2">[<?=htmlspecialcharsex($languageId)?>] <?=htmlspecialcharsex($languageName)?></td>
 		</tr>
 		<tr class="adm-detail-required-field">
-			<td width="40%"><? echo GetMessage("SALE_NAME"); ?>:</td>
-			<td width="60%"><input type="text" name="NAME_<? echo htmlspecialcharsbx($strLangID); ?>" value="<? echo htmlspecialcharsbx($arStatusLangs[$strLangID]['NAME']); ?>" size="30"></td>
+			<td><?=$statusLangFields['NAME']->getTitle()?>:</td>
+			<td><input type="text" name="NAME_<?=htmlspecialcharsbx($languageId)?>" value="<?=htmlspecialcharsbx($translations[$languageId]['NAME'])?>" size="30"></td>
 		</tr>
 		<tr>
-			<td width="40%" valign="top"><? echo GetMessage("SALE_DESCR"); ?>:</td>
-			<td width="60%">
-				<textarea name="DESCRIPTION_<? echo htmlspecialcharsbx($strLangID); ?>" cols="35" rows="3"><? echo htmlspecialcharsbx($arStatusLangs[$strLangID]['DESCRIPTION']); ?></textarea>
+			<td valign="top"><?=$statusLangFields['DESCRIPTION']->getTitle()?>:</td>
+			<td>
+				<textarea name="DESCRIPTION_<?=htmlspecialcharsbx($languageId); ?>" cols="35" rows="3"><?=htmlspecialcharsbx($translations[$languageId]['DESCRIPTION'])?></textarea>
 			</td>
-		</tr><?
-	}
-	if (isset($strLangID))
-		unset($strLangID);
-	?><tr class="heading">
-		<td colspan="2"><? echo GetMessage("SSEN_ACCESS_PERMS"); ?></td>
+		</tr>
+	<?endforeach?>
+	<tr class="heading">
+		<td colspan="2"><?=Loc::getMessage('SSEN_ACCESS_PERMS')?></td>
 	</tr>
+	<?if ($groups):?>
+		<?foreach ($groups as $groupId => $groupName): $groupTaskId = $groupTasks[$groupId]['TASK_ID']?>
+			<tr>
+				<td><?=htmlspecialcharsbx($groupName)?></td>
+				<td>
+					<select name="TASK<?=$groupId?>">
+						<?foreach ($tasks as $taskId => $task):?>
+							<option value="<?=$taskId?>" <?=$taskId == $groupTaskId ? 'selected': ''?>>
+								<?=htmlspecialcharsbx(($name = Loc::getMessage('TASK_NAME_'.strtoupper($task['NAME']))) ? $name : $task['NAME'])?>
+							</option>
+						<?endforeach?>
+					</select>
+				</td>
+			</tr>
+		<?endforeach?>
+	<?else:?>
+		<tr>
+			<td colspan="2" style="text-align: center;">
+				<?=Loc::getMessage('SSEN_PERM_GROUPS_ABSENT')?>
+			</td>
+		</tr>
+	<?endif?>
+	<tr>
+		<td>
+			<a href="settings.php?lang=<?=LANGUAGE_ID?>&mid=sale&tabControl_active_tab=edit4" target="_blank">
+				<?=Loc::getMessage('SSEN_GROUPS_LINK')?>
+			</a>
+		</td>
+		<td>
+			<a href="/bitrix/admin/task_admin.php?lang=<?=LANGUAGE_ID?>&set_filter=Y&find_module_id=sale&find_binding=status" target="_blank">
+				<?=Loc::getMessage('SSEN_TASKS_LINK')?>
+			</a>
+		</td>
+	</tr>
+
 	<?
-	if (empty($arStatusGroupIDs))
-	{
-		?><tr>
-		<td colspan="2" style="text-align: center;"><?
-			echo GetMessage('SSEN_PERM_GROUPS_ABSENT');
-			if (!$bReadOnly)
-			{
-				?><br /><?
-				echo GetMessage(
-					'SSEN_PERM_GROUPS_SET',
-					array(
-						'#LINK#' => 'settings.php?lang='.LANGUAGE_ID.'&mid=sale&back_url_settings='.urlencode($APPLICATION->GetCurPageParam()).'&tabControl_active_tab=edit4'
-					)
-				);
-			}
-		?></td>
-		</tr><?
-	}
-	else
-	{
-		?>
-		<tr><td colspan="2">
-		<table class="internal">
-		<tr class="heading">
-			<td><? echo GetMessage("SSEN_USER_GROUP"); ?></td>
-			<?
-			foreach ($arPermFieldKeys as &$strKey)
-			{
-				if ('GROUP_ID' == $strKey)
-					continue;
-				?><td><? echo GetMessage('SSEN_'.$strKey); ?></td><?
-			}
-			if (isset($strKey))
-				unset($strKey);
-			?>
-			<td><? echo GetMessage('SSEN_ALL_PERM'); ?></td>
-		</tr><?
-		$intAllCount = count($arPermFieldKeysCut);
-		foreach ($arStatusPerms as &$arOneGroup)
-		{
-			$intCurrentCount = 0;
-			$intGroupID = $arOneGroup['GROUP_ID'];
-			?><tr><td><? echo htmlspecialcharsex($arStatusGroups[$intGroupID]); ?></td><?
-			foreach ($arPermFieldKeysCut as &$strKey)
-			{
-				$strCode = htmlspecialcharsbx($strKey.'_'.$intGroupID);
-				if ('Y' == $arOneGroup[$strKey])
-					$intCurrentCount++;
-				$strDisabled = '';
-				if ('PERM_VIEW' == $strKey && 'Y' == $arOneGroup['EXT'])
-					$strDisabled = ' disabled';
-				?><td style="text-align: center;">
-					<input type="hidden" name="<? echo $strCode; ?>" id="<? echo $strCode; ?>_N" value="N" />
-					<input type="checkbox" name="<? echo $strCode; ?>" id="<? echo $strCode; ?>" value="Y" <? echo ('Y' == $arOneGroup[$strKey] ? 'checked ' : '').$strDisabled; ?>/>
-				</td><?
-			}
-			if (isset($strKey))
-				unset($strKey);
-			?><td style="text-align: center;">
-				<input type="checkbox" id="PERM_ALL_<? echo $intGroupID; ?>" value="Y" <? echo ($intCurrentCount == $intAllCount ? 'checked' : ''); ?>/>
-			</td></tr><?
-		}
-		if (isset($arOneGroup))
-			unset($arOneGroup);
-		?></table>
-		</td></tr><?
-	}
-$tabControl->EndTab();
-
-$tabControl->Buttons(
-	array(
-		"disabled" => ($bReadOnly),
+	$tabControl->EndTab();
+	$tabControl->Buttons(array(
+		"disabled" => $readOnly,
 		"back_url" => "/bitrix/admin/sale_status.php?lang=".LANGUAGE_ID.GetFilterParams("filter_")
-	)
-);
+	));
+	$tabControl->End();
+	?>
 
-$tabControl->End();
-?>
-</form><?
-if (!$bReadOnly && !empty($arStatusGroupIDs))
-{
-	$arStatusPerm = array(
-		'GROUPS' => $arStatusGroupIDs,
-		'PERM_LIST' => $arPermFieldKeysCut,
-		'PERM_VIEW' => 'PERM_VIEW',
-		'PERM_ALL' => 'PERM_ALL',
-	);
-	?><script type="text/javascript">
-	var obStatusPerms = new JCSaleStatusPerms(<? echo CUtil::PhpToJSObject($arStatusPerm); ?>);
-	</script><?
-}
-?><?require($DOCUMENT_ROOT."/bitrix/modules/main/include/epilog_admin.php");?>
+</form>
+
+<?require($_SERVER['DOCUMENT_ROOT']."/bitrix/modules/main/include/epilog_admin.php");

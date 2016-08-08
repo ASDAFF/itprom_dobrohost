@@ -2,13 +2,14 @@
 /** @global CMain $APPLICATION */
 /** @global CUser $USER */
 require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_before.php");
-require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/sale/include.php");
 require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/sale/prolog.php");
 
 use Bitrix\Main\Loader;
-
 use Bitrix\Sale\Location;
 use Bitrix\Sale\DiscountCouponsManager;
+use Bitrix\Sale;
+
+Loader::includeModule('sale');
 
 $crmMode = (defined("BX_PUBLIC_MODE") && BX_PUBLIC_MODE && array_key_exists("CRM_MANAGER_USER_ID", $_REQUEST));
 
@@ -20,7 +21,7 @@ if ($crmMode)
 	echo '<link rel="stylesheet" type="text/css" href="/bitrix/themes/.default/sale.css" />';
 }
 
-$bUseCatalog = CModule::IncludeModule("catalog");
+$bUseCatalog = Loader::includeModule('catalog');
 $bUseIblock = $bUseCatalog;
 
 IncludeModuleLangFile(__FILE__);
@@ -175,6 +176,7 @@ if (isset($_REQUEST['dontsave']) && $_REQUEST['dontsave'] == 'Y')
 {
 	$intLockUserID = 0;
 	$strLockTime = '';
+	DiscountCouponsManager::clear(true);
 	if (!CSaleOrder::IsLocked($ID, $intLockUserID, $strLockTime))
 		CSaleOrder::UnLock($ID);
 	LocalRedirect("sale_order.php?lang=".LANGUAGE_ID.GetFilterParams("filter_", false));
@@ -183,6 +185,7 @@ if ($saleModulePermissions >= "W" && isset($_REQUEST['unlock']) && 'Y' == $_REQU
 {
 	$intLockUserID = 0;
 	$strLockTime = '';
+	DiscountCouponsManager::clear(true);
 	if (CSaleOrder::IsLocked($ID, $intLockUserID, $strLockTime))
 		CSaleOrder::UnLock($ID);
 	LocalRedirect("sale_order_new.php?ID=".$ID."&lang=".LANGUAGE_ID.GetFilterParams("filter_", false));
@@ -205,6 +208,7 @@ if (
 {
 	$ID = intval($ID);
 	$recalcOrder = "N";
+	$isOrderConverted = \Bitrix\Main\Config\Option::get("main", "~sale_converted_15", 'N');
 
 	if (defined("SALE_DEBUG") && SALE_DEBUG)
 		CSaleHelper::WriteToLog("order_new.php", array("POST" => $_POST), "ORNW1");
@@ -677,6 +681,19 @@ if (
 			$couponsParams['orderId'] = $ID;
 		DiscountCouponsManager::init($couponsMode, $couponsParams, false);
 		unset($couponsParams, $couponsMode);
+
+		if ($isOrderConverted == 'Y')
+		{
+			$discountMode = ($ID > 0 ? Sale\Compatible\DiscountCompatibility::MODE_ORDER : Sale\Compatible\DiscountCompatibility::MODE_MANAGER);
+			$discountParams = array(
+				'SITE_ID' => $LID,
+				'CURRENCY' => $BASE_LANG_CURRENCY
+			);
+			if ($ID > 0)
+				$discountParams['ORDER_ID'] = $ID;
+			Sale\Compatible\DiscountCompatibility::init($discountMode, $discountParams);
+			unset($discountParams, $discountMode);
+		}
 		//send new user mail
 		if ($btnNewBuyer == "Y" && strlen($userNew) > 0)
 			CUser::SendUserInfo($str_USER_ID, $LID, $userNew, true);
@@ -817,7 +834,7 @@ if (
 							$arStoreSavedRecords = array();
 							$arStoreFormRecords = array();
 							$arStoreIDToAdd = array();
-							$arStoreIDToDelete = array();
+//							$arStoreIDToDelete = array();
 
 							$dbStoreBarcode = CSaleStoreBarcode::GetList(
 								array(),
@@ -841,17 +858,17 @@ if (
 									$arStoreIDToAdd[] = $arStore["STORE_ID"];
 							}
 
-							foreach ($arStoreSavedRecords as $index => $arRecord)
-							{
-								if (!in_array($arRecord["STORE_ID"], array_keys($arStoreFormRecords)))
-									$arStoreIDToDelete[$arRecord["ID"]] = $arRecord["STORE_ID"];
-							}
-
-							foreach ($arStoreIDToDelete as $id => $storeId)
-							{
-								CSaleStoreBarcode::Delete($id);
-							}
-
+//							foreach ($arStoreSavedRecords as $index => $arRecord)
+//							{
+//								if (!in_array($arRecord["STORE_ID"], array_keys($arStoreFormRecords)))
+//									$arStoreIDToDelete[$arRecord["ID"]] = $arRecord["STORE_ID"];
+//							}
+//
+//							foreach ($arStoreIDToDelete as $id => $storeId)
+//							{
+//								CSaleStoreBarcode::Delete($id);
+//							}
+							/*
 							foreach ($arStoreIDToAdd as $addId)
 							{
 								$arStoreBarcodeFields = array(
@@ -882,6 +899,7 @@ if (
 									}
 								}
 							}
+							*/
 							$arProduct["HAS_SAVED_QUANTITY"] = "Y";
 						}
 						else //BARCODE_MULTI = Y
@@ -893,6 +911,7 @@ if (
 							}
 
 							//deleting all previous records
+							/*
 							$dbStoreBarcode = CSaleStoreBarcode::GetList(
 								array(),
 								array(
@@ -906,9 +925,9 @@ if (
 							{
 								CSaleStoreBarcode::Delete($arStoreBarcode["ID"]);
 							}
-
+							*/
 							//adding new values
-							foreach ($arStoreFormRecords as $arStoreFormRecord)
+							/*foreach ($arStoreFormRecords as $arStoreFormRecord)
 							{
 								if (isset($arStoreFormRecord["BARCODE"]) && isset($arStoreFormRecord["BARCODE_FOUND"]))
 								{
@@ -931,6 +950,7 @@ if (
 									}
 								}
 							}
+							*/
 							$arProduct["HAS_SAVED_QUANTITY"] = "Y";
 						}
 
@@ -940,6 +960,7 @@ if (
 			}
 			unset($arProduct);
 		}
+
 
 		//newly added products info
 		if ($useStores)
@@ -977,6 +998,38 @@ if (
 
 			if ($ID <= 0 || $arOldOrder["STATUS_ID"] == $str_STATUS_ID)
 				$arAdditionalFields["STATUS_ID"] = $str_STATUS_ID;
+
+			if ($isOrderConverted == "Y")
+			{
+				$arAdditionalFields = array_merge($arAdditionalFields, array(
+					'CANCELED' => (!empty($_POST["CANCELED"]) && trim($_POST["CANCELED"]) == "Y") ? "Y" : "N",
+					'REASON_CANCELED' => (array_key_exists('REASON_CANCELED', $_POST) && strval(trim($_POST["REASON_CANCELED"])) != "") ? trim($_POST["REASON_CANCELED"]): null,
+
+					'PAYED' => (!empty($_POST["PAYED"]) && trim($_POST["PAYED"]) == "Y") ? "Y" : "N",
+
+					'PAY_VOUCHER_NUM' => (array_key_exists('PAY_VOUCHER_NUM', $_POST) && strval(trim($_POST["PAY_VOUCHER_NUM"])) != "") ? trim($_POST["PAY_VOUCHER_NUM"]): null,
+					'PAY_VOUCHER_DATE' => (array_key_exists('PAY_VOUCHER_DATE', $_POST) && strval(trim($_POST["PAY_VOUCHER_DATE"])) != "") ? trim($_POST["PAY_VOUCHER_DATE"]): null,
+					'PAY_FROM_ACCOUNT' => (array_key_exists('PAY_FROM_ACCOUNT', $_POST) && strval(trim($_POST["PAY_FROM_ACCOUNT"])) != "") ? trim($_POST["PAY_FROM_ACCOUNT"]): null,
+					'PAY_CURRENT_ACCOUNT' => (array_key_exists('PAY_CURRENT_ACCOUNT', $_POST) && strval(trim($_POST["PAY_CURRENT_ACCOUNT"])) != "") ? trim($_POST["PAY_CURRENT_ACCOUNT"]): null,
+
+					'PAY_FROM_ACCOUNT_BACK' => (!empty($_POST["PAY_FROM_ACCOUNT_BACK"]) && trim($_POST["PAY_FROM_ACCOUNT_BACK"]) == "Y") ? "Y" : "N",
+					'SUM_PAID' => (array_key_exists('SUM_PAID', $_POST) && floatval($_POST["SUM_PAID"]) > 0) ? floatval($_POST["SUM_PAID"]): null,
+
+					'ALLOW_DELIVERY' => (!empty($_POST["ALLOW_DELIVERY"]) && trim($_POST["ALLOW_DELIVERY"]) == "Y") ? "Y" : "N",
+					'DELIVERY_DOC_NUM' => (array_key_exists('DELIVERY_DOC_NUM', $_POST) && strval(trim($_POST["DELIVERY_DOC_NUM"])) != "") ? trim($_POST["DELIVERY_DOC_NUM"]): null,
+					'DELIVERY_DOC_DATE' => (array_key_exists('DELIVERY_DOC_DATE', $_POST) && strval(trim($_POST["DELIVERY_DOC_DATE"])) != "") ? trim($_POST["DELIVERY_DOC_DATE"]): null,
+
+					'MARKED' => (!empty($_POST["MARKED"]) && trim($_POST["MARKED"]) == "Y") ? "Y" : "N",
+					'REASON_MARKED' => (array_key_exists('REASON_MARKED', $_POST) && strval(trim($_POST["REASON_MARKED"])) != "") ? trim($_POST["REASON_MARKED"]): null,
+
+					'DEDUCTED' => (!empty($_POST["DEDUCTED"]) && trim($_POST["DEDUCTED"]) == "Y") ? "Y" : "N",
+					'REASON_UNDO_DEDUCTED' => (array_key_exists('REASON_UNDO_DEDUCTED', $_POST) && strval(trim($_POST["REASON_UNDO_DEDUCTED"])) != "") ? trim($_POST["REASON_UNDO_DEDUCTED"]): null,
+
+					'RESERVED' => (!empty($_POST["RESERVED"]) && trim($_POST["RESERVED"]) == "Y") ? "Y" : "N",
+				));
+			}
+
+
 
 			$bSaveBarcodes = ($hasSavedBarcodes || $DEDUCTED == "Y") ? true : false;
 
@@ -1063,259 +1116,7 @@ if (
 					}
 				}
 
-				if (empty($arErrors))
-				{
-					$PAYED = trim($_POST["PAYED"]);
-					if ($PAYED != "Y")
-						$PAYED = "N";
-					$PAY_VOUCHER_NUM = trim($_POST["PAY_VOUCHER_NUM"]);
-					$PAY_VOUCHER_DATE = trim($_POST["PAY_VOUCHER_DATE"]);
-					$PAY_FROM_ACCOUNT = trim($_POST["PAY_FROM_ACCOUNT"]);
-					$PAY_FROM_ACCOUNT_BACK = trim($_POST["PAY_FROM_ACCOUNT_BACK"]);
-					$SUM_PAID = floatval(str_replace(",", ".", trim($_POST["SUM_PAID"])));
 
-					if ($arOldOrder["PAYED"] != $PAYED)
-					{
-						$bUserCanPayOrder = CSaleOrder::CanUserChangeOrderFlag($ID, "P", $arUserGroups);
-						$errorMessageTmp = "";
-
-						if (!$bUserCanPayOrder)
-						{
-							$errorMessageTmp .= GetMessage("SOD_NO_PERMS2PAYFLAG").". ";
-						}
-						else
-						{
-							$arAdditionalFields = array(
-								"PAY_VOUCHER_NUM" => ((strlen($PAY_VOUCHER_NUM) > 0) ? $PAY_VOUCHER_NUM : false),
-								"PAY_VOUCHER_DATE" => ((strlen($PAY_VOUCHER_DATE) > 0) ? $PAY_VOUCHER_DATE : false)
-							);
-
-							$bWithdraw = true;
-							$bPay = true;
-							if ($PAY_CURRENT_ACCOUNT == "Y")
-							{
-								$dbUserAccount = CSaleUserAccount::GetList(
-									array(),
-									array(
-										"USER_ID" => $arOrder["USER_ID"],
-										"CURRENCY" => $arOrder["CURRENCY"],
-									)
-								);
-								if ($arUserAccount = $dbUserAccount->Fetch())
-								{
-									if (floatval($arUserAccount["CURRENT_BUDGET"]) >= $arOrder["PRICE"])
-										$bPay = false;
-								}
-							}
-							if ($PAYED == "N" && $PAY_FROM_ACCOUNT_BACK != "Y")
-								$bWithdraw = false;
-
-							if (!CSaleOrder::PayOrder($ID, $PAYED, $bWithdraw, $bPay, 0, $arAdditionalFields))
-							{
-								if ($ex = $APPLICATION->GetException())
-								{
-									if ($ex->GetID() != "ALREADY_FLAG")
-										$errorMessageTmp .= $ex->GetString();
-								}
-								else
-									$errorMessageTmp .= GetMessage("ERROR_PAY_ORDER").". ";
-							}
-						}
-						if ($errorMessageTmp != "")
-							$arErrors[] = $errorMessageTmp;
-					}
-					else
-					{
-						if($arOldOrder["PAY_VOUCHER_NUM"] != $PAY_VOUCHER_NUM)
-							$arOrder2Update["PAY_VOUCHER_NUM"] = ((strlen($PAY_VOUCHER_NUM) > 0) ? $PAY_VOUCHER_NUM : false);
-						if($arOldOrder["PAY_VOUCHER_DATE"] != $PAY_VOUCHER_DATE)
-							$arOrder2Update["PAY_VOUCHER_DATE"] = ((strlen($PAY_VOUCHER_DATE) > 0) ? $PAY_VOUCHER_DATE : false);
-					}
-
-					if (floatval($SUM_PAID) > 0)
-						$arOrder2Update["SUM_PAID"] = $SUM_PAID;
-				}
-
-				if (empty($arErrors))
-				{
-					$ALLOW_DELIVERY = trim($_POST["ALLOW_DELIVERY"]);
-					if ($ALLOW_DELIVERY != "Y")
-						$ALLOW_DELIVERY = "N";
-					$DELIVERY_DOC_NUM = trim($_POST["DELIVERY_DOC_NUM"]);
-					$DELIVERY_DOC_DATE = trim($_POST["DELIVERY_DOC_DATE"]);
-
-					if ($arOldOrder["ALLOW_DELIVERY"] != $ALLOW_DELIVERY)
-					{
-						$bUserCanDeliverOrder = CSaleOrder::CanUserChangeOrderFlag($ID, "D", $arUserGroups);
-						$errorMessageTmp = "";
-
-						if (!$bUserCanDeliverOrder)
-						{
-							$errorMessageTmp .= GetMessage("SOD_NO_PERMS2DELIV").". ";
-						}
-						else
-						{
-							$arAdditionalFields = array(
-								"DELIVERY_DOC_NUM" => ((strlen($DELIVERY_DOC_NUM) > 0) ? $DELIVERY_DOC_NUM : false),
-								"DELIVERY_DOC_DATE" => ((strlen($DELIVERY_DOC_DATE) > 0) ? $DELIVERY_DOC_DATE : false)
-							);
-
-							if (!CSaleOrder::DeliverOrder($ID, $ALLOW_DELIVERY, 0, $arAdditionalFields))
-							{
-								if ($ex = $APPLICATION->GetException())
-								{
-									if ($ex->GetID() != "ALREADY_FLAG")
-										$errorMessageTmp .= $ex->GetString();
-								}
-								else
-									$errorMessageTmp .= GetMessage("ERROR_DELIVERY_ORDER").". ";
-							}
-						}
-						if ($errorMessageTmp != "")
-							$arErrors[] = $errorMessageTmp;
-					}
-					else
-					{
-						if($arOldOrder["DELIVERY_DOC_NUM"] != $DELIVERY_DOC_NUM)
-							$arOrder2Update["DELIVERY_DOC_NUM"] = ((strlen($DELIVERY_DOC_NUM) > 0) ? $DELIVERY_DOC_NUM : false);
-						if($arOldOrder["DELIVERY_DOC_DATE"] != $DELIVERY_DOC_DATE)
-							$arOrder2Update["DELIVERY_DOC_DATE"] = ((strlen($DELIVERY_DOC_DATE) > 0) ? $DELIVERY_DOC_DATE : false);
-					}
-				}
-
-				//set mark
-				if (empty($arErrors))
-				{
-					$MARKED = trim($_POST["MARKED"]);
-					$REASON_MARKED = trim($_POST["REASON_MARKED"]);
-					if ($MARKED != "Y")
-						$MARKED = "N";
-
-					if (($arOldOrder["MARKED"] != $MARKED) || ($arOldOrder["MARKED"] == "Y" && $arOldOrder["REASON_MARKED"] != $REASON_MARKED))
-					{
-						$bUserCanMarkOrder = CSaleOrder::CanUserMarkOrder($ID, $arUserGroups, $intUserID);
-
-						$errorMessageTmp = "";
-
-						if (!$bUserCanMarkOrder)
-						{
-							$errorMessageTmp .= GetMessage("SOD_NO_PERMS2MARK").". ";
-						}
-						else
-						{
-							if ($MARKED == "Y")
-								$rs = CSaleOrder::SetMark($ID, $REASON_MARKED, $intUserID);
-							else
-								$rs = CSaleOrder::UnsetMark($ID, $intUserID);
-
-							if (!$rs)
-							{
-								if ($ex = $APPLICATION->GetException())
-								{
-									if ($ex->GetID() != "ALREADY_FLAG")
-										$errorMessageTmp .= $ex->GetString();
-								}
-								else
-									$errorMessageTmp .= GetMessage("ERROR_MARK_ORDER").". ";
-							}
-						}
-
-						if ($errorMessageTmp != "")
-							$arErrors[] = $errorMessageTmp;
-					}
-					else
-					{
-						if($arOldOrder["REASON_MARKED"] != $REASON_MARKED)
-							$arOrder2Update["REASON_MARKED"] = $REASON_MARKED;
-					}
-				}
-
-				if (empty($arErrors))
-				{
-					$DEDUCTED = (trim($_POST["DEDUCTED"]) != "Y") ? "N" : "Y";
-					$REASON_UNDO_DEDUCTED = trim($_POST["REASON_UNDO_DEDUCTED"]);
-
-					if ((is_array($arOldOrder) && ($arOldOrder["DEDUCTED"] != $DEDUCTED)) || (!is_array($arOldOrder) && ($DEDUCTED == "Y")))
-					{
-						$bUserCanDeductOrder = CSaleOrder::CanUserChangeOrderFlag($ID, "PERM_DEDUCTION", $arUserGroups);
-
-						$errorMessageTmp = "";
-
-						if (!$bUserCanDeductOrder)
-						{
-							$errorMessageTmp .= GetMessage("SOD_NO_PERMS2DEDUCT").". ";
-						}
-
-						if ($useStores)
-						{
-							//check if total ordered quantity = quantity on stores
-							if ($errorMessageTmp == "" && $DEDUCTED == "Y")
-							{
-								if(!CSaleOrderHelper::checkQuantity($_POST["PRODUCT"]))
-									if ($ex = $APPLICATION->GetException())
-										$errorMessageTmp .= $ex->GetString();
-
-							}
-
-							//check if barcodes are valid for deduction
-							if ($errorMessageTmp == "" && $DEDUCTED == "Y") //TODO? && $_POST["HAS_PRODUCTS_WITH_BARCODE_MULTI"] == "Y")
-							{
-								if(!CSaleOrderHelper::checkBarcodes($_POST["PRODUCT"]))
-									if ($ex = $APPLICATION->GetException())
-										$errorMessageTmp .= $ex->GetString();
-							}
-						}
-
-						//updating tmp Id in the store data from the form to the basket ID if the product was added to the basket later
-						$arNewStoreBarcodeOrderFormData = array();
-						foreach ($arStoreBarcodeOrderFormData as $key => $arStoreRecord)
-						{
-							if (substr($key, 0, 3) == "new")
-							{
-								foreach ($arOrder["BASKET_ITEMS"] as $arBasketRecord)
-								{
-									if ($arBasketRecord["STORES"] == $arStoreRecord)
-									{
-										$arNewStoreBarcodeOrderFormData[$arBasketRecord["ID"]] = $arStoreRecord;
-										break;
-									}
-								}
-							}
-							else
-							{
-								$arNewStoreBarcodeOrderFormData[$key] = $arStoreRecord;
-							}
-						}
-
-						if ($errorMessageTmp == "")
-						{
-							if (!CSaleOrder::DeductOrder($ID, $DEDUCTED, $REASON_UNDO_DEDUCTED, false, $arNewStoreBarcodeOrderFormData))
-							{
-								if ($ex = $APPLICATION->GetException())
-								{
-									if ($ex->GetID() != "ALREADY_FLAG")
-										$errorMessageTmp .= $ex->GetString();
-								}
-								else
-									$errorMessageTmp .= GetMessage("ERROR_DEDUCT_ORDER").". ";
-							}
-						}
-
-						if ($errorMessageTmp != "")
-							$arErrors[] = $errorMessageTmp;
-					}
-					else
-					{
-						if($arOldOrder["REASON_UNDO_DEDUCTED"] != $REASON_UNDO_DEDUCTED)
-							$arOrder2Update["REASON_UNDO_DEDUCTED"] = $REASON_UNDO_DEDUCTED;
-					}
-				}
-
-				if (empty($arErrors))
-				{
-					if(!empty($arOrder2Update))
-						CSaleOrder::Update($ID, $arOrder2Update);
-				}
 			}
 			if ($ID > 0 AND empty($arErrors))
 			{
@@ -1406,10 +1207,10 @@ if (
 	{
 		if ($crmMode)
 			CRMModeOutput($ID);
+		DiscountCouponsManager::clear(true);
 
 		if (isset($save) AND strlen($save) > 0)
 		{
-			DiscountCouponsManager::clear(true);
 			CSaleOrder::UnLock($ID);
 			LocalRedirect("/bitrix/admin/sale_order.php?lang=".LANGUAGE_ID."&LID=".urlencode($LID).GetFilterParams("filter_", false));
 		}
@@ -1423,6 +1224,7 @@ if (
 
 if (!empty($dontsave))
 {
+	DiscountCouponsManager::clear(true);
 	CSaleOrder::UnLock($ID);
 	if ($crmMode)
 		CRMModeOutput($ID);
@@ -2587,7 +2389,10 @@ if ($boolLocked)
 {
 	$strLockUser = $intLockUserID;
 	$strLockUserInfo = $intLockUserID;
-	$rsUsers = CUser::GetList(($by2 = 'ID'),($order2 = 'ASC'), array('ID' => $intLockUserID), array('FIELDS' => array('ID', 'LOGIN', 'NAME', 'LAST_NAME')));
+	$by2 = 'ID';
+	$order2 = 'ASC';
+	/** @var CDBResult $rsUsers */
+	$rsUsers = CUser::GetList($by2, $order2, array('ID' => $intLockUserID), array('FIELDS' => array('ID', 'LOGIN', 'NAME', 'LAST_NAME')));
 	if ($arOneUser = $rsUsers->Fetch())
 	{
 		$strLockUser = CUser::FormatName($strNameFormat, $arOneUser);
@@ -2656,7 +2461,7 @@ if ($bUserCanViewOrder && $ID > 0)
 	$aMenu[] = array(
 		"TEXT" => GetMessage("NEWO_DETAIL"),
 		"TITLE"=>GetMessage("NEWO_DETAIL_TITLE"),
-		"LINK" => "/bitrix/admin/sale_order_detail.php?ID=".$ID."&lang=".LANGUAGE_ID.GetFilterParams("filter_")
+		"LINK" => "/bitrix/admin/sale_order_view.php?ID=".$ID."&lang=".LANGUAGE_ID.GetFilterParams("filter_")
 	);
 }
 
@@ -2733,10 +2538,7 @@ function getLocation(country_id, region_id, city_id, arParams, site_id, admin_se
 	arParams.REGION = parseInt(region_id);
 	arParams.SITE_ID = '<?=LANGUAGE_ID?>';
 
-	if (admin_section && admin_section == "Y")
-	{
-		arParams.ADMIN_SECTION = "Y";
-	}
+	arParams.ADMIN_SECTION = "Y";
 
 	var url = '/bitrix/components/bitrix/sale.ajax.locations/templates/.default/ajax.php';
 	BX.ajax.post(url, arParams, getLocationResult);
@@ -2789,6 +2591,42 @@ if (isset($ID) AND $ID != "")
 	$urlForm = "&ID=".$ID."&LID=".CUtil::JSEscape($LID);
 	if (!$boolLocked)
 		CSaleOrder::Lock($ID);
+}
+
+$res = \Bitrix\Sale\Internals\PaymentTable::getList(array(
+	'select' => array('CNT'),
+	'filter' => array(
+		'ORDER_ID' => $ID
+	),
+	'runtime' => array(
+		'CNT' => array(
+			'data_type' => 'integer',
+			'expression' => array('COUNT(ID)')
+		)
+	)
+));
+$payment = $res->fetch();
+
+$res = \Bitrix\Sale\Internals\ShipmentTable::getList(array(
+	'select' => array('CNT'),
+	'filter' => array(
+		'ORDER_ID' => $ID
+	),
+	'runtime' => array(
+		'CNT' => array(
+			'data_type' => 'integer',
+			'expression' => array('COUNT(ID)')
+		)
+	)
+));
+$shipment = $res->fetch();
+
+if ($payment['CNT'] > 1 || ($shipment['CNT'] - 1) > 1)
+{
+	$note = BeginNote();
+	$note .= GetMessage('NEW_ERROR_SEVERAL_P_D');
+	$note .= EndNote();
+	echo $note;
 }
 
 $tabControl->Begin(array(
@@ -3243,7 +3081,7 @@ if ($ID <= 0)
 				method: 'POST',
 				data : '<?=bitrix_sessid_get()?>&ORDER_AJAX=Y&LID=<?=CUtil::JSEscape($LID)?>&userId=' + userId + '&buyerType=' + buyerType + '&profileDefault=' + profileDefault,
 				dataType: 'html',
-				timeout: 10,
+				timeout: 30,
 				async: true,
 				processData: true,
 				scriptsRunFirst: true,
@@ -3365,6 +3203,11 @@ elseif (isset($ID) AND $ID > 0)
 		while ($arBasketProps = $dbBasketProps->GetNext())
 			$arBasket["PROPS"][$arBasketProps["ID"]] = $arBasketProps;
 
+
+		if (CSaleBasketHelper::isSetParent($arBasket) && empty($arBasket['SET_PARENT_ID']))
+		{
+			$arBasket['SET_PARENT_ID'] = $arBasket['ID'];
+		}
 		$arBasketItem[$arBasket["ID"]] = $arBasket;
 
 		$arElementId[] = $arBasket["PRODUCT_ID"];
@@ -6394,9 +6237,15 @@ $tabControl->BeginCustomField("BASKET_CONTAINER", GetMessage("NEWO_BASKET_CONTAI
 			if (!!obCartFix && obCartFix.value == 'Y')
 			{
 				if (!BX('PAYED') || !BX('PAYED').checked)
+				{
 					obCartFix.value = 'N';
+				}
 				else
+				{
 					recalcAllowed = false;
+					alert('<?=CUtil::JSEscape(GetMessage('COUPONS_RECALC_BLOCKED')); ?>');
+					obCoupon.value = '';
+				}
 			}
 			if (recalcAllowed)
 				fRecalProduct('', '', 'N', 'Y', { 'coupon' : obCoupon.value });
@@ -6987,7 +6836,7 @@ $tabControl->BeginCustomField("BASKET_CONTAINER", GetMessage("NEWO_BASKET_CONTAI
 			method: 'POST',
 			data : '<?=bitrix_sessid_get()?>&ORDER_AJAX=Y&get_props=Y&id=<?=$ID?>&userId=' + userId + '&delivery_id=' + deliveryId + '&paysystem_id=' + paymentId + '&CURRENCY=<?=$str_CURRENCY?>&LID=<?=CUtil::JSEscape($LID)?>',
 			dataType: 'html',
-			timeout: 5,
+			timeout: 30,
 			async: true,
 			processData: true,
 			scriptsRunFirst: false,

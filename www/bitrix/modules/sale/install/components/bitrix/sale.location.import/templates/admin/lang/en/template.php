@@ -57,5 +57,5 @@ $MESS["SALE_SLI_LOCATION_PACK"] = "Location pack";
 $MESS["SALE_SLI_LOCATION_PACK_STANDARD"] = "Standard";
 $MESS["SALE_SLI_LOCATION_PACK_EXTENDED"] = "Extended";
 $MESS["SALE_SLI_HEAVY_DUTY_HOST_NOTICE"] = "Importing locations may briefly increase database and web server load. We recommend that you consult your hosting service helpdesk before importing large location sets.";
-$MESS["SALE_SLI_EXCLUDE_AREAS"] = "";
+$MESS["SALE_SLI_EXCLUDE_AREAS"] = "Exclude areas";
 ?>

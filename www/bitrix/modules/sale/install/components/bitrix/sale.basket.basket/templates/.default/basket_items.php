@@ -1,4 +1,5 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+/** @var array $arParams */
 use Bitrix\Sale\DiscountCouponsManager;
 
 if (!empty($arResult["ERROR_MESSAGE"]))
@@ -94,6 +95,9 @@ if ($normalCount > 0):
 							if (in_array($arHeader["id"], array("PROPS", "DELAY", "DELETE", "TYPE"))) // some values are not shown in the columns in this template
 								continue;
 
+							if ($arHeader["name"] == '')
+								$arHeader["name"] = GetMessage("SALE_".$arHeader["id"]);
+
 							if ($arHeader["id"] == "NAME"):
 							?>
 								<td class="itemphoto">
@@ -186,7 +190,7 @@ if ($normalCount > 0):
 
 														<div class="bx_scu">
 															<ul id="prop_<?=$arProp["CODE"]?>_<?=$arItem["ID"]?>"
-																style="width: 200%; margin-left:0%;"
+																style="width: 200%; margin-left:0;"
 																class="sku_prop_list"
 																>
 																<?
@@ -197,19 +201,17 @@ if ($normalCount > 0):
 																		if ($arItemProp["CODE"] == $arItem["SKU_DATA"][$propId]["CODE"])
 																		{
 																			if ($arItemProp["VALUE"] == $arSkuValue["NAME"] || $arItemProp["VALUE"] == $arSkuValue["XML_ID"])
-																				$selected = "bx_active";
+																				$selected = " bx_active";
 																		}
 																	endforeach;
 																?>
 																	<li style="width:10%;"
-																		class="sku_prop <?=$selected?>"
+																		class="sku_prop<?=$selected?>"
 																		data-value-id="<?=$arSkuValue["XML_ID"]?>"
 																		data-element="<?=$arItem["ID"]?>"
 																		data-property="<?=$arProp["CODE"]?>"
 																		>
-																		<a href="javascript:void(0);">
-																			<span style="background-image:url(<?=$arSkuValue["PICT"]["SRC"]?>)"></span>
-																		</a>
+																		<a href="javascript:void(0)" class="cnt"><span class="cnt_item" style="background-image:url(<?=$arSkuValue["PICT"]["SRC"];?>)"></span></a>
 																	</li>
 																<?
 																endforeach;
@@ -234,7 +236,7 @@ if ($normalCount > 0):
 													<div class="bx_size_scroller_container">
 														<div class="bx_size">
 															<ul id="prop_<?=$arProp["CODE"]?>_<?=$arItem["ID"]?>"
-																style="width: 200%; margin-left:0%;"
+																style="width: 200%; margin-left:0;"
 																class="sku_prop_list"
 																>
 																<?
@@ -245,17 +247,17 @@ if ($normalCount > 0):
 																		if ($arItemProp["CODE"] == $arItem["SKU_DATA"][$propId]["CODE"])
 																		{
 																			if ($arItemProp["VALUE"] == $arSkuValue["NAME"])
-																				$selected = "bx_active";
+																				$selected = " bx_active";
 																		}
 																	endforeach;
 																?>
 																	<li style="width:10%;"
-																		class="sku_prop <?=$selected?>"
+																		class="sku_prop<?=$selected?>"
 																		data-value-id="<?=($arProp['TYPE'] == 'S' && $arProp['USER_TYPE'] == 'directory' ? $arSkuValue['XML_ID'] : $arSkuValue['NAME']); ?>"
 																		data-element="<?=$arItem["ID"]?>"
 																		data-property="<?=$arProp["CODE"]?>"
 																		>
-																		<a href="javascript:void(0);"><?=$arSkuValue["NAME"]?></a>
+																		<a href="javascript:void(0)" class="cnt"><?=$arSkuValue["NAME"]?></a>
 																	</li>
 																<?
 																endforeach;
@@ -426,6 +428,7 @@ if ($normalCount > 0):
 	<input type="hidden" id="price_vat_show_value" value="<?=($arParams["PRICE_VAT_SHOW_VALUE"] == "Y") ? "Y" : "N"?>" />
 	<input type="hidden" id="hide_coupon" value="<?=($arParams["HIDE_COUPON"] == "Y") ? "Y" : "N"?>" />
 	<input type="hidden" id="use_prepayment" value="<?=($arParams["USE_PREPAYMENT"] == "Y") ? "Y" : "N"?>" />
+	<input type="hidden" id="auto_calculation" value="<?=($arParams["AUTO_CALCULATION"] == "N") ? "N" : "Y"?>" />
 
 	<div class="bx_ordercart_order_pay">
 
@@ -435,7 +438,7 @@ if ($normalCount > 0):
 		{
 		?>
 			<div class="bx_ordercart_coupon">
-				<span><?=GetMessage("STB_COUPON_PROMT")?></span><input type="text" id="coupon" name="COUPON" value="" onchange="enterCoupon();">
+				<span><?=GetMessage("STB_COUPON_PROMT")?></span><input type="text" id="coupon" name="COUPON" value="" onchange="enterCoupon();">&nbsp;<a class="bx_bt_button bx_big" href="javascript:void(0)" onclick="enterCoupon();" title="<?=GetMessage('SALE_COUPON_APPLY_TITLE'); ?>"><?=GetMessage('SALE_COUPON_APPLY'); ?></a>
 			</div><?
 				if (!empty($arResult['COUPON_LIST']))
 				{
@@ -470,10 +473,11 @@ if ($normalCount > 0):
 		</div>
 		<div class="bx_ordercart_order_pay_right">
 			<table class="bx_ordercart_order_sum">
-				<?if ($bWeightColumn):?>
+				<?if ($bWeightColumn && floatval($arResult['allWeight']) > 0):?>
 					<tr>
 						<td class="custom_t1"><?=GetMessage("SALE_TOTAL_WEIGHT")?></td>
-						<td class="custom_t2" id="allWeight_FORMATED"><?=$arResult["allWeight_FORMATED"]?></td>
+						<td class="custom_t2" id="allWeight_FORMATED"><?=$arResult["allWeight_FORMATED"]?>
+						</td>
 					</tr>
 				<?endif;?>
 				<?if ($arParams["PRICE_VAT_SHOW_VALUE"] == "Y"):?>
@@ -481,24 +485,30 @@ if ($normalCount > 0):
 						<td><?echo GetMessage('SALE_VAT_EXCLUDED')?></td>
 						<td id="allSum_wVAT_FORMATED"><?=$arResult["allSum_wVAT_FORMATED"]?></td>
 					</tr>
-					<tr>
-						<td><?echo GetMessage('SALE_VAT_INCLUDED')?></td>
-						<td id="allVATSum_FORMATED"><?=$arResult["allVATSum_FORMATED"]?></td>
-					</tr>
+					<?if (floatval($arResult["DISCOUNT_PRICE_ALL"]) > 0):?>
+						<tr>
+							<td class="custom_t1"></td>
+							<td class="custom_t2" style="text-decoration:line-through; color:#828282;" id="PRICE_WITHOUT_DISCOUNT">
+								<?=$arResult["PRICE_WITHOUT_DISCOUNT"]?>
+							</td>
+						</tr>
+					<?endif;?>
+					<?
+					if (floatval($arResult['allVATSum']) > 0):
+						?>
+						<tr>
+							<td><?echo GetMessage('SALE_VAT')?></td>
+							<td id="allVATSum_FORMATED"><?=$arResult["allVATSum_FORMATED"]?></td>
+						</tr>
+						<?
+					endif;
+					?>
 				<?endif;?>
-
 					<tr>
 						<td class="fwb"><?=GetMessage("SALE_TOTAL")?></td>
 						<td class="fwb" id="allSum_FORMATED"><?=str_replace(" ", "&nbsp;", $arResult["allSum_FORMATED"])?></td>
 					</tr>
-					<tr>
-						<td class="custom_t1"></td>
-						<td class="custom_t2" style="text-decoration:line-through; color:#828282;" id="PRICE_WITHOUT_DISCOUNT">
-							<?if (floatval($arResult["DISCOUNT_PRICE_ALL"]) > 0):?>
-								<?=$arResult["PRICE_WITHOUT_DISCOUNT"]?>
-							<?endif;?>
-						</td>
-					</tr>
+
 
 			</table>
 			<div style="clear:both;"></div>
@@ -510,7 +520,14 @@ if ($normalCount > 0):
 				<?=$arResult["PREPAY_BUTTON"]?>
 				<span><?=GetMessage("SALE_OR")?></span>
 			<?endif;?>
-
+			<?
+			if ($arParams["AUTO_CALCULATION"] != "Y")
+			{
+				?>
+				<a href="javascript:void(0)" onclick="updateBasket();" class="checkout refresh"><?=GetMessage("SALE_REFRESH")?></a>
+				<?
+			}
+			?>
 			<a href="javascript:void(0)" onclick="checkOut();" class="checkout"><?=GetMessage("SALE_ORDER")?></a>
 		</div>
 	</div>
@@ -522,7 +539,7 @@ else:
 	<table>
 		<tbody>
 			<tr>
-				<td colspan="<?=$numCells?>" style="text-align:center">
+				<td style="text-align:center">
 					<div class=""><?=GetMessage("SALE_NO_ITEMS");?></div>
 				</td>
 			</tr>

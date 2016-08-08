@@ -25,6 +25,17 @@ class CSaleTfpdf extends tFPDF
 		}
 	}
 
+	public function Image($file, $x = null, $y = null, $w = 0, $h = 0, $type = '', $link = '')
+	{
+		try
+		{
+			return parent::Image($file, $x, $y, $w, $h, $type, $link);
+		}
+		catch (Exception $e)
+		{
+		}
+	}
+
 	public function Header()
 	{
 		if (!empty($this->background))
@@ -238,15 +249,7 @@ class CSalePdf
 
 	public function Image($file, $x = null, $y = null, $w = 0, $h = 0, $type = '', $link = '')
 	{
-		try
-		{
-			$path = $this->GetImagePath($file);
-
-			return $this->generator->Image($path, $x, $y, $w, $h, $type, $link);
-		}
-		catch (Exception $e)
-		{
-		}
+		return $this->generator->Image($this->GetImagePath($file), $x, $y, $w, $h, $type, $link);
 	}
 
 }

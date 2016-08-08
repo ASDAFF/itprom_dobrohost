@@ -1,6 +1,6 @@
 <?
 /********************************************************************************
-Delivery handler for Kazakhstan's Post Service (http://www.kazpost.kz/)
+Delivery services for Kazakhstan's Post Service (http://www.kazpost.kz/)
 http://www.kazpost.kz/downloads/urlic/%D0%A2%D0%B0%D1%80%D0%B8%D1%84%D1%8B%20%D0%BD%D0%B0%20%D1%83%D1%81%D0%BB%D1%83%D0%B3%D1%83%20%D0%9F%D0%B5%D1%80%D0%B5%D1%81%D1%8B%D0%BB%D0%BA%D0%B0%20%D0%BF%D0%BE%D1%81%D1%8B%D0%BB%D0%BE%D0%BA%20%D0%B2%20%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B0%D1%85%20%D0%A0%D0%9A%20%D0%B4%D0%BB%D1%8F%20%D0%B4%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D1%85%20%D0%BA%D0%BE%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B9%20%D0%B8%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%BE%D0%B2.xlsx
 ********************************************************************************/
 CModule::IncludeModule('sale');
@@ -154,8 +154,8 @@ class CDeliveryKazPost
 		$totalPrice = 0;
 
 		$shopLocationId = CSaleHelper::getShopLocationId(SITE_ID);
-		$arShopLocation = CSaleLocation::GetByID($shopLocationId);
-		$arLocationTo = CSaleLocation::GetByID($arOrder['LOCATION_TO']);
+		$arShopLocation = CSaleHelper::getLocationByIdHitCached($shopLocationId);
+		$arLocationTo = CSaleHelper::getLocationByIdHitCached($arOrder['LOCATION_TO']);
 
 		foreach ($arPackagesParams as $arPackage)
 			$totalPrice += self::calculatePackPrice($arPackage, $profile, $arConfig, $arShopLocation['REGION_ID'], $arLocationTo['REGION_ID']);
@@ -224,7 +224,6 @@ class CDeliveryKazPost
 
 		$totalPrice = $basePrice;
 		$arDebug[] = 'Total value: '.$totalPrice;
-		//var_dump($arDebug);
 		return $totalPrice;
 	}
 }

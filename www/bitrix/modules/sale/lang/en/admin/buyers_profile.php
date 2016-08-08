@@ -149,4 +149,13 @@ $MESS["BUYER_NO_ORDER"] = "The customer didn't submit any orders";
 $MESS["BUYER_F_DELIVERY"] = "Approved for delivery";
 $MESS["BUYER_F_SHOW_SET"] = "Expand";
 $MESS["BUYER_F_HIDE_SET"] = "Hide";
+$MESS["SOB_PAYMENTS_PAID"] = "Paid";
+$MESS["SOB_PAYMENTS_UNPAID"] = "Not paid";
+$MESS["SOB_PAYMENTS_STATUS"] = "Status";
+$MESS["SOB_SHIPMENTS_ALLOW_DELIVERY"] = "Shipment approved";
+$MESS["SOB_SHIPMENTS_NOT_ALLOW_DELIVERY"] = "Shipment not approved";
+$MESS["SOB_SHIPMENTS_CANCELED"] = "Shipment canceled";
+$MESS["SOB_SHIPMENTS_DEDUCTED"] = "Shipped";
+$MESS["SOB_SHIPMENTS_MARKED"] = "Marked";
+$MESS["SOB_SHIPMENTS_STATUS"] = "Status";
 ?>

@@ -1,6 +1,8 @@
 <?
 $module_id = "sale";
 /** @global CMain $APPLICATION */
+/** @global string $RestoreDefaults */
+/** @global string $Update */
 
 use Bitrix\Main;
 use Bitrix\Main\Loader;
@@ -19,6 +21,7 @@ Main\Page\Asset::getInstance()->addJs('/bitrix/js/sale/options.js');
 $APPLICATION->SetAdditionalCSS("/bitrix/themes/.default/sale.css");
 
 Loader::includeModule('sale');
+Loader::includeModule('currency');
 
 $lpEnabled = CSaleLocation::isLocationProEnabled();
 $lMigrated = CSaleLocation::isLocationProMigrated();
@@ -88,7 +91,7 @@ $arAllOptions =
 		Array("GRAPH_WEIGHT", GetMessage("SALE_GRAPH_WEIGHT"), 800, Array("text", 10)),
 		Array("GRAPH_HEIGHT", GetMessage("SALE_GRAPH_HEIGHT"), 600, Array("text", 10)),
 		Array("path2user_ps_files", GetMessage("SALE_PATH2UPSF"), BX_PERSONAL_ROOT."/php_interface/include/sale_payment/", Array("text", 40)),
-		Array("path2custom_view_order", GetMessage("SMO_SALE_PATH2ORDER"), "", Array("text", 40)),
+		//Array("path2custom_view_order", GetMessage("SMO_SALE_PATH2ORDER"), "", Array("text", 40)),
 		Array("lock_catalog", GetMessage("SMO_LOCK_CATALOG"), "Y", Array("checkbox", 40)),
 		(CBXFeatures::IsFeatureEnabled('SaleAffiliate')) ? Array("affiliate_param_name", GetMessage("SMOS_AFFILIATE_PARAM"), "partner", Array("text", 40)) : array(),
 		(CBXFeatures::IsFeatureEnabled('SaleAffiliate')) ? Array("affiliate_life_time", GetMessage("SMO_AFFILIATE_LIFE_TIME"), "30", Array("text", 10)): array(),
@@ -145,6 +148,8 @@ if (CBXFeatures::IsFeatureEnabled('SaleCCards') && COption::GetOptionString($mod
 
 $aTabs[] = array("DIV" => "edit3", "TAB" => GetMessage("SALE_TAB_3"), "ICON" => "sale_settings", "TITLE" => GetMessage("SALE_TAB_3_TITLE"));
 $aTabs[] = array("DIV" => "edit4", "TAB" => GetMessage("MAIN_TAB_RIGHTS"), "ICON" => "sale_settings", "TITLE" => GetMessage("MAIN_TAB_TITLE_RIGHTS"));
+$aTabs[] = array("DIV" => "edit8", "TAB" => GetMessage("SALE_TAB_AUTO"), "ICON" => "sale_settings", "TITLE" => GetMessage("SALE_TAB_AUTO_TITLE"));
+
 $tabControl = new CAdminTabControl("tabControl", $aTabs);
 
 $strWarning = "";
@@ -282,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($Update) > 0 && $SALE_RIGHT =
 
 		$rsAgents = CAgent::GetList(array("ID"=>"DESC"), array(
 			"MODULE_ID" => "sale",
-			"NAME" => "CSaleUser::DeleteOldAgent(%",
+			"NAME" => "\\Bitrix\\Sale\\Basket::deleteOldAgent(%",
 		));
 
 		while($arAgent = $rsAgents->Fetch())
@@ -292,7 +297,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($Update) > 0 && $SALE_RIGHT =
 
 		$delete_after = (int)COption::GetOptionInt("sale", "delete_after");
 		if ($delete_after > 0)
-			CAgent::AddAgent("CSaleUser::DeleteOldAgent(".$delete_after.");", "sale", "N", 8*60*60, "", "Y");
+			CAgent::AddAgent("\\Bitrix\\Sale\\Basket::deleteOldAgent(".$delete_after.");", "sale", "N", 8*60*60, "", "Y");
 
 		/*$recalc_product_list_period = intval(COption::GetOptionInt("sale", "recalc_product_list_period", 7));
 		CAgent::RemoveAgent("CSaleProduct::RefreshProductList();", "sale");
@@ -311,8 +316,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($Update) > 0 && $SALE_RIGHT =
 		$arAmountSer = Array();
 		foreach($amount_val as $key =>$val)
 		{
-			if(DoubleVal($val) > 0)
-				$arAmountSer[$key] = Array("AMOUNT" => DoubleVal($val), "CURRENCY" => $amount_currency[$key]);
+			if((float)$val > 0)
+				$arAmountSer[$key] = array("AMOUNT" => (float)$val, "CURRENCY" => $amount_currency[$key]);
 		}
 		if(!empty($arAmountSer))
 			COption::SetOptionString("sale", "pay_amount", serialize($arAmountSer));
@@ -344,10 +349,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($Update) > 0 && $SALE_RIGHT =
 
 				if ($val["use"] == "Y")
 				{
-					if (IntVal($val["del_after"]) <= 0)
+					if (intval($val["del_after"]) <= 0)
 						$subscribProd[$lid]["del_after"] = 30;
 
-					CAgent::AddAgent("CSaleBasket::ClearProductSubscribe('".EscapePHPString($lid)."');", "sale", "N", IntVal($subscribProd[$lid]["del_after"])*24*60*60, "", "Y");
+					CAgent::AddAgent("CSaleBasket::ClearProductSubscribe('".EscapePHPString($lid)."');", "sale", "N", intval($subscribProd[$lid]["del_after"])*24*60*60, "", "Y");
 				}
 			}
 			COption::SetOptionString("sale", "subscribe_prod", serialize($subscribProd));
@@ -358,9 +363,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($Update) > 0 && $SALE_RIGHT =
 		{
 			foreach ($viewed as $lid => $val)
 			{
-				if (IntVal($val["time"]) <= 0)
+				if (intval($val["time"]) <= 0)
 					$viewed[$lid]["time"] = 90;
-				if (IntVal($val["count"]) <= 0)
+				if (intval($val["count"]) <= 0)
 					$viewed[$lid]["count"] = 1000;
 			}
 			COption::SetOptionString("sale", "viewed_product", serialize($viewed));
@@ -373,6 +378,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($Update) > 0 && $SALE_RIGHT =
 		else
 		{
 			COption::SetOptionString("sale", "viewed_capability", "N");
+		}
+
+		$rsAgents = CAgent::GetList(array("ID"=>"DESC"), array(
+			"MODULE_ID" => "sale",
+			"NAME" => "CSaleViewedProduct::ClearViewed();",
+		));
+		if (!$arAgent = $rsAgents->Fetch())
+		{
+			CAgent::AddAgent("CSaleViewedProduct::ClearViewed();", "sale", "N", 86400, "", "Y");
 		}
 
 		COption::SetOptionString("sale", "default_currency", $CURRENCY_DEFAULT);
@@ -396,6 +410,50 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($Update) > 0 && $SALE_RIGHT =
 		COption::SetOptionString("sale", "status_on_allow_delivery", $ALLOW_DELIVERY_STATUS);
 		COption::SetOptionString("sale", "status_on_payed_2_allow_delivery", $PAYED_2_ALLOW_DELIVERY);
 		COption::SetOptionString("sale", "allow_deduction_on_delivery", $ALLOW_DEDUCTION_ON_DELIVERY);
+
+		COption::SetOptionString("sale", "format_quantity", ($FORMAT_QUANTITY == 'AUTO' ? $FORMAT_QUANTITY: intval($FORMAT_QUANTITY)));
+
+		COption::SetOptionString("sale", "value_precision", (intval($VALUE_PRECISION) <= 0 ? 2 : intval($VALUE_PRECISION)));
+
+		$oldExpirationProcessingEvents = Option::get('sale', 'expiration_processing_events');
+
+		COption::SetOptionString("sale", "expiration_processing_events", $EXPIRATION_PROCESSING_EVENTS);
+
+		if ($oldExpirationProcessingEvents != $EXPIRATION_PROCESSING_EVENTS)
+		{
+			$eventManager = Main\EventManager::getInstance();
+
+			if ($EXPIRATION_PROCESSING_EVENTS == "Y")
+			{
+				Sale\Compatible\EventCompatibility::registerEvents();
+
+				$eventManager->registerEventHandlerCompatible('sale', 'OnBeforeBasketAdd', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onBeforeBasketAdd');
+				$eventManager->registerEventHandlerCompatible('sale', 'OnBasketAdd', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onBasketAdd');
+				$eventManager->registerEventHandlerCompatible('sale', 'OnOrderAdd', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onOrderAdd');
+				$eventManager->registerEventHandlerCompatible('sale', 'OnSalePayOrder', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onSalePayOrder');
+
+				$eventManager->unRegisterEventHandler('sale', 'OnSaleBasketItemSaved', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onSaleBasketItemSaved');
+				$eventManager->unRegisterEventHandler('sale', 'OnSaleOrderSaved', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onSaleOrderSaved');
+				$eventManager->unRegisterEventHandler('sale', 'OnSaleOrderPaid', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onSaleOrderPaid');
+			}
+			else
+			{
+				Sale\Compatible\EventCompatibility::unRegisterEvents();
+
+				$eventManager->unRegisterEventHandler('sale', 'OnBeforeBasketAdd', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onBeforeBasketAdd');
+				$eventManager->unRegisterEventHandler('sale', 'OnBasketAdd', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onBasketAdd');
+				$eventManager->unRegisterEventHandler('sale', 'OnOrderAdd', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onOrderAdd');
+				$eventManager->unRegisterEventHandler('sale', 'OnSalePayOrder', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onSalePayOrder');
+
+				$eventManager->registerEventHandler('sale', 'OnSaleBasketItemSaved', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onSaleBasketItemSaved');
+				$eventManager->registerEventHandler('sale', 'OnSaleOrderSaved', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onSaleOrderSaved');
+				$eventManager->registerEventHandler('sale', 'OnSaleOrderPaid', 'sale', '\Bitrix\Sale\Internals\ConversionHandlers', 'onSaleOrderPaid');
+			}
+		}
+
+		$ORDER_HISTORY_LOG_LEVEL = intval($ORDER_HISTORY_LOG_LEVEL);
+		COption::SetOptionString("sale", "order_history_log_level", $ORDER_HISTORY_LOG_LEVEL);
+
 
 		if (!empty($SELECTED_FIELDS) && is_array($SELECTED_FIELDS))
 		{
@@ -576,9 +634,79 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($Update) > 0 && $SALE_RIGHT =
 			unset($discountPercent);
 		}
 
+		$useSaleDiscountOnly = (string)Option::get('sale', 'use_sale_discount_only');
+		if ($useSaleDiscountOnly == 'N')
+		{
+			if (isset($_POST['discount_apply_mode']))
+			{
+				$discountModeApply = (int)$_POST['discount_apply_mode'];
+				$modeList = Sale\Discount::getApplyModeList(false);
+				if (in_array($discountModeApply, $modeList))
+					Option::set('sale', 'discount_apply_mode', $discountModeApply, '');
+				unset($modeList, $discountModeApply);
+			}
+		}
+		unset($useSaleDiscountOnly);
+
 		ob_start();
 		require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/admin/group_rights.php");
 		ob_end_clean();
+
+		if(isset($_POST['tracking_map_statuses']))
+		{
+			$mapStatuses = $_POST['tracking_map_statuses'];
+
+			foreach($mapStatuses as $tStatusId => $sStatusId)
+				if(strlen($sStatusId) <= 0)
+					unset($mapStatuses[$tStatusId]);
+
+			Option::set('sale', 'tracking_map_statuses', serialize($mapStatuses));
+			unset($mapStatuses);
+		}
+
+		$tSwitch = 'N';
+
+		if(isset($_POST['tracking_check_switch']) && $_POST['tracking_check_switch'] == 'Y')
+			$tSwitch = 'Y';
+
+		Option::set('sale', 'tracking_check_switch', $tSwitch);
+
+		$tPeriod = 0;
+
+		if(isset($_POST['tracking_check_period']) && intval($_POST['tracking_check_period']) > 0)
+			$tPeriod = intval($_POST['tracking_check_period']);
+
+		Option::set('sale', 'tracking_check_period', $tPeriod);
+
+		$agentName = '\Bitrix\Sale\Delivery\Tracking\Manager::startRefreshingStatuses();';
+
+		if($tSwitch == 'Y' && $tPeriod > 0)
+		{
+			$res = \CAgent::GetList(array(), array('NAME' => $agentName));
+
+			if($agent = $res->Fetch())
+			{
+				\CAgent::Update($agent['ID'], array('AGENT_INTERVAL' => $tPeriod*60*60));
+			}
+			else
+			{
+				\CAgent::AddAgent(
+					$agentName,
+					'sale',
+					"Y",
+					$tPeriod*60*60,
+					"",
+					"Y"
+				);
+			}
+		}
+		else
+		{
+			\CAgent::RemoveAgent(
+				$agentName,
+				'sale'
+			);
+		}
 	}
 }
 
@@ -603,8 +731,12 @@ elseif ($bWasUpdated)
 $currentSettings = array();
 $currentSettings['use_sale_discount_only'] = Option::get('sale', 'use_sale_discount_only');
 $currentSettings['get_discount_percent_from_base_price'] = Option::get('sale', 'get_discount_percent_from_base_price');
+$currentSettings['discount_apply_mode'] = (int)Option::get('sale', 'discount_apply_mode');
 $currentSettings['product_reserve_condition'] = (string)Option::get('sale', 'product_reserve_condition');
 $currentSettings['product_reserve_clear_period'] = (int)Option::get('sale', 'product_reserve_clear_period');
+$currentSettings['tracking_map_statuses'] = unserialize(Option::get('sale', 'tracking_map_statuses', ''));
+$currentSettings['tracking_check_switch'] = Option::get('sale', 'tracking_check_switch', 'N');
+$currentSettings['tracking_check_period'] = (int)Option::get('sale', 'tracking_check_period', '24');
 
 $tabControl->Begin();
 ?><form method="POST" action="<?echo $APPLICATION->GetCurPage()?>?mid=<?=$module_id?>&lang=<?=LANGUAGE_ID?>" name="opt_form">
@@ -647,6 +779,38 @@ $tabControl->BeginNextTab();
 	<?endfor;?>
 	<tr>
 		<td>
+			<?echo GetMessage("SMO_FORMAT_QUANTITY_TITLE")?>:
+		</td>
+		<td>
+			<?
+			$val = Main\Config\Option::get("sale", "format_quantity", "AUTO");
+			?>
+			<select name="FORMAT_QUANTITY">
+				<option value="AUTO"<?if ($val == "AUTO") echo " selected";?>><?= GetMessage("SMO_FORMAT_QUANTITY_AUTO") ?></option>
+				<option value="2"<?if ($val == "2") echo " selected";?>><?= GetMessage("SMO_FORMAT_QUANTITY_2") ?></option>
+				<option value="3"<?if ($val == "3") echo " selected";?>><?= GetMessage("SMO_FORMAT_QUANTITY_3") ?></option>
+				<option value="4"<?if ($val == "4") echo " selected";?>><?= GetMessage("SMO_FORMAT_QUANTITY_4") ?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<?echo GetMessage("SMO_VALUE_PRECISION_TITLE")?>:
+		</td>
+		<td>
+			<?
+			$val = Main\Config\Option::get("sale", "value_precision", SALE_VALUE_PRECISION);
+			?>
+			<select name="VALUE_PRECISION">
+				<option value="1"<?if ($val == "1") echo " selected";?>><?= GetMessage("SMO_VALUE_PRECISION_1") ?></option>
+				<option value="2"<?if ($val == "2") echo " selected";?>><?= GetMessage("SMO_VALUE_PRECISION_2") ?></option>
+				<option value="3"<?if ($val == "3") echo " selected";?>><?= GetMessage("SMO_VALUE_PRECISION_3") ?></option>
+				<option value="4"<?if ($val == "4") echo " selected";?>><?= GetMessage("SMO_VALUE_PRECISION_4") ?></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
 			<?echo GetMessage("SALE_DEF_CURR")?>
 		</td>
 		<td>
@@ -678,77 +842,28 @@ $tabControl->BeginNextTab();
 		<?
 	}
 	?>
-	<tr>
-		<td>
-			<?echo GetMessage("SALE_PAY_TO_STATUS")?>
-		</td>
-		<td>
-			<?
-			$val = COption::GetOptionString("sale", "status_on_paid", "");
-			?>
-			<select name="PAID_STATUS">
-				<?
-				foreach($arStatuses as $statusID => $statusName)
-				{
-					?><option value="<?=$statusID?>"<?if ($val == $statusID) echo " selected";?>><?=$statusName?></option><?
-				}
-				?>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<?echo GetMessage("SALE_ALLOW_DELIVERY_TO_STATUS")?>
-		</td>
-		<td>
-			<?
-			$val = COption::GetOptionString("sale", "status_on_allow_delivery", "");
-			?>
-			<select name="ALLOW_DELIVERY_STATUS">
-				<?
-				foreach($arStatuses as $statusID => $statusName)
-				{
-					?><option value="<?=$statusID?>"<?if ($val == $statusID) echo " selected";?>><?=$statusName?></option><?
-				}
-				?>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<label for="PAYED_2_ALLOW_DELIVERY"><?echo GetMessage("SALE_PAYED_2_ALLOW_DELIVERY")?></label>
-		</td>
-		<td>
-			<?
-			$val = COption::GetOptionString("sale", "status_on_payed_2_allow_delivery", "");
-			?>
-			<input type="checkbox" name="PAYED_2_ALLOW_DELIVERY" id="PAYED_2_ALLOW_DELIVERY" value="Y"<?if($val=="Y")echo" checked";?>>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<label for="ALLOW_DEDUCTION_ON_DELIVERY"><?echo GetMessage("SALE_ALLOW_DEDUCTION_ON_DELIVERY")?></label>
-		</td>
-		<td>
-			<?
-			$valDeductOnDelivery = COption::GetOptionString("sale", "allow_deduction_on_delivery", "");
-			?>
-			<input type="checkbox" name="ALLOW_DEDUCTION_ON_DELIVERY" id="ALLOW_DEDUCTION_ON_DELIVERY" value="Y"<?if($valDeductOnDelivery=="Y")echo" checked";?> onclick="javascript:toggleDefaultStores(this);">
-			<script type="text/javascript">
-				function toggleDefaultStores(el)
-				{
-					var elements = document.getElementsByClassName('default_deduct_store_control');
-					for (var i = 0; i < elements.length; ++i)
-					{
-						var site_id = elements[i].id.replace('default_deduct_store_control_', ''),
-							selector = BX("default_store_select_" + site_id);
 
-						elements[i].style.display = (el.checked && selector.length > 0) ? 'table-row' : 'none';
-						BX("default_store_select_save_" + site_id).value = (el.checked && selector.length > 0) ? "Y" : "N";
-					}
+	<tr>
+		<td>
+			<label for="EXPIRATION_PROCESSING_EVENTS"><?echo GetMessage("SALE_EXPIRATION_PROCESSING_EVENTS")?></label>
+		</td>
+		<td>
+			<?
+			$valExpirationProcessingEvents = COption::GetOptionString("sale", "expiration_processing_events", "");
+			?>
+			<input type="checkbox" name="EXPIRATION_PROCESSING_EVENTS" id="EXPIRATION_PROCESSING_EVENTS" value="Y"<?if($valExpirationProcessingEvents == "Y")echo" checked";?>>
+		</td>
+	</tr>
 
-				}
-			</script>
+	<tr>
+		<td>
+			<label for="ORDER_HISTORY_LOG_LEVEL"><?echo GetMessage("SALE_ORDER_HISTORY_LOG_LEVEL")?></label>
+		</td>
+		<td>
+			<?
+			$valOrderHistoryLogLevel = COption::GetOptionString("sale", "order_history_log_level", "");
+			?>
+			<input type="checkbox" name="ORDER_HISTORY_LOG_LEVEL" id="ORDER_HISTORY_LOG_LEVEL" value="1"<?if($valOrderHistoryLogLevel == "1")echo" checked";?>>
 		</td>
 	</tr>
 
@@ -958,6 +1073,28 @@ $tabControl->BeginNextTab();
 			<input type="checkbox" name="get_discount_percent_from_base_price" id="get_discount_percent_from_base_price_Y" value="Y"<? echo ($currentSettings['get_discount_percent_from_base_price'] == 'Y' ? ' checked' : ''); ?>>
 		</td>
 	</tr>
+	<?
+	if ($currentSettings['use_sale_discount_only'] != 'Y')
+	{
+	?>
+		<tr>
+			<td width="40%"><? echo GetMessage('BX_SALE_SETTINGS_OPTION_DISCOUNT_APPLY_MODE'); ?></td>
+			<td width="60%">
+				<select name="discount_apply_mode">
+				<?
+				$modeList = Sale\Discount::getApplyModeList(true);
+				foreach ($modeList as $modeId => $modeTitle)
+				{
+					?><option value="<?=$modeId; ?>"<?=($modeId == $currentSettings['discount_apply_mode'] ? ' selected' : ''); ?>><?=htmlspecialcharsex($modeTitle); ?></option><?
+				}
+				unset($modeTitle, $modeId, $modeList);
+				?>
+				</select>
+			</td>
+		</tr>
+	<?
+	}
+	?>
 
 	<!-- Recommended products -->
 	<tr class="heading">
@@ -1272,11 +1409,12 @@ function allowAutoDelivery(value)
 				<td width="40%" class="adm-detail-content-cell-l"><?echo GetMessage("SMO_PAR_SITE_WEIGHT_UNIT_SALE")?></td>
 				<td width="60%" class="adm-detail-content-cell-r"><select name="weight_unit_tmp[<?=$siteList[$i]["ID"]?>]" OnChange="setWeightValue(this)">
 						<option selected="selected"></option><?
-					$arUnitList = CSalemeasure::GetList("W");
+					$arUnitList = CSaleMeasure::GetList("W");
 					foreach ($arUnitList as $key => $arM)
 					{
+						$selectedWeightUnit = COption::GetOptionString($module_id, "weight_unit", trim($siteList[$i]["ID"]));
 						?>
-						<option value="<?=floatval($arM["KOEF"])?>"><?=htmlspecialcharsbx($arM["NAME"])?></option>
+						<option value="<?=floatval($arM["KOEF"])?>" <?=($selectedWeightUnit == $arM["NAME"]?"selected":"")?>><?=htmlspecialcharsbx($arM["NAME"])?></option>
 						<?
 					}
 
@@ -1316,10 +1454,12 @@ for ($i = 0; $i < $siteCount; $i++):
 	$location_zip = COption::GetOptionString('sale', 'location_zip', '', $siteList[$i]["ID"]);
 	$location = COption::GetOptionString('sale', 'location', '', $siteList[$i]["ID"]);
 
-	$sales_zone_countries = SalesZone::getCountriesIds($siteList[$i]["ID"]);
-	$sales_zone_regions = SalesZone::getRegionsIds($siteList[$i]["ID"]);
-	$sales_zone_cities = SalesZone::getCitiesIds($siteList[$i]["ID"]);
-
+	if(!$lMigrated)
+	{
+		$sales_zone_countries = SalesZone::getCountriesIds($siteList[$i]["ID"]);
+		$sales_zone_regions = SalesZone::getRegionsIds($siteList[$i]["ID"]);
+		$sales_zone_cities = SalesZone::getCitiesIds($siteList[$i]["ID"]);
+	}
 
 	if ($location_zip == 0) $location_zip = '';
 ?>
@@ -1572,7 +1712,7 @@ endfor;
 						);
 					while ($arSiteGroup = $dbSiteGroupsList->Fetch())
 					{
-						$arCurrentGroups[] = IntVal($arSiteGroup["GROUP_ID"]);
+						$arCurrentGroups[] = (int)$arSiteGroup["GROUP_ID"];
 					}
 
 					$b = "c_sort";
@@ -1608,11 +1748,140 @@ endfor;
 	</tr>
 <?$tabControl->BeginNextTab();?>
 <?require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/admin/group_rights.php");?>
+
+<?$tabControl->BeginNextTab();?>
+
+	<tr class="heading">
+		<td colspan="2"><?=GetMessage("SALE_AUTO_ORDER_STATUS_TITLE")?></td>
+	</tr>
+	<tr>
+		<td>
+			<?echo GetMessage("SALE_PAY_TO_STATUS")?>
+		</td>
+		<td>
+			<?
+			$val = COption::GetOptionString("sale", "status_on_paid", "");
+			?>
+			<select name="PAID_STATUS">
+				<?
+				foreach($arStatuses as $statusID => $statusName)
+				{
+					?><option value="<?=$statusID?>"<?if ($val == $statusID) echo " selected";?>><?=$statusName?></option><?
+				}
+				?>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<?echo GetMessage("SALE_ALLOW_DELIVERY_TO_STATUS")?>
+		</td>
+		<td>
+			<?
+			$val = COption::GetOptionString("sale", "status_on_allow_delivery", "");
+			?>
+			<select name="ALLOW_DELIVERY_STATUS">
+				<?
+				foreach($arStatuses as $statusID => $statusName)
+				{
+					?><option value="<?=$statusID?>"<?if ($val == $statusID) echo " selected";?>><?=$statusName?></option><?
+				}
+				?>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="PAYED_2_ALLOW_DELIVERY"><?echo GetMessage("SALE_PAYED_2_ALLOW_DELIVERY")?></label>
+		</td>
+		<td>
+			<?
+			$val = COption::GetOptionString("sale", "status_on_payed_2_allow_delivery", "");
+			?>
+			<input type="checkbox" name="PAYED_2_ALLOW_DELIVERY" id="PAYED_2_ALLOW_DELIVERY" value="Y"<?if($val=="Y")echo" checked";?>>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="ALLOW_DEDUCTION_ON_DELIVERY"><?echo GetMessage("SALE_ALLOW_DEDUCTION_ON_DELIVERY")?></label>
+		</td>
+		<td>
+			<?
+			$valDeductOnDelivery = COption::GetOptionString("sale", "allow_deduction_on_delivery", "");
+			?>
+			<input type="checkbox" name="ALLOW_DEDUCTION_ON_DELIVERY" id="ALLOW_DEDUCTION_ON_DELIVERY" value="Y"<?if($valDeductOnDelivery=="Y")echo" checked";?> onclick="javascript:toggleDefaultStores(this);">
+			<script type="text/javascript">
+				function toggleDefaultStores(el)
+				{
+					var elements = document.getElementsByClassName('default_deduct_store_control');
+					for (var i = 0; i < elements.length; ++i)
+					{
+						var site_id = elements[i].id.replace('default_deduct_store_control_', ''),
+							selector = BX("default_store_select_" + site_id);
+
+						elements[i].style.display = (el.checked && selector.length > 0) ? 'table-row' : 'none';
+						BX("default_store_select_save_" + site_id).value = (el.checked && selector.length > 0) ? "Y" : "N";
+					}
+
+				}
+			</script>
+		</td>
+	</tr>
+
+	<tr class="heading">
+		<td colspan="2"><?=GetMessage("SALE_AUTO_SHP_TR_STATUS_ON")?></td>
+	</tr>
+
+	<tr>
+		<td><?=GetMessage("SALE_TRACKING_CHECK_SWITCH")?>:</td>
+		<td><input id="sale-option-tracking-auto-switch" type="checkbox" value="Y" onClick="toggleTrackingAuto();" name="tracking_check_switch"<?=!empty($currentSettings["tracking_check_switch"]) && $currentSettings["tracking_check_switch"] == 'Y' ? ' checked' : ''?>></td>
+	</tr>
+
+	<tr class="sale-option-tracking-auto">
+		<td><?=GetMessage("SALE_TRACKING_CHECK_PERIOD")?>:</td>
+		<td><input type="text" name="tracking_check_period" value="<?=!empty($currentSettings["tracking_check_period"]) && intval($currentSettings["tracking_check_period"]) > 0 ? intval($currentSettings["tracking_check_period"]) : '0'?>"></td>
+	</tr>
+
+	<tr class="heading sale-option-tracking-auto">
+		<td colspan="2"><?=GetMessage("SALE_AUTO_SHP_TR_STATUS_MAP")?></td>
+	</tr>
+
+	<?
+	$shipmentStatuses = array();
+	$context = Main\Application::getInstance()->getContext();
+
+	$dbRes = Sale\Internals\StatusTable::getList(array(
+		'select' => array('ID', 'Bitrix\Sale\Internals\StatusLangTable:STATUS.NAME'),
+		'filter' => array(
+			'=Bitrix\Sale\Internals\StatusLangTable:STATUS.LID' => $context->getLanguage(),
+			'=TYPE' => 'D'
+		),
+		'order' => array('SORT' => 'ASC')
+	));
+
+	while ($shipmentStatus = $dbRes->fetch())
+		$shipmentStatuses[$shipmentStatus["ID"]] = $shipmentStatus["SALE_INTERNALS_STATUS_SALE_INTERNALS_STATUS_LANG_STATUS_NAME"] . " [" . $shipmentStatus["ID"] . "]";
+
+	$trackingStatuses = \Bitrix\Sale\Delivery\Tracking\Manager::getStatusesList();
+	?><tr class="sale-option-tracking-auto"><td><b><?=GetMessage("SALE_TRACKING_TSTATUSES")?></b></td><td><b><?=GetMessage("SALE_TRACKING_SSTATUSES")?></b></td></tr><?
+	foreach($trackingStatuses as $tStatusId => $tStatusName):?>
+		<tr class="sale-option-tracking-auto">
+			<td><?=$tStatusName?>:</td>
+			<td>
+				<select name="tracking_map_statuses[<?=$tStatusId?>]">
+					<option value=""><?=GetMessage("SALE_TRACKING_NOT_USE")?></option>
+					<?foreach($shipmentStatuses as $sStatusId => $sStatusName):?>
+						<option value="<?=$sStatusId?>"<?=!empty($currentSettings["tracking_map_statuses"][$tStatusId]) && $currentSettings["tracking_map_statuses"][$tStatusId] == $sStatusId ? " selected" : ""?>><?=$sStatusName?></option>
+					<?endforeach;?>
+				</select>
+			</td>
+		</tr>
+	<?endforeach;?>
 <?$tabControl->Buttons();?>
 <script type="text/javascript">
 function RestoreDefaults()
 {
-	if (confirm('<?echo AddSlashes(GetMessage("MAIN_HINT_RESTORE_DEFAULTS_WARNING"))?>'))
+	if (confirm('<?echo addslashes(GetMessage("MAIN_HINT_RESTORE_DEFAULTS_WARNING"))?>'))
 		window.location = "<?echo $APPLICATION->GetCurPage()?>?RestoreDefaults=Y&lang=<?echo LANGUAGE_ID?>&mid=<?echo $module_id?>";
 }
 </script>
@@ -1626,12 +1895,136 @@ function RestoreDefaults()
 <input type="button" <?if ($SALE_RIGHT<"W") echo "disabled" ?> title="<?echo GetMessage("MAIN_HINT_RESTORE_DEFAULTS")?>" OnClick="RestoreDefaults();" value="<?echo GetMessage("MAIN_RESTORE_DEFAULTS")?>">
 <?$tabControl->End();?>
 </form>
-<?endif;?>
+<h2><?=GetMessage("SALE_SYSTEM_PROCEDURES") ?></h2>
+	<?
+	$showbasketDiscountConvert = (string)Main\Config\Option::get('sale', 'basket_discount_converted') != 'Y' && Main\ModuleManager::isModuleInstalled('catalog');
+	if ($showbasketDiscountConvert)
+	{
+		if (CSaleBasketDiscountConvert::getAllCounter() == 0)
+		{
+			$adminNotifyIterator = CAdminNotify::GetList(array(), array('MODULE_ID' => 'sale', 'TAG' => 'BASKET_DISCOUNT_CONVERTED'));
+			if ($adminNotifyIterator)
+			{
+				if ($adminNotify = $adminNotifyIterator->Fetch())
+					CAdminNotify::Delete($adminNotify['ID']);
+				unset($adminNotify);
+			}
+			unset($adminNotifyIterator);
+			$showbasketDiscountConvert = false;
+		}
+	}
+	$systemTabs[] = array('DIV' => 'saleSysTabReindex', 'TAB' => GetMessage('SALE_SYSTEM_TAB_REINDEX'), 'ICON' => 'sale_settings', 'TITLE' => GetMessage('SALE_SYSTEM_TAB_REINDEX_TITLE'));
+	if ($showbasketDiscountConvert)
+		$systemTabs[] = array('DIV' => 'saleSysTabConvert', 'TAB' => GetMessage('SALE_SYSTEM_TAB_CONVERT'), 'ICON' => 'sale_settings', 'TITLE' => GetMessage('SALE_SYSTEM_TAB_CONVERT_TITLE'));
+
+	$systemTabControl = new CAdminTabControl('saleSysTabControl', $systemTabs, true, true);
+
+	$systemTabControl->Begin();
+	$systemTabControl->BeginNextTab();
+	?><tr><td align="left"><?
+	$firstTop = ' style="margin-top: 0;"';
+	?><h4<? echo $firstTop; ?>><? echo GetMessage('SALE_SYS_PROC_REINDEX_DISCOUNT'); ?></h4>
+	<input class="adm-btn-save" type="button" id="sale_discount_reindex" value="<? echo GetMessage('SALE_SYS_PROC_REINDEX_DISCOUNT_BTN'); ?>">
+	<p><? echo GetMessage('SALE_SYS_PROC_REINDEX_DISCOUNT_ALERT'); ?></p><?
+	$firstTop = '';
+	?></td></tr><?
+	if ($showbasketDiscountConvert)
+	{
+		$systemTabControl->BeginNextTab();
+		?>
+		<tr>
+		<td align="left"><?
+		$firstTop = ' style="margin-top: 0;"';
+		?><h4<? echo $firstTop; ?>><? echo GetMessage('SALE_SYS_PROC_CONVERT_BASKET_DISCOUNT'); ?></h4>
+		<input class="adm-btn-save" type="button" id="sale_basket_discount" value="<? echo GetMessage('SALE_SYS_PROC_CONVERT_BASKET_DISCOUNT_BTN'); ?>">
+		<p><? echo GetMessage('SALE_SYS_PROC_CONVERT_BASKET_DISCOUNT_ALERT'); ?></p><?
+		$firstTop = '';
+		?></td></tr><?
+	}
+	$systemTabControl->End();
+	?>
 <script type="text/javascript">
+
+	function toggleTrackingAuto()
+	{
+		var nodes = BX.findChildren(document, {className:"sale-option-tracking-auto"}, true),
+			switchStateOn = BX("sale-option-tracking-auto-switch").checked;
+
+		for(var i in nodes)
+			nodes[i].style.display = switchStateOn ? '' : 'none';
+	}
+
+	function showDiscountReindex()
+	{
+		var obDiscount, params;
+
+		params = {
+			bxpublic: 'Y',
+			sessid: BX.bitrix_sessid()
+		};
+
+		var obBtn = {
+			title: '<? echo CUtil::JSEscape(GetMessage('SALE_OPTIONS_POPUP_WINDOW_CLOSE_BTN')) ?>',
+			id: 'close',
+			name: 'close',
+			action: function () {
+				this.parentWindow.Close();
+			}
+		};
+
+		obDiscount = new BX.CAdminDialog({
+			'content_url': '/bitrix/tools/sale/discount_reindex.php?lang=<? echo LANGUAGE_ID; ?>',
+			'content_post': params,
+			'draggable': true,
+			'resizable': true,
+			'buttons': [obBtn]
+		});
+		obDiscount.Show();
+		return false;
+	}
+	function showBasketDiscountConvert()
+	{
+		var obDiscount, params;
+
+		params = {
+			bxpublic: 'Y',
+			sessid: BX.bitrix_sessid()
+		};
+
+		var obBtn = {
+			title: '<? echo CUtil::JSEscape(GetMessage('SALE_OPTIONS_POPUP_WINDOW_CLOSE_BTN')) ?>',
+			id: 'close',
+			name: 'close',
+			action: function () {
+				this.parentWindow.Close();
+			}
+		};
+
+		obDiscount = new BX.CAdminDialog({
+			'content_url': '/bitrix/tools/sale/basket_discount_convert.php?lang=<? echo LANGUAGE_ID; ?>',
+			'content_post': params,
+			'draggable': true,
+			'resizable': true,
+			'buttons': [obBtn]
+		});
+		obDiscount.Show();
+		return false;
+	}
 	BX.ready( function(){
 		BX.message["SMO_LOCATION_JS_GET_DATA_ERROR"] = "<?=GetMessage("SMO_LOCATION_JS_GET_DATA_ERROR")?>";
 		BX.message["SMO_LOCATION_ALL"] = "<?=GetMessage("SMO_LOCATION_ALL")?>";
 		BX.message["SMO_LOCATION_NO_COUNTRY"] = "<?=GetMessage("SMO_LOCATION_NO_COUNTRY")?>";
 		BX.message["SMO_LOCATION_NO_REGION"] = "<?=GetMessage("SMO_LOCATION_NO_REGION")?>";
+
+		var discountReindex = BX('sale_discount_reindex'),
+			basketDiscount = BX('sale_basket_discount');
+
+		if (!!discountReindex)
+			BX.bind(discountReindex, 'click', showDiscountReindex);
+		if (!!basketDiscount)
+			BX.bind(basketDiscount, 'click', showBasketDiscountConvert);
+
+		toggleTrackingAuto();
 	});
 </script>
+<?endif;?>

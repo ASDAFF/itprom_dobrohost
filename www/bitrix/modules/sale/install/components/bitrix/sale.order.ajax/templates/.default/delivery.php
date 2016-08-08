@@ -121,6 +121,10 @@
 
 		BX.onCustomEvent('onSaleDeliveryGetExtraParams',[window.BX.SaleDeliveryExtraParams]);
 	}
+
+	if(typeof submitForm === 'function')
+		BX.addCustomEvent('onDeliveryExtraServiceValueChange', function(){ submitForm(); });
+
 </script>
 
 <input type="hidden" name="BUYER_STORE" id="BUYER_STORE" value="<?=$arResult["BUYER_STORE"]?>" />
@@ -135,173 +139,158 @@
 
 		foreach ($arResult["DELIVERY"] as $delivery_id => $arDelivery)
 		{
-			if ($delivery_id !== 0 && intval($delivery_id) <= 0)
-			{
-				foreach ($arDelivery["PROFILES"] as $profile_id => $arProfile)
-				{
-					?>
-					<div class="bx_block w100 vertical">
-						<div class="bx_element">
 
-							<input
-								type="radio"
-								id="ID_DELIVERY_<?=$delivery_id?>_<?=$profile_id?>"
-								name="<?=htmlspecialcharsbx($arProfile["FIELD_NAME"])?>"
-								value="<?=$delivery_id.":".$profile_id;?>"
-								<?=$arProfile["CHECKED"] == "Y" ? "checked=\"checked\"" : "";?>
-								onclick="submitForm();"
-								/>
+			if($arDelivery["ISNEEDEXTRAINFO"] == "Y")
+				$extraParams = "showExtraParamsDialog('".$delivery_id."');";
+			else
+				$extraParams = "";
 
-							<label for="ID_DELIVERY_<?=$delivery_id?>_<?=$profile_id?>">
+			if (count($arDelivery["STORE"]) > 0)
+				$clickHandler = "onClick = \"fShowStore('".$arDelivery["ID"]."','".$arParams["SHOW_STORES_IMAGES"]."','".$width."','".SITE_ID."')\";";
+			else
+				$clickHandler = "onClick = \"BX('ID_DELIVERY_ID_".$arDelivery["ID"]."').checked=true;".$extraParams."submitForm();\"";
 
-								<?
-								if (count($arDelivery["LOGOTIP"]) > 0):
+			?>
+			<div class="bx_block w100 vertical">
 
-									$arFileTmp = CFile::ResizeImageGet(
-										$arDelivery["LOGOTIP"]["ID"],
-										array("width" => "95", "height" =>"55"),
-										BX_RESIZE_IMAGE_PROPORTIONAL,
-										true
-									);
+				<div class="bx_element">
 
-									$deliveryImgURL = $arFileTmp["src"];
-								else:
-									$deliveryImgURL = $templateFolder."/images/logo-default-d.gif";
-								endif;
+					<input type="radio"
+						id="ID_DELIVERY_ID_<?= $arDelivery["ID"] ?>"
+						name="<?=htmlspecialcharsbx($arDelivery["FIELD_NAME"])?>"
+						value="<?= $arDelivery["ID"] ?>"<?if ($arDelivery["CHECKED"]=="Y") echo " checked";?>
+						onclick="submitForm();"
+						/>
 
-								if($arDelivery["ISNEEDEXTRAINFO"] == "Y")
-									$extraParams = "showExtraParamsDialog('".$delivery_id.":".$profile_id."');";
+					<label for="ID_DELIVERY_ID_<?=$arDelivery["ID"]?>">
+
+						<?
+						if (count($arDelivery["LOGOTIP"]) > 0):
+
+							$arFileTmp = CFile::ResizeImageGet(
+								$arDelivery["LOGOTIP"]["ID"],
+								array("width" => "95", "height" =>"55"),
+								BX_RESIZE_IMAGE_PROPORTIONAL,
+								true
+							);
+
+							$deliveryImgURL = $arFileTmp["src"];
+						else:
+							$deliveryImgURL = $templateFolder."/images/logo-default-d.gif";
+						endif;
+						?>
+
+						<div class="bx_logotype"><span style='background-image:url(<?=$deliveryImgURL?>);' <?=$clickHandler?>></span></div>
+
+						<div class="bx_description">
+
+							<strong <?=$clickHandler?>>
+								<div class="name"><strong><?= htmlspecialcharsbx($arDelivery["NAME"])?></strong></div>
+							</strong>
+
+							<span class="bx_result_price">
+								<?if(isset($arDelivery["PRICE"]))
+								{
+
+									echo GetMessage("SALE_DELIV_PRICE").": <b>";
+									if (isset($arDelivery['DELIVERY_DISCOUNT_PRICE'])
+										&& round($arDelivery['DELIVERY_DISCOUNT_PRICE'], 4) != round($arDelivery["PRICE"], 4))
+									{
+										echo (strlen($arDelivery["DELIVERY_DISCOUNT_PRICE_FORMATED"]) > 0 ? $arDelivery["DELIVERY_DISCOUNT_PRICE_FORMATED"] : number_format($arDelivery["DELIVERY_DISCOUNT_PRICE"], 2, ',', ' '));
+										echo "</b><br/><span style='text-decoration:line-through;color:#828282;'>".(strlen($arDelivery["PRICE_FORMATED"]) > 0 ? $arDelivery["PRICE_FORMATED"] : number_format($arDelivery["PRICE"], 2, ',', ' '))."</span>";
+									}
+									else
+									{
+										echo (strlen($arDelivery["PRICE_FORMATED"]) > 0 ? $arDelivery["PRICE_FORMATED"] : number_format($arDelivery["PRICE"], 2, ',', ' '))."</b>";
+									}
+									echo "<br />";
+
+									if (strlen($arDelivery["PERIOD_TEXT"])>0)
+									{
+										echo GetMessage('SALE_SADC_TRANSIT').": <b>".$arDelivery["PERIOD_TEXT"]."</b>";
+										echo '<br />';
+									}
+									if ($arDelivery["PACKS_COUNT"] > 1)
+									{
+										echo '<br />';
+										echo GetMessage('SALE_SADC_PACKS').': <b>'.$arDelivery["PACKS_COUNT"].'</b>';
+									}
+								}
+								elseif(isset($arDelivery["CALCULATE_ERRORS"]))
+								{
+									ShowError($arDelivery["CALCULATE_ERRORS"]);
+								}
 								else
-									$extraParams = "";
+								{
+									$APPLICATION->IncludeComponent('bitrix:sale.ajax.delivery.calculator', '', array(
+										"NO_AJAX" => $arParams["DELIVERY_NO_AJAX"],
+										"DELIVERY_ID" => $delivery_id,
+										"ORDER_WEIGHT" => $arResult["ORDER_WEIGHT"],
+										"ORDER_PRICE" => $arResult["ORDER_PRICE"],
+										"LOCATION_TO" => $arResult["USER_VALS"]["DELIVERY_LOCATION"],
+										"LOCATION_ZIP" => $arResult["USER_VALS"]["DELIVERY_LOCATION_ZIP"],
+										"CURRENCY" => $arResult["BASE_LANG_CURRENCY"],
+										"ITEMS" => $arResult["BASKET_ITEMS"],
+										"EXTRA_PARAMS_CALLBACK" => $extraParams,
+										"ORDER_DATA" => $arResult['ORDER_DATA']
+									), null, array('HIDE_ICONS' => 'Y'));
 
-								?>
-								<div class="bx_logotype" onclick="BX('ID_DELIVERY_<?=$delivery_id?>_<?=$profile_id?>').checked=true;<?=$extraParams?>submitForm();">
-									<span style='background-image:url(<?=$deliveryImgURL?>);'></span>
-								</div>
+								}?>
 
-								<div class="bx_description">
-
-									<strong onclick="BX('ID_DELIVERY_<?=$delivery_id?>_<?=$profile_id?>').checked=true;<?=$extraParams?>submitForm();">
-										<?=htmlspecialcharsbx($arDelivery["TITLE"])." (".htmlspecialcharsbx($arProfile["TITLE"]).")";?>
-									</strong>
-
-									<span class="bx_result_price"><!-- click on this should not cause form submit -->
-										<?
-										if($arProfile["CHECKED"] == "Y" && doubleval($arResult["DELIVERY_PRICE"]) > 0):
-										?>
-											<div><?=GetMessage("SALE_DELIV_PRICE")?>:&nbsp;<b><?=$arResult["DELIVERY_PRICE_FORMATED"]?></b></div>
-										<?
-											if ((isset($arResult["PACKS_COUNT"]) && $arResult["PACKS_COUNT"]) > 1):
-												echo GetMessage('SALE_PACKS_COUNT').': <b>'.$arResult["PACKS_COUNT"].'</b>';
-											endif;
-
-										else:
-											$APPLICATION->IncludeComponent('bitrix:sale.ajax.delivery.calculator', '', array(
-												"NO_AJAX" => $arParams["DELIVERY_NO_AJAX"],
-												"DELIVERY" => $delivery_id,
-												"PROFILE" => $profile_id,
-												"ORDER_WEIGHT" => $arResult["ORDER_WEIGHT"],
-												"ORDER_PRICE" => $arResult["ORDER_PRICE"],
-												"LOCATION_TO" => $arResult["USER_VALS"]["DELIVERY_LOCATION"],
-												"LOCATION_ZIP" => $arResult["USER_VALS"]["DELIVERY_LOCATION_ZIP"],
-												"CURRENCY" => $arResult["BASE_LANG_CURRENCY"],
-												"ITEMS" => $arResult["BASKET_ITEMS"],
-												"EXTRA_PARAMS_CALLBACK" => $extraParams
-											), null, array('HIDE_ICONS' => 'Y'));
-										endif;
-										?>
-									</span>
-
-									<p onclick="BX('ID_DELIVERY_<?=$delivery_id?>_<?=$profile_id?>').checked=true;submitForm();">
-										<?if (strlen($arProfile["DESCRIPTION"]) > 0):?>
-											<?=nl2br($arProfile["DESCRIPTION"])?>
-										<?else:?>
-											<?=nl2br($arDelivery["DESCRIPTION"])?>
-										<?endif;?>
-									</p>
-								</div>
-
-							</label>
-
-						</div>
-					</div>
-					<?
-				} // endforeach
-			}
-			else // stores and courier
-			{
-				if (count($arDelivery["STORE"]) > 0)
-					$clickHandler = "onClick = \"fShowStore('".$arDelivery["ID"]."','".$arParams["SHOW_STORES_IMAGES"]."','".$width."','".SITE_ID."')\";";
-				else
-					$clickHandler = "onClick = \"BX('ID_DELIVERY_ID_".$arDelivery["ID"]."').checked=true;submitForm();\"";
-				?>
-					<div class="bx_block w100 vertical">
-
-						<div class="bx_element">
-
-							<input type="radio"
-								id="ID_DELIVERY_ID_<?= $arDelivery["ID"] ?>"
-								name="<?=htmlspecialcharsbx($arDelivery["FIELD_NAME"])?>"
-								value="<?= $arDelivery["ID"] ?>"<?if ($arDelivery["CHECKED"]=="Y") echo " checked";?>
-								onclick="submitForm();"
-								/>
-
-							<label for="ID_DELIVERY_ID_<?=$arDelivery["ID"]?>" <?=$clickHandler?>>
-
+							</span>
+							<p <?=$clickHandler?>>
 								<?
-								if (count($arDelivery["LOGOTIP"]) > 0):
+								if (strlen($arDelivery["DESCRIPTION"])>0)
+									echo $arDelivery["DESCRIPTION"]."<br />";
 
-									$arFileTmp = CFile::ResizeImageGet(
-										$arDelivery["LOGOTIP"]["ID"],
-										array("width" => "95", "height" =>"55"),
-										BX_RESIZE_IMAGE_PROPORTIONAL,
-										true
-									);
-
-									$deliveryImgURL = $arFileTmp["src"];
-								else:
-									$deliveryImgURL = $templateFolder."/images/logo-default-d.gif";
-								endif;
+								if (count($arDelivery["STORE"]) > 0 && $arDelivery['CHECKED'] == 'Y'):
 								?>
-
-								<div class="bx_logotype"><span style='background-image:url(<?=$deliveryImgURL?>);'></span></div>
-
-								<div class="bx_description">
-									<div class="name"><strong><?= htmlspecialcharsbx($arDelivery["NAME"])?></strong></div>
-									<span class="bx_result_price">
-										<?
-										if (strlen($arDelivery["PERIOD_TEXT"])>0)
-										{
-											echo $arDelivery["PERIOD_TEXT"];
-											?><br /><?
-										}
-										?>
-										<?=GetMessage("SALE_DELIV_PRICE");?>: <b><?=$arDelivery["PRICE_FORMATED"]?></b><br />
+									<span id="select_store"<?if(strlen($arResult["STORE_LIST"][$arResult["BUYER_STORE"]]["TITLE"]) <= 0) echo " style=\"display:none;\"";?>>
+										<span class="select_store"><?=GetMessage('SOA_ORDER_GIVE_TITLE');?>: </span>
+										<span class="ora-store" id="store_desc"><?=htmlspecialcharsbx($arResult["STORE_LIST"][$arResult["BUYER_STORE"]]["TITLE"])?></span>
 									</span>
-									<p>
+								<?
+							endif;
+							?>
+							</p>
+						</div>
+					</label>
+					<?if ($arDelivery['CHECKED'] == 'Y'):?>
+						<table class="delivery_extra_services">
+							<?foreach ($arDelivery['EXTRA_SERVICES'] as $extraServiceId => $extraService):?>
+								<?if(!$extraService->canUserEditValue()) continue;?>
+								<tr>
+									<td class="name">
+										<?=$extraService->getName()?>
+									</td>
+									<td class="control">
+										<?=$extraService->getEditControl('DELIVERY_EXTRA_SERVICES['.$arDelivery['ID'].']['.$extraServiceId.']')	?>
+									</td>
+									<td rowspan="2" class="price">
 										<?
-										if (strlen($arDelivery["DESCRIPTION"])>0)
-											echo $arDelivery["DESCRIPTION"]."<br />";
 
-										if (count($arDelivery["STORE"]) > 0):
+										if ($price = $extraService->getPrice())
+										{
+											echo GetMessage('SOA_TEMPL_SUM_PRICE').': ';
+											echo '<strong>'.SaleFormatCurrency($price, $arResult['BASE_LANG_CURRENCY']).'</strong>';
+										}
+
 										?>
-											<span id="select_store"<?if(strlen($arResult["STORE_LIST"][$arResult["BUYER_STORE"]]["TITLE"]) <= 0) echo " style=\"display:none;\"";?>>
-												<span class="select_store"><?=GetMessage('SOA_ORDER_GIVE_TITLE');?>: </span>
-												<span class="ora-store" id="store_desc"><?=htmlspecialcharsbx($arResult["STORE_LIST"][$arResult["BUYER_STORE"]]["TITLE"])?></span>
-											</span>
-										<?
-									endif;
-									?>
-									</p>
-								</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" class="description">
+										<?=$extraService->getDescription()?>
+									</td>
+								</tr>
+							<?endforeach?>
+						</table>
+					<?endif?>
 
-							</label>
-
-						<div class="clear"></div>
-					</div>
+					<div class="clear"></div>
 				</div>
-				<?
-			}
+			</div>
+			<?
 		}
 	}
 ?>

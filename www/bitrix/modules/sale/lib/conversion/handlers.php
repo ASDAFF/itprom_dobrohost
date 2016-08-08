@@ -9,7 +9,7 @@ use Bitrix\Main\Localization\Loc;
 
 Loc::loadMessages(__FILE__);
 
-final class Handlers
+class Handlers
 {
 //	public static function OnGetCountersInfo()
 //	{
@@ -31,7 +31,7 @@ final class Handlers
 	static public function OnGetRateClasses()
 	{
 		$scale = array(0.5, 1, 1.5, 2, 5);
-		$units = array('SUM' => Config::getBaseCurrencyUnit());
+		$units = array('SUM' => Config::getCurrencyUnit());
 
 		return array(
 			'sale_payment' => array(
@@ -170,7 +170,7 @@ final class Handlers
 
 				if (defined('ADMIN_SECTION') && ADMIN_SECTION === true)
 				{
-					$context->addCounter    ('sale_payment_add_day', 1);
+					$context->addCounter    ('sale_payment_add_day', 1, new \Bitrix\Main\Type\Date());
 				}
 				else
 				{
