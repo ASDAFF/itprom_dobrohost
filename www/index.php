@@ -3,85 +3,111 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetPageProperty("keywords", "термошкаф, термошкаф электрический, термошкафы для оборудования, термошкаф купить, термошкафы для оборудования связи, термошкаф балконный, термошкаф настенный, термошкаф лабораторный, термошкаф купить в москве, всепогодный термошкаф, вакуумный термошкаф");
 $APPLICATION->SetPageProperty("title", "Термошкафы ITProm");
 $APPLICATION->SetPageProperty("description", "Купить термошкафы ITProm по лучшей цене с доставкой по Москве и в регионы. Огромный каталог термошкафов ITProm от производителя.");
-$APPLICATION->SetTitle("Термошкафы ITProm"); ?>
-<?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/gallery_brands.js");?>
+$APPLICATION->SetTitle("Термошкафы ITProm"); ?><?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/gallery_brands.js");?>
 <?$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH."/js/gallery-cert.js");?>
 <?$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/gallery-cert.css");?>
 <?$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/gallery_brands.css");?>
+<?$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH."/css/gallery_brands.css");?>
     <div class="wrapper">
-        <?$APPLICATION->IncludeComponent(
-            "bitrix:catalog.section.list",
-            "tree1",
-            Array(
-                "ADD_SECTIONS_CHAIN" => "N",
-                "CACHE_GROUPS" => "Y",
-                "CACHE_TIME" => "36000000",
-                "CACHE_TYPE" => "N",
-                "COUNT_ELEMENTS" => "Y",
-                "HIDE_SECTION_NAME" => "N",
-                "IBLOCK_ID" => "4",
-                "IBLOCK_TYPE" => "catalog",
-                "SECTION_CODE" => "",
-                "SECTION_FIELDS" => array("NAME","DESCRIPTION","PICTURE",""),
-                "SECTION_ID" => $_REQUEST["SECTION_ID"],
-                "SECTION_URL" => "",
-                "SECTION_USER_FIELDS" => array("UF_SECT_SERIES_NAME","UF_SECT_DESCRIPTION","UF_SECT_CHARACTER","UF_SHOW_ON_MAIN_PAGE",""),
-                "SHOW_PARENT_NAME" => "Y",
-                "TOP_DEPTH" => "2",
-                "VIEW_MODE" => "TILE"
-            )
-        );?>
+        <!--Термошкаф -->
+        <div class="activ-termo">
+            <ul class="first-equip">
+                <li><a href="https://itprom.ru/catalog/aksessuary-dlya-termoshkafov/krepleniya-na-stenu/">Крепление на стену</a></li>
+                <li><a href="#">Вентилятор</a></li>
+                <li><a href="https://itprom.ru/catalog/aksessuary-dlya-termoshkafov/termostaty/">Термостат вентилятора</a></li>
+                <li><a href="https://itprom.ru/catalog/aksessuary-dlya-termoshkafov/termostaty/">Термостат нагревателя</a></li>
+                <li><a href="#">Розетка</a></li>
+                <li><a href="#">Автоматический выключатель</a></li>
+                <li><a href="#">Вентиляционная решетка</a></li>
+            </ul>
+            <ul class="second-equip">
+                <li><a href="#">Термоизоляционный корпус</a></li>
+                <li><a href="#">Монтажная панель</a></li>
+                <li><a href="https://itprom.ru/catalog/aksessuary-dlya-termoshkafov/polki-konsolnye/">Полка для оборудования</a></li>
+                <li><a href="https://itprom.ru/catalog/aksessuary-dlya-termoshkafov/ruchki-dvernye/">Замок</a></li>
+                <li><a href="https://itprom.ru/catalog/aksessuary-dlya-termoshkafov/nagrevateli/">Нагреватель</a></li>
+                <li><a href="#">Гигростат</a></li>
+                <li><a href="#">Утеплитель</a></li>
+            </ul>
+        </div>
+        <!--Термошкаф -->
     </div>
     <div class="wrapper">
-        <? $APPLICATION->IncludeComponent(
-            "bitrix:news.list",
-            "main_slider",
-            Array(
-                "ACTIVE_DATE_FORMAT" => "d.m.Y",
-                "ADD_SECTIONS_CHAIN" => "Y",
-                "AJAX_MODE" => "N",
-                "AJAX_OPTION_ADDITIONAL" => "",
-                "AJAX_OPTION_HISTORY" => "N",
-                "AJAX_OPTION_JUMP" => "N",
-                "AJAX_OPTION_STYLE" => "N",
-                "CACHE_FILTER" => "Y",
-                "CACHE_GROUPS" => "Y",
-                "CACHE_TIME" => "3600",
-                "CACHE_TYPE" => "A",
-                "CHECK_DATES" => "Y",
-                "DETAIL_URL" => "",
-                "DISPLAY_BOTTOM_PAGER" => "Y",
-                "DISPLAY_DATE" => "N",
-                "DISPLAY_NAME" => "Y",
-                "DISPLAY_PICTURE" => "Y",
-                "DISPLAY_PREVIEW_TEXT" => "N",
-                "DISPLAY_TOP_PAGER" => "Y",
-                "FIELD_CODE" => array(0 => "", 1 => "",),
-                "FILTER_NAME" => "",
-                "HIDE_LINK_WHEN_NO_DETAIL" => "Y",
-                "IBLOCK_ID" => "9",
-                "IBLOCK_TYPE" => "content",
-                "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
-                "INCLUDE_SUBSECTIONS" => "Y",
-                "NEWS_COUNT" => "1",
-                "PAGER_DESC_NUMBERING" => "Y",
-                "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-                "PAGER_SHOW_ALL" => "N",
-                "PAGER_SHOW_ALWAYS" => "N",
-                "PAGER_TEMPLATE" => ".default",
-                "PAGER_TITLE" => "Новости",
-                "PARENT_SECTION" => "",
-                "PARENT_SECTION_CODE" => "",
-                "PREVIEW_TRUNCATE_LEN" => "",
-                "PROPERTY_CODE" => array(0 => "STATIC", 1 => "SLIDES", 2 => "LINKS", 3 => "LINKS_PIC"),
-                "SET_STATUS_404" => "Y",
-                "SET_TITLE" => "N",
-                "SORT_BY1" => "SORT",
-                "SORT_BY2" => "NAME",
-                "SORT_ORDER1" => "ASC",
-                "SORT_ORDER2" => "ASC"
-            )
-        ); ?>
+
+        <?$APPLICATION->IncludeComponent(
+	"bitrix:catalog.section.list",
+	"tree2",
+	Array(
+		"ADD_SECTIONS_CHAIN" => "N",
+		"CACHE_GROUPS" => "Y",
+		"CACHE_TIME" => "36000000",
+		"CACHE_TYPE" => "N",
+		"COMPONENT_TEMPLATE" => "tree2",
+		"COUNT_ELEMENTS" => "Y",
+		"HIDE_SECTION_NAME" => "N",
+		"IBLOCK_ID" => "4",
+		"IBLOCK_TYPE" => "catalog",
+		"SECTION_CODE" => "",
+		"SECTION_FIELDS" => array(0=>"NAME",1=>"DESCRIPTION",2=>"PICTURE",3=>"",),
+		"SECTION_ID" => $_REQUEST["SECTION_ID"],
+		"SECTION_URL" => "",
+		"SECTION_USER_FIELDS" => array(0=>"UF_SECT_SERIES_NAME",1=>"UF_SECT_DESCRIPTION",2=>"UF_SECT_CHARACTER",3=>"UF_SHOW_ON_MAIN_PAGE",4=>"",),
+		"SHOW_PARENT_NAME" => "Y",
+		"TOP_DEPTH" => "2",
+		"VIEW_MODE" => "TILE"
+	)
+);?>
+    </div>
+    <div class="wrapper">
+        <?$APPLICATION->IncludeComponent(
+	"bitrix:news.list",
+	"main_slider",
+	Array(
+		"ACTIVE_DATE_FORMAT" => "d.m.Y",
+		"ADD_SECTIONS_CHAIN" => "Y",
+		"AJAX_MODE" => "N",
+		"AJAX_OPTION_ADDITIONAL" => "",
+		"AJAX_OPTION_HISTORY" => "N",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "N",
+		"CACHE_FILTER" => "Y",
+		"CACHE_GROUPS" => "Y",
+		"CACHE_TIME" => "3600",
+		"CACHE_TYPE" => "A",
+		"CHECK_DATES" => "Y",
+		"DETAIL_URL" => "",
+		"DISPLAY_BOTTOM_PAGER" => "Y",
+		"DISPLAY_DATE" => "N",
+		"DISPLAY_NAME" => "Y",
+		"DISPLAY_PICTURE" => "Y",
+		"DISPLAY_PREVIEW_TEXT" => "N",
+		"DISPLAY_TOP_PAGER" => "Y",
+		"FIELD_CODE" => array(0=>"",1=>"",),
+		"FILTER_NAME" => "",
+		"HIDE_LINK_WHEN_NO_DETAIL" => "Y",
+		"IBLOCK_ID" => "9",
+		"IBLOCK_TYPE" => "content",
+		"INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
+		"INCLUDE_SUBSECTIONS" => "Y",
+		"NEWS_COUNT" => "1",
+		"PAGER_DESC_NUMBERING" => "Y",
+		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+		"PAGER_SHOW_ALL" => "N",
+		"PAGER_SHOW_ALWAYS" => "N",
+		"PAGER_TEMPLATE" => ".default",
+		"PAGER_TITLE" => "Новости",
+		"PARENT_SECTION" => "",
+		"PARENT_SECTION_CODE" => "",
+		"PREVIEW_TRUNCATE_LEN" => "",
+		"PROPERTY_CODE" => array(0=>"STATIC",1=>"SLIDES",2=>"LINKS",3=>"LINKS_PIC"),
+		"SET_STATUS_404" => "Y",
+		"SET_TITLE" => "N",
+		"SORT_BY1" => "SORT",
+		"SORT_BY2" => "NAME",
+		"SORT_ORDER1" => "ASC",
+		"SORT_ORDER2" => "ASC"
+	)
+);?>
     </div>
     <!--  Special block -->
   <!--  <div class="wrapper">
@@ -134,191 +160,191 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
                                     </ul>
 
                                 </div>
-                                <a class='prev' href="#"> < </a>
-                                <a class='next' href="#"> > </a>
+                                <a class="prev" href="#"> &lt; </a>
+                                <a class="next" href="#"> &gt; </a>
                             </div>
                         </div>
 
                         <div class="block-type02">
-                            <? $APPLICATION->IncludeComponent(
-                                "bitrix:news.list",
-                                "main_news",
-                                Array(
-                                    "ACTIVE_DATE_FORMAT" => "d.m.Y",
-                                    "ADD_SECTIONS_CHAIN" => "Y",
-                                    "AJAX_MODE" => "N",
-                                    "AJAX_OPTION_ADDITIONAL" => "",
-                                    "AJAX_OPTION_HISTORY" => "N",
-                                    "AJAX_OPTION_JUMP" => "N",
-                                    "AJAX_OPTION_STYLE" => "Y",
-                                    "CACHE_FILTER" => "N",
-                                    "CACHE_GROUPS" => "Y",
-                                    "CACHE_TIME" => "36000000",
-                                    "CACHE_TYPE" => "A",
-                                    "CHECK_DATES" => "Y",
-                                    "DETAIL_URL" => "",
-                                    "DISPLAY_BOTTOM_PAGER" => "N",
-                                    "DISPLAY_DATE" => "Y",
-                                    "DISPLAY_NAME" => "Y",
-                                    "DISPLAY_PICTURE" => "Y",
-                                    "DISPLAY_PREVIEW_TEXT" => "Y",
-                                    "DISPLAY_TOP_PAGER" => "N",
-                                    "FIELD_CODE" => array(0 => "", 1 => "",),
-                                    "FILTER_NAME" => "",
-                                    "HIDE_LINK_WHEN_NO_DETAIL" => "N",
-                                    "IBLOCK_ID" => "6",
-                                    "IBLOCK_TYPE" => "news",
-                                    "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
-                                    "INCLUDE_SUBSECTIONS" => "Y",
-                                    "NEWS_COUNT" => "2",
-                                    "PAGER_DESC_NUMBERING" => "N",
-                                    "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-                                    "PAGER_SHOW_ALL" => "N",
-                                    "PAGER_SHOW_ALWAYS" => "N",
-                                    "PAGER_TEMPLATE" => ".default",
-                                    "PAGER_TITLE" => "",
-                                    "PARENT_SECTION" => "",
-                                    "PARENT_SECTION_CODE" => "",
-                                    "PREVIEW_TRUNCATE_LEN" => "",
-                                    "PROPERTY_CODE" => array(0 => "", 1 => "",),
-                                    "SET_BROWSER_TITLE" => "Y",
-                                    "SET_META_DESCRIPTION" => "Y",
-                                    "SET_META_KEYWORDS" => "Y",
-                                    "SET_STATUS_404" => "N",
-                                    "SET_TITLE" => "N",
-                                    "SORT_BY1" => "ACTIVE_FROM",
-                                    "SORT_BY2" => "SORT",
-                                    "SORT_ORDER1" => "DESC",
-                                    "SORT_ORDER2" => "ASC"
-                                )
-                            ); ?>
+                            <?$APPLICATION->IncludeComponent(
+	"bitrix:news.list",
+	"main_news",
+	Array(
+		"ACTIVE_DATE_FORMAT" => "d.m.Y",
+		"ADD_SECTIONS_CHAIN" => "Y",
+		"AJAX_MODE" => "N",
+		"AJAX_OPTION_ADDITIONAL" => "",
+		"AJAX_OPTION_HISTORY" => "N",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "Y",
+		"CACHE_FILTER" => "N",
+		"CACHE_GROUPS" => "Y",
+		"CACHE_TIME" => "36000000",
+		"CACHE_TYPE" => "A",
+		"CHECK_DATES" => "Y",
+		"DETAIL_URL" => "",
+		"DISPLAY_BOTTOM_PAGER" => "N",
+		"DISPLAY_DATE" => "Y",
+		"DISPLAY_NAME" => "Y",
+		"DISPLAY_PICTURE" => "Y",
+		"DISPLAY_PREVIEW_TEXT" => "Y",
+		"DISPLAY_TOP_PAGER" => "N",
+		"FIELD_CODE" => array(0=>"",1=>"",),
+		"FILTER_NAME" => "",
+		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
+		"IBLOCK_ID" => "6",
+		"IBLOCK_TYPE" => "news",
+		"INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
+		"INCLUDE_SUBSECTIONS" => "Y",
+		"NEWS_COUNT" => "2",
+		"PAGER_DESC_NUMBERING" => "N",
+		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+		"PAGER_SHOW_ALL" => "N",
+		"PAGER_SHOW_ALWAYS" => "N",
+		"PAGER_TEMPLATE" => ".default",
+		"PAGER_TITLE" => "",
+		"PARENT_SECTION" => "",
+		"PARENT_SECTION_CODE" => "",
+		"PREVIEW_TRUNCATE_LEN" => "",
+		"PROPERTY_CODE" => array(0=>"",1=>"",),
+		"SET_BROWSER_TITLE" => "Y",
+		"SET_META_DESCRIPTION" => "Y",
+		"SET_META_KEYWORDS" => "Y",
+		"SET_STATUS_404" => "N",
+		"SET_TITLE" => "N",
+		"SORT_BY1" => "ACTIVE_FROM",
+		"SORT_BY2" => "SORT",
+		"SORT_ORDER1" => "DESC",
+		"SORT_ORDER2" => "ASC"
+	)
+);?>
                         </div>
-                        <? $APPLICATION->IncludeComponent(
-                            "bitrix:news.list",
-                            "main_blog",
-                            Array(
-                                "ACTIVE_DATE_FORMAT" => "d.m.Y",
-                                "ADD_SECTIONS_CHAIN" => "Y",
-                                "AJAX_MODE" => "N",
-                                "AJAX_OPTION_ADDITIONAL" => "",
-                                "AJAX_OPTION_HISTORY" => "N",
-                                "AJAX_OPTION_JUMP" => "N",
-                                "AJAX_OPTION_STYLE" => "Y",
-                                "CACHE_FILTER" => "N",
-                                "CACHE_GROUPS" => "Y",
-                                "CACHE_TIME" => "36000000",
-                                "CACHE_TYPE" => "A",
-                                "CHECK_DATES" => "Y",
-                                "COMPONENT_TEMPLATE" => "main_blog",
-                                "DETAIL_URL" => "",
-                                "DISPLAY_BOTTOM_PAGER" => "N",
-                                "DISPLAY_DATE" => "Y",
-                                "DISPLAY_NAME" => "Y",
-                                "DISPLAY_PICTURE" => "Y",
-                                "DISPLAY_PREVIEW_TEXT" => "Y",
-                                "DISPLAY_TOP_PAGER" => "N",
-                                "FIELD_CODE" => array(0 => "", 1 => "",),
-                                "FILTER_NAME" => "",
-                                "HIDE_LINK_WHEN_NO_DETAIL" => "N",
-                                "IBLOCK_ID" => "7",
-                                "IBLOCK_TYPE" => "content",
-                                "INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
-                                "INCLUDE_SUBSECTIONS" => "Y",
-                                "MESSAGE_404" => "",
-                                "NEWS_COUNT" => "2",
-                                "PAGER_BASE_LINK_ENABLE" => "N",
-                                "PAGER_DESC_NUMBERING" => "N",
-                                "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
-                                "PAGER_SHOW_ALL" => "N",
-                                "PAGER_SHOW_ALWAYS" => "N",
-                                "PAGER_TEMPLATE" => ".default",
-                                "PAGER_TITLE" => "",
-                                "PARENT_SECTION" => "",
-                                "PARENT_SECTION_CODE" => "",
-                                "PREVIEW_TRUNCATE_LEN" => "",
-                                "PROPERTY_CODE" => array(0 => "", 1 => "",),
-                                "SET_BROWSER_TITLE" => "Y",
-                                "SET_LAST_MODIFIED" => "N",
-                                "SET_META_DESCRIPTION" => "Y",
-                                "SET_META_KEYWORDS" => "Y",
-                                "SET_STATUS_404" => "N",
-                                "SET_TITLE" => "N",
-                                "SHOW_404" => "N",
-                                "SORT_BY1" => "ACTIVE_FROM",
-                                "SORT_BY2" => "SORT",
-                                "SORT_ORDER1" => "DESC",
-                                "SORT_ORDER2" => "ASC"
-                            )
-                        ); ?>
+                        <?$APPLICATION->IncludeComponent(
+	"bitrix:news.list",
+	"main_blog",
+	Array(
+		"ACTIVE_DATE_FORMAT" => "d.m.Y",
+		"ADD_SECTIONS_CHAIN" => "Y",
+		"AJAX_MODE" => "N",
+		"AJAX_OPTION_ADDITIONAL" => "",
+		"AJAX_OPTION_HISTORY" => "N",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "Y",
+		"CACHE_FILTER" => "N",
+		"CACHE_GROUPS" => "Y",
+		"CACHE_TIME" => "36000000",
+		"CACHE_TYPE" => "A",
+		"CHECK_DATES" => "Y",
+		"COMPONENT_TEMPLATE" => "main_blog",
+		"DETAIL_URL" => "",
+		"DISPLAY_BOTTOM_PAGER" => "N",
+		"DISPLAY_DATE" => "Y",
+		"DISPLAY_NAME" => "Y",
+		"DISPLAY_PICTURE" => "Y",
+		"DISPLAY_PREVIEW_TEXT" => "Y",
+		"DISPLAY_TOP_PAGER" => "N",
+		"FIELD_CODE" => array(0=>"",1=>"",),
+		"FILTER_NAME" => "",
+		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
+		"IBLOCK_ID" => "7",
+		"IBLOCK_TYPE" => "content",
+		"INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
+		"INCLUDE_SUBSECTIONS" => "Y",
+		"MESSAGE_404" => "",
+		"NEWS_COUNT" => "2",
+		"PAGER_BASE_LINK_ENABLE" => "N",
+		"PAGER_DESC_NUMBERING" => "N",
+		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+		"PAGER_SHOW_ALL" => "N",
+		"PAGER_SHOW_ALWAYS" => "N",
+		"PAGER_TEMPLATE" => ".default",
+		"PAGER_TITLE" => "",
+		"PARENT_SECTION" => "",
+		"PARENT_SECTION_CODE" => "",
+		"PREVIEW_TRUNCATE_LEN" => "",
+		"PROPERTY_CODE" => array(0=>"",1=>"",),
+		"SET_BROWSER_TITLE" => "Y",
+		"SET_LAST_MODIFIED" => "N",
+		"SET_META_DESCRIPTION" => "Y",
+		"SET_META_KEYWORDS" => "Y",
+		"SET_STATUS_404" => "N",
+		"SET_TITLE" => "N",
+		"SHOW_404" => "N",
+		"SORT_BY1" => "ACTIVE_FROM",
+		"SORT_BY2" => "SORT",
+		"SORT_ORDER1" => "DESC",
+		"SORT_ORDER2" => "ASC"
+	)
+);?>
 
 
                     </div>
                     <!--   MainContent (tabs) starts here -->
                     <div class="tabset">
-                        <? $APPLICATION->IncludeComponent(
-                            "bitrix:catalog.top",
-                            "main_topcat",
-                            Array(
-                                "ACTION_VARIABLE" => "action",
-                                "ADD_PICT_PROP" => "-",
-                                "ADD_PROPERTIES_TO_BASKET" => "N",
-                                "ADD_TO_BASKET_ACTION" => "ADD",
-                                "BASKET_URL" => "/personal/cart/",
-                                "CACHE_FILTER" => "N",
-                                "CACHE_GROUPS" => "Y",
-                                "CACHE_TIME" => "36000000",
-                                "CACHE_TYPE" => "A",
-                                "CONVERT_CURRENCY" => "Y",
-                                "CURRENCY_ID" => "RUB",
-                                "DETAIL_URL" => "",
-                                "DISPLAY_COMPARE" => "N",
-                                "ELEMENT_COUNT" => "500000",
-                                "ELEMENT_SORT_FIELD" => "sort",
-                                "ELEMENT_SORT_FIELD2" => "name",
-                                "ELEMENT_SORT_ORDER" => "asc",
-                                "ELEMENT_SORT_ORDER2" => "desc",
-                                "FILTER_NAME" => "",
-                                "HIDE_NOT_AVAILABLE" => "N",
-                                "IBLOCK_ID" => "4",
-                                "IBLOCK_TYPE" => "catalog",
-                                "LABEL_PROP" => "-",
-                                "LINE_ELEMENT_COUNT" => "3",
-                                "MESS_BTN_ADD_TO_BASKET" => "В корзину",
-                                "MESS_BTN_BUY" => "Купить",
-                                "MESS_BTN_COMPARE" => "Сравнить",
-                                "MESS_BTN_DETAIL" => "Подробнее",
-                                "MESS_NOT_AVAILABLE" => "Ожидается",
-                                "OFFERS_CART_PROPERTIES" => array(),
-                                "OFFERS_FIELD_CODE" => array(0 => "ID", 1 => "CODE", 2 => "NAME", 3 => "SORT", 4 => "",),
-                                "OFFERS_LIMIT" => "0",
-                                "OFFERS_PROPERTY_CODE" => array(0 => "ARTNUMBER", 1 => "MORE_PHOTO", 2 => "SIZE_GENERAL", 3 => "",),
-                                "OFFERS_SORT_FIELD" => "sort",
-                                "OFFERS_SORT_FIELD2" => "timestamp_x",
-                                "OFFERS_SORT_ORDER" => "asc",
-                                "OFFERS_SORT_ORDER2" => "desc",
-                                "PARTIAL_PRODUCT_PROPERTIES" => "N",
-                                "PRICE_CODE" => array(0 => "BASE",),
-                                "PRICE_VAT_INCLUDE" => "N",
-                                "PRODUCT_DISPLAY_MODE" => "N",
-                                "PRODUCT_ID_VARIABLE" => "id",
-                                "PRODUCT_PROPERTIES" => array(),
-                                "PRODUCT_PROPS_VARIABLE" => "prop",
-                                "PRODUCT_QUANTITY_VARIABLE" => "quantity",
-                                "PROPERTY_CODE" => array(0 => "SPECIALOFFER", 1 => "SALELEADER", 2 => "SPECIALOFFER", 3 => "",),
-                                "ROTATE_TIMER" => "30",
-                                "SECTION_ID_VARIABLE" => "SECTION_ID",
-                                "SECTION_URL" => "",
-                                "SHOW_CLOSE_POPUP" => "N",
-                                "SHOW_DISCOUNT_PERCENT" => "N",
-                                "SHOW_OLD_PRICE" => "N",
-                                "SHOW_PAGINATION" => "N",
-                                "SHOW_PRICE_COUNT" => "1",
-                                "TEMPLATE_THEME" => "site",
-                                "USE_PRICE_COUNT" => "N",
-                                "USE_PRODUCT_QUANTITY" => "N",
-                                "VIEW_MODE" => "SECTION"
-                            )
-                        ); ?> <!-- SEO-article goes here -->
+                        <?$APPLICATION->IncludeComponent(
+	"bitrix:catalog.top",
+	"main_topcat",
+	Array(
+		"ACTION_VARIABLE" => "action",
+		"ADD_PICT_PROP" => "-",
+		"ADD_PROPERTIES_TO_BASKET" => "N",
+		"ADD_TO_BASKET_ACTION" => "ADD",
+		"BASKET_URL" => "/personal/cart/",
+		"CACHE_FILTER" => "N",
+		"CACHE_GROUPS" => "Y",
+		"CACHE_TIME" => "36000000",
+		"CACHE_TYPE" => "A",
+		"CONVERT_CURRENCY" => "Y",
+		"CURRENCY_ID" => "RUB",
+		"DETAIL_URL" => "",
+		"DISPLAY_COMPARE" => "N",
+		"ELEMENT_COUNT" => "500000",
+		"ELEMENT_SORT_FIELD" => "sort",
+		"ELEMENT_SORT_FIELD2" => "name",
+		"ELEMENT_SORT_ORDER" => "asc",
+		"ELEMENT_SORT_ORDER2" => "desc",
+		"FILTER_NAME" => "",
+		"HIDE_NOT_AVAILABLE" => "N",
+		"IBLOCK_ID" => "4",
+		"IBLOCK_TYPE" => "catalog",
+		"LABEL_PROP" => "-",
+		"LINE_ELEMENT_COUNT" => "3",
+		"MESS_BTN_ADD_TO_BASKET" => "В корзину",
+		"MESS_BTN_BUY" => "Купить",
+		"MESS_BTN_COMPARE" => "Сравнить",
+		"MESS_BTN_DETAIL" => "Подробнее",
+		"MESS_NOT_AVAILABLE" => "Ожидается",
+		"OFFERS_CART_PROPERTIES" => array(),
+		"OFFERS_FIELD_CODE" => array(0=>"ID",1=>"CODE",2=>"NAME",3=>"SORT",4=>"",),
+		"OFFERS_LIMIT" => "0",
+		"OFFERS_PROPERTY_CODE" => array(0=>"ARTNUMBER",1=>"MORE_PHOTO",2=>"SIZE_GENERAL",3=>"",),
+		"OFFERS_SORT_FIELD" => "sort",
+		"OFFERS_SORT_FIELD2" => "timestamp_x",
+		"OFFERS_SORT_ORDER" => "asc",
+		"OFFERS_SORT_ORDER2" => "desc",
+		"PARTIAL_PRODUCT_PROPERTIES" => "N",
+		"PRICE_CODE" => array(0=>"BASE",),
+		"PRICE_VAT_INCLUDE" => "N",
+		"PRODUCT_DISPLAY_MODE" => "N",
+		"PRODUCT_ID_VARIABLE" => "id",
+		"PRODUCT_PROPERTIES" => array(),
+		"PRODUCT_PROPS_VARIABLE" => "prop",
+		"PRODUCT_QUANTITY_VARIABLE" => "quantity",
+		"PROPERTY_CODE" => array(0=>"SPECIALOFFER",1=>"SALELEADER",2=>"SPECIALOFFER",3=>"",),
+		"ROTATE_TIMER" => "30",
+		"SECTION_ID_VARIABLE" => "SECTION_ID",
+		"SECTION_URL" => "",
+		"SHOW_CLOSE_POPUP" => "N",
+		"SHOW_DISCOUNT_PERCENT" => "N",
+		"SHOW_OLD_PRICE" => "N",
+		"SHOW_PAGINATION" => "N",
+		"SHOW_PRICE_COUNT" => "1",
+		"TEMPLATE_THEME" => "site",
+		"USE_PRICE_COUNT" => "N",
+		"USE_PRODUCT_QUANTITY" => "N",
+		"VIEW_MODE" => "SECTION"
+	)
+);?> <!-- SEO-article goes here -->
                         <style>
                             .text-description-content {
                                 overflow: hidden;
@@ -364,8 +390,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
                                     нуждается в дополнительной защите и для этого используются <strong>термошкафы для
                                         оборудования ITProm</strong>. Компания ITProm считается одним из лучших
                                     российских поставщиков промышленного оборудования, в том числе термошкафов. Компания
-                                    реализует&nbsp;<a title="шкаф всепогодный"
-                                                      href="https://itprom.ru/catalog/termoshkafi/">шкаф всепогодный</a>
+                                    реализует&nbsp;<a title="шкаф всепогодный" href="https://itprom.ru/catalog/termoshkafi/">шкаф всепогодный</a>
                                     различных серий в зависимости от целей использования.
                                 </p>
                                 <h2>Назначение защитного оборудования</h2>
@@ -389,8 +414,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
                                         температуры внутри шкафа, где работает оборудование;
                                     </li>
                                     <li>От физического воздействия или хищения помогают термошкафы с антивандальными
-                                        корпусами, <a title="шкаф всепогодный антивандальный"
-                                                      href="https://itprom.ru/catalog/termoshkafi_antivandalniye/">шкаф всепогодный антивандальный</a> обладает повышенной прочностью, значительным весом, усиленными
+                                        корпусами, <a title="шкаф всепогодный антивандальный" href="https://itprom.ru/catalog/termoshkafi_antivandalniye/">шкаф всепогодный антивандальный</a> обладает повышенной прочностью, значительным весом, усиленными
                                         скрытыми дверными петлями и специальными сейфовыми замками.
                                     </li>
                                     <li> Надежные металлические корпуса служат эффективной защитой от ультрафиолетового
@@ -428,9 +452,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
                                         и нуждается в постороннем обогреве.
                                     </li>
                                     <li> Более совершенной группой являются термошкафы для оборудования, оснащенные
-                                        системами электрического нагрева и естественной вентиляцией. <a
-                                            title="шкаф телекоммуникационный"
-                                            href="https://itprom.ru/catalog/termoshkafi_19/">Шкаф
+                                        системами электрического нагрева и естественной вентиляцией. <a title="шкаф телекоммуникационный" href="https://itprom.ru/catalog/termoshkafi_19/">Шкаф
                                             телекоммуникационный</a> обладает особенностями, а именно, они обеспечивают
                                         охлаждение только в условиях, когда внешняя температура ниже, чем внутри шкафа.
                                     </li>
@@ -461,9 +483,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
                                 <p>
                                     В зависимости от комплектации термошкафы могут обеспечивать работу оборудования в
                                     температурных режимах от -50<sup>о</sup> до +60<sup>о</sup>&nbsp;С и при влажности
-                                    до 95%, при этом в для разных видов шкафов&nbsp;необходимо разное <a
-                                        title="комплектующие для телекоммуникационных шкафов"
-                                        href="https://itprom.ru/catalog/aksessuary-dlya-termoshkafov/">комплектующие для
+                                    до 95%, при этом в для разных видов шкафов&nbsp;необходимо разное <a title="комплектующие для телекоммуникационных шкафов" href="https://itprom.ru/catalog/aksessuary-dlya-termoshkafov/">комплектующие для
                                         телекоммуникационных шкафов</a>.
                                 </p>
                                 <p>
@@ -488,8 +508,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?>
                                 </p>
                             </div>
                             <div class="text-description-more">
-                                <a onclick="seoshowmore()" rel="nofollow" href="#text-description-page"
-                                   id="short_text_show_link" class="novisited arrow-link text-description-more-link">
+                                <a onclick="seoshowmore()" rel="nofollow" href="#text-description-page" id="short_text_show_link" class="novisited arrow-link text-description-more-link">
                                     <span class="xhr arrow-link-inner">Читать полностью</span>&nbsp;→ </a>
                             </div>
                         </div>
@@ -556,5 +575,4 @@ $arLang = array();
 
 
 
-</div>
-<? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
+</div><? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
