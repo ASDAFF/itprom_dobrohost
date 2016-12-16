@@ -14,39 +14,39 @@ if (!empty($arResult["ORDER"]))
 		</tr>
 	</table>
 	<?
-	if (!empty($arResult["PAY_SYSTEM"]))
+/*	if (!empty($arResult["PAY_SYSTEM"]))
 	{
-		?>
+		*/?><!--
 		<br /><br />
 
 		<table class="sale_order_full_table">
 			<tr>
 				<td class="ps_logo">
-					<div class="pay_name"><?=GetMessage("SOA_TEMPL_PAY")?></div>
-					<?=CFile::ShowImage($arResult["PAY_SYSTEM"]["LOGOTIP"], 100, 100, "border=0", "", false);?>
-					<div class="paysystem_name"><?= $arResult["PAY_SYSTEM"]["NAME"] ?></div><br>
+					<div class="pay_name"><?/*=GetMessage("SOA_TEMPL_PAY")*/?></div>
+					<?/*=CFile::ShowImage($arResult["PAY_SYSTEM"]["LOGOTIP"], 100, 100, "border=0", "", false);*/?>
+					<div class="paysystem_name"><?/*= $arResult["PAY_SYSTEM"]["NAME"] */?></div><br>
 				</td>
 			</tr>
-			<?
+			<?/*
 			if (strlen($arResult["PAY_SYSTEM"]["ACTION_FILE"]) > 0)
 			{
-				?>
+				*/?>
 				<tr>
 					<td>
-						<?
+						<?/*
 						if ($arResult["PAY_SYSTEM"]["NEW_WINDOW"] == "Y")
 						{
-							?>
+							*/?>
 							<script language="JavaScript">
-								window.open('<?=$arParams["PATH_TO_PAYMENT"]?>?ORDER_ID=<?=urlencode(urlencode($arResult["ORDER"]["ACCOUNT_NUMBER"]))?>');
+								window.open('<?/*=$arParams["PATH_TO_PAYMENT"]*/?>?ORDER_ID=<?/*=urlencode(urlencode($arResult["ORDER"]["ACCOUNT_NUMBER"]))*/?>');
 							</script>
-							<?= GetMessage("SOA_TEMPL_PAY_LINK", Array("#LINK#" => $arParams["PATH_TO_PAYMENT"]."?ORDER_ID=".urlencode(urlencode($arResult["ORDER"]["ACCOUNT_NUMBER"]))))?>
-							<?
+							<?/*= GetMessage("SOA_TEMPL_PAY_LINK", Array("#LINK#" => $arParams["PATH_TO_PAYMENT"]."?ORDER_ID=".urlencode(urlencode($arResult["ORDER"]["ACCOUNT_NUMBER"]))))*/?>
+							<?/*
 							if (CSalePdf::isPdfAvailable() && CSalePaySystemsHelper::isPSActionAffordPdf($arResult['PAY_SYSTEM']['ACTION_FILE']))
 							{
-								?><br />
-								<?= GetMessage("SOA_TEMPL_PAY_PDF", Array("#LINK#" => $arParams["PATH_TO_PAYMENT"]."?ORDER_ID=".urlencode(urlencode($arResult["ORDER"]["ACCOUNT_NUMBER"]))."&pdf=1&DOWNLOAD=Y")) ?>
-								<?
+								*/?><br />
+								<?/*= GetMessage("SOA_TEMPL_PAY_PDF", Array("#LINK#" => $arParams["PATH_TO_PAYMENT"]."?ORDER_ID=".urlencode(urlencode($arResult["ORDER"]["ACCOUNT_NUMBER"]))."&pdf=1&DOWNLOAD=Y")) */?>
+								<?/*
 							}
 						}
 						else
@@ -68,15 +68,15 @@ if (!empty($arResult["ORDER"]))
 								}
 							}
 						}
-						?>
+						*/?>
 					</td>
 				</tr>
-				<?
+				<?/*
 			}
-			?>
+			*/?>
 		</table>
-		<?
-	}
+		--><?/*
+	}*/
 }
 else
 {

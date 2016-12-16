@@ -185,7 +185,7 @@
 										<?=htmlspecialcharsbx($arDelivery["TITLE"])." (".htmlspecialcharsbx($arProfile["TITLE"]).")";?>
 									</strong>
 
-									<span class="bx_result_price"><!-- click on this should not cause form submit -->
+									<span  style="display: none" class="bx_result_price"><!-- click on this should not cause form submit -->
 										<?
 										if($arProfile["CHECKED"] == "Y" && doubleval($arResult["DELIVERY_PRICE"]) > 0):
 										?>
@@ -268,7 +268,7 @@
 
 								<div class="bx_description">
 									<div class="name"><strong><?= htmlspecialcharsbx($arDelivery["NAME"])?></strong></div>
-									<span class="bx_result_price">
+									<span style="display: none" class="bx_result_price">
 										<?
 										if (strlen($arDelivery["PERIOD_TEXT"])>0)
 										{

@@ -1,5 +1,5 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
-<div class="section">
+<div class="section" style="display: none">
 	<script type="text/javascript">
 		function changePaySystem(param)
 		{
