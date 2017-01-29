@@ -679,6 +679,7 @@ form,fieldset{
 	height: 62px;
 	-webkit-font-smoothing: subpixel-antialiased;
 	font-weight: bold;
+	display: inline-table;
 }
 #nav > li{
 	position:relative;
@@ -686,7 +687,9 @@ form,fieldset{
     /*
 	background:url(../img/separator-nav.png) no-repeat 0 4px;
     */
+    /*
 	border-bottom: 1px solid;
+    */
 	float:left;
 	text-align:center;
 	width:25%;/*todo: ���� 11.3%*/
@@ -762,6 +765,7 @@ form,fieldset{
 	width: 756px;
 	padding: 0 0 15px;
 	overflow:hidden;
+	z-index: 1000;
 }
 .drop-nav-hold:after{
 	display:block;

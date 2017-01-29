@@ -750,6 +750,7 @@ form,fieldset{
 	width: 756px;
 	padding: 0 0 15px;
 	overflow:hidden;
+	z-index: 1000;
 }
 .drop-nav-hold:after{
 	display:block;
