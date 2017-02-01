@@ -33,7 +33,7 @@ $APPLICATION->SetTitle("Термошкафы ITProm"); ?><?$APPLICATION->AddHead
         <!--Термошкаф -->
     </div>
     <div class="wrapper">
-
+        UF_SHOW_ON_MAIN_PAGE
         <?$APPLICATION->IncludeComponent(
 	"bitrix:catalog.section.list",
 	"tree2",

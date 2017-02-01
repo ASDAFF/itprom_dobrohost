@@ -5,18 +5,13 @@ $this->setFrameMode(true);
 
 <?
 $counts = 0;
-//wfDump($arResult);
-foreach($arResult as $index => $arItem){
-  if($arItem["DEPTH_LEVEL"] == 1) $counts++;
-}
-$iter = 0;//<span class="tripple-point">&nbsp;</span>
+//<span class="tripple-point">&nbsp;</span>
 ?>
 <ul id="nav">
   <?foreach($arResult as $index => $arItem):
     $sectionId = $arItem["ITEM_INDEX"];
     if($arItem["DEPTH_LEVEL"] != 1) continue;
-    $iter++;
-    if($iter >($counts/2 + 1)) $class = "left-drop";
+    if($index%4>1) $class = "left-drop";
     else $class = "";
     if($arItem['SELECTED']) $class.=' selected';
 //    if($iter == $counts){
